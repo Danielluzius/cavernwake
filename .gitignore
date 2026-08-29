@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+
+# Build tooling / dev-only files (repo should only ship pure HTML + CSS)
+package.json
+package-lock.json
+scss/
+.vscode/

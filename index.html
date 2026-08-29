@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cavernwake</title>
+    <!-- css/main.css is compiled from scss/ via `npm run watch:css` (or
+         `npm run build:css` once) — never edit it directly. -->
+    <link rel="stylesheet" href="./css/main.css" />
+    <!-- Preload frames that only appear inside @keyframes (not in any base
+         rule): browsers otherwise fetch them lazily on first animation use,
+         causing a brief flash/pop-in the very first time an animation plays. -->
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
+</head>
+
+<body>
+
+    <!-- CSS-only world-position state. Must stay a direct sibling chain
+         (not nested) so the ~ combinator can reach .game below. A finite,
+         predefined set of steps (position-0 .. position-7) stands in for
+         "movement", since pure CSS cannot count or loop dynamically. -->
+    <!-- #awake must come before the position radios: several selectors
+         chain "#awake:checked ~ #position-N:checked ~ .game" and rely on
+         this exact document order. Once checked it never unchecks again
+         (no reset control), matching the one-way wake-up story beat. -->
+    <input type="checkbox" id="awake" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-0" class="world-position-input" checked />
+    <input type="radio" name="world-position" id="position-1" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-2" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-3" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-4" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-5" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-6" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-7" class="world-position-input" />
+
+    <main class="game" id="game">
+
+        <div class="viewport" id="viewport">
+
+            <div class="world" id="world">
+
+                <div class="world-layer world-layer--background" id="background-layer"></div>
+
+                <div class="world-layer world-layer--environment" id="environment-layer">
+                    <!-- Placeholder test terrain: a single row of floor tiles from
+                         rock-tileset.png. Tile coordinates are placeholders until
+                         the real tileset layout is mapped out. -->
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                </div>
+
+                <div class="world-layer world-layer--objects" id="object-layer"></div>
+
+                <div class="player" id="player">
+                    <div class="player__sprite"></div>
+                </div>
+
+                <div class="world-layer world-layer--foreground" id="foreground-layer"></div>
+
+            </div>
+
+        </div>
+
+        <!-- Temporary development controls for this prototype only. -->
+        <div class="ui" id="ui">
+            <div class="dev-controls">
+                <label class="dev-controls__button dev-controls__button--wake-up" for="awake">WAKE UP</label>
+
+                <label class="dev-controls__button dev-controls__button--right" data-position="0"
+                    for="position-1">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="1"
+                    for="position-2">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="2"
+                    for="position-3">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="3"
+                    for="position-4">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="4"
+                    for="position-5">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="5"
+                    for="position-6">RIGHT</label>
+                <label class="dev-controls__button dev-controls__button--right" data-position="6"
+                    for="position-7">RIGHT</label>
+
+                <!-- LEFT is only structurally prepared: it jumps back a
+                     position but has no walk-left animation yet (no
+                     walk-left assets exist for this character variant). -->
+                <label class="dev-controls__button dev-controls__button--left" data-position="1"
+                    for="position-0">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="2"
+                    for="position-1">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="3"
+                    for="position-2">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="4"
+                    for="position-3">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="5"
+                    for="position-4">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="6"
+                    for="position-5">LEFT</label>
+                <label class="dev-controls__button dev-controls__button--left" data-position="7"
+                    for="position-6">LEFT</label>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
