@@ -42,48 +42,71 @@
     <input type="radio" name="world-position" id="position-6" class="world-position-input" />
     <input type="radio" name="world-position" id="position-7" class="world-position-input" />
 
+    <!-- Dev-only, independent of the wake-up/movement chain above: toggles
+         the visual debug grid overlay (see scss/world/_room.scss). Checked
+         by default while the position test below is in use. -->
+    <input type="checkbox" id="debug-grid" class="world-position-input" checked />
+
     <main class="game" id="game">
 
         <div class="viewport" id="viewport">
 
+            <!-- Sits outside .world (not translated with scroll) so its
+                 fixed position always covers the real browser viewport. -->
+            <div class="world-layer world-layer--background" id="background-layer"></div>
+
             <div class="world" id="world">
 
-                <div class="world-layer world-layer--background" id="background-layer"></div>
-
                 <div class="world-layer world-layer--environment" id="environment-layer">
-                    <!-- Placeholder test terrain: a single row of floor tiles from
-                         rock-tileset.png. Tile coordinates are placeholders until
-                         the real tileset layout is mapped out. -->
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
-                    <div class="tile" style="--tile-x: 1; --tile-y: 6;"></div>
+                    <!-- Pure segment-system debug test: 4 segments (each
+                         3 tiles wide x 5 tiles tall) side by side = 12x5
+                         tiles. Fixed vertical layout per segment: row 1
+                         ceiling, rows 2-3 free air, row 4 floor, row 5
+                         fill. Strong 192px grid lines (GRID button) mark
+                         the exact segment boundaries. Player starts in
+                         segment 2, centered on its middle column, feet at
+                         the temporary row-4 center starting point. No
+                         puzzle mechanics, no further room dressing yet. -->
+                    <div class="room" style="--room-cols: 12; --room-rows: 5;">
+                        <div class="tile tile--wall-fill-1 cell-x-1 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-2 cell-x-2 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-3 cell-x-3 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-4 cell-x-4 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-5 cell-x-5 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-6 cell-x-6 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-7 cell-x-7 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-8 cell-x-8 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-9 cell-x-9 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-10 cell-x-10 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-11 cell-x-11 cell-y-1"></div>
+                        <div class="tile tile--wall-fill-12 cell-x-12 cell-y-1"></div>
+
+                        <div class="tile tile--top-edge-1 cell-x-1 cell-y-4"></div>
+                        <div class="tile tile--top-edge-2 cell-x-2 cell-y-4"></div>
+                        <div class="tile tile--top-edge-3 cell-x-3 cell-y-4"></div>
+                        <div class="tile tile--top-edge-4 cell-x-4 cell-y-4"></div>
+                        <div class="tile tile--top-edge-5 cell-x-5 cell-y-4"></div>
+                        <div class="tile tile--top-edge-6 cell-x-6 cell-y-4"></div>
+                        <div class="tile tile--top-edge-7 cell-x-7 cell-y-4"></div>
+                        <div class="tile tile--top-edge-8 cell-x-8 cell-y-4"></div>
+                        <div class="tile tile--top-edge-9 cell-x-9 cell-y-4"></div>
+                        <div class="tile tile--top-edge-1 cell-x-10 cell-y-4"></div>
+                        <div class="tile tile--top-edge-2 cell-x-11 cell-y-4"></div>
+                        <div class="tile tile--top-edge-3 cell-x-12 cell-y-4"></div>
+
+                        <div class="tile tile--wall-fill-1 cell-x-1 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-2 cell-x-2 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-3 cell-x-3 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-4 cell-x-4 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-5 cell-x-5 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-6 cell-x-6 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-7 cell-x-7 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-8 cell-x-8 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-9 cell-x-9 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-10 cell-x-10 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-11 cell-x-11 cell-y-5"></div>
+                        <div class="tile tile--wall-fill-12 cell-x-12 cell-y-5"></div>
+                    </div>
                 </div>
 
                 <div class="world-layer world-layer--objects" id="object-layer"></div>
@@ -102,6 +125,7 @@
         <div class="ui" id="ui">
             <div class="dev-controls">
                 <label class="dev-controls__button dev-controls__button--wake-up" for="awake">WAKE UP</label>
+                <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
 
                 <label class="dev-controls__button dev-controls__button--right" data-position="0"
                     for="position-1">RIGHT</label>

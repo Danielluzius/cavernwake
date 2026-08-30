@@ -1,7 +1,7 @@
 :root {
-  --tile-size: 32px;
-  --character-size: 64px;
-  --movement-step: 96px;
+  --tile-size: 64px;
+  --character-size: 168px;
+  --movement-step: 192px;
   --walk-frame-count: 4;
   --idle-frame-count: 4;
 }
@@ -83,31 +83,31 @@ input {
 }
 
 #position-1:checked ~ .game .world {
-  --world-offset: -96px;
-}
-
-#position-2:checked ~ .game .world {
   --world-offset: -192px;
 }
 
-#position-3:checked ~ .game .world {
-  --world-offset: -288px;
-}
-
-#position-4:checked ~ .game .world {
+#position-2:checked ~ .game .world {
   --world-offset: -384px;
 }
 
-#position-5:checked ~ .game .world {
-  --world-offset: -480px;
-}
-
-#position-6:checked ~ .game .world {
+#position-3:checked ~ .game .world {
   --world-offset: -576px;
 }
 
+#position-4:checked ~ .game .world {
+  --world-offset: -768px;
+}
+
+#position-5:checked ~ .game .world {
+  --world-offset: -960px;
+}
+
+#position-6:checked ~ .game .world {
+  --world-offset: -1152px;
+}
+
 #position-7:checked ~ .game .world {
-  --world-offset: -672px;
+  --world-offset: -1344px;
 }
 
 .world-layer {
@@ -117,13 +117,18 @@ input {
 }
 .world-layer--background {
   z-index: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at 50% 40%, #241c2c 0%, #150f1c 55%, #05040a 100%);
 }
 .world-layer--environment {
   z-index: 10;
-  display: flex;
-  top: 32px;
+  top: calc(84px - 224px);
   left: 50%;
-  transform: translateX(-160px);
+  transform: translateX(-288px);
 }
 .world-layer--objects {
   z-index: 20;
@@ -134,21 +139,471 @@ input {
 }
 
 .tile {
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   flex: 0 0 auto;
   background-image: url("../assets/world/rock-tileset.png");
-  background-position: calc(var(--tile-x, 0) * -32px) calc(var(--tile-y, 0) * -32px);
+  background-size: 512px 512px;
+  background-position: calc(var(--tile-x, 0) * -64px) calc(var(--tile-y, 0) * -64px);
   background-repeat: no-repeat;
   image-rendering: pixelated;
+}
+
+.tile--top-edge-1 {
+  --tile-x: 5;
+  --tile-y: 0;
+}
+
+.tile--top-edge-2 {
+  --tile-x: 6;
+  --tile-y: 0;
+}
+
+.tile--top-edge-3 {
+  --tile-x: 2;
+  --tile-y: 1;
+}
+
+.tile--top-edge-4 {
+  --tile-x: 3;
+  --tile-y: 1;
+}
+
+.tile--top-edge-5 {
+  --tile-x: 1;
+  --tile-y: 4;
+}
+
+.tile--top-edge-6 {
+  --tile-x: 2;
+  --tile-y: 4;
+}
+
+.tile--top-edge-7 {
+  --tile-x: 3;
+  --tile-y: 4;
+}
+
+.tile--top-edge-8 {
+  --tile-x: 5;
+  --tile-y: 6;
+}
+
+.tile--top-edge-9 {
+  --tile-x: 6;
+  --tile-y: 6;
+}
+
+.tile--wall-fill-1 {
+  --tile-x: 4;
+  --tile-y: 1;
+}
+
+.tile--wall-fill-2 {
+  --tile-x: 5;
+  --tile-y: 1;
+}
+
+.tile--wall-fill-3 {
+  --tile-x: 6;
+  --tile-y: 1;
+}
+
+.tile--wall-fill-4 {
+  --tile-x: 0;
+  --tile-y: 2;
+}
+
+.tile--wall-fill-5 {
+  --tile-x: 2;
+  --tile-y: 2;
+}
+
+.tile--wall-fill-6 {
+  --tile-x: 3;
+  --tile-y: 2;
+}
+
+.tile--wall-fill-7 {
+  --tile-x: 4;
+  --tile-y: 5;
+}
+
+.tile--wall-fill-8 {
+  --tile-x: 0;
+  --tile-y: 5;
+}
+
+.tile--wall-fill-9 {
+  --tile-x: 0;
+  --tile-y: 6;
+}
+
+.tile--wall-fill-10 {
+  --tile-x: 1;
+  --tile-y: 6;
+}
+
+.tile--wall-fill-11 {
+  --tile-x: 0;
+  --tile-y: 7;
+}
+
+.tile--wall-fill-12 {
+  --tile-x: 6;
+  --tile-y: 7;
+}
+
+.tile--corner-a-shadow {
+  --tile-x: 7;
+  --tile-y: 1;
+}
+
+.tile--boulder-wall-top {
+  --tile-x: 6;
+  --tile-y: 2;
+}
+
+.tile--boulder-wall-mid {
+  --tile-x: 7;
+  --tile-y: 2;
+}
+
+.tile--platform-4-fill {
+  --tile-x: 5;
+  --tile-y: 7;
+}
+
+.tile--wall-left-cap {
+  --tile-x: 0;
+  --tile-y: 1;
+}
+
+.tile--wall-left-end {
+  --tile-x: 0;
+  --tile-y: 3;
+}
+
+.tile--corner-a {
+  --tile-x: 7;
+  --tile-y: 0;
+}
+
+.tile--boulder-wall-end {
+  --tile-x: 7;
+  --tile-y: 3;
+}
+
+.tile--corner-fern {
+  --tile-x: 0;
+  --tile-y: 4;
+}
+
+.tile--corner-b {
+  --tile-x: 7;
+  --tile-y: 6;
+}
+
+.tile--rock-standalone {
+  --tile-x: 4;
+  --tile-y: 7;
+}
+
+.tile--deco-spike-1 {
+  --tile-x: 4;
+  --tile-y: 2;
+}
+
+.tile--deco-spike-2 {
+  --tile-x: 4;
+  --tile-y: 4;
+}
+
+.tile--deco-loose-rocks {
+  --tile-x: 6;
+  --tile-y: 3;
+}
+
+.tile--deco-pebble {
+  --tile-x: 1;
+  --tile-y: 5;
+}
+
+.tile--deco-gravel {
+  --tile-x: 7;
+  --tile-y: 7;
+}
+
+.tile--boulder-cluster-1 {
+  --tile-x: 2;
+  --tile-y: 5;
+}
+
+.tile--boulder-cluster-2 {
+  --tile-x: 3;
+  --tile-y: 5;
+}
+
+.tile--boulder-cluster-3 {
+  --tile-x: 2;
+  --tile-y: 6;
+}
+
+.tile--boulder-cluster-4 {
+  --tile-x: 3;
+  --tile-y: 6;
+}
+
+.tile--boulder-cluster-5 {
+  --tile-x: 4;
+  --tile-y: 6;
+}
+
+.tile--rubble-strip-1 {
+  --tile-x: 1;
+  --tile-y: 7;
+}
+
+.tile--rubble-strip-2 {
+  --tile-x: 2;
+  --tile-y: 7;
+}
+
+.tile--rubble-strip-3 {
+  --tile-x: 3;
+  --tile-y: 7;
+}
+
+.room {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--room-cols, 1), 64px);
+  grid-template-rows: repeat(var(--room-rows, 1), 64px);
+}
+
+.cell-x-1 {
+  grid-column: 1;
+}
+
+.cell-x-2 {
+  grid-column: 2;
+}
+
+.cell-x-3 {
+  grid-column: 3;
+}
+
+.cell-x-4 {
+  grid-column: 4;
+}
+
+.cell-x-5 {
+  grid-column: 5;
+}
+
+.cell-x-6 {
+  grid-column: 6;
+}
+
+.cell-x-7 {
+  grid-column: 7;
+}
+
+.cell-x-8 {
+  grid-column: 8;
+}
+
+.cell-x-9 {
+  grid-column: 9;
+}
+
+.cell-x-10 {
+  grid-column: 10;
+}
+
+.cell-x-11 {
+  grid-column: 11;
+}
+
+.cell-x-12 {
+  grid-column: 12;
+}
+
+.cell-x-13 {
+  grid-column: 13;
+}
+
+.cell-x-14 {
+  grid-column: 14;
+}
+
+.cell-x-15 {
+  grid-column: 15;
+}
+
+.cell-x-16 {
+  grid-column: 16;
+}
+
+.cell-x-17 {
+  grid-column: 17;
+}
+
+.cell-x-18 {
+  grid-column: 18;
+}
+
+.cell-x-19 {
+  grid-column: 19;
+}
+
+.cell-x-20 {
+  grid-column: 20;
+}
+
+.cell-x-21 {
+  grid-column: 21;
+}
+
+.cell-x-22 {
+  grid-column: 22;
+}
+
+.cell-x-23 {
+  grid-column: 23;
+}
+
+.cell-x-24 {
+  grid-column: 24;
+}
+
+.cell-x-25 {
+  grid-column: 25;
+}
+
+.cell-x-26 {
+  grid-column: 26;
+}
+
+.cell-x-27 {
+  grid-column: 27;
+}
+
+.cell-x-28 {
+  grid-column: 28;
+}
+
+.cell-x-29 {
+  grid-column: 29;
+}
+
+.cell-x-30 {
+  grid-column: 30;
+}
+
+.cell-x-31 {
+  grid-column: 31;
+}
+
+.cell-x-32 {
+  grid-column: 32;
+}
+
+.cell-x-33 {
+  grid-column: 33;
+}
+
+.cell-x-34 {
+  grid-column: 34;
+}
+
+.cell-x-35 {
+  grid-column: 35;
+}
+
+.cell-x-36 {
+  grid-column: 36;
+}
+
+.cell-x-37 {
+  grid-column: 37;
+}
+
+.cell-x-38 {
+  grid-column: 38;
+}
+
+.cell-x-39 {
+  grid-column: 39;
+}
+
+.cell-x-40 {
+  grid-column: 40;
+}
+
+.cell-y-1 {
+  grid-row: 1;
+}
+
+.cell-y-2 {
+  grid-row: 2;
+}
+
+.cell-y-3 {
+  grid-row: 3;
+}
+
+.cell-y-4 {
+  grid-row: 4;
+}
+
+.cell-y-5 {
+  grid-row: 5;
+}
+
+.cell-y-6 {
+  grid-row: 6;
+}
+
+.cell-y-7 {
+  grid-row: 7;
+}
+
+.cell-y-8 {
+  grid-row: 8;
+}
+
+.cell-y-9 {
+  grid-row: 9;
+}
+
+.cell-y-10 {
+  grid-row: 10;
+}
+
+.room::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+  background-image: repeating-linear-gradient(to right, rgba(255, 176, 0, 0.85) 0 2px, transparent 2px 192px), repeating-linear-gradient(to right, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), linear-gradient(to bottom, transparent 0, transparent calc(224px - 1px), rgba(0, 170, 255, 0.9) calc(224px - 1px), rgba(0, 170, 255, 0.9) calc(224px + 1px), transparent calc(224px + 1px), transparent 100%);
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+#debug-grid:checked ~ .game .room::after {
+  display: block;
 }
 
 .player {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 64px;
-  height: 64px;
+  width: 168px;
+  height: 168px;
   transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1));
   transition: transform 0.6s ease-in-out;
   z-index: 30;
@@ -159,8 +614,8 @@ input {
   height: 100%;
   background-repeat: no-repeat;
   background-size: contain;
-  --sprite-frame-width: 64px;
-  --sprite-frame-height: 64px;
+  --sprite-frame-width: 84px;
+  --sprite-frame-height: 84px;
   --sprite-frame-count: 4;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -382,6 +837,16 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+.dev-controls__button--debug-grid {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  bottom: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .dev-controls__button--right {
