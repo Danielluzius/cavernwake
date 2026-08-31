@@ -11,15 +11,16 @@
     <!-- Preload frames that only appear inside @keyframes (not in any base
          rule): browsers otherwise fetch them lazily on first animation use,
          causing a brief flash/pop-in the very first time an animation plays. -->
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
 </head>
 
 <body>
@@ -28,24 +29,44 @@
          (not nested) so the ~ combinator can reach .game below. A finite,
          predefined set of steps (position-0 .. position-7) stands in for
          "movement", since pure CSS cannot count or loop dynamically. -->
-    <!-- #awake must come before the position radios: several selectors
-         chain "#awake:checked ~ #position-N:checked ~ .game" and rely on
+    <!-- #started must come before the position radios: several selectors
+         chain "#started:checked ~ #position-N:checked ~ .game" and rely on
          this exact document order. Once checked it never unchecks again
-         (no reset control), matching the one-way wake-up story beat. -->
-    <input type="checkbox" id="awake" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-0" class="world-position-input" checked />
-    <input type="radio" name="world-position" id="position-1" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-2" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-3" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-4" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-5" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-6" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-7" class="world-position-input" />
+         (no reset control) — pressing START just reveals the character,
+         see .player in scss/player/_player.scss.
 
-    <!-- Dev-only, independent of the wake-up/movement chain above: toggles
+         Position radios are direction-aware (see $position-arrival-ids in
+         scss/base/_variables.scss): positions 1-6 are reachable from both
+         directions and get a "-r"/"-l" id pair so the correct walk
+         animation/end pose can be selected. Position 0 keeps its bare id
+         as the untouched page-load default plus a "-l" variant for when
+         it's re-entered by walking left; position 7 is right-only. -->
+    <input type="checkbox" id="started" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-0" class="world-position-input" checked />
+    <input type="radio" name="world-position" id="position-0-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-1-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-1-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-2-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-2-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-3-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-3-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-4-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-4-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-5-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-5-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-6-r" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-6-l" class="world-position-input" />
+    <input type="radio" name="world-position" id="position-7-r" class="world-position-input" />
+
+    <!-- Dev-only, independent of the start/movement chain above: toggles
          the visual debug grid overlay (see scss/world/_room.scss). Checked
          by default while the position test below is in use. -->
     <input type="checkbox" id="debug-grid" class="world-position-input" checked />
+
+    <!-- Dev-only, independent of everything else: toggles the circular
+         vision mask around the character (see .view-mask in
+         scss/game/_viewport.scss). -->
+    <input type="checkbox" id="debug-view" class="world-position-input" />
 
     <main class="game" id="game">
 
@@ -55,57 +76,89 @@
                  fixed position always covers the real browser viewport. -->
             <div class="world-layer world-layer--background" id="background-layer"></div>
 
+            <div class="view-mask"></div>
+
             <div class="world" id="world">
 
                 <div class="world-layer world-layer--environment" id="environment-layer">
-                    <!-- Pure segment-system debug test: 4 segments (each
-                         3 tiles wide x 5 tiles tall) side by side = 12x5
-                         tiles. Fixed vertical layout per segment: row 1
-                         ceiling, rows 2-3 free air, row 4 floor, row 5
-                         fill. Strong 192px grid lines (GRID button) mark
-                         the exact segment boundaries. Player starts in
-                         segment 2, centered on its middle column, feet at
-                         the temporary row-4 center starting point. No
-                         puzzle mechanics, no further room dressing yet. -->
-                    <div class="room" style="--room-cols: 12; --room-rows: 5;">
-                        <div class="tile tile--wall-fill-1 cell-x-1 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-2 cell-x-2 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-3 cell-x-3 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-4 cell-x-4 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-5 cell-x-5 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-6 cell-x-6 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-7 cell-x-7 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-8 cell-x-8 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-9 cell-x-9 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-10 cell-x-10 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-11 cell-x-11 cell-y-1"></div>
-                        <div class="tile tile--wall-fill-12 cell-x-12 cell-y-1"></div>
+                    <!-- Segment-system test dressed with the cave tileset
+                         (tileset-reference.txt): 4 segments (each 3 tiles
+                         wide x 7 tiles tall) side by side = 12x7 tiles.
+                         Fixed vertical layout per segment: row 1 fill
+                         (buffer above ceiling), row 2 ceiling, rows 3-4
+                         free air, row 5 floor, rows 6-7 fill. Flat variants
+                         are simply cycled left-to-right for visual variety,
+                         no seams/junctions/corners yet (single open strip,
+                         not an enclosed room). Strong 192px grid lines
+                         (GRID button) mark the exact segment boundaries.
+                         Player starts in segment 2, centered on its middle
+                         column, feet at the temporary row-5 center
+                         starting point. No puzzle mechanics yet. -->
+                    <div class="room" style="--room-cols: 12; --room-rows: 7;">
+                        <div class="tile tile--cave tile--cave-fill-a cell-x-1 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-b cell-x-2 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-c cell-x-3 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-d cell-x-4 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-e cell-x-5 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-f cell-x-6 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-g cell-x-7 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-h cell-x-8 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-i cell-x-9 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-j cell-x-10 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-k cell-x-11 cell-y-1"></div>
+                        <div class="tile tile--cave tile--cave-fill-l cell-x-12 cell-y-1"></div>
 
-                        <div class="tile tile--top-edge-1 cell-x-1 cell-y-4"></div>
-                        <div class="tile tile--top-edge-2 cell-x-2 cell-y-4"></div>
-                        <div class="tile tile--top-edge-3 cell-x-3 cell-y-4"></div>
-                        <div class="tile tile--top-edge-4 cell-x-4 cell-y-4"></div>
-                        <div class="tile tile--top-edge-5 cell-x-5 cell-y-4"></div>
-                        <div class="tile tile--top-edge-6 cell-x-6 cell-y-4"></div>
-                        <div class="tile tile--top-edge-7 cell-x-7 cell-y-4"></div>
-                        <div class="tile tile--top-edge-8 cell-x-8 cell-y-4"></div>
-                        <div class="tile tile--top-edge-9 cell-x-9 cell-y-4"></div>
-                        <div class="tile tile--top-edge-1 cell-x-10 cell-y-4"></div>
-                        <div class="tile tile--top-edge-2 cell-x-11 cell-y-4"></div>
-                        <div class="tile tile--top-edge-3 cell-x-12 cell-y-4"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-1 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-2 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-3 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-4 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-5 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-6 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-7 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-8 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-9 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-10 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-11 cell-y-2"></div>
+                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-12 cell-y-2"></div>
 
-                        <div class="tile tile--wall-fill-1 cell-x-1 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-2 cell-x-2 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-3 cell-x-3 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-4 cell-x-4 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-5 cell-x-5 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-6 cell-x-6 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-7 cell-x-7 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-8 cell-x-8 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-9 cell-x-9 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-10 cell-x-10 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-11 cell-x-11 cell-y-5"></div>
-                        <div class="tile tile--wall-fill-12 cell-x-12 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-a cell-x-1 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-b cell-x-2 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-c cell-x-3 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-d cell-x-4 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-e cell-x-5 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-f cell-x-6 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-g cell-x-7 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-h cell-x-8 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-i cell-x-9 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-j cell-x-10 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-k cell-x-11 cell-y-5"></div>
+                        <div class="tile tile--cave tile--cave-floor-flat-a cell-x-12 cell-y-5"></div>
+
+                        <div class="tile tile--cave tile--cave-fill-c cell-x-1 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-d cell-x-2 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-e cell-x-3 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-f cell-x-4 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-g cell-x-5 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-h cell-x-6 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-i cell-x-7 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-j cell-x-8 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-k cell-x-9 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-l cell-x-10 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-m cell-x-11 cell-y-6"></div>
+                        <div class="tile tile--cave tile--cave-fill-a cell-x-12 cell-y-6"></div>
+
+                        <div class="tile tile--cave tile--cave-fill-g cell-x-1 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-h cell-x-2 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-i cell-x-3 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-j cell-x-4 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-k cell-x-5 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-l cell-x-6 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-m cell-x-7 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-a cell-x-8 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-b cell-x-9 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-c cell-x-10 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-d cell-x-11 cell-y-7"></div>
+                        <div class="tile tile--cave tile--cave-fill-e cell-x-12 cell-y-7"></div>
                     </div>
                 </div>
 
@@ -124,41 +177,39 @@
         <!-- Temporary development controls for this prototype only. -->
         <div class="ui" id="ui">
             <div class="dev-controls">
-                <label class="dev-controls__button dev-controls__button--wake-up" for="awake">WAKE UP</label>
+                <label class="dev-controls__button dev-controls__button--start" for="started">START</label>
                 <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
+                <label class="dev-controls__button dev-controls__button--debug-view" for="debug-view">VIEW</label>
 
                 <label class="dev-controls__button dev-controls__button--right" data-position="0"
-                    for="position-1">RIGHT</label>
+                    for="position-1-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="1"
-                    for="position-2">RIGHT</label>
+                    for="position-2-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="2"
-                    for="position-3">RIGHT</label>
+                    for="position-3-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="3"
-                    for="position-4">RIGHT</label>
+                    for="position-4-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="4"
-                    for="position-5">RIGHT</label>
+                    for="position-5-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="5"
-                    for="position-6">RIGHT</label>
+                    for="position-6-r">RIGHT</label>
                 <label class="dev-controls__button dev-controls__button--right" data-position="6"
-                    for="position-7">RIGHT</label>
+                    for="position-7-r">RIGHT</label>
 
-                <!-- LEFT is only structurally prepared: it jumps back a
-                     position but has no walk-left animation yet (no
-                     walk-left assets exist for this character variant). -->
                 <label class="dev-controls__button dev-controls__button--left" data-position="1"
-                    for="position-0">LEFT</label>
+                    for="position-0-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="2"
-                    for="position-1">LEFT</label>
+                    for="position-1-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="3"
-                    for="position-2">LEFT</label>
+                    for="position-2-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="4"
-                    for="position-3">LEFT</label>
+                    for="position-3-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="5"
-                    for="position-4">LEFT</label>
+                    for="position-4-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="6"
-                    for="position-5">LEFT</label>
+                    for="position-5-l">LEFT</label>
                 <label class="dev-controls__button dev-controls__button--left" data-position="7"
-                    for="position-6">LEFT</label>
+                    for="position-6-l">LEFT</label>
             </div>
         </div>
 

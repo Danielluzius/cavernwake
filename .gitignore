@@ -6,3 +6,11 @@ package.json
 package-lock.json
 scss/
 .vscode/
+
+# Dev-only tileset analysis tooling and its throwaway output (not part of
+# the shipped game, and shouldn't hint at the Python-assisted asset workflow)
+scripts/
+tileset-reference.txt
+assets/world/cave-tileset-base.debug.png
+assets/world/_debug_rows/
+assets/world/_debug_single/

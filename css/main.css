@@ -68,6 +68,22 @@ input {
   image-rendering: crisp-edges;
 }
 
+.view-mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  background: radial-gradient(circle 176px at 50% 50%, transparent 0%, transparent 65%, rgba(0, 0, 0, 0.94) 100%);
+}
+
+#debug-view:checked ~ .game .view-mask {
+  display: block;
+}
+
 .world {
   position: absolute;
   top: 50%;
@@ -82,31 +98,59 @@ input {
   --world-offset: 0px;
 }
 
-#position-1:checked ~ .game .world {
+#position-0-l:checked ~ .game .world {
+  --world-offset: 0px;
+}
+
+#position-1-r:checked ~ .game .world {
   --world-offset: -192px;
 }
 
-#position-2:checked ~ .game .world {
+#position-1-l:checked ~ .game .world {
+  --world-offset: -192px;
+}
+
+#position-2-r:checked ~ .game .world {
   --world-offset: -384px;
 }
 
-#position-3:checked ~ .game .world {
+#position-2-l:checked ~ .game .world {
+  --world-offset: -384px;
+}
+
+#position-3-r:checked ~ .game .world {
   --world-offset: -576px;
 }
 
-#position-4:checked ~ .game .world {
+#position-3-l:checked ~ .game .world {
+  --world-offset: -576px;
+}
+
+#position-4-r:checked ~ .game .world {
   --world-offset: -768px;
 }
 
-#position-5:checked ~ .game .world {
+#position-4-l:checked ~ .game .world {
+  --world-offset: -768px;
+}
+
+#position-5-r:checked ~ .game .world {
   --world-offset: -960px;
 }
 
-#position-6:checked ~ .game .world {
+#position-5-l:checked ~ .game .world {
+  --world-offset: -960px;
+}
+
+#position-6-r:checked ~ .game .world {
   --world-offset: -1152px;
 }
 
-#position-7:checked ~ .game .world {
+#position-6-l:checked ~ .game .world {
+  --world-offset: -1152px;
+}
+
+#position-7-r:checked ~ .game .world {
   --world-offset: -1344px;
 }
 
@@ -126,7 +170,7 @@ input {
 }
 .world-layer--environment {
   z-index: 10;
-  top: calc(84px - 224px);
+  top: calc(84px - 288px);
   left: 50%;
   transform: translateX(-288px);
 }
@@ -374,6 +418,257 @@ input {
   --tile-y: 7;
 }
 
+.tile--cave {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+  background-image: url("../assets/world/cave-tileset-base.png");
+  background-size: 512px 512px;
+  background-position: calc(var(--tile-x, 0) * -64px) calc(var(--tile-y, 0) * -64px);
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.tile--cave-floor-flat-a {
+  --tile-x: 5;
+  --tile-y: 0;
+}
+
+.tile--cave-floor-flat-b {
+  --tile-x: 6;
+  --tile-y: 0;
+}
+
+.tile--cave-floor-flat-c {
+  --tile-x: 7;
+  --tile-y: 0;
+}
+
+.tile--cave-floor-flat-d {
+  --tile-x: 2;
+  --tile-y: 1;
+}
+
+.tile--cave-floor-flat-e {
+  --tile-x: 3;
+  --tile-y: 1;
+}
+
+.tile--cave-floor-flat-f {
+  --tile-x: 1;
+  --tile-y: 4;
+}
+
+.tile--cave-floor-flat-g {
+  --tile-x: 2;
+  --tile-y: 4;
+}
+
+.tile--cave-floor-flat-h {
+  --tile-x: 3;
+  --tile-y: 4;
+}
+
+.tile--cave-floor-flat-i {
+  --tile-x: 5;
+  --tile-y: 6;
+}
+
+.tile--cave-floor-flat-j {
+  --tile-x: 6;
+  --tile-y: 6;
+}
+
+.tile--cave-floor-flat-k {
+  --tile-x: 7;
+  --tile-y: 6;
+}
+
+.tile--cave-floor-end-right-a {
+  --tile-x: 4;
+  --tile-y: 0;
+}
+
+.tile--cave-floor-end-right-b {
+  --tile-x: 1;
+  --tile-y: 1;
+}
+
+.tile--cave-floor-end-right-c {
+  --tile-x: 4;
+  --tile-y: 6;
+}
+
+.tile--cave-floor-end-left-a {
+  --tile-x: 0;
+  --tile-y: 1;
+}
+
+.tile--cave-floor-end-left-b {
+  --tile-x: 4;
+  --tile-y: 4;
+}
+
+.tile--cave-ceiling-flat-a {
+  --tile-x: 5;
+  --tile-y: 1;
+}
+
+.tile--cave-ceiling-flat-b {
+  --tile-x: 2;
+  --tile-y: 2;
+}
+
+.tile--cave-ceiling-flat-c {
+  --tile-x: 3;
+  --tile-y: 2;
+}
+
+.tile--cave-ceiling-flat-d {
+  --tile-x: 7;
+  --tile-y: 3;
+}
+
+.tile--cave-ceiling-end-right-a {
+  --tile-x: 1;
+  --tile-y: 2;
+}
+
+.tile--cave-ceiling-end-right-b {
+  --tile-x: 6;
+  --tile-y: 3;
+}
+
+.tile--cave-ceiling-end-left-a {
+  --tile-x: 4;
+  --tile-y: 2;
+}
+
+.tile--cave-ceiling-end-left-b {
+  --tile-x: 4;
+  --tile-y: 5;
+}
+
+.tile--cave-wall-left-a {
+  --tile-x: 0;
+  --tile-y: 2;
+}
+
+.tile--cave-wall-left-b {
+  --tile-x: 0;
+  --tile-y: 3;
+}
+
+.tile--cave-wall-left-c {
+  --tile-x: 3;
+  --tile-y: 6;
+}
+
+.tile--cave-wall-right {
+  --tile-x: 6;
+  --tile-y: 2;
+}
+
+.tile--cave-wall-corner-bottom-left {
+  --tile-x: 0;
+  --tile-y: 4;
+}
+
+.tile--cave-wall-corner-bottom-right {
+  --tile-x: 4;
+  --tile-y: 7;
+}
+
+.tile--cave-wall-ceiling-join-right {
+  --tile-x: 6;
+  --tile-y: 1;
+}
+
+.tile--cave-wall-ceiling-join-left-a {
+  --tile-x: 3;
+  --tile-y: 5;
+}
+
+.tile--cave-wall-ceiling-join-left-b {
+  --tile-x: 2;
+  --tile-y: 7;
+}
+
+.tile--cave-special-floor-left-ceiling-right {
+  --tile-x: 4;
+  --tile-y: 1;
+}
+
+.tile--cave-special-floor-right-ceiling-left {
+  --tile-x: 3;
+  --tile-y: 7;
+}
+
+.tile--cave-fill-a {
+  --tile-x: 7;
+  --tile-y: 1;
+}
+
+.tile--cave-fill-b {
+  --tile-x: 7;
+  --tile-y: 2;
+}
+
+.tile--cave-fill-c {
+  --tile-x: 0;
+  --tile-y: 5;
+}
+
+.tile--cave-fill-d {
+  --tile-x: 1;
+  --tile-y: 5;
+}
+
+.tile--cave-fill-e {
+  --tile-x: 2;
+  --tile-y: 5;
+}
+
+.tile--cave-fill-f {
+  --tile-x: 0;
+  --tile-y: 6;
+}
+
+.tile--cave-fill-g {
+  --tile-x: 1;
+  --tile-y: 6;
+}
+
+.tile--cave-fill-h {
+  --tile-x: 2;
+  --tile-y: 6;
+}
+
+.tile--cave-fill-i {
+  --tile-x: 0;
+  --tile-y: 7;
+}
+
+.tile--cave-fill-j {
+  --tile-x: 1;
+  --tile-y: 7;
+}
+
+.tile--cave-fill-k {
+  --tile-x: 5;
+  --tile-y: 7;
+}
+
+.tile--cave-fill-l {
+  --tile-x: 6;
+  --tile-y: 7;
+}
+
+.tile--cave-fill-m {
+  --tile-x: 7;
+  --tile-y: 7;
+}
+
 .room {
   position: relative;
   display: grid;
@@ -581,6 +876,218 @@ input {
   grid-row: 10;
 }
 
+.tile--vertex {
+  position: absolute;
+}
+
+.vertex-x-0 {
+  left: calc(0 * 64px - 32px);
+}
+
+.vertex-x-1 {
+  left: calc(1 * 64px - 32px);
+}
+
+.vertex-x-2 {
+  left: calc(2 * 64px - 32px);
+}
+
+.vertex-x-3 {
+  left: calc(3 * 64px - 32px);
+}
+
+.vertex-x-4 {
+  left: calc(4 * 64px - 32px);
+}
+
+.vertex-x-5 {
+  left: calc(5 * 64px - 32px);
+}
+
+.vertex-x-6 {
+  left: calc(6 * 64px - 32px);
+}
+
+.vertex-x-7 {
+  left: calc(7 * 64px - 32px);
+}
+
+.vertex-x-8 {
+  left: calc(8 * 64px - 32px);
+}
+
+.vertex-x-9 {
+  left: calc(9 * 64px - 32px);
+}
+
+.vertex-x-10 {
+  left: calc(10 * 64px - 32px);
+}
+
+.vertex-x-11 {
+  left: calc(11 * 64px - 32px);
+}
+
+.vertex-x-12 {
+  left: calc(12 * 64px - 32px);
+}
+
+.vertex-x-13 {
+  left: calc(13 * 64px - 32px);
+}
+
+.vertex-x-14 {
+  left: calc(14 * 64px - 32px);
+}
+
+.vertex-x-15 {
+  left: calc(15 * 64px - 32px);
+}
+
+.vertex-x-16 {
+  left: calc(16 * 64px - 32px);
+}
+
+.vertex-x-17 {
+  left: calc(17 * 64px - 32px);
+}
+
+.vertex-x-18 {
+  left: calc(18 * 64px - 32px);
+}
+
+.vertex-x-19 {
+  left: calc(19 * 64px - 32px);
+}
+
+.vertex-x-20 {
+  left: calc(20 * 64px - 32px);
+}
+
+.vertex-x-21 {
+  left: calc(21 * 64px - 32px);
+}
+
+.vertex-x-22 {
+  left: calc(22 * 64px - 32px);
+}
+
+.vertex-x-23 {
+  left: calc(23 * 64px - 32px);
+}
+
+.vertex-x-24 {
+  left: calc(24 * 64px - 32px);
+}
+
+.vertex-x-25 {
+  left: calc(25 * 64px - 32px);
+}
+
+.vertex-x-26 {
+  left: calc(26 * 64px - 32px);
+}
+
+.vertex-x-27 {
+  left: calc(27 * 64px - 32px);
+}
+
+.vertex-x-28 {
+  left: calc(28 * 64px - 32px);
+}
+
+.vertex-x-29 {
+  left: calc(29 * 64px - 32px);
+}
+
+.vertex-x-30 {
+  left: calc(30 * 64px - 32px);
+}
+
+.vertex-x-31 {
+  left: calc(31 * 64px - 32px);
+}
+
+.vertex-x-32 {
+  left: calc(32 * 64px - 32px);
+}
+
+.vertex-x-33 {
+  left: calc(33 * 64px - 32px);
+}
+
+.vertex-x-34 {
+  left: calc(34 * 64px - 32px);
+}
+
+.vertex-x-35 {
+  left: calc(35 * 64px - 32px);
+}
+
+.vertex-x-36 {
+  left: calc(36 * 64px - 32px);
+}
+
+.vertex-x-37 {
+  left: calc(37 * 64px - 32px);
+}
+
+.vertex-x-38 {
+  left: calc(38 * 64px - 32px);
+}
+
+.vertex-x-39 {
+  left: calc(39 * 64px - 32px);
+}
+
+.vertex-x-40 {
+  left: calc(40 * 64px - 32px);
+}
+
+.vertex-y-0 {
+  top: calc(0 * 64px - 32px);
+}
+
+.vertex-y-1 {
+  top: calc(1 * 64px - 32px);
+}
+
+.vertex-y-2 {
+  top: calc(2 * 64px - 32px);
+}
+
+.vertex-y-3 {
+  top: calc(3 * 64px - 32px);
+}
+
+.vertex-y-4 {
+  top: calc(4 * 64px - 32px);
+}
+
+.vertex-y-5 {
+  top: calc(5 * 64px - 32px);
+}
+
+.vertex-y-6 {
+  top: calc(6 * 64px - 32px);
+}
+
+.vertex-y-7 {
+  top: calc(7 * 64px - 32px);
+}
+
+.vertex-y-8 {
+  top: calc(8 * 64px - 32px);
+}
+
+.vertex-y-9 {
+  top: calc(9 * 64px - 32px);
+}
+
+.vertex-y-10 {
+  top: calc(10 * 64px - 32px);
+}
+
 .room::after {
   content: "";
   position: absolute;
@@ -590,7 +1097,7 @@ input {
   height: 100%;
   pointer-events: none;
   display: none;
-  background-image: repeating-linear-gradient(to right, rgba(255, 176, 0, 0.85) 0 2px, transparent 2px 192px), repeating-linear-gradient(to right, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), linear-gradient(to bottom, transparent 0, transparent calc(224px - 1px), rgba(0, 170, 255, 0.9) calc(224px - 1px), rgba(0, 170, 255, 0.9) calc(224px + 1px), transparent calc(224px + 1px), transparent 100%);
+  background-image: repeating-linear-gradient(to right, rgba(255, 176, 0, 0.85) 0 2px, transparent 2px 192px), repeating-linear-gradient(to right, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), linear-gradient(to bottom, transparent 0, transparent calc(288px - 1px), rgba(0, 170, 255, 0.9) calc(288px - 1px), rgba(0, 170, 255, 0.9) calc(288px + 1px), transparent calc(288px + 1px), transparent 100%);
   background-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -607,6 +1114,11 @@ input {
   transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1)) translateY(32px);
   transition: transform 0.6s ease-in-out;
   z-index: 30;
+  visibility: hidden;
+}
+
+#started:checked ~ .game .player {
+  visibility: visible;
 }
 
 .player__sprite {
@@ -620,175 +1132,301 @@ input {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
-@keyframes player-stand-up {
+@keyframes player-walk-left-0-l {
   0% {
-    background-image: url("../assets/characters/without-backpack/stand-up/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/stand-up/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/stand-up/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/stand-up/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
-#awake:checked ~ #position-0:checked ~ .game .world .player .player__sprite {
-  animation: player-stand-up 0.8s step-end 1 forwards;
+#started:checked ~ #position-0-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-0-l 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-1 {
+@keyframes player-walk-right-1-r {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
 }
-#awake:checked ~ #position-1:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-1 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-1-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-1-r 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-2 {
+@keyframes player-walk-left-1-l {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
-#awake:checked ~ #position-2:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-2 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-1-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-1-l 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-3 {
+@keyframes player-walk-right-2-r {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
 }
-#awake:checked ~ #position-3:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-3 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-2-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-2-r 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-4 {
+@keyframes player-walk-left-2-l {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
-#awake:checked ~ #position-4:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-4 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-2-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-2-l 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-5 {
+@keyframes player-walk-right-3-r {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
 }
-#awake:checked ~ #position-5:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-5 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-3-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-3-r 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-6 {
+@keyframes player-walk-left-3-l {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
-#awake:checked ~ #position-6:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-6 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-3-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-3-l 0.6s step-end 1 forwards !important;
 }
 
-@keyframes player-walk-right-7 {
+@keyframes player-walk-right-4-r {
   0% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
   }
   20% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
   }
   40% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
   }
   60% {
-    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
   }
   80%, 100% {
-    background-image: url("../assets/characters/without-backpack/base/base-right.png");
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
 }
-#awake:checked ~ #position-7:checked ~ .game .world .player .player__sprite {
-  animation: player-walk-right-7 0.6s step-end 1 forwards !important;
+#started:checked ~ #position-4-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-4-r 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-left-4-l {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  }
+}
+#started:checked ~ #position-4-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-4-l 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-right-5-r {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+}
+#started:checked ~ #position-5-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-5-r 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-left-5-l {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  }
+}
+#started:checked ~ #position-5-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-5-l 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-right-6-r {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+}
+#started:checked ~ #position-6-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-6-r 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-left-6-l {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  }
+}
+#started:checked ~ #position-6-l:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-left-6-l 0.6s step-end 1 forwards !important;
+}
+
+@keyframes player-walk-right-7-r {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+}
+#started:checked ~ #position-7-r:checked ~ .game .world .player .player__sprite {
+  animation: player-walk-right-7-r 0.6s step-end 1 forwards !important;
 }
 
 .ui {
@@ -825,7 +1463,7 @@ input {
   user-select: none;
 }
 
-.dev-controls__button--wake-up {
+.dev-controls__button--start {
   left: 50%;
   transform: translateX(-50%);
   opacity: 1;
@@ -833,7 +1471,7 @@ input {
   pointer-events: auto;
 }
 
-#awake:checked ~ .game .dev-controls__button--wake-up {
+#started:checked ~ .game .dev-controls__button--start {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -849,6 +1487,16 @@ input {
   pointer-events: auto;
 }
 
+.dev-controls__button--debug-view {
+  position: fixed;
+  top: 24px;
+  right: 116px;
+  bottom: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 .dev-controls__button--right {
   right: 24px;
 }
@@ -857,97 +1505,188 @@ input {
   left: 24px;
 }
 
-#awake:checked ~ #position-0:checked ~ .game .dev-controls__button--right[data-position="0"] {
+#started:checked ~ #position-0:checked ~ .game .dev-controls__button--right[data-position="0"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-#awake:checked ~ #position-1:checked ~ .game .dev-controls__button--right[data-position="1"] {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
-}
-
-#awake:checked ~ #position-2:checked ~ .game .dev-controls__button--right[data-position="2"] {
+#started:checked ~ #position-0-l:checked ~ .game .dev-controls__button--right[data-position="0"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-3:checked ~ .game .dev-controls__button--right[data-position="3"] {
+#started:checked ~ #position-1-r:checked ~ .game .dev-controls__button--right[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-4:checked ~ .game .dev-controls__button--right[data-position="4"] {
+#started:checked ~ #position-1-r:checked ~ .game .dev-controls__button--left[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-5:checked ~ .game .dev-controls__button--right[data-position="5"] {
+#started:checked ~ #position-1-l:checked ~ .game .dev-controls__button--right[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-6:checked ~ .game .dev-controls__button--right[data-position="6"] {
+#started:checked ~ #position-1-l:checked ~ .game .dev-controls__button--left[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-1:checked ~ .game .dev-controls__button--left[data-position="1"] {
+#started:checked ~ #position-2-r:checked ~ .game .dev-controls__button--right[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-2:checked ~ .game .dev-controls__button--left[data-position="2"] {
+#started:checked ~ #position-2-r:checked ~ .game .dev-controls__button--left[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-3:checked ~ .game .dev-controls__button--left[data-position="3"] {
+#started:checked ~ #position-2-l:checked ~ .game .dev-controls__button--right[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-4:checked ~ .game .dev-controls__button--left[data-position="4"] {
+#started:checked ~ #position-2-l:checked ~ .game .dev-controls__button--left[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-5:checked ~ .game .dev-controls__button--left[data-position="5"] {
+#started:checked ~ #position-3-r:checked ~ .game .dev-controls__button--right[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-6:checked ~ .game .dev-controls__button--left[data-position="6"] {
+#started:checked ~ #position-3-r:checked ~ .game .dev-controls__button--left[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#awake:checked ~ #position-7:checked ~ .game .dev-controls__button--left[data-position="7"] {
+#started:checked ~ #position-3-l:checked ~ .game .dev-controls__button--right[data-position="3"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-3-l:checked ~ .game .dev-controls__button--left[data-position="3"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-4-r:checked ~ .game .dev-controls__button--right[data-position="4"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-4-r:checked ~ .game .dev-controls__button--left[data-position="4"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-4-l:checked ~ .game .dev-controls__button--right[data-position="4"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-4-l:checked ~ .game .dev-controls__button--left[data-position="4"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-5-r:checked ~ .game .dev-controls__button--right[data-position="5"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-5-r:checked ~ .game .dev-controls__button--left[data-position="5"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-5-l:checked ~ .game .dev-controls__button--right[data-position="5"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-5-l:checked ~ .game .dev-controls__button--left[data-position="5"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-6-r:checked ~ .game .dev-controls__button--right[data-position="6"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-6-r:checked ~ .game .dev-controls__button--left[data-position="6"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-6-l:checked ~ .game .dev-controls__button--right[data-position="6"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-6-l:checked ~ .game .dev-controls__button--left[data-position="6"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#started:checked ~ #position-7-r:checked ~ .game .dev-controls__button--left[data-position="7"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
