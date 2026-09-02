@@ -641,7 +641,7 @@ input {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  background-color: #f0f;
 }
 .world-layer--environment {
   z-index: 10;
@@ -652,6 +652,23 @@ input {
 .world-layer--foreground {
   z-index: 40;
   pointer-events: none;
+}
+.world-layer--shadow-mask {
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 2496px;
+  height: 1792px;
+  pointer-events: none;
+  display: none;
+  background-image: url("../assets/world/shadow-mask.png");
+  background-size: 2496px 1792px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+#debug-shadow-mask:checked ~ .game .world-layer--shadow-mask {
+  display: block;
 }
 
 .room {
@@ -2270,6 +2287,16 @@ input {
   position: fixed;
   top: 24px;
   right: 24px;
+  bottom: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.dev-controls__button--debug-shadow-mask {
+  position: fixed;
+  top: 24px;
+  right: 110px;
   bottom: auto;
   opacity: 1;
   visibility: visible;
@@ -4107,7 +4134,7 @@ input {
   }
 }
 #position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
-  animation: player-walk-intro-4 0.6s steps(1, end);
+  animation: player-walk-intro-4 0.6s steps(1, end), player-bridge-tip 0.6s steps(1, end) forwards 0.6s;
 }
 
 @keyframes player-walk-intro-9 {
@@ -4141,16 +4168,63 @@ input {
   transition: none;
 }
 
-#position-1:checked ~ #intro-5:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-5:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
+}
+
+@keyframes player-wake-blink {
+  0%, 50%, 100% {
+    background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
+  }
+  25%, 75% {
+    background-image: url("../assets/characters/without-backpack/passed-out/passed-out-eyes-open.png");
+  }
+}
 #position-1:checked ~ #intro-6:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
+  animation: player-wake-blink 1.6s steps(1, end);
+}
+
+@keyframes player-stand-up {
+  0% {
+    background-image: url("../assets/characters/without-backpack/stand-up/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/without-backpack/stand-up/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/without-backpack/stand-up/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/without-backpack/stand-up/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-7:checked ~ .game .player__sprite {
+  animation: player-stand-up 0.8s steps(1, end);
 }
 
 #position-1:checked ~ #intro-7:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-8:checked ~ .game .player__sprite,
-#position-1:checked ~ #intro-9:checked ~ .game .player__sprite,
-#position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
+#position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/base/base-right.png");
+}
+
+@keyframes player-backpack-interact {
+  0% {
+    background-image: url("../assets/characters/without-backpack/interact-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/without-backpack/interact-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/without-backpack/interact-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/without-backpack/interact-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
+  animation: player-backpack-interact 0.6s steps(1, end);
 }
 
 @keyframes player-bridge-tip {
@@ -4170,11 +4244,6 @@ input {
     background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
   }
 }
-#position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
-  animation: player-bridge-tip 0.6s steps(1, end) forwards;
-  animation-delay: 0.6s;
-}
-
 #position-1:checked ~ #intro-fall:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
@@ -4251,67 +4320,70 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
 
 #position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  transition: opacity 0s 0.8s, visibility 0s 0.8s;
 }
 
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  transition: opacity 0s 0.8s, visibility 0s 0.8s;
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1s, visibility 0s 1s;
+  transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  transition: opacity 0s 2.6s, visibility 0s 2.6s;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.6s, visibility 0s 1.6s;
+  transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
 
 #position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 1.4s, visibility 0s 1.4s;
 }
 
 #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .direction-controls__button--edge[data-position],
@@ -4379,12 +4451,17 @@ input {
 }
 
 .story-object--backpack {
+  display: block;
   left: 1088px;
   top: 672px;
   width: 64px;
   height: 64px;
   background-color: rgba(255, 200, 0, 0.5);
   border: 2px solid #fc0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0s, visibility 0s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack,
@@ -4393,7 +4470,15 @@ input {
 #position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack,
-#position-1:checked ~ #intro-9:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-9:checked ~ .game .story-object--backpack {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 #position-1:checked ~ #intro-10:checked ~ .game .story-object--backpack {
-  display: block;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
