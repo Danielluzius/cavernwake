@@ -4056,6 +4056,78 @@ input {
   --player-extra-offset: 0px;
 }
 
+@keyframes player-walk-intro-1 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-1:checked ~ .game .player__sprite {
+  animation: player-walk-intro-1 0.6s steps(1, end);
+}
+
+@keyframes player-walk-intro-2 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-2:checked ~ .game .player__sprite {
+  animation: player-walk-intro-2 0.6s steps(1, end);
+}
+
+@keyframes player-walk-intro-4 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
+  animation: player-walk-intro-4 0.6s steps(1, end);
+}
+
+@keyframes player-walk-intro-9 {
+  0% {
+    background-image: url("../assets/characters/without-backpack/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/without-backpack/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/without-backpack/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/without-backpack/walk-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
+  animation: player-walk-intro-9 0.6s steps(1, end);
+}
+
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
   --player-extra-offset-y: 256px;
 }
@@ -4249,7 +4321,9 @@ input {
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--up[data-position="14"],
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--right[data-position="14"],
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .story-object--bridge {
