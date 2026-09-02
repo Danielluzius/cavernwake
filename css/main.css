@@ -99,6 +99,536 @@ input {
   will-change: transform;
 }
 
+#position-1:checked ~ .game .world {
+  --world-offset: -96px;
+  --world-offset-y: -224px;
+}
+
+#position-2:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -224px;
+}
+
+#position-3:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -224px;
+}
+
+#position-4:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-5:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -224px;
+}
+
+#position-6:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -224px;
+}
+
+#position-7:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -224px;
+}
+
+#position-8:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -224px;
+}
+
+#position-9:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -224px;
+}
+
+#position-10:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -224px;
+}
+
+#position-11:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -672px;
+}
+
+#position-12:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -672px;
+}
+
+#position-13:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -672px;
+}
+
+#position-14:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-15:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -672px;
+}
+
+#position-16:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -672px;
+}
+
+#position-17:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -672px;
+}
+
+#position-18:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -672px;
+}
+
+#position-19:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -1120px;
+}
+
+#position-20:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1120px;
+}
+
+#position-21:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1120px;
+}
+
+#position-22:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1120px;
+}
+
+#position-23:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -1120px;
+}
+
+#position-24:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -1120px;
+}
+
+#position-25:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1120px;
+}
+
+#position-26:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1120px;
+}
+
+#position-27:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -1568px;
+}
+
+#position-28:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -1568px;
+}
+
+#position-29:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1568px;
+}
+
+#position-30:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1568px;
+}
+
+#position-31:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1568px;
+}
+
+#position-32:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -1568px;
+}
+
+#position-33:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1568px;
+}
+
+#position-34:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1568px;
+}
+
+#position-35:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -1568px;
+}
+
+#position-36:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -1568px;
+}
+
+#position-2--from-1:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -224px;
+}
+
+#position-3--from-2:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -224px;
+}
+
+#position-1--from-2:checked ~ .game .world {
+  --world-offset: -96px;
+  --world-offset-y: -224px;
+}
+
+#position-4--from-3:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-2--from-3:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -224px;
+}
+
+#position-5--from-4:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -224px;
+}
+
+#position-3--from-4:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -224px;
+}
+
+#position-6--from-5:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -224px;
+}
+
+#position-4--from-5:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-14--from-6:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-5--from-6:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -224px;
+}
+
+#position-8--from-7:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -224px;
+}
+
+#position-16--from-8:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -672px;
+}
+
+#position-7--from-8:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -224px;
+}
+
+#position-10--from-9:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -224px;
+}
+
+#position-36--from-10:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -1568px;
+}
+
+#position-9--from-10:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -224px;
+}
+
+#position-12--from-11:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -672px;
+}
+
+#position-27--from-11:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -1568px;
+}
+
+#position-11--from-12:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -672px;
+}
+
+#position-14--from-13:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-6--from-14:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -224px;
+}
+
+#position-15--from-14:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -672px;
+}
+
+#position-13--from-14:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -672px;
+}
+
+#position-23--from-15:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -1120px;
+}
+
+#position-14--from-15:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-8--from-16:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -224px;
+}
+
+#position-17--from-16:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -672px;
+}
+
+#position-18--from-17:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -672px;
+}
+
+#position-26--from-17:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1120px;
+}
+
+#position-16--from-17:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -672px;
+}
+
+#position-17--from-18:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -672px;
+}
+
+#position-20--from-19:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1120px;
+}
+
+#position-21--from-20:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1120px;
+}
+
+#position-19--from-20:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -1120px;
+}
+
+#position-22--from-21:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1120px;
+}
+
+#position-30--from-21:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1568px;
+}
+
+#position-20--from-21:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1120px;
+}
+
+#position-23--from-22:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -1120px;
+}
+
+#position-21--from-22:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1120px;
+}
+
+#position-15--from-23:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -672px;
+}
+
+#position-24--from-23:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -1120px;
+}
+
+#position-22--from-23:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1120px;
+}
+
+#position-25--from-24:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1120px;
+}
+
+#position-23--from-24:checked ~ .game .world {
+  --world-offset: -1248px;
+  --world-offset-y: -1120px;
+}
+
+#position-26--from-25:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1120px;
+}
+
+#position-33--from-25:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1568px;
+}
+
+#position-24--from-25:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -1120px;
+}
+
+#position-17--from-26:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -672px;
+}
+
+#position-25--from-26:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1120px;
+}
+
+#position-11--from-27:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -672px;
+}
+
+#position-28--from-27:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -1568px;
+}
+
+#position-29--from-28:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1568px;
+}
+
+#position-27--from-28:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -1568px;
+}
+
+#position-30--from-29:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1568px;
+}
+
+#position-28--from-29:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -1568px;
+}
+
+#position-21--from-30:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1120px;
+}
+
+#position-31--from-30:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1568px;
+}
+
+#position-29--from-30:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -1568px;
+}
+
+#position-30--from-31:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1568px;
+}
+
+#position-33--from-32:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1568px;
+}
+
+#position-25--from-33:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1120px;
+}
+
+#position-34--from-33:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1568px;
+}
+
+#position-32--from-33:checked ~ .game .world {
+  --world-offset: -1440px;
+  --world-offset-y: -1568px;
+}
+
+#position-35--from-34:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -1568px;
+}
+
+#position-33--from-34:checked ~ .game .world {
+  --world-offset: -1632px;
+  --world-offset-y: -1568px;
+}
+
+#position-36--from-35:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -1568px;
+}
+
+#position-34--from-35:checked ~ .game .world {
+  --world-offset: -1824px;
+  --world-offset-y: -1568px;
+}
+
+#position-10--from-36:checked ~ .game .world {
+  --world-offset: -2208px;
+  --world-offset-y: -224px;
+}
+
+#position-35--from-36:checked ~ .game .world {
+  --world-offset: -2016px;
+  --world-offset-y: -1568px;
+}
+
 .world-layer {
   position: absolute;
   top: 0;
@@ -115,9 +645,6 @@ input {
 }
 .world-layer--environment {
   z-index: 10;
-  top: calc(84px - 288px);
-  left: 50%;
-  transform: translateX(-96px);
 }
 .world-layer--objects {
   z-index: 20;
@@ -546,8 +1073,7 @@ input {
   top: calc(10 * 64px - 32px);
 }
 
-.room::before {
-  content: "";
+.debug-map {
   position: absolute;
   top: 0;
   left: 0;
@@ -555,27 +1081,13 @@ input {
   height: 1792px;
   pointer-events: none;
   display: none;
-  background-image: url("../assets/world/logic-map.png");
+  background-image: url("../assets/world/logic-map-debug.png");
   background-size: 2496px 1792px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
 
-.room::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  display: none;
-  background-image: repeating-linear-gradient(to right, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 64px), linear-gradient(to bottom, transparent 0, transparent calc(288px - 1px), rgba(0, 170, 255, 0.9) calc(288px - 1px), rgba(0, 170, 255, 0.9) calc(288px + 1px), transparent calc(288px + 1px), transparent 100%);
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-#debug-grid:checked ~ .game .room::before,
-#debug-grid:checked ~ .game .room::after {
+#debug-grid:checked ~ .game .debug-map {
   display: block;
 }
 
@@ -609,7 +1121,7 @@ input {
   left: 50%;
   width: 168px;
   height: 168px;
-  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1)) translateY(32px);
+  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1)) translateY(calc(var(--world-offset-y) * -1)) translateY(12px);
   transition: transform 0.6s ease-in-out;
   z-index: 30;
 }
@@ -626,6 +1138,286 @@ input {
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-2--from-1:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-3--from-2:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-1--from-2:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-4--from-3:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-2--from-3:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-5--from-4:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-3--from-4:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-6--from-5:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-4--from-5:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-14--from-6:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-5--from-6:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-8--from-7:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-16--from-8:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-7--from-8:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-10--from-9:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-36--from-10:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-9--from-10:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-12--from-11:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-27--from-11:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-11--from-12:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-14--from-13:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-6--from-14:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-15--from-14:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-13--from-14:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-23--from-15:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-14--from-15:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-8--from-16:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-17--from-16:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-18--from-17:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-26--from-17:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-16--from-17:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-17--from-18:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-20--from-19:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-21--from-20:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-19--from-20:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-22--from-21:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-30--from-21:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-20--from-21:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-23--from-22:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-21--from-22:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-15--from-23:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-24--from-23:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-22--from-23:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-25--from-24:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-23--from-24:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-26--from-25:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-33--from-25:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-24--from-25:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-17--from-26:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-25--from-26:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-11--from-27:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-28--from-27:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-29--from-28:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-27--from-28:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-30--from-29:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-28--from-29:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-21--from-30:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-31--from-30:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-29--from-30:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-30--from-31:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-33--from-32:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-25--from-33:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+#position-34--from-33:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-32--from-33:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-35--from-34:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-33--from-34:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-36--from-35:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#position-34--from-35:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+}
+
+#position-10--from-36:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-down.png");
+}
+
+#position-35--from-36:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
 }
 
 .ui {
@@ -674,12 +1466,13 @@ input {
 
 .direction-controls {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: grid;
-  grid-template-columns: repeat(3, 48px);
-  grid-template-rows: repeat(3, 48px);
-  gap: 4px;
+  grid-template-columns: 48px 168px 48px;
+  grid-template-rows: 48px 168px 48px;
+  gap: 8px;
 }
 
 .direction-controls__button {
@@ -711,12 +1504,902 @@ input {
   grid-column: 2;
   grid-row: 3;
 }
-.direction-controls__button--enabled {
+
+.direction-controls__button--edge {
+  display: none;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.6);
   border-color: #fff;
   cursor: pointer;
   pointer-events: auto;
+}
+
+#position-1:checked ~ .game .direction-controls__button--right[data-position="1"] {
+  display: flex;
+}
+
+#position-2:checked ~ .game .direction-controls__button--right[data-position="2"] {
+  display: flex;
+}
+
+#position-2:checked ~ .game .direction-controls__button--left[data-position="2"] {
+  display: flex;
+}
+
+#position-3:checked ~ .game .direction-controls__button--right[data-position="3"] {
+  display: flex;
+}
+
+#position-3:checked ~ .game .direction-controls__button--left[data-position="3"] {
+  display: flex;
+}
+
+#position-4:checked ~ .game .direction-controls__button--right[data-position="4"] {
+  display: flex;
+}
+
+#position-4:checked ~ .game .direction-controls__button--left[data-position="4"] {
+  display: flex;
+}
+
+#position-5:checked ~ .game .direction-controls__button--right[data-position="5"] {
+  display: flex;
+}
+
+#position-5:checked ~ .game .direction-controls__button--left[data-position="5"] {
+  display: flex;
+}
+
+#position-6:checked ~ .game .direction-controls__button--down[data-position="6"] {
+  display: flex;
+}
+
+#position-6:checked ~ .game .direction-controls__button--left[data-position="6"] {
+  display: flex;
+}
+
+#position-7:checked ~ .game .direction-controls__button--right[data-position="7"] {
+  display: flex;
+}
+
+#position-8:checked ~ .game .direction-controls__button--down[data-position="8"] {
+  display: flex;
+}
+
+#position-8:checked ~ .game .direction-controls__button--left[data-position="8"] {
+  display: flex;
+}
+
+#position-9:checked ~ .game .direction-controls__button--right[data-position="9"] {
+  display: flex;
+}
+
+#position-10:checked ~ .game .direction-controls__button--down[data-position="10"] {
+  display: flex;
+}
+
+#position-10:checked ~ .game .direction-controls__button--left[data-position="10"] {
+  display: flex;
+}
+
+#position-11:checked ~ .game .direction-controls__button--right[data-position="11"] {
+  display: flex;
+}
+
+#position-11:checked ~ .game .direction-controls__button--down[data-position="11"] {
+  display: flex;
+}
+
+#position-12:checked ~ .game .direction-controls__button--left[data-position="12"] {
+  display: flex;
+}
+
+#position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
+  display: flex;
+}
+
+#position-14:checked ~ .game .direction-controls__button--up[data-position="14"] {
+  display: flex;
+}
+
+#position-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
+  display: flex;
+}
+
+#position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
+  display: flex;
+}
+
+#position-15:checked ~ .game .direction-controls__button--down[data-position="15"] {
+  display: flex;
+}
+
+#position-15:checked ~ .game .direction-controls__button--left[data-position="15"] {
+  display: flex;
+}
+
+#position-16:checked ~ .game .direction-controls__button--up[data-position="16"] {
+  display: flex;
+}
+
+#position-16:checked ~ .game .direction-controls__button--right[data-position="16"] {
+  display: flex;
+}
+
+#position-17:checked ~ .game .direction-controls__button--right[data-position="17"] {
+  display: flex;
+}
+
+#position-17:checked ~ .game .direction-controls__button--down[data-position="17"] {
+  display: flex;
+}
+
+#position-17:checked ~ .game .direction-controls__button--left[data-position="17"] {
+  display: flex;
+}
+
+#position-18:checked ~ .game .direction-controls__button--left[data-position="18"] {
+  display: flex;
+}
+
+#position-19:checked ~ .game .direction-controls__button--right[data-position="19"] {
+  display: flex;
+}
+
+#position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
+  display: flex;
+}
+
+#position-20:checked ~ .game .direction-controls__button--left[data-position="20"] {
+  display: flex;
+}
+
+#position-21:checked ~ .game .direction-controls__button--right[data-position="21"] {
+  display: flex;
+}
+
+#position-21:checked ~ .game .direction-controls__button--down[data-position="21"] {
+  display: flex;
+}
+
+#position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
+  display: flex;
+}
+
+#position-22:checked ~ .game .direction-controls__button--right[data-position="22"] {
+  display: flex;
+}
+
+#position-22:checked ~ .game .direction-controls__button--left[data-position="22"] {
+  display: flex;
+}
+
+#position-23:checked ~ .game .direction-controls__button--up[data-position="23"] {
+  display: flex;
+}
+
+#position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
+  display: flex;
+}
+
+#position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
+  display: flex;
+}
+
+#position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
+  display: flex;
+}
+
+#position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
+  display: flex;
+}
+
+#position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
+  display: flex;
+}
+
+#position-25:checked ~ .game .direction-controls__button--down[data-position="25"] {
+  display: flex;
+}
+
+#position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
+  display: flex;
+}
+
+#position-26:checked ~ .game .direction-controls__button--up[data-position="26"] {
+  display: flex;
+}
+
+#position-26:checked ~ .game .direction-controls__button--left[data-position="26"] {
+  display: flex;
+}
+
+#position-27:checked ~ .game .direction-controls__button--up[data-position="27"] {
+  display: flex;
+}
+
+#position-27:checked ~ .game .direction-controls__button--right[data-position="27"] {
+  display: flex;
+}
+
+#position-28:checked ~ .game .direction-controls__button--right[data-position="28"] {
+  display: flex;
+}
+
+#position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
+  display: flex;
+}
+
+#position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
+  display: flex;
+}
+
+#position-29:checked ~ .game .direction-controls__button--left[data-position="29"] {
+  display: flex;
+}
+
+#position-30:checked ~ .game .direction-controls__button--up[data-position="30"] {
+  display: flex;
+}
+
+#position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
+  display: flex;
+}
+
+#position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
+  display: flex;
+}
+
+#position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
+  display: flex;
+}
+
+#position-32:checked ~ .game .direction-controls__button--right[data-position="32"] {
+  display: flex;
+}
+
+#position-33:checked ~ .game .direction-controls__button--up[data-position="33"] {
+  display: flex;
+}
+
+#position-33:checked ~ .game .direction-controls__button--right[data-position="33"] {
+  display: flex;
+}
+
+#position-33:checked ~ .game .direction-controls__button--left[data-position="33"] {
+  display: flex;
+}
+
+#position-34:checked ~ .game .direction-controls__button--right[data-position="34"] {
+  display: flex;
+}
+
+#position-34:checked ~ .game .direction-controls__button--left[data-position="34"] {
+  display: flex;
+}
+
+#position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
+  display: flex;
+}
+
+#position-35:checked ~ .game .direction-controls__button--left[data-position="35"] {
+  display: flex;
+}
+
+#position-36:checked ~ .game .direction-controls__button--up[data-position="36"] {
+  display: flex;
+}
+
+#position-36:checked ~ .game .direction-controls__button--left[data-position="36"] {
+  display: flex;
+}
+
+#position-2--from-1:checked ~ .game .direction-controls__button--right[data-position="2"] {
+  display: flex;
+}
+
+#position-2--from-1:checked ~ .game .direction-controls__button--left[data-position="2"] {
+  display: flex;
+}
+
+#position-3--from-2:checked ~ .game .direction-controls__button--right[data-position="3"] {
+  display: flex;
+}
+
+#position-3--from-2:checked ~ .game .direction-controls__button--left[data-position="3"] {
+  display: flex;
+}
+
+#position-1--from-2:checked ~ .game .direction-controls__button--right[data-position="1"] {
+  display: flex;
+}
+
+#position-4--from-3:checked ~ .game .direction-controls__button--right[data-position="4"] {
+  display: flex;
+}
+
+#position-4--from-3:checked ~ .game .direction-controls__button--left[data-position="4"] {
+  display: flex;
+}
+
+#position-2--from-3:checked ~ .game .direction-controls__button--right[data-position="2"] {
+  display: flex;
+}
+
+#position-2--from-3:checked ~ .game .direction-controls__button--left[data-position="2"] {
+  display: flex;
+}
+
+#position-5--from-4:checked ~ .game .direction-controls__button--right[data-position="5"] {
+  display: flex;
+}
+
+#position-5--from-4:checked ~ .game .direction-controls__button--left[data-position="5"] {
+  display: flex;
+}
+
+#position-3--from-4:checked ~ .game .direction-controls__button--right[data-position="3"] {
+  display: flex;
+}
+
+#position-3--from-4:checked ~ .game .direction-controls__button--left[data-position="3"] {
+  display: flex;
+}
+
+#position-6--from-5:checked ~ .game .direction-controls__button--down[data-position="6"] {
+  display: flex;
+}
+
+#position-6--from-5:checked ~ .game .direction-controls__button--left[data-position="6"] {
+  display: flex;
+}
+
+#position-4--from-5:checked ~ .game .direction-controls__button--right[data-position="4"] {
+  display: flex;
+}
+
+#position-4--from-5:checked ~ .game .direction-controls__button--left[data-position="4"] {
+  display: flex;
+}
+
+#position-14--from-6:checked ~ .game .direction-controls__button--up[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-6:checked ~ .game .direction-controls__button--right[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
+  display: flex;
+}
+
+#position-5--from-6:checked ~ .game .direction-controls__button--right[data-position="5"] {
+  display: flex;
+}
+
+#position-5--from-6:checked ~ .game .direction-controls__button--left[data-position="5"] {
+  display: flex;
+}
+
+#position-8--from-7:checked ~ .game .direction-controls__button--down[data-position="8"] {
+  display: flex;
+}
+
+#position-8--from-7:checked ~ .game .direction-controls__button--left[data-position="8"] {
+  display: flex;
+}
+
+#position-16--from-8:checked ~ .game .direction-controls__button--up[data-position="16"] {
+  display: flex;
+}
+
+#position-16--from-8:checked ~ .game .direction-controls__button--right[data-position="16"] {
+  display: flex;
+}
+
+#position-7--from-8:checked ~ .game .direction-controls__button--right[data-position="7"] {
+  display: flex;
+}
+
+#position-10--from-9:checked ~ .game .direction-controls__button--down[data-position="10"] {
+  display: flex;
+}
+
+#position-10--from-9:checked ~ .game .direction-controls__button--left[data-position="10"] {
+  display: flex;
+}
+
+#position-36--from-10:checked ~ .game .direction-controls__button--up[data-position="36"] {
+  display: flex;
+}
+
+#position-36--from-10:checked ~ .game .direction-controls__button--left[data-position="36"] {
+  display: flex;
+}
+
+#position-9--from-10:checked ~ .game .direction-controls__button--right[data-position="9"] {
+  display: flex;
+}
+
+#position-12--from-11:checked ~ .game .direction-controls__button--left[data-position="12"] {
+  display: flex;
+}
+
+#position-27--from-11:checked ~ .game .direction-controls__button--up[data-position="27"] {
+  display: flex;
+}
+
+#position-27--from-11:checked ~ .game .direction-controls__button--right[data-position="27"] {
+  display: flex;
+}
+
+#position-11--from-12:checked ~ .game .direction-controls__button--right[data-position="11"] {
+  display: flex;
+}
+
+#position-11--from-12:checked ~ .game .direction-controls__button--down[data-position="11"] {
+  display: flex;
+}
+
+#position-14--from-13:checked ~ .game .direction-controls__button--up[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-13:checked ~ .game .direction-controls__button--right[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
+  display: flex;
+}
+
+#position-6--from-14:checked ~ .game .direction-controls__button--down[data-position="6"] {
+  display: flex;
+}
+
+#position-6--from-14:checked ~ .game .direction-controls__button--left[data-position="6"] {
+  display: flex;
+}
+
+#position-15--from-14:checked ~ .game .direction-controls__button--down[data-position="15"] {
+  display: flex;
+}
+
+#position-15--from-14:checked ~ .game .direction-controls__button--left[data-position="15"] {
+  display: flex;
+}
+
+#position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
+  display: flex;
+}
+
+#position-23--from-15:checked ~ .game .direction-controls__button--up[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
+  display: flex;
+}
+
+#position-14--from-15:checked ~ .game .direction-controls__button--up[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-15:checked ~ .game .direction-controls__button--right[data-position="14"] {
+  display: flex;
+}
+
+#position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
+  display: flex;
+}
+
+#position-8--from-16:checked ~ .game .direction-controls__button--down[data-position="8"] {
+  display: flex;
+}
+
+#position-8--from-16:checked ~ .game .direction-controls__button--left[data-position="8"] {
+  display: flex;
+}
+
+#position-17--from-16:checked ~ .game .direction-controls__button--right[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-16:checked ~ .game .direction-controls__button--down[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-16:checked ~ .game .direction-controls__button--left[data-position="17"] {
+  display: flex;
+}
+
+#position-18--from-17:checked ~ .game .direction-controls__button--left[data-position="18"] {
+  display: flex;
+}
+
+#position-26--from-17:checked ~ .game .direction-controls__button--up[data-position="26"] {
+  display: flex;
+}
+
+#position-26--from-17:checked ~ .game .direction-controls__button--left[data-position="26"] {
+  display: flex;
+}
+
+#position-16--from-17:checked ~ .game .direction-controls__button--up[data-position="16"] {
+  display: flex;
+}
+
+#position-16--from-17:checked ~ .game .direction-controls__button--right[data-position="16"] {
+  display: flex;
+}
+
+#position-17--from-18:checked ~ .game .direction-controls__button--right[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-18:checked ~ .game .direction-controls__button--down[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-18:checked ~ .game .direction-controls__button--left[data-position="17"] {
+  display: flex;
+}
+
+#position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
+  display: flex;
+}
+
+#position-20--from-19:checked ~ .game .direction-controls__button--left[data-position="20"] {
+  display: flex;
+}
+
+#position-21--from-20:checked ~ .game .direction-controls__button--right[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-20:checked ~ .game .direction-controls__button--down[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
+  display: flex;
+}
+
+#position-19--from-20:checked ~ .game .direction-controls__button--right[data-position="19"] {
+  display: flex;
+}
+
+#position-22--from-21:checked ~ .game .direction-controls__button--right[data-position="22"] {
+  display: flex;
+}
+
+#position-22--from-21:checked ~ .game .direction-controls__button--left[data-position="22"] {
+  display: flex;
+}
+
+#position-30--from-21:checked ~ .game .direction-controls__button--up[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
+  display: flex;
+}
+
+#position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
+  display: flex;
+}
+
+#position-20--from-21:checked ~ .game .direction-controls__button--left[data-position="20"] {
+  display: flex;
+}
+
+#position-23--from-22:checked ~ .game .direction-controls__button--up[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
+  display: flex;
+}
+
+#position-21--from-22:checked ~ .game .direction-controls__button--right[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-22:checked ~ .game .direction-controls__button--down[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
+  display: flex;
+}
+
+#position-15--from-23:checked ~ .game .direction-controls__button--down[data-position="15"] {
+  display: flex;
+}
+
+#position-15--from-23:checked ~ .game .direction-controls__button--left[data-position="15"] {
+  display: flex;
+}
+
+#position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
+  display: flex;
+}
+
+#position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
+  display: flex;
+}
+
+#position-22--from-23:checked ~ .game .direction-controls__button--right[data-position="22"] {
+  display: flex;
+}
+
+#position-22--from-23:checked ~ .game .direction-controls__button--left[data-position="22"] {
+  display: flex;
+}
+
+#position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-24:checked ~ .game .direction-controls__button--down[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
+  display: flex;
+}
+
+#position-23--from-24:checked ~ .game .direction-controls__button--up[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
+  display: flex;
+}
+
+#position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
+  display: flex;
+}
+
+#position-26--from-25:checked ~ .game .direction-controls__button--up[data-position="26"] {
+  display: flex;
+}
+
+#position-26--from-25:checked ~ .game .direction-controls__button--left[data-position="26"] {
+  display: flex;
+}
+
+#position-33--from-25:checked ~ .game .direction-controls__button--up[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-25:checked ~ .game .direction-controls__button--right[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-25:checked ~ .game .direction-controls__button--left[data-position="33"] {
+  display: flex;
+}
+
+#position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
+  display: flex;
+}
+
+#position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
+  display: flex;
+}
+
+#position-17--from-26:checked ~ .game .direction-controls__button--right[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-26:checked ~ .game .direction-controls__button--down[data-position="17"] {
+  display: flex;
+}
+
+#position-17--from-26:checked ~ .game .direction-controls__button--left[data-position="17"] {
+  display: flex;
+}
+
+#position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-26:checked ~ .game .direction-controls__button--down[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
+  display: flex;
+}
+
+#position-11--from-27:checked ~ .game .direction-controls__button--right[data-position="11"] {
+  display: flex;
+}
+
+#position-11--from-27:checked ~ .game .direction-controls__button--down[data-position="11"] {
+  display: flex;
+}
+
+#position-28--from-27:checked ~ .game .direction-controls__button--right[data-position="28"] {
+  display: flex;
+}
+
+#position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
+  display: flex;
+}
+
+#position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
+  display: flex;
+}
+
+#position-29--from-28:checked ~ .game .direction-controls__button--left[data-position="29"] {
+  display: flex;
+}
+
+#position-27--from-28:checked ~ .game .direction-controls__button--up[data-position="27"] {
+  display: flex;
+}
+
+#position-27--from-28:checked ~ .game .direction-controls__button--right[data-position="27"] {
+  display: flex;
+}
+
+#position-30--from-29:checked ~ .game .direction-controls__button--up[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
+  display: flex;
+}
+
+#position-28--from-29:checked ~ .game .direction-controls__button--right[data-position="28"] {
+  display: flex;
+}
+
+#position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
+  display: flex;
+}
+
+#position-21--from-30:checked ~ .game .direction-controls__button--right[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-30:checked ~ .game .direction-controls__button--down[data-position="21"] {
+  display: flex;
+}
+
+#position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
+  display: flex;
+}
+
+#position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
+  display: flex;
+}
+
+#position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
+  display: flex;
+}
+
+#position-29--from-30:checked ~ .game .direction-controls__button--left[data-position="29"] {
+  display: flex;
+}
+
+#position-30--from-31:checked ~ .game .direction-controls__button--up[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
+  display: flex;
+}
+
+#position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
+  display: flex;
+}
+
+#position-33--from-32:checked ~ .game .direction-controls__button--up[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-32:checked ~ .game .direction-controls__button--right[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-32:checked ~ .game .direction-controls__button--left[data-position="33"] {
+  display: flex;
+}
+
+#position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-33:checked ~ .game .direction-controls__button--down[data-position="25"] {
+  display: flex;
+}
+
+#position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
+  display: flex;
+}
+
+#position-34--from-33:checked ~ .game .direction-controls__button--right[data-position="34"] {
+  display: flex;
+}
+
+#position-34--from-33:checked ~ .game .direction-controls__button--left[data-position="34"] {
+  display: flex;
+}
+
+#position-32--from-33:checked ~ .game .direction-controls__button--right[data-position="32"] {
+  display: flex;
+}
+
+#position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
+  display: flex;
+}
+
+#position-35--from-34:checked ~ .game .direction-controls__button--left[data-position="35"] {
+  display: flex;
+}
+
+#position-33--from-34:checked ~ .game .direction-controls__button--up[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-34:checked ~ .game .direction-controls__button--right[data-position="33"] {
+  display: flex;
+}
+
+#position-33--from-34:checked ~ .game .direction-controls__button--left[data-position="33"] {
+  display: flex;
+}
+
+#position-36--from-35:checked ~ .game .direction-controls__button--up[data-position="36"] {
+  display: flex;
+}
+
+#position-36--from-35:checked ~ .game .direction-controls__button--left[data-position="36"] {
+  display: flex;
+}
+
+#position-34--from-35:checked ~ .game .direction-controls__button--right[data-position="34"] {
+  display: flex;
+}
+
+#position-34--from-35:checked ~ .game .direction-controls__button--left[data-position="34"] {
+  display: flex;
+}
+
+#position-10--from-36:checked ~ .game .direction-controls__button--down[data-position="10"] {
+  display: flex;
+}
+
+#position-10--from-36:checked ~ .game .direction-controls__button--left[data-position="10"] {
+  display: flex;
+}
+
+#position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
+  display: flex;
+}
+
+#position-35--from-36:checked ~ .game .direction-controls__button--left[data-position="35"] {
+  display: flex;
 }
 
 .title-screen {
