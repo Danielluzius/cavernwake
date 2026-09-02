@@ -2283,20 +2283,17 @@ input {
   user-select: none;
 }
 
-.dev-controls__button--debug-grid {
+.dev-controls__toggles {
   position: fixed;
   top: 24px;
   right: 24px;
-  bottom: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  display: flex;
+  gap: 8px;
 }
 
+.dev-controls__button--debug-grid,
 .dev-controls__button--debug-shadow-mask {
-  position: fixed;
-  top: 24px;
-  right: 110px;
+  position: static;
   bottom: auto;
   opacity: 1;
   visibility: visible;
@@ -4006,9 +4003,7 @@ input {
 }
 
 .dev-controls__button--intro-start {
-  position: fixed;
-  top: 24px;
-  right: 140px;
+  position: static;
   bottom: auto;
   opacity: 1;
   visibility: visible;
