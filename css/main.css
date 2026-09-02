@@ -83,11 +83,42 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+  clip-path: ellipse(256px 203px at center);
+  animation: vision-field-pulse 4s ease-in-out infinite;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
+.vignette-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: transparent;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.vignette-ring--outer {
+  width: 512px;
+  height: 406px;
+  border: 20px solid rgba(0, 0, 0, 0.55);
+}
+.vignette-ring--inner {
+  width: 472px;
+  height: 366px;
+  border: 20px solid rgba(0, 0, 0, 0.3);
+}
+
+@keyframes vision-field-pulse {
+  0%, 100% {
+    clip-path: ellipse(256px 203px at center);
+  }
+  50% {
+    clip-path: ellipse(252px 199px at center);
+  }
+}
 .world {
   position: absolute;
   top: 50%;
@@ -641,7 +672,7 @@ input {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #f0f;
+  background-color: #000;
 }
 .world-layer--environment {
   z-index: 10;
@@ -652,23 +683,6 @@ input {
 .world-layer--foreground {
   z-index: 40;
   pointer-events: none;
-}
-.world-layer--shadow-mask {
-  z-index: 50;
-  top: 0;
-  left: 0;
-  width: 2496px;
-  height: 1792px;
-  pointer-events: none;
-  display: none;
-  background-image: url("../assets/world/shadow-mask.png");
-  background-size: 2496px 1792px;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-}
-
-#debug-shadow-mask:checked ~ .game .world-layer--shadow-mask {
-  display: block;
 }
 
 .room {
@@ -2291,8 +2305,7 @@ input {
   gap: 8px;
 }
 
-.dev-controls__button--debug-grid,
-.dev-controls__button--debug-shadow-mask {
+.dev-controls__button--debug-grid {
   position: static;
   bottom: auto;
   opacity: 1;
