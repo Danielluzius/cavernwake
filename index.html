@@ -8,212 +8,83 @@
     <!-- css/main.css is compiled from scss/ via `npm run watch:css` (or
          `npm run build:css` once) — never edit it directly. -->
     <link rel="stylesheet" href="./css/main.css" />
-    <!-- Preload frames that only appear inside @keyframes (not in any base
-         rule): browsers otherwise fetch them lazily on first animation use,
-         causing a brief flash/pop-in the very first time an animation plays. -->
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
+    <!-- Preload the resting frame that's shown the instant the game scene
+         appears: browsers otherwise fetch it lazily on first use, causing
+         a brief flash/pop-in. -->
     <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
 </head>
 
 <body>
 
-    <!-- CSS-only world-position state. Must stay a direct sibling chain
-         (not nested) so the ~ combinator can reach .game below. A finite,
-         predefined set of steps (position-0 .. position-7) stands in for
-         "movement", since pure CSS cannot count or loop dynamically. -->
-    <!-- #started must come before the position radios: several selectors
-         chain "#started:checked ~ #position-N:checked ~ .game" and rely on
-         this exact document order. Once checked it never unchecks again
-         (no reset control) — pressing START just reveals the character,
-         see .player in scss/player/_player.scss.
+    <!-- Title screen dismiss toggle: unchecked shows the title screen
+         (.scene--intro), checked reveals the real game (.scene--game) —
+         see components/_title-screen.scss and game/_game.scss. -->
+    <input type="checkbox" id="title-dismissed" class="world-position-input" />
 
-         Position radios are direction-aware (see $position-arrival-ids in
-         scss/base/_variables.scss): positions 1-6 are reachable from both
-         directions and get a "-r"/"-l" id pair so the correct walk
-         animation/end pose can be selected. Position 0 keeps its bare id
-         as the untouched page-load default plus a "-l" variant for when
-         it's re-entered by walking left; position 7 is right-only. -->
-    <input type="checkbox" id="started" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-0" class="world-position-input" checked />
-    <input type="radio" name="world-position" id="position-0-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-1-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-1-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-2-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-2-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-3-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-3-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-4-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-4-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-5-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-5-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-6-r" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-6-l" class="world-position-input" />
-    <input type="radio" name="world-position" id="position-7-r" class="world-position-input" />
-
-    <!-- Dev-only, independent of the start/movement chain above: toggles
-         the visual debug grid overlay (see scss/world/_room.scss). Checked
-         by default while the position test below is in use. -->
+    <!-- Dev-only, independent of everything else: toggles the visual
+         debug grid overlay (see scss/world/_room.scss). -->
     <input type="checkbox" id="debug-grid" class="world-position-input" checked />
-
-    <!-- Dev-only, independent of everything else: toggles the circular
-         vision mask around the character (see .view-mask in
-         scss/game/_viewport.scss). -->
-    <input type="checkbox" id="debug-view" class="world-position-input" />
 
     <main class="game" id="game">
 
-        <div class="viewport" id="viewport">
+        <!-- Title screen only — placeholder text/loading-bar art, real
+             title/logo/credit copy and a timed auto-fade come later. -->
+        <section class="scene scene--intro">
+            <div class="title-screen">
+                <h1 class="title-screen__title">CAVERNWAKE</h1>
+                <div class="title-screen__loading-bar">
+                    <div class="title-screen__loading-bar-fill"></div>
+                </div>
+                <p class="title-screen__credit">made by Daniel Luzius</p>
+                <label class="title-screen__button" for="title-dismissed">WEITER</label>
+            </div>
+        </section>
 
-            <!-- Sits outside .world (not translated with scroll) so its
-                 fixed position always covers the real browser viewport. -->
-            <div class="world-layer world-layer--background" id="background-layer"></div>
+        <!-- Real game scene, unlocked once the title screen is dismissed.
+             Single stub room (segment 1 of the logic-map, see
+             assets/world/logic-map.png) — real tile art is added later as
+             separate pre-drawn image layers, this is structure only. -->
+        <section class="scene scene--game">
 
-            <div class="view-mask"></div>
+            <div class="viewport" id="viewport">
 
-            <div class="world" id="world">
+                <div class="world-layer world-layer--background"></div>
 
-                <div class="world-layer world-layer--environment" id="environment-layer">
-                    <!-- Segment-system test dressed with the cave tileset
-                         (tileset-reference.txt): 4 segments (each 3 tiles
-                         wide x 7 tiles tall) side by side = 12x7 tiles.
-                         Fixed vertical layout per segment: row 1 fill
-                         (buffer above ceiling), row 2 ceiling, rows 3-4
-                         free air, row 5 floor, rows 6-7 fill. Flat variants
-                         are simply cycled left-to-right for visual variety,
-                         no seams/junctions/corners yet (single open strip,
-                         not an enclosed room). Strong 192px grid lines
-                         (GRID button) mark the exact segment boundaries.
-                         Player starts in segment 2, centered on its middle
-                         column, feet at the temporary row-5 center
-                         starting point. No puzzle mechanics yet. -->
-                    <div class="room" style="--room-cols: 12; --room-rows: 7;">
-                        <div class="tile tile--cave tile--cave-fill-a cell-x-1 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-b cell-x-2 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-c cell-x-3 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-d cell-x-4 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-e cell-x-5 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-f cell-x-6 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-g cell-x-7 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-h cell-x-8 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-i cell-x-9 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-j cell-x-10 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-k cell-x-11 cell-y-1"></div>
-                        <div class="tile tile--cave tile--cave-fill-l cell-x-12 cell-y-1"></div>
-
-                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-1 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-2 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-3 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-4 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-5 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-6 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-7 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-8 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-a cell-x-9 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-b cell-x-10 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-c cell-x-11 cell-y-2"></div>
-                        <div class="tile tile--cave tile--cave-ceiling-flat-d cell-x-12 cell-y-2"></div>
-
-                        <div class="tile tile--cave tile--cave-floor-flat-a cell-x-1 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-b cell-x-2 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-c cell-x-3 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-d cell-x-4 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-e cell-x-5 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-f cell-x-6 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-g cell-x-7 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-h cell-x-8 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-i cell-x-9 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-j cell-x-10 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-k cell-x-11 cell-y-5"></div>
-                        <div class="tile tile--cave tile--cave-floor-flat-a cell-x-12 cell-y-5"></div>
-
-                        <div class="tile tile--cave tile--cave-fill-c cell-x-1 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-d cell-x-2 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-e cell-x-3 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-f cell-x-4 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-g cell-x-5 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-h cell-x-6 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-i cell-x-7 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-j cell-x-8 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-k cell-x-9 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-l cell-x-10 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-m cell-x-11 cell-y-6"></div>
-                        <div class="tile tile--cave tile--cave-fill-a cell-x-12 cell-y-6"></div>
-
-                        <div class="tile tile--cave tile--cave-fill-g cell-x-1 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-h cell-x-2 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-i cell-x-3 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-j cell-x-4 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-k cell-x-5 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-l cell-x-6 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-m cell-x-7 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-a cell-x-8 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-b cell-x-9 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-c cell-x-10 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-d cell-x-11 cell-y-7"></div>
-                        <div class="tile tile--cave tile--cave-fill-e cell-x-12 cell-y-7"></div>
+                <div class="world">
+                    <div class="world-layer world-layer--environment">
+                        <div class="room" style="--room-cols: 3; --room-rows: 7;"></div>
                     </div>
+
+                    <div class="world-layer world-layer--objects"></div>
+
+                    <div class="player">
+                        <div class="player__sprite"></div>
+                    </div>
+
+                    <div class="world-layer world-layer--foreground"></div>
                 </div>
-
-                <div class="world-layer world-layer--objects" id="object-layer"></div>
-
-                <div class="player" id="player">
-                    <div class="player__sprite"></div>
-                </div>
-
-                <div class="world-layer world-layer--foreground" id="foreground-layer"></div>
 
             </div>
 
-        </div>
-
-        <!-- Temporary development controls for this prototype only. -->
-        <div class="ui" id="ui">
-            <div class="dev-controls">
-                <label class="dev-controls__button dev-controls__button--start" for="started">START</label>
-                <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
-                <label class="dev-controls__button dev-controls__button--debug-view" for="debug-view">VIEW</label>
-
-                <label class="dev-controls__button dev-controls__button--right" data-position="0"
-                    for="position-1-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="1"
-                    for="position-2-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="2"
-                    for="position-3-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="3"
-                    for="position-4-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="4"
-                    for="position-5-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="5"
-                    for="position-6-r">RIGHT</label>
-                <label class="dev-controls__button dev-controls__button--right" data-position="6"
-                    for="position-7-r">RIGHT</label>
-
-                <label class="dev-controls__button dev-controls__button--left" data-position="1"
-                    for="position-0-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="2"
-                    for="position-1-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="3"
-                    for="position-2-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="4"
-                    for="position-3-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="5"
-                    for="position-4-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="6"
-                    for="position-5-l">LEFT</label>
-                <label class="dev-controls__button dev-controls__button--left" data-position="7"
-                    for="position-6-l">LEFT</label>
+            <div class="ui">
+                <div class="dev-controls">
+                    <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
+                </div>
+                <!-- Not wired to any movement state yet (see
+                     components/_components.scss) — every button renders
+                     disabled until the room graph exists. -->
+                <div class="direction-controls">
+                    <div class="direction-controls__button direction-controls__button--up">▲</div>
+                    <div class="direction-controls__button direction-controls__button--left">◀</div>
+                    <div class="direction-controls__button direction-controls__button--right">▶</div>
+                    <div class="direction-controls__button direction-controls__button--down">▼</div>
+                </div>
             </div>
-        </div>
+
+        </section>
 
     </main>
+
 
 </body>
 
