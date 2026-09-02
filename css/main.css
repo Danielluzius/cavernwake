@@ -4129,11 +4129,11 @@ input {
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
-  --player-extra-offset-y: 256px;
+  --player-extra-offset-y: 448px;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
-  --player-extra-offset-y: 256px;
+  --player-extra-offset-y: 448px;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .player {
@@ -4151,6 +4151,33 @@ input {
 #position-1:checked ~ #intro-9:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/base/base-right.png");
+}
+
+@keyframes player-bridge-tip {
+  0% {
+    background-image: url("../assets/characters/with-backpack/fall/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/fall/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/fall/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/fall/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
+  }
+}
+#position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
+  animation: player-bridge-tip 0.6s steps(1, end) forwards;
+  animation-delay: 0.6s;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
 }
 
 @keyframes intro-screen-shake {
