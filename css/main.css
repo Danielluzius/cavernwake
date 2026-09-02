@@ -1121,7 +1121,9 @@ input {
   left: 50%;
   width: 168px;
   height: 168px;
-  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1)) translateY(calc(var(--world-offset-y) * -1)) translateY(12px);
+  --player-extra-offset: 0px;
+  --player-extra-offset-y: 0px;
+  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1 + var(--player-extra-offset))) translateY(calc(var(--world-offset-y) * -1 + var(--player-extra-offset-y))) translateY(12px);
   transition: transform 0.6s ease-in-out;
   z-index: 30;
 }
@@ -1142,38 +1144,47 @@ input {
 
 #position-2--from-1:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-1-to-2 0.6s steps(1, end);
 }
 
 #position-3--from-2:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-2-to-3 0.6s steps(1, end);
 }
 
 #position-1--from-2:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-2-to-1 0.6s steps(1, end);
 }
 
 #position-4--from-3:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-3-to-4 0.6s steps(1, end);
 }
 
 #position-2--from-3:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-3-to-2 0.6s steps(1, end);
 }
 
 #position-5--from-4:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-4-to-5 0.6s steps(1, end);
 }
 
 #position-3--from-4:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-4-to-3 0.6s steps(1, end);
 }
 
 #position-6--from-5:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-5-to-6 0.6s steps(1, end);
 }
 
 #position-4--from-5:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-5-to-4 0.6s steps(1, end);
 }
 
 #position-14--from-6:checked ~ .game .player__sprite {
@@ -1182,10 +1193,12 @@ input {
 
 #position-5--from-6:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-6-to-5 0.6s steps(1, end);
 }
 
 #position-8--from-7:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-7-to-8 0.6s steps(1, end);
 }
 
 #position-16--from-8:checked ~ .game .player__sprite {
@@ -1194,10 +1207,12 @@ input {
 
 #position-7--from-8:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-8-to-7 0.6s steps(1, end);
 }
 
 #position-10--from-9:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-9-to-10 0.6s steps(1, end);
 }
 
 #position-36--from-10:checked ~ .game .player__sprite {
@@ -1206,10 +1221,12 @@ input {
 
 #position-9--from-10:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-10-to-9 0.6s steps(1, end);
 }
 
 #position-12--from-11:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-11-to-12 0.6s steps(1, end);
 }
 
 #position-27--from-11:checked ~ .game .player__sprite {
@@ -1218,10 +1235,12 @@ input {
 
 #position-11--from-12:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-12-to-11 0.6s steps(1, end);
 }
 
 #position-14--from-13:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-13-to-14 0.6s steps(1, end);
 }
 
 #position-6--from-14:checked ~ .game .player__sprite {
@@ -1230,10 +1249,12 @@ input {
 
 #position-15--from-14:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-14-to-15 0.6s steps(1, end);
 }
 
 #position-13--from-14:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-14-to-13 0.6s steps(1, end);
 }
 
 #position-23--from-15:checked ~ .game .player__sprite {
@@ -1242,6 +1263,7 @@ input {
 
 #position-14--from-15:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-15-to-14 0.6s steps(1, end);
 }
 
 #position-8--from-16:checked ~ .game .player__sprite {
@@ -1250,10 +1272,12 @@ input {
 
 #position-17--from-16:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-16-to-17 0.6s steps(1, end);
 }
 
 #position-18--from-17:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-17-to-18 0.6s steps(1, end);
 }
 
 #position-26--from-17:checked ~ .game .player__sprite {
@@ -1262,26 +1286,32 @@ input {
 
 #position-16--from-17:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-17-to-16 0.6s steps(1, end);
 }
 
 #position-17--from-18:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-18-to-17 0.6s steps(1, end);
 }
 
 #position-20--from-19:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-19-to-20 0.6s steps(1, end);
 }
 
 #position-21--from-20:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-20-to-21 0.6s steps(1, end);
 }
 
 #position-19--from-20:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-20-to-19 0.6s steps(1, end);
 }
 
 #position-22--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-21-to-22 0.6s steps(1, end);
 }
 
 #position-30--from-21:checked ~ .game .player__sprite {
@@ -1290,14 +1320,17 @@ input {
 
 #position-20--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-21-to-20 0.6s steps(1, end);
 }
 
 #position-23--from-22:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-22-to-23 0.6s steps(1, end);
 }
 
 #position-21--from-22:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-22-to-21 0.6s steps(1, end);
 }
 
 #position-15--from-23:checked ~ .game .player__sprite {
@@ -1306,22 +1339,27 @@ input {
 
 #position-24--from-23:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-23-to-24 0.6s steps(1, end);
 }
 
 #position-22--from-23:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-23-to-22 0.6s steps(1, end);
 }
 
 #position-25--from-24:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-24-to-25 0.6s steps(1, end);
 }
 
 #position-23--from-24:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-24-to-23 0.6s steps(1, end);
 }
 
 #position-26--from-25:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-25-to-26 0.6s steps(1, end);
 }
 
 #position-33--from-25:checked ~ .game .player__sprite {
@@ -1330,6 +1368,7 @@ input {
 
 #position-24--from-25:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-25-to-24 0.6s steps(1, end);
 }
 
 #position-17--from-26:checked ~ .game .player__sprite {
@@ -1338,6 +1377,7 @@ input {
 
 #position-25--from-26:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-26-to-25 0.6s steps(1, end);
 }
 
 #position-11--from-27:checked ~ .game .player__sprite {
@@ -1346,22 +1386,27 @@ input {
 
 #position-28--from-27:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-27-to-28 0.6s steps(1, end);
 }
 
 #position-29--from-28:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-28-to-29 0.6s steps(1, end);
 }
 
 #position-27--from-28:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-28-to-27 0.6s steps(1, end);
 }
 
 #position-30--from-29:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-29-to-30 0.6s steps(1, end);
 }
 
 #position-28--from-29:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-29-to-28 0.6s steps(1, end);
 }
 
 #position-21--from-30:checked ~ .game .player__sprite {
@@ -1370,18 +1415,22 @@ input {
 
 #position-31--from-30:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-30-to-31 0.6s steps(1, end);
 }
 
 #position-29--from-30:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-30-to-29 0.6s steps(1, end);
 }
 
 #position-30--from-31:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-31-to-30 0.6s steps(1, end);
 }
 
 #position-33--from-32:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-32-to-33 0.6s steps(1, end);
 }
 
 #position-25--from-33:checked ~ .game .player__sprite {
@@ -1390,26 +1439,32 @@ input {
 
 #position-34--from-33:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-33-to-34 0.6s steps(1, end);
 }
 
 #position-32--from-33:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-33-to-32 0.6s steps(1, end);
 }
 
 #position-35--from-34:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-34-to-35 0.6s steps(1, end);
 }
 
 #position-33--from-34:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-34-to-33 0.6s steps(1, end);
 }
 
 #position-36--from-35:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-35-to-36 0.6s steps(1, end);
 }
 
 #position-34--from-35:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-35-to-34 0.6s steps(1, end);
 }
 
 #position-10--from-36:checked ~ .game .player__sprite {
@@ -1418,8 +1473,765 @@ input {
 
 #position-35--from-36:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-36-to-35 0.6s steps(1, end);
 }
 
+@keyframes player-walk-from-1-to-2 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-2-to-3 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-2-to-1 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-3-to-4 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-3-to-2 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-4-to-5 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-4-to-3 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-5-to-6 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-5-to-4 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-6-to-5 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-7-to-8 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-8-to-7 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-9-to-10 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-10-to-9 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-11-to-12 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-12-to-11 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-13-to-14 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-14-to-15 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-14-to-13 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-15-to-14 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-16-to-17 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-17-to-18 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-17-to-16 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-18-to-17 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-19-to-20 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-20-to-21 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-20-to-19 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-21-to-22 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-21-to-20 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-22-to-23 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-22-to-21 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-23-to-24 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-23-to-22 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-24-to-25 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-24-to-23 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-25-to-26 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-25-to-24 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-26-to-25 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-27-to-28 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-28-to-29 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-28-to-27 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-29-to-30 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-29-to-28 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-30-to-31 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-30-to-29 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-31-to-30 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-32-to-33 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-33-to-34 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-33-to-32 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-34-to-35 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-34-to-33 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-35-to-36 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-35-to-34 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-walk-from-36-to-35 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
 .ui {
   position: absolute;
   top: 0;
@@ -1506,900 +2318,1568 @@ input {
 }
 
 .direction-controls__button--edge {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.6);
   border-color: #fff;
   cursor: pointer;
-  pointer-events: auto;
+  transition: opacity 0s, visibility 0s;
 }
 
 #position-1:checked ~ .game .direction-controls__button--right[data-position="1"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6:checked ~ .game .direction-controls__button--down[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-7:checked ~ .game .direction-controls__button--right[data-position="7"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-9:checked ~ .game .direction-controls__button--right[data-position="9"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-12:checked ~ .game .direction-controls__button--left[data-position="12"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14:checked ~ .game .direction-controls__button--up[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17:checked ~ .game .direction-controls__button--down[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-18:checked ~ .game .direction-controls__button--left[data-position="18"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-19:checked ~ .game .direction-controls__button--right[data-position="19"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26:checked ~ .game .direction-controls__button--up[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-32:checked ~ .game .direction-controls__button--right[data-position="32"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33:checked ~ .game .direction-controls__button--left[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-1--from-2:checked ~ .game .direction-controls__button--right[data-position="1"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--down[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-6:checked ~ .game .direction-controls__button--up[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-6:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-7--from-8:checked ~ .game .direction-controls__button--right[data-position="7"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-9--from-10:checked ~ .game .direction-controls__button--right[data-position="9"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-12--from-11:checked ~ .game .direction-controls__button--left[data-position="12"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-13:checked ~ .game .direction-controls__button--up[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-13:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6--from-14:checked ~ .game .direction-controls__button--down[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-6--from-14:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-15:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-15:checked ~ .game .direction-controls__button--up[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-15:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--down[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-18--from-17:checked ~ .game .direction-controls__button--left[data-position="18"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26--from-17:checked ~ .game .direction-controls__button--up[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26--from-17:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--down[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20--from-19:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-19--from-20:checked ~ .game .direction-controls__button--right[data-position="19"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-21:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-20--from-21:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-22:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-24:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-24:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--up[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--left[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--down[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-26:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28--from-27:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29--from-28:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-29:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28--from-29:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-29--from-30:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-31:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-32:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-32:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-32:checked ~ .game .direction-controls__button--left[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-33:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34--from-33:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34--from-33:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-32--from-33:checked ~ .game .direction-controls__button--right[data-position="32"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35--from-34:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--left[data-position="33"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34--from-35:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-34--from-35:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-35--from-36:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 .title-screen {
@@ -2496,4 +3976,323 @@ input {
   border: 2px solid #fff;
   cursor: pointer;
   user-select: none;
+}
+
+.dev-controls__button--intro-start {
+  position: fixed;
+  top: 24px;
+  right: 140px;
+  bottom: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .world,
+#position-1:checked ~ #intro-fade:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -224px;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-1:checked ~ .game .world {
+  --world-offset: -288px;
+  --world-offset-y: -224px;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-2:checked ~ .game .world,
+#position-1:checked ~ #intro-3:checked ~ .game .world {
+  --world-offset: -480px;
+  --world-offset-y: -224px;
+}
+
+#position-1:checked ~ #intro-4:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .world {
+  --world-offset: -672px;
+  --world-offset-y: -224px;
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -672px;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-6:checked ~ .game .world,
+#position-1:checked ~ #intro-7:checked ~ .game .world,
+#position-1:checked ~ #intro-8:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -672px;
+}
+
+#position-1:checked ~ #intro-9:checked ~ .game .world,
+#position-1:checked ~ #intro-10:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-1:checked ~ #intro-11:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -672px;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .player,
+#position-1:checked ~ #intro-fade:checked ~ .game .player {
+  --player-extra-offset: -192px;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-1:checked ~ .game .player {
+  --player-extra-offset: 0px;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .player {
+  --player-extra-offset-y: 256px;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
+  --player-extra-offset-y: 256px;
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .player {
+  --player-extra-offset-y: 0px;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-6:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
+}
+
+#position-1:checked ~ #intro-7:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-8:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-9:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/without-backpack/base/base-right.png");
+}
+
+@keyframes intro-screen-shake {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-6px, 4px);
+  }
+  40% {
+    transform: translate(5px, -5px);
+  }
+  60% {
+    transform: translate(-4px, 6px);
+  }
+  80% {
+    transform: translate(6px, -3px);
+  }
+}
+#position-1:checked ~ #intro-4:checked ~ .game .viewport,
+#position-1:checked ~ #intro-fall:checked ~ .game .viewport,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .viewport {
+  animation: intro-screen-shake 0.4s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.blackout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+  background-color: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .blackout {
+  opacity: 1;
+  transition: none;
+}
+
+#position-1:checked ~ #intro-fade:checked ~ .game .blackout {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .blackout {
+  transition: none;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .blackout {
+  opacity: 1;
+  transition: opacity 1.6s ease-in-out;
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .blackout {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .dialogue[data-intro-step=dark] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 2s, visibility 0s 2s;
+}
+
+#position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 1s, visibility 0s 1s;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 2s, visibility 0s 2s;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 1.6s, visibility 0s 1.6s;
+}
+
+#position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-fade:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-1:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-2:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-4:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-fall:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-5:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-6:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-7:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-9:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-10:checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+.direction-controls__button--intro-arrow {
+  display: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="3"],
+#position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"] {
+  display: flex;
+}
+
+#position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--up[data-position="14"],
+#position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--right[data-position="14"],
+#position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--left[data-position="14"] {
+  display: flex;
+}
+
+.story-object--bridge {
+  left: 640px;
+  top: 256px;
+  width: 64px;
+  height: 64px;
+  background-color: rgba(150, 100, 50, 0.5);
+  border: 2px solid #963;
+  cursor: default;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .story-object--bridge,
+#position-1:checked ~ #intro-fade:checked ~ .game .story-object--bridge,
+#position-1:checked ~ #intro-1:checked ~ .game .story-object--bridge,
+#position-1:checked ~ #intro-2:checked ~ .game .story-object--bridge,
+#position-1:checked ~ #intro-3:checked ~ .game .story-object--bridge,
+#position-1:checked ~ #intro-4:checked ~ .game .story-object--bridge {
+  display: block;
+}
+
+.story-object {
+  position: absolute;
+  display: none;
+  cursor: pointer;
+}
+
+.story-object--backpack {
+  left: 1088px;
+  top: 672px;
+  width: 64px;
+  height: 64px;
+  background-color: rgba(255, 200, 0, 0.5);
+  border: 2px solid #fc0;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-9:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-10:checked ~ .game .story-object--backpack {
+  display: block;
 }

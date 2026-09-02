@@ -18,6 +18,20 @@
     <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
     <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-down.png" />
     <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-up.png" />
+    <!-- Walk-cycle frames (see animations/_animations.scss) — same
+         first-use flash reasoning, only referenced inside @keyframes. -->
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+    <!-- Intro-only poses (see scss/intro/_intro.scss) — same first-use
+         flash reasoning as the four poses above. -->
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
+    <link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out.png" />
 </head>
 
 <body>
@@ -152,6 +166,28 @@
     <input type="radio" name="position" id="position-10--from-36" class="world-position-input" />
     <input type="radio" name="position" id="position-35--from-36" class="world-position-input" />
 
+    <!-- Opening cutscene, own linear radio chain (name="intro"), entirely
+         decoupled from the position graph above (see scss/intro/_intro.scss
+         for the full explanation) — driven for now by the dev-only START
+         button below; will later become the real title-screen dismiss
+         button. Re-uses position-graph nodes 1-4/13/14 for its camera
+         targets, but never touches the "position" radios themselves. -->
+    <input type="radio" name="intro" id="intro-dark" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-fade" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-1" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-2" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-3" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-4" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-fall" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-dark-hold" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-5" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-6" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-7" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-8" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-9" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-10" class="world-position-input" />
+    <input type="radio" name="intro" id="intro-11" class="world-position-input" />
+
     <main class="game" id="game">
 
         <!-- Title screen only — placeholder text/loading-bar art, real
@@ -183,7 +219,19 @@
                         <div class="room" style="--room-cols: 3; --room-rows: 7;"></div>
                     </div>
 
-                    <div class="world-layer world-layer--objects"></div>
+                    <div class="world-layer world-layer--objects">
+                        <!-- Placeholder for the collapsing-bridge tile
+                             (col 10 / row 4, one below node 4) — visible
+                             from the very start, disappears the moment the
+                             fall triggers, see scss/intro/_intro.scss. -->
+                        <div class="story-object story-object--bridge"></div>
+
+                        <!-- Placeholder for the intro's backpack pickup
+                             (col 17 / row 10, one tile right of node 14) —
+                             real object art/positioning comes later, see
+                             scss/intro/_intro.scss. -->
+                        <label class="story-object story-object--backpack" for="intro-10"></label>
+                    </div>
 
                     <div class="player">
                         <div class="player__sprite"></div>
@@ -194,9 +242,91 @@
 
             </div>
 
+            <!-- Sibling of .viewport on purpose: .blackout is position:fixed
+                 and must stay pinned to the real browser viewport even
+                 while .viewport itself is transformed (e.g. the intro's
+                 screen shake) — a transformed ancestor would otherwise
+                 become its containing block and shake it too. -->
+            <div class="blackout"></div>
+
             <div class="ui">
                 <div class="dev-controls">
                     <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
+                    <!-- Dev-only for now: kicks off the intro chain (see
+                         scss/intro/_intro.scss). Becomes the real game's
+                         start button later, once the title screen leads
+                         straight into it instead of the free-roam stub. -->
+                    <label class="dev-controls__button dev-controls__button--intro-start" for="intro-dark">START</label>
+                </div>
+
+                <!-- Opening-cutscene dialogue boxes — one per beat, see
+                     scss/intro/_intro.scss for which #intro-N reveals
+                     which box and for how long. Placeholder copy only. -->
+                <div class="dialogue" data-intro-step="dark">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=dark</p>
+                        <label class="dialogue__button" for="intro-fade">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="fade">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=fade</p>
+                        <label class="dialogue__button" for="intro-1">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="1">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=1</p>
+                        <label class="dialogue__button" for="intro-2">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="2">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=2</p>
+                        <label class="dialogue__button" for="intro-3">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="4">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=4</p>
+                        <label class="dialogue__button" for="intro-fall">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="fall">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=fall</p>
+                        <label class="dialogue__button" for="intro-dark-hold">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="dark-hold">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=dark-hold</p>
+                        <label class="dialogue__button" for="intro-5">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="5">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=5</p>
+                        <label class="dialogue__button" for="intro-6">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="6">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=6</p>
+                        <label class="dialogue__button" for="intro-7">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="7">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=7</p>
+                        <label class="dialogue__button" for="intro-8">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-intro-step="10">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">step=10</p>
+                        <label class="dialogue__button" for="intro-11">WEITER</label>
+                    </div>
                 </div>
                 <!-- Dimmed placeholders (always present, define the ring's
                      shape) plus one clickable overlay label per (position,
@@ -420,6 +550,17 @@
                     <label
                         class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                         data-position="36" for="position-35--from-36">◀</label>
+
+                    <!-- Intro-only stand-ins for the two arrow clicks that
+                         advance the cutscene (see scss/intro/_intro.scss) —
+                         same look as the real edge buttons above, but wired
+                         to the intro chain instead of the position graph. -->
+                    <label
+                        class="direction-controls__button direction-controls__button--right direction-controls__button--intro-arrow"
+                        for="intro-4" data-intro-step="3">▶</label>
+                    <label
+                        class="direction-controls__button direction-controls__button--right direction-controls__button--intro-arrow"
+                        for="intro-9" data-intro-step="8">▶</label>
                 </div>
             </div>
 
