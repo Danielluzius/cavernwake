@@ -5,6 +5,7 @@ node_modules/
 package.json
 package-lock.json
 scss/
+html/
 .vscode/
 
 # Dev-only tileset analysis tooling and its throwaway output (not part of
