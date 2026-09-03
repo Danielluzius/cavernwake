@@ -352,6 +352,7 @@ input {
 #position-16--from-8:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -672px;
+  transition-duration: 1.8s;
 }
 
 #position-7--from-8:checked ~ .game .world {
@@ -412,6 +413,7 @@ input {
 #position-23--from-15:checked ~ .game .world {
   --world-offset: -1248px;
   --world-offset-y: -1120px;
+  transition-duration: 1.8s;
 }
 
 #position-14--from-15:checked ~ .game .world {
@@ -422,6 +424,7 @@ input {
 #position-8--from-16:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -224px;
+  transition-duration: 1.8s;
 }
 
 #position-17--from-16:checked ~ .game .world {
@@ -472,6 +475,7 @@ input {
 #position-30--from-21:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1568px;
+  transition-duration: 1.8s;
 }
 
 #position-20--from-21:checked ~ .game .world {
@@ -492,6 +496,7 @@ input {
 #position-15--from-23:checked ~ .game .world {
   --world-offset: -1248px;
   --world-offset-y: -672px;
+  transition-duration: 1.8s;
 }
 
 #position-24--from-23:checked ~ .game .world {
@@ -522,6 +527,7 @@ input {
 #position-33--from-25:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1568px;
+  transition-duration: 1.8s;
 }
 
 #position-24--from-25:checked ~ .game .world {
@@ -572,6 +578,7 @@ input {
 #position-21--from-30:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1120px;
+  transition-duration: 1.8s;
 }
 
 #position-31--from-30:checked ~ .game .world {
@@ -597,6 +604,7 @@ input {
 #position-25--from-33:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1120px;
+  transition-duration: 1.8s;
 }
 
 #position-34--from-33:checked ~ .game .world {
@@ -1143,6 +1151,7 @@ input {
   --player-extra-offset-y: 0px;
   transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1 + var(--player-extra-offset))) translateY(calc(var(--world-offset-y) * -1 + var(--player-extra-offset-y))) translateY(12px);
   transition: transform 0.6s ease-in-out;
+  will-change: transform;
   z-index: 30;
 }
 
@@ -1221,6 +1230,11 @@ input {
 
 #position-16--from-8:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-8-to-16 0.6s steps(1, end) normal 3;
+}
+
+#position-16--from-8:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-7--from-8:checked ~ .game .player__sprite {
@@ -1277,6 +1291,11 @@ input {
 
 #position-23--from-15:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-15-to-23 0.6s steps(1, end) normal 3;
+}
+
+#position-23--from-15:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-14--from-15:checked ~ .game .player__sprite {
@@ -1286,6 +1305,11 @@ input {
 
 #position-8--from-16:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-16-to-8 0.6s steps(1, end) reverse 3;
+}
+
+#position-8--from-16:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-17--from-16:checked ~ .game .player__sprite {
@@ -1334,6 +1358,11 @@ input {
 
 #position-30--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-21-to-30 0.6s steps(1, end) normal 3;
+}
+
+#position-30--from-21:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-20--from-21:checked ~ .game .player__sprite {
@@ -1353,6 +1382,11 @@ input {
 
 #position-15--from-23:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-23-to-15 0.6s steps(1, end) reverse 3;
+}
+
+#position-15--from-23:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-24--from-23:checked ~ .game .player__sprite {
@@ -1382,6 +1416,11 @@ input {
 
 #position-33--from-25:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-25-to-33 0.6s steps(1, end) normal 3;
+}
+
+#position-33--from-25:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-24--from-25:checked ~ .game .player__sprite {
@@ -1429,6 +1468,11 @@ input {
 
 #position-21--from-30:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-30-to-21 0.6s steps(1, end) reverse 3;
+}
+
+#position-21--from-30:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-31--from-30:checked ~ .game .player__sprite {
@@ -1453,6 +1497,11 @@ input {
 
 #position-25--from-33:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-33-to-25 0.6s steps(1, end) reverse 3;
+}
+
+#position-25--from-33:checked ~ .game .player {
+  transition-duration: 1.8s;
 }
 
 #position-34--from-33:checked ~ .game .player__sprite {
@@ -1516,7 +1565,7 @@ input {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,3000 A256,203 0 1,0 3256,3000 A256,203 0 1,0 2744,3000 Z");
 }
 .lamp-glow__layer:last-child {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 @keyframes lamp-glow-pulse {
@@ -2281,6 +2330,142 @@ input {
   }
   75%, 100% {
     background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+@keyframes player-climb-from-8-to-16 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-15-to-23 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-16-to-8 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-21-to-30 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-23-to-15 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-25-to-33 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-30-to-21 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
+  }
+}
+@keyframes player-climb-from-33-to-25 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_001.png");
+  }
+  20% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_002.png");
+  }
+  40% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_003.png");
+  }
+  60% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_004.png");
+  }
+  80%, 100% {
+    background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
   }
 }
 .ui {
