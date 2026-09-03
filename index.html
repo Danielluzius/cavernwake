@@ -66,8 +66,9 @@
     <input type="checkbox" id="title-dismissed" class="world-position-input" />
 
     <!-- Dev-only, independent of everything else: toggles the visual
-         debug grid overlay (see scss/world/_room.scss). -->
+         debug grid/colors overlays (see scss/world/_room.scss). -->
     <input type="checkbox" id="debug-grid" class="world-position-input" checked />
+    <input type="checkbox" id="debug-colors" class="world-position-input" />
 
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
@@ -240,7 +241,8 @@
                 <div class="world">
                     <div class="world-layer world-layer--environment">
                         <div class="environment-map"></div>
-                        <div class="debug-map"></div>
+                        <div class="debug-colors-map"></div>
+                        <div class="debug-grid-map"></div>
                         <div class="room" style="--room-cols: 3; --room-rows: 7;"></div>
                     </div>
 
@@ -310,6 +312,7 @@
             <div class="ui">
                 <div class="dev-controls">
                     <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
+                    <label class="dev-controls__button dev-controls__button--debug-colors" for="debug-colors">COLORS</label>
                     <!-- Dev-only for now: kicks off the intro chain (see
                          scss/intro/_intro.scss). Becomes the real game's
                          start button later, once the title screen leads

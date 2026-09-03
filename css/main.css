@@ -90,6 +90,11 @@ input {
   image-rendering: crisp-edges;
 }
 
+#debug-grid:checked ~ .game .viewport {
+  clip-path: none;
+  animation: none;
+}
+
 @keyframes vision-field-pulse {
   0%, 100% {
     clip-path: ellipse(256px 203px at center);
@@ -1104,7 +1109,7 @@ input {
   image-rendering: pixelated;
 }
 
-.debug-map {
+.debug-colors-map {
   position: absolute;
   top: 0;
   left: 0;
@@ -1113,13 +1118,31 @@ input {
   pointer-events: none;
   display: none;
   opacity: 0.15;
-  background-image: url("../assets/world/logic-map-debug.png");
+  background-image: url("../assets/world/logic-map-colors.png");
   background-size: 2496px 1792px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
 
-#debug-grid:checked ~ .game .debug-map {
+.debug-grid-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2496px;
+  height: 1792px;
+  pointer-events: none;
+  display: none;
+  background-image: url("../assets/world/logic-map-grid.png");
+  background-size: 2496px 1792px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+#debug-colors:checked ~ .game .debug-colors-map {
+  display: block;
+}
+
+#debug-grid:checked ~ .game .debug-grid-map {
   display: block;
 }
 
@@ -2525,6 +2548,14 @@ input {
 }
 
 .dev-controls__button--debug-grid {
+  position: static;
+  bottom: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.dev-controls__button--debug-colors {
   position: static;
   bottom: auto;
   opacity: 1;
