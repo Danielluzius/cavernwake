@@ -1516,7 +1516,7 @@ input {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,3000 A256,203 0 1,0 3256,3000 A256,203 0 1,0 2744,3000 Z");
 }
 .lamp-glow__layer:last-child {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 @keyframes lamp-glow-pulse {
@@ -1524,7 +1524,7 @@ input {
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.04);
+    transform: translate(-50%, -50%) scale(1.015);
   }
 }
 @keyframes player-walk-from-1-to-2 {
@@ -2339,9 +2339,9 @@ input {
   left: 50%;
   transform: translate(-50%, -50%);
   display: grid;
-  grid-template-columns: 48px 168px 48px;
-  grid-template-rows: 48px 168px 48px;
-  gap: 8px;
+  grid-template-columns: 64px 168px 64px;
+  grid-template-rows: 64px 168px 64px;
+  gap: 32px;
 }
 
 .direction-controls__button {
@@ -2356,22 +2356,32 @@ input {
   cursor: not-allowed;
   pointer-events: none;
   user-select: none;
+  opacity: 0;
+  visibility: hidden;
 }
 .direction-controls__button--up {
   grid-column: 2;
   grid-row: 1;
+  width: 64px;
+  justify-self: center;
 }
 .direction-controls__button--left {
   grid-column: 1;
   grid-row: 2;
+  height: 64px;
+  align-self: center;
 }
 .direction-controls__button--right {
   grid-column: 3;
   grid-row: 2;
+  height: 64px;
+  align-self: center;
 }
 .direction-controls__button--down {
   grid-column: 2;
   grid-row: 3;
+  width: 64px;
+  justify-self: center;
 }
 
 .direction-controls__button--edge {
@@ -4451,6 +4461,8 @@ input {
 
 .direction-controls__button--intro-arrow {
   display: none;
+  opacity: 1;
+  visibility: visible;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.6);
   border-color: #fff;
