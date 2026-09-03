@@ -297,46 +297,55 @@ input {
 #position-2--from-1:checked ~ .game .world {
   --world-offset: -288px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-3--from-2:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-1--from-2:checked ~ .game .world {
   --world-offset: -96px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-4--from-3:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-2--from-3:checked ~ .game .world {
   --world-offset: -288px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-5--from-4:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-3--from-4:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-6--from-5:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-4--from-5:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-14--from-6:checked ~ .game .world {
@@ -347,11 +356,13 @@ input {
 #position-5--from-6:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-8--from-7:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-16--from-8:checked ~ .game .world {
@@ -363,11 +374,13 @@ input {
 #position-7--from-8:checked ~ .game .world {
   --world-offset: -1440px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-10--from-9:checked ~ .game .world {
   --world-offset: -2208px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-36--from-10:checked ~ .game .world {
@@ -378,11 +391,13 @@ input {
 #position-9--from-10:checked ~ .game .world {
   --world-offset: -2016px;
   --world-offset-y: -224px;
+  transition-duration: 1.2s;
 }
 
 #position-12--from-11:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-27--from-11:checked ~ .game .world {
@@ -393,11 +408,13 @@ input {
 #position-11--from-12:checked ~ .game .world {
   --world-offset: -288px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-14--from-13:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-6--from-14:checked ~ .game .world {
@@ -408,11 +425,13 @@ input {
 #position-15--from-14:checked ~ .game .world {
   --world-offset: -1248px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-13--from-14:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-23--from-15:checked ~ .game .world {
@@ -424,6 +443,7 @@ input {
 #position-14--from-15:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-8--from-16:checked ~ .game .world {
@@ -435,11 +455,13 @@ input {
 #position-17--from-16:checked ~ .game .world {
   --world-offset: -1824px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-18--from-17:checked ~ .game .world {
   --world-offset: -2016px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-26--from-17:checked ~ .game .world {
@@ -450,31 +472,37 @@ input {
 #position-16--from-17:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .world {
   --world-offset: -1824px;
   --world-offset-y: -672px;
+  transition-duration: 1.2s;
 }
 
 #position-20--from-19:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-21--from-20:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-19--from-20:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-22--from-21:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-30--from-21:checked ~ .game .world {
@@ -486,16 +514,19 @@ input {
 #position-20--from-21:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-23--from-22:checked ~ .game .world {
   --world-offset: -1248px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-21--from-22:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-15--from-23:checked ~ .game .world {
@@ -507,26 +538,31 @@ input {
 #position-24--from-23:checked ~ .game .world {
   --world-offset: -1440px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-22--from-23:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-25--from-24:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-23--from-24:checked ~ .game .world {
   --world-offset: -1248px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-26--from-25:checked ~ .game .world {
   --world-offset: -1824px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-33--from-25:checked ~ .game .world {
@@ -538,6 +574,7 @@ input {
 #position-24--from-25:checked ~ .game .world {
   --world-offset: -1440px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-17--from-26:checked ~ .game .world {
@@ -548,6 +585,7 @@ input {
 #position-25--from-26:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1120px;
+  transition-duration: 1.2s;
 }
 
 #position-11--from-27:checked ~ .game .world {
@@ -558,26 +596,31 @@ input {
 #position-28--from-27:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-29--from-28:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-27--from-28:checked ~ .game .world {
   --world-offset: -288px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-30--from-29:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-28--from-29:checked ~ .game .world {
   --world-offset: -480px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-21--from-30:checked ~ .game .world {
@@ -589,21 +632,25 @@ input {
 #position-31--from-30:checked ~ .game .world {
   --world-offset: -1056px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-29--from-30:checked ~ .game .world {
   --world-offset: -672px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-30--from-31:checked ~ .game .world {
   --world-offset: -864px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-33--from-32:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-25--from-33:checked ~ .game .world {
@@ -615,31 +662,37 @@ input {
 #position-34--from-33:checked ~ .game .world {
   --world-offset: -1824px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-32--from-33:checked ~ .game .world {
   --world-offset: -1440px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-35--from-34:checked ~ .game .world {
   --world-offset: -2016px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-33--from-34:checked ~ .game .world {
   --world-offset: -1632px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-36--from-35:checked ~ .game .world {
   --world-offset: -2208px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-34--from-35:checked ~ .game .world {
   --world-offset: -1824px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 #position-10--from-36:checked ~ .game .world {
@@ -650,6 +703,7 @@ input {
 #position-35--from-36:checked ~ .game .world {
   --world-offset: -2016px;
   --world-offset-y: -1568px;
+  transition-duration: 1.2s;
 }
 
 .world-layer {
@@ -1208,47 +1262,83 @@ input {
 
 #position-2--from-1:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-1-to-2 0.6s steps(1, end);
+  animation: player-walk-from-1-to-2 0.6s steps(1, end) 2;
+}
+
+#position-2--from-1:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-3--from-2:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-2-to-3 0.6s steps(1, end);
+  animation: player-walk-from-2-to-3 0.6s steps(1, end) 2;
+}
+
+#position-3--from-2:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-1--from-2:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-2-to-1 0.6s steps(1, end);
+  animation: player-walk-from-2-to-1 0.6s steps(1, end) 2;
+}
+
+#position-1--from-2:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-4--from-3:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-3-to-4 0.6s steps(1, end);
+  animation: player-walk-from-3-to-4 0.6s steps(1, end) 2;
+}
+
+#position-4--from-3:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-2--from-3:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-3-to-2 0.6s steps(1, end);
+  animation: player-walk-from-3-to-2 0.6s steps(1, end) 2;
+}
+
+#position-2--from-3:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-5--from-4:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-4-to-5 0.6s steps(1, end);
+  animation: player-walk-from-4-to-5 0.6s steps(1, end) 2;
+}
+
+#position-5--from-4:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-3--from-4:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-4-to-3 0.6s steps(1, end);
+  animation: player-walk-from-4-to-3 0.6s steps(1, end) 2;
+}
+
+#position-3--from-4:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-6--from-5:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-5-to-6 0.6s steps(1, end);
+  animation: player-walk-from-5-to-6 0.6s steps(1, end) 2;
+}
+
+#position-6--from-5:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-4--from-5:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-5-to-4 0.6s steps(1, end);
+  animation: player-walk-from-5-to-4 0.6s steps(1, end) 2;
+}
+
+#position-4--from-5:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-14--from-6:checked ~ .game .player__sprite {
@@ -1257,12 +1347,20 @@ input {
 
 #position-5--from-6:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-6-to-5 0.6s steps(1, end);
+  animation: player-walk-from-6-to-5 0.6s steps(1, end) 2;
+}
+
+#position-5--from-6:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-8--from-7:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-7-to-8 0.6s steps(1, end);
+  animation: player-walk-from-7-to-8 0.6s steps(1, end) 2;
+}
+
+#position-8--from-7:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-16--from-8:checked ~ .game .player__sprite {
@@ -1276,12 +1374,20 @@ input {
 
 #position-7--from-8:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-8-to-7 0.6s steps(1, end);
+  animation: player-walk-from-8-to-7 0.6s steps(1, end) 2;
+}
+
+#position-7--from-8:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-10--from-9:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-9-to-10 0.6s steps(1, end);
+  animation: player-walk-from-9-to-10 0.6s steps(1, end) 2;
+}
+
+#position-10--from-9:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-36--from-10:checked ~ .game .player__sprite {
@@ -1290,12 +1396,20 @@ input {
 
 #position-9--from-10:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-10-to-9 0.6s steps(1, end);
+  animation: player-walk-from-10-to-9 0.6s steps(1, end) 2;
+}
+
+#position-9--from-10:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-12--from-11:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-11-to-12 0.6s steps(1, end);
+  animation: player-walk-from-11-to-12 0.6s steps(1, end) 2;
+}
+
+#position-12--from-11:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-27--from-11:checked ~ .game .player__sprite {
@@ -1304,12 +1418,20 @@ input {
 
 #position-11--from-12:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-12-to-11 0.6s steps(1, end);
+  animation: player-walk-from-12-to-11 0.6s steps(1, end) 2;
+}
+
+#position-11--from-12:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-14--from-13:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-13-to-14 0.6s steps(1, end);
+  animation: player-walk-from-13-to-14 0.6s steps(1, end) 2;
+}
+
+#position-14--from-13:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-6--from-14:checked ~ .game .player__sprite {
@@ -1318,12 +1440,20 @@ input {
 
 #position-15--from-14:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-14-to-15 0.6s steps(1, end);
+  animation: player-walk-from-14-to-15 0.6s steps(1, end) 2;
+}
+
+#position-15--from-14:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-13--from-14:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-14-to-13 0.6s steps(1, end);
+  animation: player-walk-from-14-to-13 0.6s steps(1, end) 2;
+}
+
+#position-13--from-14:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-23--from-15:checked ~ .game .player__sprite {
@@ -1337,7 +1467,11 @@ input {
 
 #position-14--from-15:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-15-to-14 0.6s steps(1, end);
+  animation: player-walk-from-15-to-14 0.6s steps(1, end) 2;
+}
+
+#position-14--from-15:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-8--from-16:checked ~ .game .player__sprite {
@@ -1351,12 +1485,20 @@ input {
 
 #position-17--from-16:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-16-to-17 0.6s steps(1, end);
+  animation: player-walk-from-16-to-17 0.6s steps(1, end) 2;
+}
+
+#position-17--from-16:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-18--from-17:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-17-to-18 0.6s steps(1, end);
+  animation: player-walk-from-17-to-18 0.6s steps(1, end) 2;
+}
+
+#position-18--from-17:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-26--from-17:checked ~ .game .player__sprite {
@@ -1365,32 +1507,56 @@ input {
 
 #position-16--from-17:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-17-to-16 0.6s steps(1, end);
+  animation: player-walk-from-17-to-16 0.6s steps(1, end) 2;
+}
+
+#position-16--from-17:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-18-to-17 0.6s steps(1, end);
+  animation: player-walk-from-18-to-17 0.6s steps(1, end) 2;
+}
+
+#position-17--from-18:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-20--from-19:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-19-to-20 0.6s steps(1, end);
+  animation: player-walk-from-19-to-20 0.6s steps(1, end) 2;
+}
+
+#position-20--from-19:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-21--from-20:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-20-to-21 0.6s steps(1, end);
+  animation: player-walk-from-20-to-21 0.6s steps(1, end) 2;
+}
+
+#position-21--from-20:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-19--from-20:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-20-to-19 0.6s steps(1, end);
+  animation: player-walk-from-20-to-19 0.6s steps(1, end) 2;
+}
+
+#position-19--from-20:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-22--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-21-to-22 0.6s steps(1, end);
+  animation: player-walk-from-21-to-22 0.6s steps(1, end) 2;
+}
+
+#position-22--from-21:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-30--from-21:checked ~ .game .player__sprite {
@@ -1404,17 +1570,29 @@ input {
 
 #position-20--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-21-to-20 0.6s steps(1, end);
+  animation: player-walk-from-21-to-20 0.6s steps(1, end) 2;
+}
+
+#position-20--from-21:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-23--from-22:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-22-to-23 0.6s steps(1, end);
+  animation: player-walk-from-22-to-23 0.6s steps(1, end) 2;
+}
+
+#position-23--from-22:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-21--from-22:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-22-to-21 0.6s steps(1, end);
+  animation: player-walk-from-22-to-21 0.6s steps(1, end) 2;
+}
+
+#position-21--from-22:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-15--from-23:checked ~ .game .player__sprite {
@@ -1428,27 +1606,47 @@ input {
 
 #position-24--from-23:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-23-to-24 0.6s steps(1, end);
+  animation: player-walk-from-23-to-24 0.6s steps(1, end) 2;
+}
+
+#position-24--from-23:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-22--from-23:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-23-to-22 0.6s steps(1, end);
+  animation: player-walk-from-23-to-22 0.6s steps(1, end) 2;
+}
+
+#position-22--from-23:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-25--from-24:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-24-to-25 0.6s steps(1, end);
+  animation: player-walk-from-24-to-25 0.6s steps(1, end) 2;
+}
+
+#position-25--from-24:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-23--from-24:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-24-to-23 0.6s steps(1, end);
+  animation: player-walk-from-24-to-23 0.6s steps(1, end) 2;
+}
+
+#position-23--from-24:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-26--from-25:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-25-to-26 0.6s steps(1, end);
+  animation: player-walk-from-25-to-26 0.6s steps(1, end) 2;
+}
+
+#position-26--from-25:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-33--from-25:checked ~ .game .player__sprite {
@@ -1462,7 +1660,11 @@ input {
 
 #position-24--from-25:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-25-to-24 0.6s steps(1, end);
+  animation: player-walk-from-25-to-24 0.6s steps(1, end) 2;
+}
+
+#position-24--from-25:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-17--from-26:checked ~ .game .player__sprite {
@@ -1471,7 +1673,11 @@ input {
 
 #position-25--from-26:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-26-to-25 0.6s steps(1, end);
+  animation: player-walk-from-26-to-25 0.6s steps(1, end) 2;
+}
+
+#position-25--from-26:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-11--from-27:checked ~ .game .player__sprite {
@@ -1480,27 +1686,47 @@ input {
 
 #position-28--from-27:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-27-to-28 0.6s steps(1, end);
+  animation: player-walk-from-27-to-28 0.6s steps(1, end) 2;
+}
+
+#position-28--from-27:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-29--from-28:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-28-to-29 0.6s steps(1, end);
+  animation: player-walk-from-28-to-29 0.6s steps(1, end) 2;
+}
+
+#position-29--from-28:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-27--from-28:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-28-to-27 0.6s steps(1, end);
+  animation: player-walk-from-28-to-27 0.6s steps(1, end) 2;
+}
+
+#position-27--from-28:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-30--from-29:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-29-to-30 0.6s steps(1, end);
+  animation: player-walk-from-29-to-30 0.6s steps(1, end) 2;
+}
+
+#position-30--from-29:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-28--from-29:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-29-to-28 0.6s steps(1, end);
+  animation: player-walk-from-29-to-28 0.6s steps(1, end) 2;
+}
+
+#position-28--from-29:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-21--from-30:checked ~ .game .player__sprite {
@@ -1514,22 +1740,38 @@ input {
 
 #position-31--from-30:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-30-to-31 0.6s steps(1, end);
+  animation: player-walk-from-30-to-31 0.6s steps(1, end) 2;
+}
+
+#position-31--from-30:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-29--from-30:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-30-to-29 0.6s steps(1, end);
+  animation: player-walk-from-30-to-29 0.6s steps(1, end) 2;
+}
+
+#position-29--from-30:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-30--from-31:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-31-to-30 0.6s steps(1, end);
+  animation: player-walk-from-31-to-30 0.6s steps(1, end) 2;
+}
+
+#position-30--from-31:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-33--from-32:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-32-to-33 0.6s steps(1, end);
+  animation: player-walk-from-32-to-33 0.6s steps(1, end) 2;
+}
+
+#position-33--from-32:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-25--from-33:checked ~ .game .player__sprite {
@@ -1543,32 +1785,56 @@ input {
 
 #position-34--from-33:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-33-to-34 0.6s steps(1, end);
+  animation: player-walk-from-33-to-34 0.6s steps(1, end) 2;
+}
+
+#position-34--from-33:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-32--from-33:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-33-to-32 0.6s steps(1, end);
+  animation: player-walk-from-33-to-32 0.6s steps(1, end) 2;
+}
+
+#position-32--from-33:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-35--from-34:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-34-to-35 0.6s steps(1, end);
+  animation: player-walk-from-34-to-35 0.6s steps(1, end) 2;
+}
+
+#position-35--from-34:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-33--from-34:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-34-to-33 0.6s steps(1, end);
+  animation: player-walk-from-34-to-33 0.6s steps(1, end) 2;
+}
+
+#position-33--from-34:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-36--from-35:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-walk-from-35-to-36 0.6s steps(1, end);
+  animation: player-walk-from-35-to-36 0.6s steps(1, end) 2;
+}
+
+#position-36--from-35:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-34--from-35:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-35-to-34 0.6s steps(1, end);
+  animation: player-walk-from-35-to-34 0.6s steps(1, end) 2;
+}
+
+#position-34--from-35:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-10--from-36:checked ~ .game .player__sprite {
@@ -1577,7 +1843,11 @@ input {
 
 #position-35--from-36:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-36-to-35 0.6s steps(1, end);
+  animation: player-walk-from-36-to-35 0.6s steps(1, end) 2;
+}
+
+#position-35--from-36:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 .lamp-glow__layer {
@@ -4349,6 +4619,7 @@ input {
 
 #position-1:checked ~ #intro-1:checked ~ .game .player {
   --player-extra-offset: 0px;
+  transition-duration: 1.2s;
 }
 
 @keyframes player-walk-intro-1 {
@@ -4366,7 +4637,7 @@ input {
   }
 }
 #position-1:checked ~ #intro-1:checked ~ .game .player__sprite {
-  animation: player-walk-intro-1 0.6s steps(1, end);
+  animation: player-walk-intro-1 0.6s steps(1, end) 2;
 }
 
 @keyframes player-walk-intro-2 {
@@ -4384,7 +4655,12 @@ input {
   }
 }
 #position-1:checked ~ #intro-2:checked ~ .game .player__sprite {
-  animation: player-walk-intro-2 0.6s steps(1, end);
+  animation: player-walk-intro-2 0.6s steps(1, end) 2;
+}
+
+#position-1:checked ~ #intro-2:checked ~ .game .world,
+#position-1:checked ~ #intro-2:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 @keyframes player-walk-intro-4 {
@@ -4402,7 +4678,12 @@ input {
   }
 }
 #position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
-  animation: player-walk-intro-4 0.6s steps(1, end), player-bridge-tip 0.6s steps(1, end) forwards 0.6s;
+  animation: player-walk-intro-4 0.6s steps(1, end) 2, player-bridge-tip 0.6s steps(1, end) forwards 1.2s;
+}
+
+#position-1:checked ~ #intro-4:checked ~ .game .world,
+#position-1:checked ~ #intro-4:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 @keyframes player-walk-intro-9 {
@@ -4420,7 +4701,12 @@ input {
   }
 }
 #position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
-  animation: player-walk-intro-9 0.6s steps(1, end);
+  animation: player-walk-intro-9 0.6s steps(1, end) 2;
+}
+
+#position-1:checked ~ #intro-9:checked ~ .game .world,
+#position-1:checked ~ #intro-9:checked ~ .game .player {
+  transition-duration: 1.2s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
@@ -4556,7 +4842,7 @@ input {
 #position-1:checked ~ #intro-fall:checked ~ .game .viewport,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .viewport {
   animation: intro-screen-shake 0.4s ease-in-out infinite;
-  animation-delay: 0.6s;
+  animation-delay: 1.2s;
 }
 
 .blackout {
@@ -4613,21 +4899,21 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.8s, visibility 0s 0.8s;
+  transition: opacity 0s 1.4s, visibility 0s 1.4s;
 }
 
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.8s, visibility 0s 0.8s;
+  transition: opacity 0s 1.4s, visibility 0s 1.4s;
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
