@@ -253,9 +253,35 @@
 
                     <div class="player">
                         <div class="player__sprite"></div>
+
+                        <!-- The character's own light source (see
+                             player/_player.scss) — moves with .player for
+                             free (including the intro's walk-in/fall
+                             offsets), independent of the permanent
+                             camera-fixed vision field on .viewport. -->
+                        <div class="lamp-glow">
+                            <div class="lamp-glow__layer"></div>
+                            <div class="lamp-glow__layer"></div>
+                            <div class="lamp-glow__layer"></div>
+                        </div>
                     </div>
 
                     <div class="world-layer world-layer--foreground"></div>
+
+                    <!-- NOT nested inside .world-layer--objects (see
+                         world/_objects.scss): that layer's own z-index
+                         traps every descendant below it, so the glow
+                         could never visually darken .player (z-index
+                         above it) no matter what z-index it got itself —
+                         a child can't escape its stacking-context
+                         ancestor. Sibling of .player instead, with its
+                         own z-index above it, positioned independently at
+                         the same spot as .story-object--backpack. -->
+                    <div class="lamp-glow lamp-glow--backpack">
+                        <div class="lamp-glow__layer"></div>
+                        <div class="lamp-glow__layer"></div>
+                        <div class="lamp-glow__layer"></div>
+                    </div>
                 </div>
 
                 <!-- Stepped vignette rings: each is a plain clip-path

@@ -90,27 +90,6 @@ input {
   image-rendering: crisp-edges;
 }
 
-.vignette-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: transparent;
-  box-sizing: border-box;
-  pointer-events: none;
-}
-.vignette-ring--outer {
-  width: 512px;
-  height: 406px;
-  border: 20px solid rgba(0, 0, 0, 0.55);
-}
-.vignette-ring--inner {
-  width: 472px;
-  height: 366px;
-  border: 20px solid rgba(0, 0, 0, 0.3);
-}
-
 @keyframes vision-field-pulse {
   0%, 100% {
     clip-path: ellipse(256px 203px at center);
@@ -1146,6 +1125,14 @@ input {
   display: none;
 }
 
+.lamp-glow--backpack {
+  position: absolute;
+  left: 1120px;
+  top: 704px;
+  z-index: 40;
+  display: none;
+}
+
 .player {
   position: absolute;
   top: 50%;
@@ -1507,6 +1494,39 @@ input {
   animation: player-walk-from-36-to-35 0.6s steps(1, end);
 }
 
+.lamp-glow__layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6000px;
+  height: 6000px;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 1;
+  animation: lamp-glow-pulse 3s ease-in-out infinite;
+}
+.lamp-glow__layer:nth-child(1) {
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2805,3000 A195,175 0 1,0 3195,3000 A195,175 0 1,0 2805,3000 Z");
+}
+.lamp-glow__layer:nth-child(2) {
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2765,3000 A235,195 0 1,0 3235,3000 A235,195 0 1,0 2765,3000 Z");
+}
+.lamp-glow__layer:nth-child(3) {
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,3000 A256,203 0 1,0 3256,3000 A256,203 0 1,0 2744,3000 Z");
+}
+.lamp-glow__layer:last-child {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+@keyframes lamp-glow-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
 @keyframes player-walk-from-1-to-2 {
   0% {
     background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
@@ -4174,6 +4194,24 @@ input {
 #position-1:checked ~ #intro-5:checked ~ .game .player {
   --player-extra-offset-y: 0px;
   transition: none;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .player .lamp-glow,
+#position-1:checked ~ #intro-5:checked ~ .game .player .lamp-glow,
+#position-1:checked ~ #intro-6:checked ~ .game .player .lamp-glow,
+#position-1:checked ~ #intro-7:checked ~ .game .player .lamp-glow,
+#position-1:checked ~ #intro-8:checked ~ .game .player .lamp-glow,
+#position-1:checked ~ #intro-9:checked ~ .game .player .lamp-glow {
+  display: none;
+}
+
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .lamp-glow--backpack,
+#position-1:checked ~ #intro-5:checked ~ .game .lamp-glow--backpack,
+#position-1:checked ~ #intro-6:checked ~ .game .lamp-glow--backpack,
+#position-1:checked ~ #intro-7:checked ~ .game .lamp-glow--backpack,
+#position-1:checked ~ #intro-8:checked ~ .game .lamp-glow--backpack,
+#position-1:checked ~ #intro-9:checked ~ .game .lamp-glow--backpack {
+  display: block;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .player__sprite {
