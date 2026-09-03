@@ -271,6 +271,7 @@
                 <div class="world">
                     <div class="world-layer world-layer--environment">
                         <div class="environment-map"></div>
+                        <div class="structures-map"></div>
                         <div class="debug-colors-map"></div>
                         <div class="debug-grid-map"></div>
                         <div class="room" style="--room-cols: 3; --room-rows: 7;"></div>
@@ -288,6 +289,11 @@
                              real object art/positioning comes later, see
                              scss/intro/_intro.scss. -->
                         <label class="story-object story-object--backpack" for="intro-10"></label>
+
+                        <!-- First lift PoC, shaft 6<->14 (see scss/world/_lift.scss)
+                             — rope + tub, both behind the player. -->
+                        <div class="lift-rope"></div>
+                        <div class="lift-basket"></div>
                     </div>
 
                     <div class="player">
@@ -305,7 +311,12 @@
                         </div>
                     </div>
 
-                    <div class="world-layer world-layer--foreground"></div>
+                    <div class="world-layer world-layer--foreground">
+                        <!-- Tub's front rim only, rendered above the player
+                             (see scss/world/_lift.scss) so it looks like the
+                             character stands inside the basket. -->
+                        <div class="lift-door"></div>
+                    </div>
 
                     <!-- NOT nested inside .world-layer--objects (see
                          world/_objects.scss): that layer's own z-index

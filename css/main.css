@@ -1219,6 +1219,19 @@ input {
   image-rendering: pixelated;
 }
 
+.structures-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2496px;
+  height: 1792px;
+  pointer-events: none;
+  background-image: url("../assets/world/carvernwake-lift-ladder-bridge.png");
+  background-size: 2496px 1792px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
 .debug-colors-map {
   position: absolute;
   top: 0;
@@ -1286,6 +1299,65 @@ input {
   top: 704px;
   z-index: 40;
   display: none;
+}
+
+.lift-rope,
+.lift-basket,
+.lift-door {
+  position: absolute;
+  left: 1024px;
+  width: 64px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.lift-rope {
+  top: 192px;
+  height: 0;
+  background-image: url("../assets/objects/lift/rope.png");
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+  transition: height 2s ease-in-out;
+}
+
+.lift-basket {
+  top: 192px;
+  height: 128px;
+  background-image: url("../assets/objects/lift/basked.png");
+  transition: top 2s ease-in-out;
+}
+
+.lift-door {
+  top: 256px;
+  height: 64px;
+  background-image: url("../assets/objects/lift/basked-door.png");
+  transition: top 2s ease-in-out;
+  pointer-events: none;
+}
+
+#position-14:checked ~ .game .lift-rope,
+#position-14--from-6--right:checked ~ .game .lift-rope,
+#position-14--from-6--left:checked ~ .game .lift-rope,
+#position-14--from-13:checked ~ .game .lift-rope,
+#position-14--from-15:checked ~ .game .lift-rope {
+  height: 448px;
+}
+
+#position-14:checked ~ .game .lift-basket,
+#position-14--from-6--right:checked ~ .game .lift-basket,
+#position-14--from-6--left:checked ~ .game .lift-basket,
+#position-14--from-13:checked ~ .game .lift-basket,
+#position-14--from-15:checked ~ .game .lift-basket {
+  top: 640px;
+}
+
+#position-14:checked ~ .game .lift-door,
+#position-14--from-6--right:checked ~ .game .lift-door,
+#position-14--from-6--left:checked ~ .game .lift-door,
+#position-14--from-13:checked ~ .game .lift-door,
+#position-14--from-15:checked ~ .game .lift-door {
+  top: 704px;
 }
 
 .player {
