@@ -9,53 +9,65 @@
     <!-- css/main.css is compiled from scss/ via `npm run watch:css` (or
          `npm run build:css` once) — never edit it directly. -->
     <link rel="stylesheet" href="./css/main.css" />
-    <!-- Preload the resting frame that's shown the instant the game scene
+<!-- Preload the resting frame that's shown the instant the game scene
          appears: browsers otherwise fetch it lazily on first use, causing
          a brief flash/pop-in. Same reason for the other three facing
          poses (see player/_player.scss) — the first click of a given
          direction otherwise still lazy-loads it right when the sprite
          swaps, producing the same flash. -->
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-down.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-up.png" />
-    <!-- Walk-cycle frames (see animations/_animations.scss) — same
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-down.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-up.png" />
+<!-- Walk-cycle frames (see animations/_animations.scss) — same
          first-use flash reasoning, only referenced inside @keyframes. -->
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_005.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_005.png" />
-    <!-- Intro-only poses (see scss/intro/_intro.scss) — same first-use
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+<!-- Elevator idle-cycle frames (see animations/_animations.scss,
+         both the plain per-shaft and the dual-access facing variants) —
+         same first-use flash reasoning, only referenced inside
+         @keyframes. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_005.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_005.png" />
+<!-- Intro-only poses (see scss/intro/_intro.scss) — same first-use
          flash reasoning as the four poses above. -->
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out-eyes-open.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_004.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_001.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
-    <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out-eyes-open.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
 </head>
 
 <body>
@@ -114,82 +126,100 @@
     <input type="radio" name="position" id="position-35" class="world-position-input" />
     <input type="radio" name="position" id="position-36" class="world-position-input" />
 
-    <!-- One extra "facing" radio per edge (position-<to>--from-<source>),
+<!-- One extra "facing" radio per edge (position-<to>--from-<source>),
          all unchecked — lets the direction button actually clicked decide
          which way the player sprite faces (see player/_player.scss),
          instead of the plain position-<to> id above which can be reached
          from several directions and can't disambiguate on its own.
          Auto-generated from logic-map.png via scripts/extract_positions.py. -->
-    <input type="radio" name="position" id="position-2--from-1" class="world-position-input" />
-    <input type="radio" name="position" id="position-3--from-2" class="world-position-input" />
-    <input type="radio" name="position" id="position-1--from-2" class="world-position-input" />
-    <input type="radio" name="position" id="position-4--from-3" class="world-position-input" />
-    <input type="radio" name="position" id="position-2--from-3" class="world-position-input" />
-    <input type="radio" name="position" id="position-5--from-4" class="world-position-input" />
-    <input type="radio" name="position" id="position-3--from-4" class="world-position-input" />
-    <input type="radio" name="position" id="position-6--from-5" class="world-position-input" />
-    <input type="radio" name="position" id="position-4--from-5" class="world-position-input" />
-    <input type="radio" name="position" id="position-14--from-6" class="world-position-input" />
-    <input type="radio" name="position" id="position-5--from-6" class="world-position-input" />
-    <input type="radio" name="position" id="position-8--from-7" class="world-position-input" />
-    <input type="radio" name="position" id="position-16--from-8" class="world-position-input" />
-    <input type="radio" name="position" id="position-7--from-8" class="world-position-input" />
-    <input type="radio" name="position" id="position-10--from-9" class="world-position-input" />
-    <input type="radio" name="position" id="position-36--from-10" class="world-position-input" />
-    <input type="radio" name="position" id="position-9--from-10" class="world-position-input" />
-    <input type="radio" name="position" id="position-12--from-11" class="world-position-input" />
-    <input type="radio" name="position" id="position-27--from-11" class="world-position-input" />
-    <input type="radio" name="position" id="position-11--from-12" class="world-position-input" />
-    <input type="radio" name="position" id="position-14--from-13" class="world-position-input" />
-    <input type="radio" name="position" id="position-6--from-14" class="world-position-input" />
-    <input type="radio" name="position" id="position-15--from-14" class="world-position-input" />
-    <input type="radio" name="position" id="position-13--from-14" class="world-position-input" />
-    <input type="radio" name="position" id="position-23--from-15" class="world-position-input" />
-    <input type="radio" name="position" id="position-14--from-15" class="world-position-input" />
-    <input type="radio" name="position" id="position-8--from-16" class="world-position-input" />
-    <input type="radio" name="position" id="position-17--from-16" class="world-position-input" />
-    <input type="radio" name="position" id="position-18--from-17" class="world-position-input" />
-    <input type="radio" name="position" id="position-26--from-17" class="world-position-input" />
-    <input type="radio" name="position" id="position-16--from-17" class="world-position-input" />
-    <input type="radio" name="position" id="position-17--from-18" class="world-position-input" />
-    <input type="radio" name="position" id="position-20--from-19" class="world-position-input" />
-    <input type="radio" name="position" id="position-21--from-20" class="world-position-input" />
-    <input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
-    <input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
-    <input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
-    <input type="radio" name="position" id="position-20--from-21" class="world-position-input" />
-    <input type="radio" name="position" id="position-23--from-22" class="world-position-input" />
-    <input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
-    <input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
-    <input type="radio" name="position" id="position-24--from-23" class="world-position-input" />
-    <input type="radio" name="position" id="position-22--from-23" class="world-position-input" />
-    <input type="radio" name="position" id="position-25--from-24" class="world-position-input" />
-    <input type="radio" name="position" id="position-23--from-24" class="world-position-input" />
-    <input type="radio" name="position" id="position-26--from-25" class="world-position-input" />
-    <input type="radio" name="position" id="position-33--from-25" class="world-position-input" />
-    <input type="radio" name="position" id="position-24--from-25" class="world-position-input" />
-    <input type="radio" name="position" id="position-17--from-26" class="world-position-input" />
-    <input type="radio" name="position" id="position-25--from-26" class="world-position-input" />
-    <input type="radio" name="position" id="position-11--from-27" class="world-position-input" />
-    <input type="radio" name="position" id="position-28--from-27" class="world-position-input" />
-    <input type="radio" name="position" id="position-29--from-28" class="world-position-input" />
-    <input type="radio" name="position" id="position-27--from-28" class="world-position-input" />
-    <input type="radio" name="position" id="position-30--from-29" class="world-position-input" />
-    <input type="radio" name="position" id="position-28--from-29" class="world-position-input" />
-    <input type="radio" name="position" id="position-21--from-30" class="world-position-input" />
-    <input type="radio" name="position" id="position-31--from-30" class="world-position-input" />
-    <input type="radio" name="position" id="position-29--from-30" class="world-position-input" />
-    <input type="radio" name="position" id="position-30--from-31" class="world-position-input" />
-    <input type="radio" name="position" id="position-33--from-32" class="world-position-input" />
-    <input type="radio" name="position" id="position-25--from-33" class="world-position-input" />
-    <input type="radio" name="position" id="position-34--from-33" class="world-position-input" />
-    <input type="radio" name="position" id="position-32--from-33" class="world-position-input" />
-    <input type="radio" name="position" id="position-35--from-34" class="world-position-input" />
-    <input type="radio" name="position" id="position-33--from-34" class="world-position-input" />
-    <input type="radio" name="position" id="position-36--from-35" class="world-position-input" />
-    <input type="radio" name="position" id="position-34--from-35" class="world-position-input" />
-    <input type="radio" name="position" id="position-10--from-36" class="world-position-input" />
-    <input type="radio" name="position" id="position-35--from-36" class="world-position-input" />
+<input type="radio" name="position" id="position-2--from-1" class="world-position-input" />
+<input type="radio" name="position" id="position-3--from-2" class="world-position-input" />
+<input type="radio" name="position" id="position-1--from-2" class="world-position-input" />
+<input type="radio" name="position" id="position-4--from-3" class="world-position-input" />
+<input type="radio" name="position" id="position-2--from-3" class="world-position-input" />
+<input type="radio" name="position" id="position-5--from-4" class="world-position-input" />
+<input type="radio" name="position" id="position-3--from-4" class="world-position-input" />
+<input type="radio" name="position" id="position-6--from-5" class="world-position-input" />
+<input type="radio" name="position" id="position-4--from-5" class="world-position-input" />
+<!-- Elevator ride BACK from a dual-access end's simple partner (see
+         base/_variables.scss vars.$elevator-reverse-duals) — 2 facing
+         variants, since which way the player is currently facing when
+         boarding here depends on how they arrived, not a single fixed
+         direction. Hand-added, not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-14--from-6--right" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-6--left" class="world-position-input" />
+<input type="radio" name="position" id="position-5--from-6" class="world-position-input" />
+<input type="radio" name="position" id="position-8--from-7" class="world-position-input" />
+<input type="radio" name="position" id="position-16--from-8" class="world-position-input" />
+<input type="radio" name="position" id="position-7--from-8" class="world-position-input" />
+<input type="radio" name="position" id="position-10--from-9" class="world-position-input" />
+<input type="radio" name="position" id="position-36--from-10" class="world-position-input" />
+<input type="radio" name="position" id="position-9--from-10" class="world-position-input" />
+<input type="radio" name="position" id="position-12--from-11" class="world-position-input" />
+<input type="radio" name="position" id="position-27--from-11" class="world-position-input" />
+<input type="radio" name="position" id="position-11--from-12" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-13" class="world-position-input" />
+<!-- Dual-access elevator end (see base/_variables.scss vars.$elevator-dual-ends) —
+         hand-added, not part of extract_positions.py's output: 2 facing
+         variants instead of the single position-6--from-14 an auto-run
+         would produce. -->
+<input type="radio" name="position" id="position-6--from-14--right" class="world-position-input" />
+<input type="radio" name="position" id="position-6--from-14--left" class="world-position-input" />
+<input type="radio" name="position" id="position-15--from-14" class="world-position-input" />
+<input type="radio" name="position" id="position-13--from-14" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-15" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-15" class="world-position-input" />
+<input type="radio" name="position" id="position-8--from-16" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-16" class="world-position-input" />
+<input type="radio" name="position" id="position-18--from-17" class="world-position-input" />
+<!-- Dual-access elevator end (see base/_variables.scss vars.$elevator-dual-ends) —
+         hand-added, not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-26--from-17--right" class="world-position-input" />
+<input type="radio" name="position" id="position-26--from-17--left" class="world-position-input" />
+<input type="radio" name="position" id="position-16--from-17" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-18" class="world-position-input" />
+<input type="radio" name="position" id="position-20--from-19" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-20" class="world-position-input" />
+<input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
+<input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-20--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-22" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
+<input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-24--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-22--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-24" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-24" class="world-position-input" />
+<input type="radio" name="position" id="position-26--from-25" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-25" class="world-position-input" />
+<input type="radio" name="position" id="position-24--from-25" class="world-position-input" />
+<!-- Elevator ride BACK from a dual-access end's simple partner (see
+         base/_variables.scss vars.$elevator-reverse-duals). Hand-added,
+         not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-17--from-26--right" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-26--left" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-26" class="world-position-input" />
+<input type="radio" name="position" id="position-11--from-27" class="world-position-input" />
+<input type="radio" name="position" id="position-28--from-27" class="world-position-input" />
+<input type="radio" name="position" id="position-29--from-28" class="world-position-input" />
+<input type="radio" name="position" id="position-27--from-28" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-29" class="world-position-input" />
+<input type="radio" name="position" id="position-28--from-29" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-31--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-29--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-31" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-32" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-34--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-32--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-35--from-34" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-34" class="world-position-input" />
+<input type="radio" name="position" id="position-36--from-35" class="world-position-input" />
+<input type="radio" name="position" id="position-34--from-35" class="world-position-input" />
+<input type="radio" name="position" id="position-10--from-36" class="world-position-input" />
+<input type="radio" name="position" id="position-35--from-36" class="world-position-input" />
 
     <!-- Opening cutscene, own linear radio chain (name="intro"), entirely
          decoupled from the position graph above (see scss/intro/_intro.scss
@@ -312,7 +342,8 @@
             <div class="ui">
                 <div class="dev-controls">
                     <label class="dev-controls__button dev-controls__button--debug-grid" for="debug-grid">GRID</label>
-                    <label class="dev-controls__button dev-controls__button--debug-colors" for="debug-colors">COLORS</label>
+                    <label class="dev-controls__button dev-controls__button--debug-colors"
+                        for="debug-colors">COLORS</label>
                     <!-- Dev-only for now: kicks off the intro chain (see
                          scss/intro/_intro.scss). Becomes the real game's
                          start button later, once the title screen leads
@@ -401,216 +432,154 @@
                     <div class="direction-controls__button direction-controls__button--right">▶</div>
                     <div class="direction-controls__button direction-controls__button--down">▼</div>
 
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="1" for="position-2--from-1">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="2" for="position-3--from-2">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="2" for="position-1--from-2">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="3" for="position-4--from-3">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="3" for="position-2--from-3">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="4" for="position-5--from-4">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="4" for="position-3--from-4">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="5" for="position-6--from-5">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="5" for="position-4--from-5">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="6" for="position-14--from-6">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="6" for="position-5--from-6">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="7" for="position-8--from-7">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="8" for="position-16--from-8">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="8" for="position-7--from-8">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="9" for="position-10--from-9">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="10" for="position-36--from-10">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="10" for="position-9--from-10">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="11" for="position-12--from-11">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="11" for="position-27--from-11">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="12" for="position-11--from-12">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="13" for="position-14--from-13">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="14" for="position-6--from-14">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="14" for="position-15--from-14">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="14" for="position-13--from-14">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="15" for="position-23--from-15">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="15" for="position-14--from-15">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="16" for="position-8--from-16">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="16" for="position-17--from-16">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="17" for="position-18--from-17">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="17" for="position-26--from-17">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="17" for="position-16--from-17">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="18" for="position-17--from-18">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="19" for="position-20--from-19">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="20" for="position-21--from-20">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="20" for="position-19--from-20">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="21" for="position-22--from-21">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="21" for="position-30--from-21">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="21" for="position-20--from-21">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="22" for="position-23--from-22">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="22" for="position-21--from-22">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="23" for="position-15--from-23">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="23" for="position-24--from-23">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="23" for="position-22--from-23">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="24" for="position-25--from-24">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="24" for="position-23--from-24">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="25" for="position-26--from-25">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
-                        data-position="25" for="position-33--from-25">▼</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="25" for="position-24--from-25">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="26" for="position-17--from-26">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="26" for="position-25--from-26">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="27" for="position-11--from-27">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="27" for="position-28--from-27">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="28" for="position-29--from-28">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="28" for="position-27--from-28">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="29" for="position-30--from-29">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="29" for="position-28--from-29">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="30" for="position-21--from-30">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="30" for="position-31--from-30">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="30" for="position-29--from-30">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="31" for="position-30--from-31">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="32" for="position-33--from-32">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="33" for="position-25--from-33">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="33" for="position-34--from-33">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="33" for="position-32--from-33">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="34" for="position-35--from-34">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="34" for="position-33--from-34">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
-                        data-position="35" for="position-36--from-35">▶</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="35" for="position-34--from-35">◀</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
-                        data-position="36" for="position-10--from-36">▲</label>
-                    <label
-                        class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
-                        data-position="36" for="position-35--from-36">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="1" for="position-2--from-1">▶</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="2" for="position-3--from-2">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="2" for="position-1--from-2">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="3" for="position-4--from-3">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="3" for="position-2--from-3">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="4" for="position-5--from-4">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="4" for="position-3--from-4">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="5" for="position-6--from-5">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="5" for="position-4--from-5">◀</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="6" data-facing="right" for="position-14--from-6--right">▼</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="6" data-facing="left" for="position-14--from-6--left">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="6" for="position-5--from-6">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="7" for="position-8--from-7">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="8" for="position-16--from-8">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="8" for="position-7--from-8">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="9" for="position-10--from-9">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="10" for="position-36--from-10">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="10" for="position-9--from-10">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="11" for="position-12--from-11">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="11" for="position-27--from-11">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="12" for="position-11--from-12">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="13" for="position-14--from-13">▶</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="14" data-facing="right" for="position-6--from-14--right">▲</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="14" data-facing="left" for="position-6--from-14--left">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="14" for="position-15--from-14">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="14" for="position-13--from-14">◀</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="15" for="position-23--from-15">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="15" for="position-14--from-15">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="16" for="position-8--from-16">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="16" for="position-17--from-16">▶</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="17" for="position-18--from-17">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="17" data-facing="right" for="position-26--from-17--right">▼</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="17" data-facing="left" for="position-26--from-17--left">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="17" for="position-16--from-17">◀</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="18" for="position-17--from-18">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="19" for="position-20--from-19">▶</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="20" for="position-21--from-20">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="20" for="position-19--from-20">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="21" for="position-22--from-21">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="21" for="position-30--from-21">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="21" for="position-20--from-21">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="22" for="position-23--from-22">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="22" for="position-21--from-22">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="23" for="position-15--from-23">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="23" for="position-24--from-23">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="23" for="position-22--from-23">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="24" for="position-25--from-24">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="24" for="position-23--from-24">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="25" for="position-26--from-25">▶</label>
+<label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+    data-position="25" for="position-33--from-25">▼</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="25" for="position-24--from-25">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="26" data-facing="right" for="position-17--from-26--right">▲</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="26" data-facing="left" for="position-17--from-26--left">▲</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="26" for="position-25--from-26">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="27" for="position-11--from-27">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="27" for="position-28--from-27">▶</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="28" for="position-29--from-28">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="28" for="position-27--from-28">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="29" for="position-30--from-29">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="29" for="position-28--from-29">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="30" for="position-21--from-30">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="30" for="position-31--from-30">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="30" for="position-29--from-30">◀</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="31" for="position-30--from-31">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="32" for="position-33--from-32">▶</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="33" for="position-25--from-33">▲</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="33" for="position-34--from-33">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="33" for="position-32--from-33">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="34" for="position-35--from-34">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="34" for="position-33--from-34">◀</label>
+<label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+    data-position="35" for="position-36--from-35">▶</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="35" for="position-34--from-35">◀</label>
+<label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
+    data-position="36" for="position-10--from-36">▲</label>
+<label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+    data-position="36" for="position-35--from-36">◀</label>
 
                     <!-- Intro-only stand-ins for the two arrow clicks that
                          advance the cutscene (see scss/intro/_intro.scss) —
