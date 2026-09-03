@@ -1091,6 +1091,19 @@ input {
   top: calc(10 * 64px - 32px);
 }
 
+.environment-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2496px;
+  height: 1792px;
+  pointer-events: none;
+  background-image: url("../assets/world/carvernwake-main-background.png");
+  background-size: 2496px 1792px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
 .debug-map {
   position: absolute;
   top: 0;
@@ -1099,6 +1112,7 @@ input {
   height: 1792px;
   pointer-events: none;
   display: none;
+  opacity: 0.15;
   background-image: url("../assets/world/logic-map-debug.png");
   background-size: 2496px 1792px;
   background-repeat: no-repeat;
