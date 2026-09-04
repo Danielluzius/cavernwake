@@ -1407,6 +1407,10 @@ input {
   --lift-17-26-row: 10;
 }
 
+[id^=position-26--from-17]:checked ~ .game .world {
+  --lift-17-26-row: 17;
+}
+
 #lift-17-26-unlocked:checked ~ .game .world {
   --lift-17-26-row: 17;
 }
@@ -1470,6 +1474,10 @@ input {
   --lift-11-27-row: 10;
 }
 
+[id^=position-27--from-11]:checked ~ .game .world {
+  --lift-11-27-row: 24;
+}
+
 #lift-11-27-unlocked:checked ~ .game .world {
   --lift-11-27-row: 24;
 }
@@ -1531,6 +1539,10 @@ input {
 
 .world {
   --lift-10-36-row: 3;
+}
+
+[id^=position-36--from-10]:checked ~ .game .world {
+  --lift-10-36-row: 24;
 }
 
 #lift-10-36-unlocked:checked ~ .game .world {
