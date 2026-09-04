@@ -5720,7 +5720,6 @@ input {
   display: flex;
 }
 
-#position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--up[data-position="14"],
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--right[data-position="14"],
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
