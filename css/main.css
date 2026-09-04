@@ -5193,6 +5193,25 @@ input {
   transition: opacity 0s 2s, visibility 0s 2s;
 }
 
+@keyframes lift-call-wait {
+  from, to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+#lift-17-26-unlocked:checked ~ .game .direction-controls__button--right[data-position="25"] {
+  animation: lift-call-wait 2s;
+}
+
+#lift-11-27-unlocked:checked ~ .game .direction-controls__button--left[data-position="28"] {
+  animation: lift-call-wait 3s;
+}
+
+#lift-10-36-unlocked:checked ~ .game .direction-controls__button--right[data-position="35"] {
+  animation: lift-call-wait 4s;
+}
+
 .title-screen {
   display: none;
   position: fixed;
