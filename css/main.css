@@ -1298,7 +1298,9 @@ input {
   left: 1120px;
   top: 704px;
   z-index: 40;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0s, visibility 0s;
 }
 
 .lift-rope,
@@ -1581,6 +1583,7 @@ input {
   transition: transform 0.6s ease-in-out;
   will-change: transform;
   z-index: 30;
+  pointer-events: none;
 }
 
 .player__sprite {
@@ -5469,7 +5472,9 @@ input {
 #position-1:checked ~ #intro-7:checked ~ .game .player .lamp-glow,
 #position-1:checked ~ #intro-8:checked ~ .game .player .lamp-glow,
 #position-1:checked ~ #intro-9:checked ~ .game .player .lamp-glow {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0s, visibility 0s;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .lamp-glow--backpack,
@@ -5478,7 +5483,21 @@ input {
 #position-1:checked ~ #intro-7:checked ~ .game .lamp-glow--backpack,
 #position-1:checked ~ #intro-8:checked ~ .game .lamp-glow--backpack,
 #position-1:checked ~ #intro-9:checked ~ .game .lamp-glow--backpack {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0s, visibility 0s;
+}
+
+#position-1:checked ~ #intro-10:checked ~ .game .player .lamp-glow {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#position-1:checked ~ #intro-10:checked ~ .game .lamp-glow--backpack {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .player__sprite {
