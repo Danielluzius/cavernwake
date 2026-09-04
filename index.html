@@ -88,6 +88,7 @@
          the top and the walk button leading to the bottom station stays
          hidden — see lift-gate() in scss/components/_components.scss.
          Shaft 6<->14 has no gate: it's where the intro drops the player. -->
+    <input type="checkbox" id="lift-6-14-unlocked" class="world-position-input" />
     <input type="checkbox" id="lift-17-26-unlocked" class="world-position-input" />
     <input type="checkbox" id="lift-11-27-unlocked" class="world-position-input" />
     <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
@@ -308,8 +309,7 @@
                              each shaft's bottom station. -->
                         <div class="lift-rope"></div>
                         <div class="lift-basket"></div>
-
-                        <div class="lift-rope--17-26"></div>
+        <label class="lift-call-button" for="lift-6-14-unlocked"></label>
                         <div class="lift-basket--17-26"></div>
                         <label class="lift-call-button--17-26" for="lift-17-26-unlocked"></label>
 
