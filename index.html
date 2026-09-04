@@ -82,6 +82,16 @@
     <input type="checkbox" id="debug-grid" class="world-position-input" checked />
     <input type="checkbox" id="debug-colors" class="world-position-input" />
 
+    <!-- One-way activation per lift shaft (see scss/world/_lift.scss and
+         vars.$lifts): stays checked forever once that shaft's call button
+         is clicked, never needs to be reset. Until then the car idles at
+         the top and the walk button leading to the bottom station stays
+         hidden — see lift-gate() in scss/components/_components.scss.
+         Shaft 6<->14 has no gate: it's where the intro drops the player. -->
+    <input type="checkbox" id="lift-17-26-unlocked" class="world-position-input" />
+    <input type="checkbox" id="lift-11-27-unlocked" class="world-position-input" />
+    <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
+
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
          base/_variables.scss) — exactly one is ever checked. Position 1
@@ -290,15 +300,26 @@
                              scss/intro/_intro.scss. -->
                         <label class="story-object story-object--backpack" for="intro-10"></label>
 
-                        <!-- First lift PoC, shaft 6<->14 (see scss/world/_lift.scss)
-                             — rope + tub, both behind the player. -->
+                        <!-- Lift shafts (see scss/world/_lift.scss) — rope
+                             + tub per shaft, both behind the player; the
+                             tub's front rim sits in the foreground layer
+                             further below. Call buttons are the one-way
+                             activation labels, placed automatically beside
+                             each shaft's bottom station. -->
                         <div class="lift-rope"></div>
                         <div class="lift-basket"></div>
 
-                        <!-- Second lift, shaft 17<->26 (see scss/world/_lift.scss)
-                             — rope + tub, both behind the player. -->
                         <div class="lift-rope--17-26"></div>
                         <div class="lift-basket--17-26"></div>
+                        <label class="lift-call-button--17-26" for="lift-17-26-unlocked"></label>
+
+                        <div class="lift-rope--11-27"></div>
+                        <div class="lift-basket--11-27"></div>
+                        <label class="lift-call-button--11-27" for="lift-11-27-unlocked"></label>
+
+                        <div class="lift-rope--10-36"></div>
+                        <div class="lift-basket--10-36"></div>
+                        <label class="lift-call-button--10-36" for="lift-10-36-unlocked"></label>
                     </div>
 
                     <div class="player">
@@ -322,6 +343,8 @@
                              character stands inside the basket. -->
                         <div class="lift-door"></div>
                         <div class="lift-door--17-26"></div>
+                        <div class="lift-door--11-27"></div>
+                        <div class="lift-door--10-36"></div>
                     </div>
 
                     <!-- NOT nested inside .world-layer--objects (see

@@ -1314,7 +1314,7 @@ input {
 
 .lift-rope {
   top: 192px;
-  height: 0;
+  height: calc((var(--lift-6-14-row) - 3) * 64px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
   background-size: 64px 64px;
@@ -1322,42 +1322,26 @@ input {
 }
 
 .lift-basket {
-  top: 192px;
+  top: calc(var(--lift-6-14-row) * 64px);
   height: 128px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door {
-  top: 256px;
+  top: calc((var(--lift-6-14-row) + 1) * 64px);
   height: 64px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
 }
 
-#position-14:checked ~ .game .lift-rope,
-#position-14--from-6--right:checked ~ .game .lift-rope,
-#position-14--from-6--left:checked ~ .game .lift-rope,
-#position-14--from-13:checked ~ .game .lift-rope,
-#position-14--from-15:checked ~ .game .lift-rope {
-  height: 448px;
+.world {
+  --lift-6-14-row: 10;
 }
 
-#position-14:checked ~ .game .lift-basket,
-#position-14--from-6--right:checked ~ .game .lift-basket,
-#position-14--from-6--left:checked ~ .game .lift-basket,
-#position-14--from-13:checked ~ .game .lift-basket,
-#position-14--from-15:checked ~ .game .lift-basket {
-  top: 640px;
-}
-
-#position-14:checked ~ .game .lift-door,
-#position-14--from-6--right:checked ~ .game .lift-door,
-#position-14--from-6--left:checked ~ .game .lift-door,
-#position-14--from-13:checked ~ .game .lift-door,
-#position-14--from-15:checked ~ .game .lift-door {
-  top: 704px;
+:is(#position-6, [id^=position-6--], #position-5, [id^=position-5--], #position-4, [id^=position-4--], #position-3, [id^=position-3--], #position-2, [id^=position-2--], #position-1, [id^=position-1--]):checked ~ .game .world {
+  --lift-6-14-row: 3;
 }
 
 .lift-rope--17-26,
@@ -1373,7 +1357,7 @@ input {
 
 .lift-rope--17-26 {
   top: 640px;
-  height: 0;
+  height: calc((var(--lift-17-26-row) - 10) * 64px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
   background-size: 64px 64px;
@@ -1381,39 +1365,166 @@ input {
 }
 
 .lift-basket--17-26 {
-  top: 640px;
+  top: calc(var(--lift-17-26-row) * 64px);
   height: 128px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door--17-26 {
-  top: 704px;
+  top: calc((var(--lift-17-26-row) + 1) * 64px);
   height: 64px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
 }
 
-#position-26:checked ~ .game .lift-rope--17-26,
-#position-26--from-25:checked ~ .game .lift-rope--17-26,
-#position-26--from-17--right:checked ~ .game .lift-rope--17-26,
-#position-26--from-17--left:checked ~ .game .lift-rope--17-26 {
-  height: 448px;
+.world {
+  --lift-17-26-row: 10;
 }
 
-#position-26:checked ~ .game .lift-basket--17-26,
-#position-26--from-25:checked ~ .game .lift-basket--17-26,
-#position-26--from-17--right:checked ~ .game .lift-basket--17-26,
-#position-26--from-17--left:checked ~ .game .lift-basket--17-26 {
-  top: 1088px;
+#lift-17-26-unlocked:checked ~ .game .world {
+  --lift-17-26-row: 17;
 }
 
-#position-26:checked ~ .game .lift-door--17-26,
-#position-26--from-25:checked ~ .game .lift-door--17-26,
-#position-26--from-17--right:checked ~ .game .lift-door--17-26,
-#position-26--from-17--left:checked ~ .game .lift-door--17-26 {
+#lift-17-26-unlocked:checked ~ :is(#position-17, [id^=position-17--], #position-18, [id^=position-18--], #position-16, [id^=position-16--], #position-8, [id^=position-8--], #position-7, [id^=position-7--]):checked ~ .game .world {
+  --lift-17-26-row: 10;
+}
+
+.lift-call-button--17-26 {
+  position: absolute;
+  left: 1728px;
   top: 1152px;
+  width: 64px;
+  height: 64px;
+  background-color: #b33;
+  cursor: pointer;
+}
+
+#lift-17-26-unlocked:checked ~ .game .lift-call-button--17-26 {
+  background-color: #3b3;
+}
+
+.lift-rope--11-27,
+.lift-basket--11-27,
+.lift-door--11-27 {
+  position: absolute;
+  left: 256px;
+  width: 64px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.lift-rope--11-27 {
+  top: 640px;
+  height: calc((var(--lift-11-27-row) - 10) * 64px);
+  background-image: url("../assets/objects/lift/rope.png");
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+  transition: height 3s ease-in-out;
+}
+
+.lift-basket--11-27 {
+  top: calc(var(--lift-11-27-row) * 64px);
+  height: 128px;
+  background-image: url("../assets/objects/lift/basked.png");
+  transition: top 3s ease-in-out;
+}
+
+.lift-door--11-27 {
+  top: calc((var(--lift-11-27-row) + 1) * 64px);
+  height: 64px;
+  background-image: url("../assets/objects/lift/basked-door.png");
+  transition: top 3s ease-in-out;
+  pointer-events: none;
+}
+
+.world {
+  --lift-11-27-row: 10;
+}
+
+#lift-11-27-unlocked:checked ~ .game .world {
+  --lift-11-27-row: 24;
+}
+
+#lift-11-27-unlocked:checked ~ :is(#position-11, [id^=position-11--], #position-12, [id^=position-12--]):checked ~ .game .world {
+  --lift-11-27-row: 10;
+}
+
+.lift-call-button--11-27 {
+  position: absolute;
+  left: 320px;
+  top: 1600px;
+  width: 64px;
+  height: 64px;
+  background-color: #b33;
+  cursor: pointer;
+}
+
+#lift-11-27-unlocked:checked ~ .game .lift-call-button--11-27 {
+  background-color: #3b3;
+}
+
+.lift-rope--10-36,
+.lift-basket--10-36,
+.lift-door--10-36 {
+  position: absolute;
+  left: 2176px;
+  width: 64px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.lift-rope--10-36 {
+  top: 192px;
+  height: calc((var(--lift-10-36-row) - 3) * 64px);
+  background-image: url("../assets/objects/lift/rope.png");
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+  transition: height 4s ease-in-out;
+}
+
+.lift-basket--10-36 {
+  top: calc(var(--lift-10-36-row) * 64px);
+  height: 128px;
+  background-image: url("../assets/objects/lift/basked.png");
+  transition: top 4s ease-in-out;
+}
+
+.lift-door--10-36 {
+  top: calc((var(--lift-10-36-row) + 1) * 64px);
+  height: 64px;
+  background-image: url("../assets/objects/lift/basked-door.png");
+  transition: top 4s ease-in-out;
+  pointer-events: none;
+}
+
+.world {
+  --lift-10-36-row: 3;
+}
+
+#lift-10-36-unlocked:checked ~ .game .world {
+  --lift-10-36-row: 24;
+}
+
+#lift-10-36-unlocked:checked ~ :is(#position-10, [id^=position-10--], #position-9, [id^=position-9--]):checked ~ .game .world {
+  --lift-10-36-row: 3;
+}
+
+.lift-call-button--10-36 {
+  position: absolute;
+  left: 2112px;
+  top: 1600px;
+  width: 64px;
+  height: 64px;
+  background-color: #b33;
+  cursor: pointer;
+}
+
+#lift-10-36-unlocked:checked ~ .game .lift-call-button--10-36 {
+  background-color: #3b3;
 }
 
 .player {
@@ -3679,7 +3790,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
+#lift-17-26-unlocked:checked ~ #position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3728,7 +3839,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
+#lift-11-27-unlocked:checked ~ #position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3819,7 +3930,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
+#lift-10-36-unlocked:checked ~ #position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4414,7 +4525,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
+#lift-17-26-unlocked:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4512,7 +4623,7 @@ input {
   transition: opacity 0s 2s, visibility 0s 2s;
 }
 
-#position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
+#lift-17-26-unlocked:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4554,7 +4665,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
+#lift-11-27-unlocked:checked ~ #position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4617,7 +4728,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
+#lift-11-27-unlocked:checked ~ #position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4708,7 +4819,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
+#lift-17-26-unlocked:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4750,7 +4861,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
+#lift-10-36-unlocked:checked ~ #position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4827,7 +4938,7 @@ input {
   transition: opacity 0s 4s, visibility 0s 4s;
 }
 
-#position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
+#lift-10-36-unlocked:checked ~ #position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
