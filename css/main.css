@@ -1360,6 +1360,62 @@ input {
   top: 704px;
 }
 
+.lift-rope--17-26,
+.lift-basket--17-26,
+.lift-door--17-26 {
+  position: absolute;
+  left: 1792px;
+  width: 64px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.lift-rope--17-26 {
+  top: 640px;
+  height: 0;
+  background-image: url("../assets/objects/lift/rope.png");
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+  transition: height 2s ease-in-out;
+}
+
+.lift-basket--17-26 {
+  top: 640px;
+  height: 128px;
+  background-image: url("../assets/objects/lift/basked.png");
+  transition: top 2s ease-in-out;
+}
+
+.lift-door--17-26 {
+  top: 704px;
+  height: 64px;
+  background-image: url("../assets/objects/lift/basked-door.png");
+  transition: top 2s ease-in-out;
+  pointer-events: none;
+}
+
+#position-26:checked ~ .game .lift-rope--17-26,
+#position-26--from-25:checked ~ .game .lift-rope--17-26,
+#position-26--from-17--right:checked ~ .game .lift-rope--17-26,
+#position-26--from-17--left:checked ~ .game .lift-rope--17-26 {
+  height: 448px;
+}
+
+#position-26:checked ~ .game .lift-basket--17-26,
+#position-26--from-25:checked ~ .game .lift-basket--17-26,
+#position-26--from-17--right:checked ~ .game .lift-basket--17-26,
+#position-26--from-17--left:checked ~ .game .lift-basket--17-26 {
+  top: 1088px;
+}
+
+#position-26:checked ~ .game .lift-door--17-26,
+#position-26--from-25:checked ~ .game .lift-door--17-26,
+#position-26--from-17--right:checked ~ .game .lift-door--17-26,
+#position-26--from-17--left:checked ~ .game .lift-door--17-26 {
+  top: 1152px;
+}
+
 .player {
   position: absolute;
   top: 50%;
