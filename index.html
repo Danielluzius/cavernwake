@@ -68,6 +68,21 @@
     <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
     <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
     <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+    <!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
+         and the three vine barrier states (see scss/world/_obstacles.scss) —
+         only referenced inside @keyframes/background-image, same first-use
+         flash reasoning as everything else here. -->
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-with-sickle.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-gone.png" />
 </head>
 
 <body>
@@ -92,6 +107,29 @@
     <input type="checkbox" id="lift-17-26-unlocked" class="world-position-input" />
     <input type="checkbox" id="lift-11-27-unlocked" class="world-position-input" />
     <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
+
+    <!-- Vine barriers (node 24, node 30 — node 30's also holds the sickle).
+         ONE radio group per barrier and nothing else: every WEITER button
+         only ever advances its own group, so radio exclusivity closes the
+         previous dialogue for free and no step can be left behind checked.
+         Resting states are ordinary steps in that same group (-idle,
+         -armed, -done), NOT separate checkboxes — that split is what used
+         to strand #vine30-found checked forever and pin the player.
+         "Sickle in possession" is therefore just "node 30 is at -armed or
+         later", see scss/world/_obstacles.scss. -->
+    <input type="radio" name="vine24-step" id="vine24-idle" class="world-position-input" checked />
+    <input type="radio" name="vine24-step" id="vine24-blocked" class="world-position-input" />
+    <input type="radio" name="vine24-step" id="vine24-cut-prompt" class="world-position-input" />
+    <input type="radio" name="vine24-step" id="vine24-cutting" class="world-position-input" />
+    <input type="radio" name="vine24-step" id="vine24-done" class="world-position-input" />
+
+    <input type="radio" name="vine30-step" id="vine30-idle" class="world-position-input" checked />
+    <input type="radio" name="vine30-step" id="vine30-blocked" class="world-position-input" />
+    <input type="radio" name="vine30-step" id="vine30-pickup" class="world-position-input" />
+    <input type="radio" name="vine30-step" id="vine30-armed" class="world-position-input" />
+    <input type="radio" name="vine30-step" id="vine30-cut-prompt" class="world-position-input" />
+    <input type="radio" name="vine30-step" id="vine30-cutting" class="world-position-input" />
+    <input type="radio" name="vine30-step" id="vine30-done" class="world-position-input" />
 
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
@@ -321,10 +359,25 @@
                         <div class="lift-rope--10-36"></div>
                         <div class="lift-basket--10-36"></div>
                         <label class="lift-call-button--10-36" for="lift-10-36-unlocked"></label>
+
+                        <!-- Two stacked labels per barrier: the visible one
+                             starts the "no sickle yet" branch, the
+                             invisible twin the "cut it" branch. Only ever
+                             one of them is pointer-events: auto (see
+                             scss/world/_obstacles.scss) — that flip is the
+                             only way CSS can express an if/else on click. -->
+                        <label class="object object--vines-24" for="vine24-blocked"></label>
+                        <label class="object object--vines-24-cut" for="vine24-cut-prompt"></label>
+                        <label class="object object--vines-30" for="vine30-blocked"></label>
+                        <label class="object object--vines-30-cut" for="vine30-cut-prompt"></label>
                     </div>
 
                     <div class="player">
                         <div class="player__sprite"></div>
+
+                        <!-- One-shot interaction poses play here, not on
+                             .player__sprite — see scss/player/_player.scss. -->
+                        <div class="player__action"></div>
 
                         <!-- The character's own light source (see
                              player/_player.scss) — moves with .player for
@@ -346,6 +399,14 @@
                         <div class="lift-door--17-26"></div>
                         <div class="lift-door--11-27"></div>
                         <div class="lift-door--10-36"></div>
+
+                        <!-- Cut-vines twin, rendered above the player once
+                             a barrier is permanently resolved (see
+                             scss/world/_obstacles.scss) so walking through
+                             the gap looks like passing behind the
+                             remaining vine stubs, not in front of them. -->
+                        <div class="object object--vines-24-gone"></div>
+                        <div class="object object--vines-30-gone"></div>
                     </div>
 
                     <!-- NOT nested inside .world-layer--objects (see
@@ -459,6 +520,55 @@
                     <div class="dialogue__box">
                         <p class="dialogue__text">step=10</p>
                         <label class="dialogue__button" for="intro-11">WEITER</label>
+                    </div>
+                </div>
+
+                <!-- Vine barrier / sickle dialogue boxes, see scss/world/_obstacles.scss
+                     for which step reveals which box. Placeholder copy only (named after
+                     their own [data-step]); every WEITER points at the next step of the
+                     SAME radio group, which is what closes the box it sits in.
+                     vine24-blocked is the one that loops back to -idle on purpose: the
+                     "I need a tool" hint stays readable as often as you like. -->
+                <div class="dialogue" data-step="vine24-blocked">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine24-blocked</p>
+                        <label class="dialogue__button" for="vine24-idle">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine24-cut-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine24-cut-prompt</p>
+                        <label class="dialogue__button" for="vine24-cutting">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine24-cut-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine24-cut-confirm</p>
+                        <label class="dialogue__button" for="vine24-done">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine30-blocked">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine30-blocked</p>
+                        <label class="dialogue__button" for="vine30-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine30-found">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine30-found</p>
+                        <label class="dialogue__button" for="vine30-armed">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine30-cut-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine30-cut-prompt</p>
+                        <label class="dialogue__button" for="vine30-cutting">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="vine30-cut-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">vine30-cut-confirm</p>
+                        <label class="dialogue__button" for="vine30-done">WEITER</label>
                     </div>
                 </div>
                 <!-- Dimmed placeholders (always present, define the ring's

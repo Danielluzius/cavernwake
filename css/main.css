@@ -1600,6 +1600,17 @@ input {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
+.player__action {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  opacity: 0;
+}
+
 #position-2--from-1:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
   animation: player-walk-from-1-to-2 0.6s steps(1, end) 2;
@@ -3421,6 +3432,34 @@ input {
     background-image: url("../assets/characters/with-backpack/climb/frame_005.png");
   }
 }
+@keyframes player-sickle-swing {
+  0% {
+    background-image: url("../assets/characters/with-backpack/use-item/sickle/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/use-item/sickle/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/use-item/sickle/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/use-item/sickle/frame_004.png");
+  }
+}
+@keyframes player-sickle-pickup {
+  0% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_004.png");
+  }
+}
 .ui {
   position: absolute;
   top: 0;
@@ -3821,7 +3860,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
+#vine24-done:checked ~ #position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3849,7 +3888,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
+#vine24-done:checked ~ #position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3912,7 +3951,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
+#vine30-done:checked ~ #position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3933,7 +3972,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
+#vine30-done:checked ~ #position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4458,7 +4497,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
+#vine30-done:checked ~ #position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4542,7 +4581,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
+#vine24-done:checked ~ #position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4584,7 +4623,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
+#vine24-done:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4633,7 +4672,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
+#vine24-done:checked ~ #position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4675,7 +4714,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
+#vine24-done:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4745,7 +4784,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
+#vine30-done:checked ~ #position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4801,7 +4840,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
+#vine30-done:checked ~ #position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4836,7 +4875,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
+#vine30-done:checked ~ #position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4857,7 +4896,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-31--from-32:checked ~ .game .direction-controls__button--left[data-position="31"] {
+#vine30-done:checked ~ #position-31--from-32:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4878,7 +4917,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
+#vine24-done:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5292,6 +5331,212 @@ input {
   border: 2px solid #fff;
   cursor: pointer;
   user-select: none;
+}
+
+@keyframes dialogue-show-after-delay {
+  to {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+.object--vines-24,
+.object--vines-24-cut,
+.object--vines-24-gone {
+  position: absolute;
+  left: 1472px;
+  top: 960px;
+  width: 64px;
+  height: 256px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--vines-24-gone {
+  background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  opacity: 0;
+}
+
+#vine24-done:checked ~ .game .object--vines-24-gone {
+  opacity: 1;
+}
+
+@keyframes vine24-cut-swap {
+  to {
+    background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  }
+}
+#vine24-cutting:checked ~ .game .object--vines-24 {
+  animation: vine24-cut-swap 0s 0.6s forwards;
+}
+
+#vine24-done:checked ~ .game .object--vines-24 {
+  background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  opacity: 0;
+}
+
+:is(#vine24-blocked, #vine24-cut-prompt, #vine24-cutting):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+:is(#vine24-blocked, #vine24-cut-prompt, #vine24-cutting):checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#vine24-cutting:checked ~ .game .player__action {
+  animation: player-sickle-swing 0.6s steps(1, end);
+}
+
+:is(#vine24-blocked, #vine24-cut-prompt, #vine24-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#vine24-blocked:checked ~ .game .dialogue[data-step=vine24-blocked] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#vine24-cut-prompt:checked ~ .game .dialogue[data-step=vine24-cut-prompt] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#vine24-cutting:checked ~ .game .dialogue[data-step=vine24-cut-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+.object--vines-30,
+.object--vines-30-cut,
+.object--vines-30-gone {
+  position: absolute;
+  left: 896px;
+  top: 1408px;
+  width: 64px;
+  height: 256px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--vines-30-gone {
+  background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  opacity: 0;
+}
+
+#vine30-done:checked ~ .game .object--vines-30-gone {
+  opacity: 1;
+}
+
+@keyframes vine30-cut-swap {
+  to {
+    background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  }
+}
+#vine30-cutting:checked ~ .game .object--vines-30 {
+  animation: vine30-cut-swap 0s 0.6s forwards;
+}
+
+#vine30-done:checked ~ .game .object--vines-30 {
+  background-image: url("../assets/world/obstacles/obstacle-vines-gone.png");
+  opacity: 0;
+}
+
+:is(#vine30-blocked, #vine30-pickup, #vine30-cut-prompt, #vine30-cutting):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+:is(#vine30-blocked, #vine30-pickup, #vine30-cut-prompt, #vine30-cutting):checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#vine30-cutting:checked ~ .game .player__action {
+  animation: player-sickle-swing 0.6s steps(1, end);
+}
+
+:is(#vine30-armed, #vine30-done):checked ~ #position-30--from-21:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+:is(#vine30-blocked, #vine30-pickup, #vine30-cut-prompt, #vine30-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#vine30-blocked:checked ~ .game .dialogue[data-step=vine30-blocked] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#vine30-cut-prompt:checked ~ .game .dialogue[data-step=vine30-cut-prompt] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#vine30-cutting:checked ~ .game .dialogue[data-step=vine30-cut-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+.object--vines-24 {
+  background-image: url("../assets/world/obstacles/obstacle-vines.png");
+}
+
+#vine24-idle:checked ~ :is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked ~ .game .object--vines-24,
+#vine24-idle:checked ~ :is(#vine30-armed,
+#vine30-cut-prompt,
+#vine30-cutting,
+#vine30-done):checked ~ .game .object--vines-24-cut {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.object--vines-30 {
+  background-image: url("../assets/world/obstacles/obstacle-vines-with-sickle.png");
+}
+
+@keyframes vine30-pickup-swap {
+  to {
+    background-image: url("../assets/world/obstacles/obstacle-vines.png");
+  }
+}
+#vine30-pickup:checked ~ .game .object--vines-30 {
+  animation: vine30-pickup-swap 0s 0.6s forwards;
+}
+
+:is(#vine30-armed, #vine30-cut-prompt, #vine30-cutting):checked ~ .game .object--vines-30 {
+  background-image: url("../assets/world/obstacles/obstacle-vines.png");
+}
+
+#vine30-pickup:checked ~ .game .player__action {
+  animation: player-sickle-pickup 0.6s steps(1, end);
+}
+
+#vine30-pickup:checked ~ .game .dialogue[data-step=vine30-found] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+#vine30-idle:checked ~ .game .object--vines-30,
+#vine30-armed:checked ~ .game .object--vines-30-cut {
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .dev-controls__button--intro-start {
