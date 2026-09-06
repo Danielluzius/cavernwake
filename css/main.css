@@ -3790,7 +3790,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3818,7 +3818,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3930,7 +3930,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3958,7 +3958,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4434,7 +4434,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4462,7 +4462,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4504,14 +4504,14 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4560,7 +4560,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4749,7 +4749,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4791,7 +4791,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4826,7 +4826,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4847,7 +4847,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4882,7 +4882,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5537,6 +5537,62 @@ input {
 #vine30-armed:checked ~ .game .object--vines-30-cut {
   pointer-events: auto;
   cursor: pointer;
+}
+
+.object--waterfall {
+  position: absolute;
+  left: 576px;
+  top: 960px;
+  width: 192px;
+  height: 832px;
+  background-image: url("../assets/world/obstacles/waterfall/waterfall-base.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#lever7-done:checked ~ .game .object--waterfall {
+  opacity: 0;
+}
+
+.object--lever {
+  position: absolute;
+  left: 1344px;
+  top: 192px;
+  pointer-events: none;
+}
+
+#lever7-idle:checked ~ .game .object--lever {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#lever7-done:checked ~ .game .object--lever .object__placeholder {
+  opacity: 0.4;
+}
+
+#lever7-confirm:checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#lever7-confirm:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#lever7-confirm:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#lever7-confirm:checked ~ .game .viewport {
+  animation: intro-screen-shake 0.4s ease-in-out infinite;
+}
+
+#lever7-confirm:checked ~ .game .dialogue[data-step=lever7-confirm] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .dev-controls__button--intro-start {
