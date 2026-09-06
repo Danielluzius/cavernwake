@@ -88,6 +88,20 @@
     <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_002.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_003.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_004.png" />
+    <!-- Pickaxe pickup + swing frames and the four before/after object states
+         (see scss/world/_pickaxe.scss, scss/world/_rock.scss). -->
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pikeaxe/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pikeaxe/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pikeaxe/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pikeaxe/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/pikeaxe-before.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/pikeaxe-after.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-before.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-after.png" />
 </head>
 
 <body>
@@ -143,6 +157,22 @@
     <input type="radio" name="lever7-step" id="lever7-idle" class="world-position-input" checked />
     <input type="radio" name="lever7-step" id="lever7-confirm" class="world-position-input" />
     <input type="radio" name="lever7-step" id="lever7-done" class="world-position-input" />
+
+    <!-- Pickaxe pickup left of node 19 (scss/world/_pickaxe.scss) and the
+         rock barrier it opens between node 34 and 35
+         (scss/world/_rock.scss). "Player has the pickaxe" is not a flag but
+         simply "pickaxe-step is at -armed", which is what decides which of
+         the rock's two stacked labels is clickable. -->
+    <input type="radio" name="pickaxe-step" id="pickaxe-idle" class="world-position-input" checked />
+    <input type="radio" name="pickaxe-step" id="pickaxe-prompt" class="world-position-input" />
+    <input type="radio" name="pickaxe-step" id="pickaxe-pickup" class="world-position-input" />
+    <input type="radio" name="pickaxe-step" id="pickaxe-armed" class="world-position-input" />
+
+    <input type="radio" name="rock-step" id="rock-idle" class="world-position-input" checked />
+    <input type="radio" name="rock-step" id="rock-blocked" class="world-position-input" />
+    <input type="radio" name="rock-step" id="rock-cut-prompt" class="world-position-input" />
+    <input type="radio" name="rock-step" id="rock-cutting" class="world-position-input" />
+    <input type="radio" name="rock-step" id="rock-done" class="world-position-input" />
 
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
@@ -393,6 +423,15 @@
                         <label class="object object--lever" for="lever7-confirm">
                             <div class="object__placeholder"></div>
                         </label>
+
+                        <!-- Pickaxe pickup (scss/world/_pickaxe.scss) and
+                             the rock barrier (scss/world/_rock.scss); the
+                             rock uses the same two-stacked-labels trick as
+                             the vines, gated on the pickaxe instead of the
+                             sickle. -->
+                        <label class="object object--pickaxe" for="pickaxe-prompt"></label>
+                        <label class="object object--rock" for="rock-blocked"></label>
+                        <label class="object object--rock-cut" for="rock-cut-prompt"></label>
                     </div>
 
                     <div class="player">
@@ -430,6 +469,10 @@
                              remaining vine stubs, not in front of them. -->
                         <div class="object object--vines-24-gone"></div>
                         <div class="object object--vines-30-gone"></div>
+
+                        <!-- Broken-rock twin, same reasoning (see
+                             scss/world/_rock.scss). -->
+                        <div class="object object--rock-gone"></div>
 
                         <!-- Waterfall barrier, see scss/world/_waterfall.scss.
                              In front of the player on purpose, removed for
@@ -603,6 +646,36 @@
                     <div class="dialogue__box">
                         <p class="dialogue__text">lever7-confirm</p>
                         <label class="dialogue__button" for="lever7-done">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="pickaxe-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">pickaxe-prompt</p>
+                        <label class="dialogue__button" for="pickaxe-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="pickaxe-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">pickaxe-confirm</p>
+                        <label class="dialogue__button" for="pickaxe-armed">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="rock-blocked">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">rock-blocked</p>
+                        <label class="dialogue__button" for="rock-idle">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="rock-cut-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">rock-cut-prompt</p>
+                        <label class="dialogue__button" for="rock-cutting">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="rock-cut-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">rock-cut-confirm</p>
+                        <label class="dialogue__button" for="rock-done">WEITER</label>
                     </div>
                 </div>
                 <!-- Dimmed placeholders (always present, define the ring's
