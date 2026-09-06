@@ -102,6 +102,16 @@
     <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/pikeaxe-after.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-before.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-after.png" />
+    <!-- Shovel pickup + swing frames and the four before/after mud states
+         (see scss/world/_shovel.scss, scss/world/_mud.scss). -->
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/mud/shovel-before.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/mud/shovel-after.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-before.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-after.png" />
 </head>
 
 <body>
@@ -173,6 +183,21 @@
     <input type="radio" name="rock-step" id="rock-cut-prompt" class="world-position-input" />
     <input type="radio" name="rock-step" id="rock-cutting" class="world-position-input" />
     <input type="radio" name="rock-step" id="rock-done" class="world-position-input" />
+
+    <!-- Shovel pickup left of node 9 (scss/world/_shovel.scss) and the mud
+         barrier it opens between node 28 and 29 (scss/world/_mud.scss) —
+         same pattern as pickaxe/rock above. -->
+    <input type="radio" name="shovel-step" id="shovel-idle" class="world-position-input" checked />
+    <input type="radio" name="shovel-step" id="shovel-prompt" class="world-position-input" />
+    <input type="radio" name="shovel-step" id="shovel-pickup" class="world-position-input" />
+    <input type="radio" name="shovel-step" id="shovel-armed" class="world-position-input" />
+
+    <input type="radio" name="mud-step" id="mud-idle" class="world-position-input" checked />
+    <input type="radio" name="mud-step" id="mud-blocked" class="world-position-input" />
+    <input type="radio" name="mud-step" id="mud-blocked-2" class="world-position-input" />
+    <input type="radio" name="mud-step" id="mud-cut-prompt" class="world-position-input" />
+    <input type="radio" name="mud-step" id="mud-cutting" class="world-position-input" />
+    <input type="radio" name="mud-step" id="mud-done" class="world-position-input" />
 
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
@@ -432,6 +457,13 @@
                         <label class="object object--pickaxe" for="pickaxe-prompt"></label>
                         <label class="object object--rock" for="rock-blocked"></label>
                         <label class="object object--rock-cut" for="rock-cut-prompt"></label>
+
+                        <!-- Shovel pickup (scss/world/_shovel.scss) and the
+                             mud barrier (scss/world/_mud.scss), same
+                             two-stacked-labels trick as the rock. -->
+                        <label class="object object--shovel" for="shovel-prompt"></label>
+                        <label class="object object--mud" for="mud-blocked"></label>
+                        <label class="object object--mud-cut" for="mud-cut-prompt"></label>
                     </div>
 
                     <div class="player">
@@ -473,6 +505,10 @@
                         <!-- Broken-rock twin, same reasoning (see
                              scss/world/_rock.scss). -->
                         <div class="object object--rock-gone"></div>
+
+                        <!-- Cleared-mud twin, same reasoning (see
+                             scss/world/_mud.scss). -->
+                        <div class="object object--mud-gone"></div>
 
                         <!-- Waterfall barrier, see scss/world/_waterfall.scss.
                              In front of the player on purpose, removed for
@@ -676,6 +712,42 @@
                     <div class="dialogue__box">
                         <p class="dialogue__text">rock-cut-confirm</p>
                         <label class="dialogue__button" for="rock-done">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="shovel-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">shovel-prompt</p>
+                        <label class="dialogue__button" for="shovel-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="shovel-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">shovel-confirm</p>
+                        <label class="dialogue__button" for="shovel-armed">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="mud-blocked">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">mud-blocked</p>
+                        <label class="dialogue__button" for="mud-blocked-2">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="mud-blocked-2">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">mud-blocked-2</p>
+                        <label class="dialogue__button" for="mud-idle">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="mud-cut-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">mud-cut-prompt</p>
+                        <label class="dialogue__button" for="mud-cutting">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="mud-cut-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">mud-cut-confirm</p>
+                        <label class="dialogue__button" for="mud-done">WEITER</label>
                     </div>
                 </div>
                 <!-- Dimmed placeholders (always present, define the ring's
