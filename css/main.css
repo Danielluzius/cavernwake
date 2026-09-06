@@ -5539,19 +5539,62 @@ input {
   cursor: pointer;
 }
 
+:is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked ~ .game .direction-controls__button--down[data-position="21"][data-arrival=post],
+:is(#vine30-armed, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ .game .direction-controls__button--down[data-position="21"]:not([data-arrival]) {
+  display: none;
+}
+
+#position-30--from-21--post:checked ~ .game .world {
+  --world-offset: -864px;
+  --world-offset-y: -1568px;
+  transition-duration: 1.8s;
+}
+
+#position-30--from-21--post:checked ~ .game .player {
+  transition-duration: 1.8s;
+}
+
+#position-30--from-21--post:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+  animation: player-climb-from-21-to-30 0.6s steps(1, end) 3;
+}
+
+#position-30--from-21--post:checked ~ .game .direction-controls__button--up[data-position="30"],
+#vine30-done:checked ~ #position-30--from-21--post:checked ~ .game .direction-controls__button--right[data-position="30"],
+#lever7-done:checked ~ #position-30--from-21--post:checked ~ .game .direction-controls__button--left[data-position="30"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+}
+
 .object--waterfall {
   position: absolute;
   left: 576px;
   top: 960px;
   width: 192px;
   height: 832px;
-  background-image: url("../assets/world/obstacles/waterfall/waterfall-base.png");
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
 }
 
+@keyframes waterfall-loop {
+  0%, 100% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_003.png");
+  }
+  75% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_004.png");
+  }
+}
 #lever7-done:checked ~ .game .object--waterfall {
   opacity: 0;
 }

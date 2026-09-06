@@ -84,6 +84,10 @@
     <link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-with-sickle.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-gone.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/waterfall-base.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_004.png" />
 </head>
 
 <body>
@@ -241,6 +245,9 @@
     <input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
     <input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
     <input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
+    <!-- Second arrival for the same ladder edge, used for every return AFTER
+         the sickle interaction — see scss/world/_obstacles.scss. -->
+    <input type="radio" name="position" id="position-30--from-21--post" class="world-position-input" />
     <input type="radio" name="position" id="position-20--from-21" class="world-position-input" />
     <input type="radio" name="position" id="position-23--from-22" class="world-position-input" />
     <input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
@@ -690,6 +697,8 @@
                         data-position="21" for="position-22--from-21">▶</label>
                     <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
                         data-position="21" for="position-30--from-21">▼</label>
+                    <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
+                        data-position="21" data-arrival="post" for="position-30--from-21--post">▼</label>
                     <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                         data-position="21" for="position-20--from-21">◀</label>
                     <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
