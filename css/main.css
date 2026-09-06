@@ -5756,85 +5756,6 @@ input {
   animation: dialogue-show-after-delay 0s 0.6s forwards;
 }
 
-.object--rock,
-.object--rock-cut,
-.object--rock-gone {
-  position: absolute;
-  left: 1856px;
-  top: 1472px;
-  width: 192px;
-  height: 192px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-  pointer-events: none;
-  cursor: default;
-}
-
-.object--rock {
-  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
-}
-
-:is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ #rock-idle:checked ~ .game .object--rock,
-#pickaxe-armed:checked ~ #rock-idle:checked ~ .game .object--rock-cut {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.object--rock-gone {
-  background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
-  opacity: 0;
-}
-
-#rock-done:checked ~ .game .object--rock-gone {
-  opacity: 1;
-}
-
-@keyframes rock-break-swap {
-  to {
-    background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
-  }
-}
-#rock-cutting:checked ~ .game .object--rock {
-  animation: rock-break-swap 0s 0.6s forwards;
-}
-
-#rock-done:checked ~ .game .object--rock {
-  background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
-  opacity: 0;
-}
-
-:is(#rock-blocked, #rock-cut-prompt, #rock-cutting):checked ~ .game .player__sprite {
-  opacity: 0;
-}
-
-:is(#rock-blocked, #rock-cut-prompt, #rock-cutting):checked ~ .game .player__action {
-  opacity: 1;
-  background-image: url("../assets/characters/with-backpack/base/base-right.png");
-}
-
-#rock-cutting:checked ~ .game .player__action {
-  animation: player-pickaxe-swing 0.6s steps(1, end);
-}
-
-:is(#rock-blocked, #rock-cut-prompt, #rock-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
-  display: none;
-}
-
-#rock-blocked:checked ~ .game .dialogue[data-step=rock-blocked] .dialogue__box,
-#rock-cut-prompt:checked ~ .game .dialogue[data-step=rock-cut-prompt] .dialogue__box {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-#rock-cutting:checked ~ .game .dialogue[data-step=rock-cut-confirm] .dialogue__box {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  animation: dialogue-show-after-delay 0s 0.6s forwards;
-}
-
 .object--shovel {
   position: absolute;
   left: 1920px;
@@ -5891,6 +5812,87 @@ input {
 }
 
 #shovel-pickup:checked ~ .game .dialogue[data-step=shovel-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+.object--rock,
+.object--rock-cut,
+.object--rock-gone {
+  position: absolute;
+  left: 1856px;
+  top: 1472px;
+  width: 192px;
+  height: 192px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--rock {
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+:is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ #rock-idle:checked ~ .game .object--rock,
+#pickaxe-armed:checked ~ #rock-idle:checked ~ .game .object--rock-cut {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.object--rock-gone {
+  background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
+  opacity: 0;
+}
+
+#rock-done:checked ~ .game .object--rock-gone {
+  opacity: 1;
+}
+
+@keyframes rock-clear-swap {
+  to {
+    background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
+  }
+}
+#rock-cutting:checked ~ .game .object--rock {
+  animation: rock-clear-swap 0s 0.6s forwards;
+}
+
+#rock-done:checked ~ .game .object--rock {
+  background-image: url("../assets/world/obstacles/big-rock/rock-after.png");
+  opacity: 0;
+}
+
+#rock-cutting:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#rock-cutting:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-pickaxe-swing 0.6s steps(1, end);
+}
+
+:is(#rock-blocked, #rock-cut-prompt, #rock-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#rock-blocked:checked ~ .game .dialogue[data-step=rock-blocked] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#rock-cut-prompt:checked ~ .game .dialogue[data-step=rock-cut-prompt] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#rock-cutting:checked ~ .game .dialogue[data-step=rock-cut-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -5959,8 +5961,18 @@ input {
   display: none;
 }
 
-#mud-blocked:checked ~ .game .dialogue[data-step=mud-blocked] .dialogue__box,
-#mud-blocked-2:checked ~ .game .dialogue[data-step=mud-blocked-2] .dialogue__box,
+#mud-blocked:checked ~ .game .dialogue[data-step=mud-blocked] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#mud-blocked-2:checked ~ .game .dialogue[data-step=mud-blocked-2] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 #mud-cut-prompt:checked ~ .game .dialogue[data-step=mud-cut-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
