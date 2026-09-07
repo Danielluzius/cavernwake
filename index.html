@@ -135,6 +135,13 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_006.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_007.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_008.png" />
+     <!-- Last lever: the item on the ground, the socket's empty/fitted states and
+          the two-frame fitting animation (see scss/world/_last-lever.scss). -->
+     <link rel="preload" as="image" href="./assets/objects/inventory/last-lever-item.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-before.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_002.png" />
 </head>
 
 <body>
@@ -154,8 +161,8 @@
          is clicked, never needs to be reset. Until then the car idles at
          the top and the walk button leading to the bottom station stays
          hidden — see lift-gate() in scss/components/_components.scss.
-         Shaft 6<->14 has no gate: it's where the intro drops the player. -->
-     <input type="checkbox" id="lift-6-14-unlocked" class="world-position-input" />
+         Shaft 6<->14's own unlock is not here: it is the final step of the
+         last-lever socket group further down (scss/world/_last-lever.scss). -->
      <input type="checkbox" id="lift-17-26-unlocked" class="world-position-input" />
      <input type="checkbox" id="lift-11-27-unlocked" class="world-position-input" />
      <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
@@ -258,6 +265,26 @@
      <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
+
+     <!-- The last lever: picked up in the dead end right of node 32
+         (scss/world/_tools.scss, same pattern as the bomb parts) and fitted
+         into the broken winch beside node 15 (scss/world/_last-lever.scss),
+         which repairs the 6<->14 lift. Picking it up also starts the cave
+         collapse, hence #last-lever-armed doubling as that trigger.
+         Order is load-bearing twice over: the socket reads the pickup group
+         as a preceding sibling, and #lift-6-14-unlocked has to stay ahead of
+         the position radios below because lift-gate() prefixes them with it. -->
+     <input type="radio" name="last-lever-step" id="last-lever-idle" class="world-position-input" checked />
+     <input type="radio" name="last-lever-step" id="last-lever-prompt" class="world-position-input" />
+     <input type="radio" name="last-lever-step" id="last-lever-pickup" class="world-position-input" />
+     <input type="radio" name="last-lever-step" id="last-lever-armed" class="world-position-input" />
+
+     <!-- Final step keeps the id the lift system already reads, so it must
+         stay last: anything after it would uncheck it and raise the car. -->
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-idle" class="world-position-input" checked />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-prompt" class="world-position-input" />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-using" class="world-position-input" />
+     <input type="radio" name="last-lever-socket-step" id="lift-6-14-unlocked" class="world-position-input" />
 
      <!-- Current position in the room/position graph (see
           assets/world/logic-map.png and vars.$positions in
@@ -486,7 +513,6 @@
                              each shaft's bottom station. -->
                               <div class="lift-rope"></div>
                               <div class="lift-basket"></div>
-                              <label class="lift-call-button" for="lift-6-14-unlocked"></label>
                               <div class="lift-rope--17-26"></div>
                               <div class="lift-basket--17-26"></div>
                               <label class="lift-call-button--17-26" for="lift-17-26-unlocked"></label>
@@ -555,18 +581,27 @@
                              foreground layer, which can't take clicks. -->
                               <label class="object object--stone-wall" for="wall-blocked"></label>
                               <label class="object object--stone-wall-cut" for="wall-blast-prompt"></label>
+
+                              <!-- The last lever where it lies (right of node
+                             32) and the socket it goes into (right of node
+                             15) — see scss/world/_last-lever.scss. The
+                             socket replaces this shaft's old placeholder
+                             call button. -->
+                              <label class="object object--last-lever" for="last-lever-prompt"></label>
+                              <label class="object object--last-lever-socket" for="last-lever-socket-prompt"></label>
                          </div>
 
                          <div class="player">
                               <!-- One hide-wrapper per lift shaft, nested so
                              any one of them can blank the sprite on its own.
-                             See scss/world/_lift.scss. -->
-                              <div class="player__body player__body--6-14">
-                                   <div class="player__body player__body--17-26">
-                                        <div class="player__body player__body--11-27">
-                                             <div class="player__body player__body--10-36">
-                                                  <div class="player__sprite"></div>
-                                             </div>
+                             See scss/world/_lift.scss. 6<->14 has none: its
+                             activation is an ordinary transient interaction
+                             now, so it uses .player__action like every other
+                             object (scss/world/_last-lever.scss). -->
+                              <div class="player__body player__body--17-26">
+                                   <div class="player__body player__body--11-27">
+                                        <div class="player__body player__body--10-36">
+                                             <div class="player__sprite"></div>
                                         </div>
                                    </div>
                               </div>
@@ -577,7 +612,6 @@
 
                               <!-- Reserved for the lift call buttons, one
                              overlay per shaft. -->
-                              <div class="player__call player__call--6-14"></div>
                               <div class="player__call player__call--17-26"></div>
                               <div class="player__call player__call--11-27"></div>
                               <div class="player__call player__call--10-36"></div>
@@ -966,6 +1000,32 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-confirm</p>
                             <label class="dialogue__button" for="wall-done">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="last-lever-prompt">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-prompt</p>
+                            <label class="dialogue__button" for="last-lever-pickup">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="last-lever-confirm">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-confirm</p>
+                            <label class="dialogue__button" for="last-lever-armed">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="last-lever-socket-prompt">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-socket-prompt</p>
+                            <label class="dialogue__button" for="last-lever-socket-using">WEITER</label>
+                        </div>
+                    </div>
+                    <!-- This WEITER is what actually repairs the lift: #lift-6-14-unlocked is the
+                         socket group's final step, and the car starts coming down on it. -->
+                    <div class="dialogue" data-step="last-lever-socket-confirm">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-socket-confirm</p>
+                            <label class="dialogue__button" for="lift-6-14-unlocked">WEITER</label>
                         </div>
                     </div>
                     <!-- Dimmed placeholders (always present, define the ring's

@@ -1367,40 +1367,6 @@ input {
   --lift-6-14-row: 3;
 }
 
-.lift-call-button {
-  position: absolute;
-  left: 1280px;
-  top: 640px;
-  width: 64px;
-  height: 64px;
-  cursor: pointer;
-  background-color: #b33;
-}
-
-#lift-6-14-unlocked:checked ~ .game .lift-call-button {
-  pointer-events: none;
-  cursor: default;
-  background-color: #3b3;
-}
-
-@keyframes lift-call-hide-6-14 {
-  from, to {
-    opacity: 0;
-  }
-}
-@keyframes lift-call-show-6-14 {
-  from, to {
-    opacity: 1;
-  }
-}
-#lift-6-14-unlocked:checked ~ .game .player__body--6-14 {
-  animation: lift-call-hide-6-14 0.6s steps(1, end);
-}
-
-#lift-6-14-unlocked:checked ~ .game .player__call--6-14 {
-  animation: lift-call-show-6-14 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
-}
-
 .lift-rope--17-26,
 .lift-basket--17-26,
 .lift-door--17-26 {
@@ -3646,6 +3612,14 @@ input {
   }
   75%, 100% {
     background-image: url("../assets/characters/with-backpack/interact/interact-left/frame_004.png");
+  }
+}
+@keyframes player-last-lever-use {
+  0% {
+    background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_001.png");
+  }
+  50%, 100% {
+    background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_002.png");
   }
 }
 @keyframes player-workbench-craft {
@@ -6175,6 +6149,68 @@ input {
   animation: dialogue-show-after-delay 0s 0.6s forwards;
 }
 
+.object--last-lever {
+  position: absolute;
+  left: 1280px;
+  top: 1536px;
+  width: 64px;
+  height: 64px;
+  background-image: url("../assets/objects/inventory/last-lever-item.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+}
+
+#last-lever-idle:checked ~ .game .object--last-lever {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@keyframes last-lever-take-swap {
+  to {
+    background-image: none;
+  }
+}
+#last-lever-pickup:checked ~ .game .object--last-lever {
+  animation: last-lever-take-swap 0s 0.6s forwards;
+}
+
+#last-lever-armed:checked ~ .game .object--last-lever {
+  background-image: none;
+}
+
+:is(#last-lever-prompt, #last-lever-pickup):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+:is(#last-lever-prompt, #last-lever-pickup):checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+}
+
+#last-lever-pickup:checked ~ .game .player__action {
+  animation: player-item-pickup-right 0.6s steps(1, end);
+}
+
+:is(#last-lever-prompt, #last-lever-pickup):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#last-lever-prompt:checked ~ .game .dialogue[data-step=last-lever-prompt] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#last-lever-pickup:checked ~ .game .dialogue[data-step=last-lever-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
 .object--rock,
 .object--rock-cut,
 .object--rock-gone {
@@ -6581,6 +6617,67 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 3s forwards;
+}
+
+.object--last-lever-socket {
+  position: absolute;
+  left: 1280px;
+  top: 640px;
+  width: 64px;
+  height: 64px;
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-before.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+}
+
+#last-lever-armed:checked ~ .game .object--last-lever-socket {
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png");
+}
+
+#last-lever-armed:checked ~ #last-lever-socket-idle:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_002.png");
+}
+
+#last-lever-socket-using:checked ~ .game .player__action {
+  animation: player-last-lever-use 0.6s steps(1, end);
+}
+
+:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#last-lever-socket-prompt:checked ~ .game .dialogue[data-step=last-lever-socket-prompt] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+#last-lever-armed:checked ~ .game .viewport {
+  animation: intro-screen-shake 0.4s ease-in-out infinite;
+}
+
+#debug-grid:checked ~ #last-lever-armed:checked ~ .game .viewport {
+  animation: none;
 }
 
 .dev-controls__button--intro-start {
