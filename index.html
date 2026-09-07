@@ -112,6 +112,24 @@
     <link rel="preload" as="image" href="./assets/world/obstacles/mud/shovel-after.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-before.png" />
     <link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-after.png" />
+    <!-- Bomb parts, the workbench that assembles them and the wall it opens
+         (see scss/world/_tools.scss, _workbench.scss, _stone-wall.scss). -->
+    <link rel="preload" as="image" href="./assets/objects/inventory/bomb-shell.png" />
+    <link rel="preload" as="image" href="./assets/objects/inventory/bomb-gunpowder.png" />
+    <link rel="preload" as="image" href="./assets/objects/inventory/bomb-fuse.png" />
+    <link rel="preload" as="image" href="./assets/objects/inventory/bomb.png" />
+    <link rel="preload" as="image" href="./assets/world/workbench-before.png" />
+    <link rel="preload" as="image" href="./assets/world/workbench-with-bomb.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/stone-wall/stone-wall-before.png" />
+    <link rel="preload" as="image" href="./assets/world/obstacles/stone-wall/stone-wall-after.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_001.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_002.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_003.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_004.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_005.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_006.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_007.png" />
+    <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_008.png" />
 </head>
 
 <body>
@@ -198,6 +216,41 @@
     <input type="radio" name="mud-step" id="mud-cut-prompt" class="world-position-input" />
     <input type="radio" name="mud-step" id="mud-cutting" class="world-position-input" />
     <input type="radio" name="mud-step" id="mud-done" class="world-position-input" />
+
+    <!-- The three bomb parts (scss/world/_tools.scss), the node-22 workbench
+         that turns them into the bomb (scss/world/_workbench.scss) and the
+         stone wall it blows open (scss/world/_stone-wall.scss).
+         Order is load-bearing: "all three parts collected" is a plain
+         sibling chain shell -> powder -> fuse, and the workbench and wall
+         both query the groups above them, so nothing here may be reordered. -->
+    <input type="radio" name="bomb-shell-step" id="bomb-shell-idle" class="world-position-input" checked />
+    <input type="radio" name="bomb-shell-step" id="bomb-shell-prompt" class="world-position-input" />
+    <input type="radio" name="bomb-shell-step" id="bomb-shell-pickup" class="world-position-input" />
+    <input type="radio" name="bomb-shell-step" id="bomb-shell-armed" class="world-position-input" />
+
+    <input type="radio" name="bomb-powder-step" id="bomb-powder-idle" class="world-position-input" checked />
+    <input type="radio" name="bomb-powder-step" id="bomb-powder-prompt" class="world-position-input" />
+    <input type="radio" name="bomb-powder-step" id="bomb-powder-pickup" class="world-position-input" />
+    <input type="radio" name="bomb-powder-step" id="bomb-powder-armed" class="world-position-input" />
+
+    <input type="radio" name="bomb-fuse-step" id="bomb-fuse-idle" class="world-position-input" checked />
+    <input type="radio" name="bomb-fuse-step" id="bomb-fuse-prompt" class="world-position-input" />
+    <input type="radio" name="bomb-fuse-step" id="bomb-fuse-pickup" class="world-position-input" />
+    <input type="radio" name="bomb-fuse-step" id="bomb-fuse-armed" class="world-position-input" />
+
+    <input type="radio" name="workbench-step" id="workbench-idle" class="world-position-input" checked />
+    <input type="radio" name="workbench-step" id="workbench-incomplete" class="world-position-input" />
+    <input type="radio" name="workbench-step" id="workbench-craft-prompt" class="world-position-input" />
+    <input type="radio" name="workbench-step" id="workbench-crafting" class="world-position-input" />
+    <input type="radio" name="workbench-step" id="workbench-done" class="world-position-input" />
+
+    <!-- No -blasting step on purpose: lighting the fuse checks the ordinary
+         #position-30--from-31 arrival radio instead, so the walk back to
+         node 30 comes from the position graph. See scss/world/_stone-wall.scss. -->
+    <input type="radio" name="wall-step" id="wall-idle" class="world-position-input" checked />
+    <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
+    <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
+    <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
 
     <!-- Current position in the room/position graph (see
          assets/world/logic-map.png and vars.$positions in
@@ -464,6 +517,27 @@
                         <label class="object object--shovel" for="shovel-prompt"></label>
                         <label class="object object--mud" for="mud-blocked"></label>
                         <label class="object object--mud-cut" for="mud-cut-prompt"></label>
+
+                        <!-- Bomb parts (scss/world/_tools.scss) — same
+                             pickup pattern as pickaxe/shovel, they just
+                             leave nothing behind. -->
+                        <label class="object object--bomb-shell" for="bomb-shell-prompt"></label>
+                        <label class="object object--bomb-powder" for="bomb-powder-prompt"></label>
+                        <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
+
+                        <!-- Workbench at node 22 (scss/world/_workbench.scss):
+                             the visible label is the "nothing to do here"
+                             branch, the twin the "build it" branch that only
+                             goes live once all three parts are in. -->
+                        <label class="object object--workbench" for="workbench-incomplete"></label>
+                        <label class="object object--workbench-craft" for="workbench-craft-prompt"></label>
+
+                        <!-- Stone wall between node 31 and 32
+                             (scss/world/_stone-wall.scss), same two-stacked-
+                             labels trick, gated on the finished bomb. -->
+                        <label class="object object--stone-wall" for="wall-blocked"></label>
+                        <label class="object object--stone-wall-cut" for="wall-blast-prompt"></label>
+                        <div class="object object--wall-bomb"></div>
                     </div>
 
                     <div class="player">
@@ -510,6 +584,10 @@
                              scss/world/_mud.scss). -->
                         <div class="object object--mud-gone"></div>
 
+                        <!-- Blown-open stone wall twin, same reasoning (see
+                             scss/world/_stone-wall.scss). -->
+                        <div class="object object--stone-wall-gone"></div>
+
                         <!-- Waterfall barrier, see scss/world/_waterfall.scss.
                              In front of the player on purpose, removed for
                              good once the node-7 lever is used. -->
@@ -547,6 +625,11 @@
                  screen shake) — a transformed ancestor would otherwise
                  become its containing block and shake it too. -->
             <div class="blackout"></div>
+
+            <!-- Detonation flash, sibling of .viewport for the exact same
+                 reason as .blackout above — it fires while .viewport is
+                 being shaken by a transform. See scss/world/_stone-wall.scss. -->
+            <div class="blast-flash"></div>
 
             <div class="ui">
                 <div class="dev-controls">
@@ -748,6 +831,82 @@
                     <div class="dialogue__box">
                         <p class="dialogue__text">mud-cut-confirm</p>
                         <label class="dialogue__button" for="mud-done">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-shell-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-shell-prompt</p>
+                        <label class="dialogue__button" for="bomb-shell-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-shell-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-shell-confirm</p>
+                        <label class="dialogue__button" for="bomb-shell-armed">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-powder-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-powder-prompt</p>
+                        <label class="dialogue__button" for="bomb-powder-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-powder-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-powder-confirm</p>
+                        <label class="dialogue__button" for="bomb-powder-armed">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-fuse-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-fuse-prompt</p>
+                        <label class="dialogue__button" for="bomb-fuse-pickup">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="bomb-fuse-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">bomb-fuse-confirm</p>
+                        <label class="dialogue__button" for="bomb-fuse-armed">WEITER</label>
+                    </div>
+                </div>
+                <!-- Shown on every workbench click until all three parts are in; loops back
+                     to -idle so the hint can be re-read as often as you like. -->
+                <div class="dialogue" data-step="workbench-incomplete">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">workbench-incomplete</p>
+                        <label class="dialogue__button" for="workbench-idle">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="workbench-craft-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">workbench-craft-prompt</p>
+                        <label class="dialogue__button" for="workbench-crafting">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="workbench-craft-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">workbench-craft-confirm</p>
+                        <label class="dialogue__button" for="workbench-done">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="wall-blocked">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">wall-blocked</p>
+                        <label class="dialogue__button" for="wall-idle">WEITER</label>
+                    </div>
+                </div>
+                <!-- The one WEITER in the game that moves the player instead of advancing
+                     its own group — see scss/world/_stone-wall.scss for why. -->
+                <div class="dialogue" data-step="wall-blast-prompt">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">wall-blast-prompt</p>
+                        <label class="dialogue__button" for="position-30--from-31">WEITER</label>
+                    </div>
+                </div>
+                <div class="dialogue" data-step="wall-blast-confirm">
+                    <div class="dialogue__box">
+                        <p class="dialogue__text">wall-blast-confirm</p>
+                        <label class="dialogue__button" for="wall-done">WEITER</label>
                     </div>
                 </div>
                 <!-- Dimmed placeholders (always present, define the ring's
