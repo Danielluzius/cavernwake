@@ -1373,14 +1373,14 @@ input {
   top: 640px;
   width: 64px;
   height: 64px;
-  background-color: #b33;
   cursor: pointer;
+  background-color: #b33;
 }
 
 #lift-6-14-unlocked:checked ~ .game .lift-call-button {
-  background-color: #3b3;
   pointer-events: none;
   cursor: default;
+  background-color: #3b3;
 }
 
 @keyframes lift-call-hide-6-14 {
@@ -1458,14 +1458,17 @@ input {
   top: 1088px;
   width: 64px;
   height: 64px;
-  background-color: #b33;
   cursor: pointer;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
 }
 
 #lift-17-26-unlocked:checked ~ .game .lift-call-button--17-26 {
-  background-color: #3b3;
   pointer-events: none;
   cursor: default;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-down.png");
 }
 
 @keyframes lift-call-hide-17-26 {
@@ -1543,14 +1546,17 @@ input {
   top: 1536px;
   width: 64px;
   height: 64px;
-  background-color: #b33;
   cursor: pointer;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
 }
 
 #lift-11-27-unlocked:checked ~ .game .lift-call-button--11-27 {
-  background-color: #3b3;
   pointer-events: none;
   cursor: default;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-down.png");
 }
 
 @keyframes lift-call-hide-11-27 {
@@ -1628,14 +1634,17 @@ input {
   top: 1536px;
   width: 64px;
   height: 64px;
-  background-color: #b33;
   cursor: pointer;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
 }
 
 #lift-10-36-unlocked:checked ~ .game .lift-call-button--10-36 {
-  background-color: #3b3;
   pointer-events: none;
   cursor: default;
+  background-image: url("../assets/characters/with-backpack/use-item/lever/lever-down.png");
 }
 
 @keyframes lift-call-hide-10-36 {
