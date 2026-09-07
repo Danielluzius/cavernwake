@@ -445,6 +445,7 @@
 
                     <div class="world">
                          <div class="world-layer world-layer--environment">
+                              <div class="last-background-map"></div>
                               <div class="environment-map"></div>
                               <div class="structures-map"></div>
                               <div class="debug-colors-map"></div>
@@ -600,6 +601,12 @@
                              In front of the player on purpose, removed for
                              good once the node-7 lever is used. -->
                               <div class="object--waterfall"></div>
+
+                              <!-- Full-map decor overlay (hanging vines/roots),
+                             see scss/world/_room.scss — painted last so it
+                             sits in front of every other foreground object
+                             and the player. -->
+                              <div class="foreground-map"></div>
                          </div>
 
                          <!-- NOT nested inside .world-layer--objects (see
