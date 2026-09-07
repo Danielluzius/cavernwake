@@ -1232,19 +1232,6 @@ input {
   image-rendering: pixelated;
 }
 
-.structures-map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2496px;
-  height: 1792px;
-  pointer-events: none;
-  background-image: url("../assets/world/carvernwake-lift-ladder-bridge.png");
-  background-size: 2496px 1792px;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-}
-
 .foreground-map {
   position: absolute;
   top: 0;
