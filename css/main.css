@@ -5813,7 +5813,7 @@ input {
 .object--shovel {
   position: absolute;
   left: 1920px;
-  top: 192px;
+  top: 176px;
   width: 64px;
   height: 128px;
   background-image: url("../assets/world/obstacles/mud/shovel-before.png");
@@ -5874,8 +5874,8 @@ input {
 
 .object--bomb-shell {
   position: absolute;
-  left: 512px;
-  top: 704px;
+  left: 504px;
+  top: 696px;
   width: 64px;
   height: 64px;
   background-image: url("../assets/objects/inventory/bomb-shell.png");
@@ -5936,8 +5936,8 @@ input {
 
 .object--bomb-powder {
   position: absolute;
-  left: 1856px;
-  top: 256px;
+  left: 1920px;
+  top: 240px;
   width: 64px;
   height: 64px;
   background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
@@ -5948,7 +5948,15 @@ input {
   cursor: default;
 }
 
-#bomb-powder-idle:checked ~ .game .object--bomb-powder {
+.object--bomb-powder {
+  opacity: 0;
+}
+
+#shovel-armed:checked ~ .game .object--bomb-powder {
+  opacity: 1;
+}
+
+#shovel-armed:checked ~ #bomb-powder-idle:checked ~ .game .object--bomb-powder {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -5998,8 +6006,8 @@ input {
 
 .object--bomb-fuse {
   position: absolute;
-  left: 2048px;
-  top: 704px;
+  left: 2080px;
+  top: 640px;
   width: 64px;
   height: 64px;
   background-image: url("../assets/objects/inventory/bomb-fuse.png");
@@ -6227,9 +6235,10 @@ input {
 }
 
 .object--workbench,
-.object--workbench-craft {
+.object--workbench-craft,
+.object--workbench-take {
   position: absolute;
-  left: 896px;
+  left: 960px;
   top: 1024px;
   width: 192px;
   height: 192px;
@@ -6244,17 +6253,22 @@ input {
   background-image: url("../assets/world/workbench-before.png");
 }
 
-#workbench-idle:checked ~ .game .object--workbench {
+#workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
   pointer-events: auto;
   cursor: pointer;
 }
 
-#bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked ~ #workbench-idle:checked ~ .game .object--workbench {
+#bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
   pointer-events: none;
   cursor: default;
 }
 
-#bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked ~ #workbench-idle:checked ~ .game .object--workbench-craft {
+#bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-craft {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#workbench-crafted:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-take {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -6268,11 +6282,11 @@ input {
   animation: workbench-craft-swap 0s 1.2s forwards;
 }
 
-#workbench-done:checked ~ .game .object--workbench {
+:is(#workbench-crafted, #workbench-take):checked ~ .game .object--workbench {
   background-image: url("../assets/world/workbench-with-bomb.png");
 }
 
-#workbench-crafting:checked ~ .game .player__sprite {
+:is(#workbench-crafting, #workbench-take):checked ~ .game .player__sprite {
   opacity: 0;
 }
 
@@ -6282,7 +6296,13 @@ input {
   animation: player-workbench-craft 1.2s steps(1, end);
 }
 
-:is(#workbench-incomplete, #workbench-craft-prompt, #workbench-crafting):checked ~ .game .direction-controls__button--edge[data-position] {
+#workbench-take:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-item-pickup-left 0.6s steps(1, end);
+}
+
+:is(#workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-take):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -6305,12 +6325,19 @@ input {
   animation: dialogue-show-after-delay 0s 1.2s forwards;
 }
 
+#workbench-take:checked ~ .game .dialogue[data-step=workbench-take] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
 .object--stone-wall,
 .object--stone-wall-cut,
-.object--stone-wall-gone {
+.object--stone-wall-front {
   position: absolute;
   left: 960px;
-  top: 1280px;
+  top: 1344px;
   width: 384px;
   height: 384px;
   background-size: contain;
@@ -6320,23 +6347,14 @@ input {
   cursor: default;
 }
 
-.object--stone-wall {
-  background-image: url("../assets/world/obstacles/stone-wall/stone-wall-before.png");
-}
-
-:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting):checked ~ #wall-idle:checked ~ .game .object--stone-wall,
+:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ .game .object--stone-wall,
 #workbench-done:checked ~ #wall-idle:checked ~ .game .object--stone-wall-cut {
   pointer-events: auto;
   cursor: pointer;
 }
 
-.object--stone-wall-gone {
-  background-image: url("../assets/world/obstacles/stone-wall/stone-wall-after.png");
-  opacity: 0;
-}
-
-#wall-done:checked ~ .game .object--stone-wall-gone {
-  opacity: 1;
+.object--stone-wall-front {
+  background-image: url("../assets/world/obstacles/stone-wall/stone-wall-before.png");
 }
 
 @keyframes stone-wall-blast-swap {
@@ -6344,13 +6362,12 @@ input {
     background-image: url("../assets/world/obstacles/stone-wall/stone-wall-after.png");
   }
 }
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .object--stone-wall {
+#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .object--stone-wall-front {
   animation: stone-wall-blast-swap 0s 1.8s forwards;
 }
 
-#wall-done:checked ~ .game .object--stone-wall {
+#wall-done:checked ~ .game .object--stone-wall-front {
   background-image: url("../assets/world/obstacles/stone-wall/stone-wall-after.png");
-  opacity: 0;
 }
 
 .object--wall-bomb {
