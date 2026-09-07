@@ -83,7 +83,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  clip-path: ellipse(256px 203px at center);
+  clip-path: ellipse(256px 171px at 50% calc(50% - 32px));
   animation: vision-field-pulse 4s ease-in-out infinite;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -97,10 +97,10 @@ input {
 
 @keyframes vision-field-pulse {
   0%, 100% {
-    clip-path: ellipse(256px 203px at center);
+    clip-path: ellipse(256px 171px at 50% calc(50% - 32px));
   }
   50% {
-    clip-path: ellipse(252px 199px at center);
+    clip-path: ellipse(252px 167px at 50% calc(50% - 32px));
   }
 }
 .world {
@@ -1369,8 +1369,8 @@ input {
 
 .lift-call-button {
   position: absolute;
-  left: 1856px;
-  top: 704px;
+  left: 1280px;
+  top: 640px;
   width: 64px;
   height: 64px;
   background-color: #b33;
@@ -1381,6 +1381,24 @@ input {
   background-color: #3b3;
   pointer-events: none;
   cursor: default;
+}
+
+@keyframes lift-call-hide-6-14 {
+  from, to {
+    opacity: 0;
+  }
+}
+@keyframes lift-call-show-6-14 {
+  from, to {
+    opacity: 1;
+  }
+}
+#lift-6-14-unlocked:checked ~ .game .player__body--6-14 {
+  animation: lift-call-hide-6-14 0.6s steps(1, end);
+}
+
+#lift-6-14-unlocked:checked ~ .game .player__call--6-14 {
+  animation: lift-call-show-6-14 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
 }
 
 .lift-rope--17-26,
@@ -1436,8 +1454,8 @@ input {
 
 .lift-call-button--17-26 {
   position: absolute;
-  left: 1728px;
-  top: 1152px;
+  left: 1664px;
+  top: 1088px;
   width: 64px;
   height: 64px;
   background-color: #b33;
@@ -1448,6 +1466,24 @@ input {
   background-color: #3b3;
   pointer-events: none;
   cursor: default;
+}
+
+@keyframes lift-call-hide-17-26 {
+  from, to {
+    opacity: 0;
+  }
+}
+@keyframes lift-call-show-17-26 {
+  from, to {
+    opacity: 1;
+  }
+}
+#lift-17-26-unlocked:checked ~ .game .player__body--17-26 {
+  animation: lift-call-hide-17-26 0.6s steps(1, end);
+}
+
+#lift-17-26-unlocked:checked ~ .game .player__call--17-26 {
+  animation: lift-call-show-17-26 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
 }
 
 .lift-rope--11-27,
@@ -1503,8 +1539,8 @@ input {
 
 .lift-call-button--11-27 {
   position: absolute;
-  left: 320px;
-  top: 1600px;
+  left: 384px;
+  top: 1536px;
   width: 64px;
   height: 64px;
   background-color: #b33;
@@ -1515,6 +1551,24 @@ input {
   background-color: #3b3;
   pointer-events: none;
   cursor: default;
+}
+
+@keyframes lift-call-hide-11-27 {
+  from, to {
+    opacity: 0;
+  }
+}
+@keyframes lift-call-show-11-27 {
+  from, to {
+    opacity: 1;
+  }
+}
+#lift-11-27-unlocked:checked ~ .game .player__body--11-27 {
+  animation: lift-call-hide-11-27 0.6s steps(1, end);
+}
+
+#lift-11-27-unlocked:checked ~ .game .player__call--11-27 {
+  animation: lift-call-show-11-27 0.6s steps(1, end), player-item-pickup-left 0.6s steps(1, end);
 }
 
 .lift-rope--10-36,
@@ -1570,8 +1624,8 @@ input {
 
 .lift-call-button--10-36 {
   position: absolute;
-  left: 2112px;
-  top: 1600px;
+  left: 2048px;
+  top: 1536px;
   width: 64px;
   height: 64px;
   background-color: #b33;
@@ -1582,6 +1636,24 @@ input {
   background-color: #3b3;
   pointer-events: none;
   cursor: default;
+}
+
+@keyframes lift-call-hide-10-36 {
+  from, to {
+    opacity: 0;
+  }
+}
+@keyframes lift-call-show-10-36 {
+  from, to {
+    opacity: 1;
+  }
+}
+#lift-10-36-unlocked:checked ~ .game .player__body--10-36 {
+  animation: lift-call-hide-10-36 0.6s steps(1, end);
+}
+
+#lift-10-36-unlocked:checked ~ .game .player__call--10-36 {
+  animation: lift-call-show-10-36 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
 }
 
 .player {
@@ -1599,6 +1671,11 @@ input {
   pointer-events: none;
 }
 
+.player__body {
+  position: absolute;
+  inset: 0;
+}
+
 .player__sprite {
   width: 100%;
   height: 100%;
@@ -1613,7 +1690,8 @@ input {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
-.player__action {
+.player__action,
+.player__call {
   position: absolute;
   inset: 0;
   background-repeat: no-repeat;
@@ -2324,6 +2402,10 @@ input {
   transition-duration: 2s;
 }
 
+.player.lamp-glow-anchor {
+  z-index: 45;
+}
+
 .lamp-glow__layer {
   position: absolute;
   top: 50%;
@@ -2337,13 +2419,13 @@ input {
   animation: lamp-glow-pulse 3s ease-in-out infinite;
 }
 .lamp-glow__layer:nth-child(1) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2805,3000 A195,175 0 1,0 3195,3000 A195,175 0 1,0 2805,3000 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2805,2952 A195,95 0 1,0 3195,2952 A195,95 0 1,0 2805,2952 Z");
 }
 .lamp-glow__layer:nth-child(2) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2765,3000 A235,195 0 1,0 3235,3000 A235,195 0 1,0 2765,3000 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2765,2952 A235,115 0 1,0 3235,2952 A235,115 0 1,0 2765,2952 Z");
 }
 .lamp-glow__layer:nth-child(3) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,3000 A256,203 0 1,0 3256,3000 A256,203 0 1,0 2744,3000 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,2952 A256,171 0 1,0 3256,2952 A256,171 0 1,0 2744,2952 Z");
 }
 .lamp-glow__layer:last-child {
   background: rgba(0, 0, 0, 0.5);
@@ -5691,7 +5773,8 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-.object--waterfall {
+.object--waterfall,
+.object--waterfall-back {
   position: absolute;
   left: 576px;
   top: 960px;
@@ -5702,6 +5785,10 @@ input {
   image-rendering: pixelated;
   pointer-events: none;
   animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+.object--waterfall-back {
+  opacity: 0.4;
 }
 
 @keyframes waterfall-loop {
@@ -5887,8 +5974,8 @@ input {
 
 .object--bomb-shell {
   position: absolute;
-  left: 504px;
-  top: 696px;
+  left: 512px;
+  top: 632px;
   width: 64px;
   height: 64px;
   background-image: url("../assets/objects/inventory/bomb-shell.png");
@@ -6164,11 +6251,11 @@ input {
 .object--mud-cut,
 .object--mud-gone {
   position: absolute;
-  left: 384px;
-  top: 1472px;
-  width: 256px;
-  height: 192px;
-  background-size: contain;
+  left: 320px;
+  top: 1440px;
+  width: 320px;
+  height: 256px;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
@@ -6386,7 +6473,7 @@ input {
 .object--wall-bomb {
   position: absolute;
   left: 1088px;
-  top: 1600px;
+  top: 1568px;
   width: 64px;
   height: 64px;
   background-image: url("../assets/objects/inventory/bomb.png");

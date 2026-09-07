@@ -446,6 +446,14 @@
                     <div class="world">
                          <div class="world-layer world-layer--environment">
                               <div class="last-background-map"></div>
+
+                              <!-- Second, dimmer waterfall painted between the
+                             far backdrop and the main background, so the
+                             cave walls clip it and the water keeps running
+                             in the shaft after the lever removes the front
+                             one (see scss/world/_waterfall.scss). -->
+                              <div class="object--waterfall-back"></div>
+
                               <div class="environment-map"></div>
                               <div class="debug-colors-map"></div>
                               <div class="debug-grid-map"></div>
@@ -545,22 +553,29 @@
                          </div>
 
                          <div class="player">
-                              <div class="player__sprite"></div>
+                              <!-- One hide-wrapper per lift shaft, nested so
+                             any one of them can blank the sprite on its own.
+                             See scss/world/_lift.scss. -->
+                              <div class="player__body player__body--6-14">
+                                   <div class="player__body player__body--17-26">
+                                        <div class="player__body player__body--11-27">
+                                             <div class="player__body player__body--10-36">
+                                                  <div class="player__sprite"></div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
 
                               <!-- One-shot interaction poses play here, not on
                              .player__sprite — see scss/player/_player.scss. -->
                               <div class="player__action"></div>
 
-                              <!-- The character's own light source (see
-                             player/_player.scss) — moves with .player for
-                             free (including the intro's walk-in/fall
-                             offsets), independent of the permanent
-                             camera-fixed vision field on .viewport. -->
-                              <div class="lamp-glow">
-                                   <div class="lamp-glow__layer"></div>
-                                   <div class="lamp-glow__layer"></div>
-                                   <div class="lamp-glow__layer"></div>
-                              </div>
+                              <!-- Reserved for the lift call buttons, one
+                             overlay per shaft. -->
+                              <div class="player__call player__call--6-14"></div>
+                              <div class="player__call player__call--17-26"></div>
+                              <div class="player__call player__call--11-27"></div>
+                              <div class="player__call player__call--10-36"></div>
                          </div>
 
                          <div class="world-layer world-layer--foreground">
@@ -606,6 +621,23 @@
                              sits in front of every other foreground object
                              and the player. -->
                               <div class="foreground-map"></div>
+                         </div>
+
+                         <!-- The character's own light source. Sibling of
+                         .player rather than its child: .player's own
+                         transform makes it a stacking context, so a glow
+                         nested inside could never paint above the
+                         foreground layer. Carries the `player` class so it
+                         inherits every existing .player positioning rule
+                         (arrival transforms, the intro's walk-in/fall
+                         offsets, per-edge durations) for free \u2014 see
+                         scss/player/_player.scss. -->
+                         <div class="player lamp-glow-anchor">
+                              <div class="lamp-glow">
+                                   <div class="lamp-glow__layer"></div>
+                                   <div class="lamp-glow__layer"></div>
+                                   <div class="lamp-glow__layer"></div>
+                              </div>
                          </div>
 
                          <!-- NOT nested inside .world-layer--objects (see
