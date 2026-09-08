@@ -135,6 +135,13 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_006.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_007.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_008.png" />
+     <!-- Lighting the bomb fuse at the stone wall (see scss/world/_stone-wall.scss). -->
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_002.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_003.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_005.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_006.png" />
      <!-- Last lever: the item on the ground, the socket's empty/fitted states and
           the two-frame fitting animation (see scss/world/_last-lever.scss). -->
      <link rel="preload" as="image" href="./assets/objects/inventory/last-lever-item.png" />
@@ -264,6 +271,7 @@
      <input type="radio" name="wall-step" id="wall-idle" class="world-position-input" checked />
      <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-lantern-fire" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
 
      <!-- The last lever: picked up in the dead end right of node 32
@@ -281,8 +289,11 @@
 
      <!-- Final step keeps the id the lift system already reads, so it must
          stay last: anything after it would uncheck it and raise the car. -->
-     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-idle" class="world-position-input" checked />
-     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-prompt" class="world-position-input" />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-idle" class="world-position-input"
+          checked />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-hint" class="world-position-input" />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-fitting" class="world-position-input" />
+     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-fitted" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-using" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="lift-6-14-unlocked" class="world-position-input" />
 
@@ -386,6 +397,9 @@
      <input type="radio" name="position" id="position-21--from-20" class="world-position-input" />
      <input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
      <input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
+     <!-- Second arrival for the same walk edge, used for every return AFTER
+          the workbench interaction — see scss/world/_workbench.scss. -->
+     <input type="radio" name="position" id="position-22--from-21--post" class="world-position-input" />
      <input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
      <!-- Second arrival for the same ladder edge, used for every return AFTER
           the sickle interaction — see scss/world/_obstacles.scss. -->
@@ -396,6 +410,7 @@
      <input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
      <input type="radio" name="position" id="position-24--from-23" class="world-position-input" />
      <input type="radio" name="position" id="position-22--from-23" class="world-position-input" />
+     <input type="radio" name="position" id="position-22--from-23--post" class="world-position-input" />
      <input type="radio" name="position" id="position-25--from-24" class="world-position-input" />
      <input type="radio" name="position" id="position-23--from-24" class="world-position-input" />
      <input type="radio" name="position" id="position-26--from-25" class="world-position-input" />
@@ -449,6 +464,13 @@
      <input type="radio" name="intro" id="intro-9" class="world-position-input" />
      <input type="radio" name="intro" id="intro-10" class="world-position-input" />
      <input type="radio" name="intro" id="intro-11" class="world-position-input" />
+
+     <!-- Outro / ending sequence (see scss/outro/_outro.scss) — gated on
+         #lift-6-14-unlocked and the player walking 4 -> 3. -->
+     <input type="radio" name="outro" id="outro-idle" class="world-position-input" checked />
+     <input type="radio" name="outro" id="outro-to-1" class="world-position-input" />
+     <input type="radio" name="outro" id="outro-end" class="world-position-input" />
+     <input type="radio" name="outro" id="outro-credits" class="world-position-input" />
 
      <main class="game" id="game">
 
@@ -588,7 +610,9 @@
                              socket replaces this shaft's old placeholder
                              call button. -->
                               <label class="object object--last-lever" for="last-lever-prompt"></label>
-                              <label class="object object--last-lever-socket" for="last-lever-socket-prompt"></label>
+                              <label class="object object--last-lever-socket" for="last-lever-socket-hint"></label>
+                              <label class="object object--last-lever-socket-fit" for="last-lever-socket-fitting"></label>
+                              <label class="object object--last-lever-socket-pull" for="last-lever-socket-using"></label>
                          </div>
 
                          <div class="player">
@@ -715,6 +739,13 @@
                  reason as .blackout above — it fires while .viewport is
                  being shaken by a transform. See scss/world/_stone-wall.scss. -->
                <div class="blast-flash"></div>
+
+               <!-- Ending overlay — placeholder until real end art/copy exist. -->
+               <div class="end-screen">
+                    <h1 class="end-screen__title">CAVERNWAKE</h1>
+                    <p class="end-screen__credit">made by Daniel Luzius</p>
+                    <a class="end-screen__button" href="./index.html">WEITER</a>
+               </div>
 
                <div class="ui">
                     <div class="dev-controls">
@@ -988,11 +1019,17 @@
                             <label class="dialogue__button" for="wall-idle">WEITER</label>
                         </div>
                     </div>
-                    <!-- The one WEITER in the game that moves the player instead of advancing
-                         its own group — see scss/world/_stone-wall.scss for why. -->
                     <div class="dialogue" data-step="wall-blast-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-prompt</p>
+                            <label class="dialogue__button" for="wall-lantern-fire">WEITER</label>
+                        </div>
+                    </div>
+                    <!-- The one WEITER in the game that moves the player instead of advancing
+                         its own group — see scss/world/_stone-wall.scss for why. -->
+                    <div class="dialogue" data-step="wall-lantern-fire">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">wall-lantern-fire</p>
                             <label class="dialogue__button" for="position-30--from-31">WEITER</label>
                         </div>
                     </div>
@@ -1014,10 +1051,17 @@
                             <label class="dialogue__button" for="last-lever-armed">WEITER</label>
                         </div>
                     </div>
+                    <!-- Loops back to -idle so the hint stays readable as often as you like. -->
+                    <div class="dialogue" data-step="last-lever-socket-hint">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-socket-hint</p>
+                            <label class="dialogue__button" for="last-lever-socket-idle">WEITER</label>
+                        </div>
+                    </div>
                     <div class="dialogue" data-step="last-lever-socket-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-prompt</p>
-                            <label class="dialogue__button" for="last-lever-socket-using">WEITER</label>
+                            <label class="dialogue__button" for="last-lever-socket-fitted">WEITER</label>
                         </div>
                     </div>
                     <!-- This WEITER is what actually repairs the lift: #lift-6-14-unlocked is the
@@ -1026,6 +1070,18 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-confirm</p>
                             <label class="dialogue__button" for="lift-6-14-unlocked">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="outro-idle">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">outro-idle</p>
+                            <label class="dialogue__button" for="outro-to-1">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="outro-end">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">outro-end</p>
+                            <label class="dialogue__button" for="outro-credits">WEITER</label>
                         </div>
                     </div>
                     <!-- Dimmed placeholders (always present, define the ring's
@@ -1118,6 +1174,8 @@
                              data-position="20" for="position-19--from-20">◀</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="21" for="position-22--from-21">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="21" data-arrival="post" for="position-22--from-21--post">▶</label>
                          <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
                              data-position="21" for="position-30--from-21">▼</label>
                          <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
@@ -1134,6 +1192,8 @@
                              data-position="23" for="position-24--from-23">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="23" for="position-22--from-23">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="23" data-arrival="post" for="position-22--from-23--post">◀</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="24" for="position-25--from-24">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"

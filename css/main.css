@@ -3615,11 +3615,31 @@ input {
   }
 }
 @keyframes player-last-lever-use {
-  0% {
+  0%, 66.67% {
     background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_001.png");
   }
-  50%, 100% {
+  33.33% {
     background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_002.png");
+  }
+}
+@keyframes player-lantern-fire {
+  0% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_001.png");
+  }
+  16.67% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_002.png");
+  }
+  33.33% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_003.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_004.png");
+  }
+  66.67% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_005.png");
+  }
+  83.33%, 100% {
+    background-image: url("../assets/characters/with-backpack/use-item/lantern-fire/frame_006.png");
   }
 }
 @keyframes player-workbench-craft {
@@ -5479,6 +5499,49 @@ input {
   user-select: none;
 }
 
+.end-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background-color: #05040a;
+}
+
+#outro-credits:checked ~ .game .end-screen {
+  display: flex;
+}
+
+.end-screen__title {
+  margin: 0;
+  color: #fff;
+  font-size: 48px;
+  letter-spacing: 4px;
+}
+
+.end-screen__credit {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+.end-screen__button {
+  padding: 8px 24px;
+  font-weight: bold;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid #fff;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
 .dialogue {
   position: fixed;
   left: 50%;
@@ -6452,6 +6515,58 @@ input {
   animation: player-item-pickup-left 0.6s steps(1, end);
 }
 
+:is(#workbench-crafted, #workbench-done):checked ~ :is(#position-22--from-21, #position-22--from-23):checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-up.png");
+}
+
+:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--right[data-position="21"][data-arrival=post],
+:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--left[data-position="23"][data-arrival=post] {
+  display: none;
+}
+
+:is(#workbench-done):checked ~ .game .direction-controls__button--right[data-position="21"]:not([data-arrival]),
+:is(#workbench-done):checked ~ .game .direction-controls__button--left[data-position="23"]:not([data-arrival]) {
+  display: none;
+}
+
+#position-22--from-21--post:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1120px;
+  transition-duration: 1.2s;
+}
+
+#position-22--from-21--post:checked ~ .game .player {
+  transition-duration: 1.2s;
+}
+
+#position-22--from-21--post:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-21-to-22 0.6s steps(1, end) 2;
+}
+
+#position-22--from-23--post:checked ~ .game .world {
+  --world-offset: -1056px;
+  --world-offset-y: -1120px;
+  transition-duration: 1.2s;
+}
+
+#position-22--from-23--post:checked ~ .game .player {
+  transition-duration: 1.2s;
+}
+
+#position-22--from-23--post:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-23-to-22 0.6s steps(1, end) 2;
+}
+
+:is(#position-22--from-21--post, #position-22--from-23--post):checked ~ .game .direction-controls__button--right[data-position="22"],
+:is(#position-22--from-21--post, #position-22--from-23--post):checked ~ .game .direction-controls__button--left[data-position="22"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+}
+
 :is(#workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-take):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
@@ -6512,7 +6627,7 @@ input {
     background-image: url("../assets/world/obstacles/stone-wall/stone-wall-after.png");
   }
 }
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .object--stone-wall-front {
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .object--stone-wall-front {
   animation: stone-wall-blast-swap 0s 1.8s forwards;
 }
 
@@ -6536,10 +6651,14 @@ input {
 
 #wall-blast-prompt:checked ~ .game .object--wall-bomb {
   opacity: 1;
-  animation: wall-bomb-pulse 0.6s ease-in-out infinite;
 }
 
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .object--wall-bomb {
+#wall-lantern-fire:checked ~ .game .object--wall-bomb {
+  opacity: 1;
+  animation: wall-bomb-pulse 0.6s ease-in-out 0.9s infinite;
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .object--wall-bomb {
   animation: wall-bomb-pulse 0.6s ease-in-out infinite, wall-bomb-vanish 0s 1.8s forwards;
 }
 
@@ -6558,7 +6677,26 @@ input {
     opacity: 0;
   }
 }
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .viewport {
+#wall-lantern-fire:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .player__sprite {
+  opacity: 1;
+}
+
+#wall-lantern-fire:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-lantern-fire 0.9s steps(1, end);
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .player__action {
+  opacity: 0;
+  animation: none;
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .viewport {
   animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 3;
   animation-delay: 0s, 1.8s;
 }
@@ -6575,7 +6713,7 @@ input {
   pointer-events: none;
 }
 
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .blast-flash {
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .blast-flash {
   animation: blast-flash 0.4s ease-out 1.8s;
 }
 
@@ -6590,7 +6728,7 @@ input {
     opacity: 0;
   }
 }
-:is(#wall-blocked, #wall-blast-prompt):checked ~ .game .direction-controls__button--edge[data-position] {
+:is(#wall-blocked, #wall-blast-prompt, #wall-lantern-fire):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -6606,26 +6744,34 @@ input {
   pointer-events: auto;
 }
 
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-blast-prompt] .dialogue__box {
+#wall-lantern-fire:checked ~ .game .dialogue[data-step=wall-lantern-fire] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.9s forwards;
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-lantern-fire] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-#wall-blast-prompt:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-blast-confirm] .dialogue__box {
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-blast-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 3s forwards;
 }
 
-.object--last-lever-socket {
+.object--last-lever-socket,
+.object--last-lever-socket-fit,
+.object--last-lever-socket-pull {
   position: absolute;
   left: 1280px;
-  top: 640px;
-  width: 64px;
-  height: 64px;
-  background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-before.png");
+  top: 576px;
+  width: 128px;
+  height: 128px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6633,36 +6779,67 @@ input {
   cursor: default;
 }
 
-#last-lever-armed:checked ~ .game .object--last-lever-socket {
+.object--last-lever-socket {
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-before.png");
+}
+
+:is(#last-lever-socket-fitting, #last-lever-socket-fitted, #last-lever-socket-using, #lift-6-14-unlocked):checked ~ .game .object--last-lever-socket {
   background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png");
 }
 
-#last-lever-armed:checked ~ #last-lever-socket-idle:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket {
+#last-lever-armed:not(:checked) ~ #last-lever-socket-idle:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket {
   pointer-events: auto;
   cursor: pointer;
 }
 
-:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .player__sprite {
+#last-lever-armed:checked ~ #last-lever-socket-idle:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket {
+  pointer-events: none;
+  cursor: default;
+}
+
+#last-lever-armed:checked ~ #last-lever-socket-idle:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket-fit {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#last-lever-socket-fitted:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .object--last-lever-socket-pull {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+:is(#last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .player__sprite {
   opacity: 0;
 }
 
-:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .player__action {
+:is(#last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .player__action {
   opacity: 1;
-  background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_002.png");
+}
+
+#last-lever-socket-fitting:checked ~ .game .player__action {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-item-pickup-right 0.6s steps(1, end);
 }
 
 #last-lever-socket-using:checked ~ .game .player__action {
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/frame_001.png");
   animation: player-last-lever-use 0.6s steps(1, end);
 }
 
-:is(#last-lever-socket-prompt, #last-lever-socket-using):checked ~ .game .direction-controls__button--edge[data-position] {
+:is(#last-lever-socket-hint, #last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
-#last-lever-socket-prompt:checked ~ .game .dialogue[data-step=last-lever-socket-prompt] .dialogue__box {
+#last-lever-socket-hint:checked ~ .game .dialogue[data-step=last-lever-socket-hint] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+#last-lever-socket-fitting:checked ~ .game .dialogue[data-step=last-lever-socket-prompt] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
 }
 
 #last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box {
@@ -7205,4 +7382,46 @@ input {
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
+}
+
+#lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ :is(#outro-idle, #outro-to-1, #outro-end, #outro-credits):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-idle:checked ~ .game .dialogue[data-step=outro-idle] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 1.2s forwards;
+}
+
+#lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-to-1:checked ~ .game .player {
+  --player-extra-offset: -1152px;
+  transition-duration: 1.2s;
+}
+
+@keyframes player-walk-outro-to-1 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+#lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-to-1:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-outro-to-1 0.6s steps(1, end) 2;
+}
+
+#outro-to-1:checked ~ .game .dialogue[data-step=outro-end] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 1.2s forwards;
 }
