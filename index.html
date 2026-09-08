@@ -197,6 +197,12 @@
      <input type="radio" name="vine30-step" id="vine30-cutting" class="world-position-input" />
      <input type="radio" name="vine30-step" id="vine30-done" class="world-position-input" />
 
+     <input type="radio" name="vine12-step" id="vine12-idle" class="world-position-input" checked />
+     <input type="radio" name="vine12-step" id="vine12-blocked" class="world-position-input" />
+     <input type="radio" name="vine12-step" id="vine12-cut-prompt" class="world-position-input" />
+     <input type="radio" name="vine12-step" id="vine12-cutting" class="world-position-input" />
+     <input type="radio" name="vine12-step" id="vine12-done" class="world-position-input" />
+
      <!-- Node-7 lever: sole click trigger removing the waterfall barrier
          (see scss/world/_lever.scss, scss/world/_waterfall.scss) and
          unlocking the 20<->21 / 29<->30 walk edges (vars.$obstacles). Same
@@ -204,6 +210,11 @@
      <input type="radio" name="lever7-step" id="lever7-idle" class="world-position-input" checked />
      <input type="radio" name="lever7-step" id="lever7-confirm" class="world-position-input" />
      <input type="radio" name="lever7-step" id="lever7-done" class="world-position-input" />
+
+     <!-- Waterfall hint (blocked path left of nodes 21 / 30 — see
+         scss/world/_waterfall.scss). Loops while the waterfall is still up. -->
+     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-idle" class="world-position-input" checked />
+     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-blocked" class="world-position-input" />
 
      <!-- Pickaxe pickup left of node 19 (scss/world/_pickaxe.scss) and the
          rock barrier it opens between node 34 and 35
@@ -470,6 +481,7 @@
      <input type="radio" name="outro" id="outro-idle" class="world-position-input" checked />
      <input type="radio" name="outro" id="outro-to-1" class="world-position-input" />
      <input type="radio" name="outro" id="outro-end" class="world-position-input" />
+     <input type="radio" name="outro" id="outro-fade" class="world-position-input" />
      <input type="radio" name="outro" id="outro-credits" class="world-position-input" />
 
      <main class="game" id="game">
@@ -557,6 +569,15 @@
                               <label class="object object--vines-24-cut" for="vine24-cut-prompt"></label>
                               <label class="object object--vines-30" for="vine30-blocked"></label>
                               <label class="object object--vines-30-cut" for="vine30-cut-prompt"></label>
+                              <!-- Bomb shell sits behind vine-12 (source order
+                             in this layer — see scss/world/_objects.scss). -->
+                              <label class="object object--bomb-shell" for="bomb-shell-prompt"></label>
+                              <label class="object object--vines-12" for="vine12-blocked"></label>
+                              <label class="object object--vines-12-cut" for="vine12-cut-prompt"></label>
+
+                              <!-- Waterfall hint hitboxes (see scss/world/_waterfall.scss). -->
+                              <label class="object object--waterfall-hint-21" for="waterfall-hint-blocked"></label>
+                              <label class="object object--waterfall-hint-30" for="waterfall-hint-blocked"></label>
 
                               <!-- Node-7 lever, see scss/world/_lever.scss. Only
                              clickable while lever7-idle is current; one-time
@@ -583,8 +604,7 @@
 
                               <!-- Bomb parts (scss/world/_tools.scss) — same
                              pickup pattern as pickaxe/shovel, they just
-                             leave nothing behind. -->
-                              <label class="object object--bomb-shell" for="bomb-shell-prompt"></label>
+                             leave nothing behind. Shell is above vine-12. -->
                               <label class="object object--bomb-powder" for="bomb-powder-prompt"></label>
                               <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
 
@@ -657,6 +677,7 @@
                              remaining vine stubs, not in front of them. -->
                               <div class="object object--vines-24-gone"></div>
                               <div class="object object--vines-30-gone"></div>
+                              <div class="object object--vines-12-gone"></div>
 
                               <!-- Broken-rock twin, same reasoning (see
                              scss/world/_rock.scss). -->
@@ -879,6 +900,30 @@
                             <label class="dialogue__button" for="vine30-done">WEITER</label>
                         </div>
                     </div>
+                    <div class="dialogue" data-step="vine12-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">vine12-blocked</p>
+                            <label class="dialogue__button" for="vine12-idle">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="vine12-cut-prompt">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">vine12-cut-prompt</p>
+                            <label class="dialogue__button" for="vine12-cutting">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="vine12-cut-confirm">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">vine12-cut-confirm</p>
+                            <label class="dialogue__button" for="vine12-done">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="waterfall-hint-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">waterfall-hint-blocked</p>
+                            <label class="dialogue__button" for="waterfall-hint-idle">WEITER</label>
+                        </div>
+                    </div>
                     <div class="dialogue" data-step="lever7-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">lever7-confirm</p>
@@ -1081,7 +1126,7 @@
                     <div class="dialogue" data-step="outro-end">
                         <div class="dialogue__box">
                             <p class="dialogue__text">outro-end</p>
-                            <label class="dialogue__button" for="outro-credits">WEITER</label>
+                            <label class="dialogue__button" for="outro-fade">WEITER</label>
                         </div>
                     </div>
                     <!-- Dimmed placeholders (always present, define the ring's
