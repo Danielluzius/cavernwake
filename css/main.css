@@ -5926,6 +5926,44 @@ input {
   opacity: 0.4;
 }
 
+.object--waterfall-far {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0.4;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+.object--waterfall-far--1 {
+  left: 576px;
+  top: 0;
+  width: 192px;
+  height: 832px;
+}
+
+.object--waterfall-far--2 {
+  left: 0;
+  top: 896px;
+  width: 192px;
+  height: 896px;
+}
+
+.object--waterfall-far--3 {
+  left: 2304px;
+  top: 896px;
+  width: 192px;
+  height: 896px;
+}
+
+.object--waterfall-far--4 {
+  left: 1856px;
+  top: 384px;
+  width: 192px;
+  height: 896px;
+}
+
 .object--waterfall-hint-21,
 .object--waterfall-hint-30 {
   position: absolute;
