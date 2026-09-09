@@ -247,6 +247,7 @@
      <input type="radio" name="mud-step" id="mud-idle" class="world-position-input" checked />
      <input type="radio" name="mud-step" id="mud-blocked" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-blocked-2" class="world-position-input" />
+     <input type="radio" name="mud-step" id="mud-pickaxe-swing" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-cut-prompt" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-cutting" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-done" class="world-position-input" />
@@ -282,9 +283,15 @@
 
      <!-- No -blasting step on purpose: lighting the fuse checks the ordinary
           #position-30--from-31 arrival radio instead, so the walk back to
-          node 30 comes from the position graph. See scss/world/_stone-wall.scss. -->
+          node 30 comes from the position graph. Pickaxe/shovel fails are
+          resting steps so a later bomb click still works. See
+          scss/world/_stone-wall.scss. -->
      <input type="radio" name="wall-step" id="wall-idle" class="world-position-input" checked />
      <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-pickaxe-swing" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-pickaxe-failed" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-shovel-swing" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-tools-failed" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-lantern-fire" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
@@ -619,6 +626,7 @@
                              two-stacked-labels trick as the rock. -->
                               <label class="object object--shovel" for="shovel-prompt"></label>
                               <label class="object object--mud" for="mud-blocked"></label>
+                              <label class="object object--mud-pickaxe" for="mud-pickaxe-swing"></label>
                               <label class="object object--mud-cut" for="mud-cut-prompt"></label>
 
                               <!-- Bomb parts (scss/world/_tools.scss) — same
@@ -639,8 +647,12 @@
                               <!-- Stone wall between node 31 and 32
                              (scss/world/_stone-wall.scss). Invisible hit
                              areas only — the wall itself renders in the
-                             foreground layer, which can't take clicks. -->
+                             foreground layer, which can't take clicks.
+                             Extra labels are the failed pickaxe/shovel
+                             swings; bomb still uses -cut. -->
                               <label class="object object--stone-wall" for="wall-blocked"></label>
+                              <label class="object object--stone-wall-pickaxe" for="wall-pickaxe-swing"></label>
+                              <label class="object object--stone-wall-shovel" for="wall-shovel-swing"></label>
                               <label class="object object--stone-wall-cut" for="wall-blast-prompt"></label>
 
                               <!-- The last lever where it lies (right of node
@@ -688,6 +700,13 @@
                               <div class="lift-door--17-26"></div>
                               <div class="lift-door--11-27"></div>
                               <div class="lift-door--10-36"></div>
+
+                              <!-- Wooden shaft barriers (see scss/world/_lift.scss):
+                             purely visual, above player and basket, swapped
+                             open the moment the shaft's call lever is pulled. -->
+                              <div class="lift-barrier lift-barrier--17-26"></div>
+                              <div class="lift-barrier lift-barrier--11-27"></div>
+                              <div class="lift-barrier lift-barrier--10-36"></div>
 
                               <!-- Cut-vines twin, rendered above the player once
                              a barrier is permanently resolved (see
@@ -1036,6 +1055,12 @@
                             <label class="dialogue__button" for="mud-idle">WEITER</label>
                         </div>
                     </div>
+                    <div class="dialogue" data-step="mud-pickaxe-fail">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Das ist zu weich, das bringt nichts.</p>
+                            <label class="dialogue__button" for="mud-idle">WEITER</label>
+                        </div>
+                    </div>
                     <div class="dialogue" data-step="mud-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-cut-prompt</p>
@@ -1114,6 +1139,18 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blocked</p>
                             <label class="dialogue__button" for="wall-idle">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="wall-pickaxe-fail">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Die Wand ist zu hart und zu groß — da komme ich nicht durch.</p>
+                            <label class="dialogue__button" for="wall-pickaxe-failed">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="wall-shovel-fail">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Die Wand ist zu hart zum Durchgraben.</p>
+                            <label class="dialogue__button" for="wall-tools-failed">WEITER</label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blast-prompt">

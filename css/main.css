@@ -1448,6 +1448,23 @@ input {
   animation: lift-call-show-17-26 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
 }
 
+.lift-barrier--17-26 {
+  position: absolute;
+  left: 1728px;
+  top: 1088px;
+  width: 128px;
+  height: 128px;
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#lift-17-26-unlocked:checked ~ .game .lift-barrier--17-26 {
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
+}
+
 .lift-rope--11-27,
 .lift-basket--11-27,
 .lift-door--11-27 {
@@ -1542,6 +1559,23 @@ input {
   animation: lift-call-show-11-27 0.6s steps(1, end), player-item-pickup-left 0.6s steps(1, end);
 }
 
+.lift-barrier--11-27 {
+  position: absolute;
+  left: 256px;
+  top: 1536px;
+  width: 128px;
+  height: 128px;
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-block-left.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#lift-11-27-unlocked:checked ~ .game .lift-barrier--11-27 {
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-open-left.png");
+}
+
 .lift-rope--10-36,
 .lift-basket--10-36,
 .lift-door--10-36 {
@@ -1634,6 +1668,23 @@ input {
 
 #lift-10-36-unlocked:checked ~ .game .player__call--10-36 {
   animation: lift-call-show-10-36 0.6s steps(1, end), player-item-pickup-right 0.6s steps(1, end);
+}
+
+.lift-barrier--10-36 {
+  position: absolute;
+  left: 2112px;
+  top: 1536px;
+  width: 128px;
+  height: 128px;
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#lift-10-36-unlocked:checked ~ .game .lift-barrier--10-36 {
+  background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
 }
 
 .player {
@@ -3533,6 +3584,29 @@ input {
   }
   75%, 100% {
     background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_004.png");
+  }
+}
+@keyframes player-pickaxe-bounce {
+  0% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_001.png");
+  }
+  12.5% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_002.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_003.png");
+  }
+  37.5%, 50% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_004.png");
+  }
+  62.5% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_003.png");
+  }
+  75% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_002.png");
+  }
+  87.5%, 100% {
+    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_001.png");
   }
 }
 @keyframes player-pickaxe-pickup {
@@ -6314,7 +6388,7 @@ input {
 
 .object--bomb-fuse {
   position: absolute;
-  left: 2080px;
+  left: 2048px;
   top: 640px;
   width: 64px;
   height: 64px;
@@ -6580,7 +6654,7 @@ input {
   animation: player-shovel-swing 0.6s steps(1, end);
 }
 
-:is(#mud-blocked, #mud-blocked-2, #mud-cut-prompt, #mud-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
+:is(#mud-blocked, #mud-blocked-2, #mud-cut-prompt, #mud-cutting, #mud-pickaxe-swing):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -6603,6 +6677,44 @@ input {
 }
 
 #mud-cutting:checked ~ .game .dialogue[data-step=mud-cut-confirm] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
+.object--mud-pickaxe {
+  position: absolute;
+  left: 320px;
+  top: 1440px;
+  width: 320px;
+  height: 256px;
+  pointer-events: none;
+  cursor: default;
+}
+
+#pickaxe-armed:checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud {
+  pointer-events: none;
+  cursor: default;
+}
+
+#pickaxe-armed:checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-pickaxe {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#mud-pickaxe-swing:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#mud-pickaxe-swing:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-pickaxe-swing 0.6s steps(1, end);
+  transform: scaleX(-1);
+}
+
+#mud-pickaxe-swing:checked ~ .game .dialogue[data-step=mud-pickaxe-fail] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6760,6 +6872,8 @@ input {
 }
 
 .object--stone-wall,
+.object--stone-wall-pickaxe,
+.object--stone-wall-shovel,
 .object--stone-wall-cut,
 .object--stone-wall-front {
   position: absolute;
@@ -6774,8 +6888,12 @@ input {
   cursor: default;
 }
 
-:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
-#workbench-done:checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut {
+:is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
+#pickaxe-armed:checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-pickaxe,
+#pickaxe-armed:checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-pickaxe-failed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-pickaxe,
+:is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ #shovel-armed:checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-shovel,
+#shovel-armed:checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ :is(#wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-shovel,
+#workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -6858,6 +6976,43 @@ input {
   animation: none;
 }
 
+#wall-pickaxe-swing:checked ~ .game .player__sprite,
+#wall-shovel-swing:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#wall-pickaxe-swing:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-pickaxe-bounce 1.2s steps(1, end);
+}
+
+#wall-shovel-swing:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-shovel-swing 0.6s steps(1, end);
+  transform: scaleX(-1);
+}
+
+#wall-pickaxe-swing:checked ~ .game .viewport {
+  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 1;
+  animation-delay: 0s, 0.3s;
+}
+
+#wall-pickaxe-swing:checked ~ .game .dialogue[data-step=wall-pickaxe-fail] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 1.2s forwards;
+}
+
+#wall-shovel-swing:checked ~ .game .dialogue[data-step=wall-shovel-fail] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+
 #wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .viewport {
   animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 3;
   animation-delay: 0s, 1.8s;
@@ -6890,7 +7045,7 @@ input {
     opacity: 0;
   }
 }
-:is(#wall-blocked, #wall-blast-prompt, #wall-lantern-fire):checked ~ .game .direction-controls__button--edge[data-position] {
+:is(#wall-blocked, #wall-pickaxe-swing, #wall-shovel-swing, #wall-blast-prompt, #wall-lantern-fire):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
