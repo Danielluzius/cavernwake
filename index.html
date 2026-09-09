@@ -150,6 +150,9 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_001.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_002.png" />
+     <!-- Cave collapse debris reuses rock-before (see scss/world/_collapse.scss)
+          until collapse-debris/ sprites land; shaft reuses the waterfall frames
+          already preloaded above. -->
 </head>
 
 <body>
@@ -298,6 +301,14 @@
      <input type="radio" name="last-lever-step" id="last-lever-prompt" class="world-position-input" />
      <input type="radio" name="last-lever-step" id="last-lever-pickup" class="world-position-input" />
      <input type="radio" name="last-lever-step" id="last-lever-armed" class="world-position-input" />
+
+     <!-- Cave collapse flags (see scss/world/_collapse.scss). Must sit after
+         #last-lever-armed and before every #position-* radio so sibling ~
+         chains reach the game scene. #collapse-bench-dropped is a one-way
+         checkbox: set by the bench-rock dialogue WEITER and never reset. -->
+     <input type="checkbox" id="collapse-bench-dropped" class="world-position-input" />
+     <input type="radio" name="collapse-hint-step" id="collapse-hint-idle" class="world-position-input" checked />
+     <input type="radio" name="collapse-hint-step" id="collapse-hint-blocked" class="world-position-input" />
 
      <!-- Final step keeps the id the lift system already reads, so it must
          stay last: anything after it would uncheck it and raise the car. -->
@@ -528,6 +539,10 @@
                               <div class="object--waterfall-far object--waterfall-far--3"></div>
                               <div class="object--waterfall-far object--waterfall-far--4"></div>
 
+                              <!-- Collapse background flood (col 14-17 / row 2-11),
+                             see scss/world/_collapse.scss. -->
+                              <div class="object--waterfall-collapse-far"></div>
+
                               <div class="environment-map"></div>
                               <div class="debug-colors-map"></div>
                               <div class="debug-grid-map"></div>
@@ -579,6 +594,11 @@
                               <!-- Waterfall hint hitboxes (see scss/world/_waterfall.scss). -->
                               <label class="object object--waterfall-hint-21" for="waterfall-hint-blocked"></label>
                               <label class="object object--waterfall-hint-30" for="waterfall-hint-blocked"></label>
+
+                              <!-- Collapse hint hitboxes (see scss/world/_collapse.scss). -->
+                              <label class="object object--collapse-hint-21" for="collapse-hint-blocked"></label>
+                              <label class="object object--collapse-hint-30" for="collapse-hint-blocked"></label>
+                              <label class="object object--collapse-hint-23" for="collapse-hint-blocked"></label>
 
                               <!-- Node-7 lever, see scss/world/_lever.scss. Only
                              clickable while lever7-idle is current; one-time
@@ -699,11 +719,24 @@
                              good once the node-7 lever is used. -->
                               <div class="object--waterfall"></div>
 
+                              <!-- Rock that drops onto the node-22 workbench
+                             after the player walks past (see scss/world/_collapse.scss). -->
+                              <div class="object--collapse-bench-rock"></div>
+
+                              <!-- Twin that seals the 14<->13 corridor on the
+                             upper floor once the bench rock lands. -->
+                              <div class="object--collapse-upper-rock"></div>
+
                               <!-- Full-map decor overlay (hanging vines/roots),
                              see scss/world/_room.scss — painted last so it
                              sits in front of every other foreground object
                              and the player. -->
                               <div class="foreground-map"></div>
+
+                              <!-- Tall east-shaft flood after the last lever
+                             (scss/world/_collapse.scss). After .foreground-map
+                             on purpose so hanging vines don't cover it. -->
+                              <div class="object--waterfall-collapse"></div>
                          </div>
 
                          <!-- The character's own light source. Sibling of
@@ -737,6 +770,26 @@
                               <div class="lamp-glow__layer"></div>
                               <div class="lamp-glow__layer"></div>
                          </div>
+                    </div>
+
+                    <!-- Screen-space debris during the cave collapse (see
+                     scss/world/_collapse.scss) — viewport siblings so the
+                     rocks fall through the oval, not the world grid. -->
+                    <div class="collapse-debris collapse-debris--back">
+                         <div class="collapse-debris__piece collapse-debris__piece--1"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--2"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--3"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--4"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--5"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--6"></div>
+                    </div>
+                    <div class="collapse-debris collapse-debris--front">
+                         <div class="collapse-debris__piece collapse-debris__piece--1"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--2"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--3"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--4"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--5"></div>
+                         <div class="collapse-debris__piece collapse-debris__piece--6"></div>
                     </div>
 
                     <!-- Stepped vignette rings: each is a plain clip-path
@@ -1093,6 +1146,20 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-confirm</p>
                             <label class="dialogue__button" for="last-lever-armed">WEITER</label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="collapse-hint-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">collapse-hint-blocked</p>
+                            <label class="dialogue__button" for="collapse-hint-idle">WEITER</label>
+                        </div>
+                    </div>
+                    <!-- Appears after the workbench rock finishes falling; WEITER permanently
+                         seals the walk back (see scss/world/_collapse.scss). -->
+                    <div class="dialogue" data-step="collapse-bench">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">collapse-bench</p>
+                            <label class="dialogue__button" for="collapse-bench-dropped">WEITER</label>
                         </div>
                     </div>
                     <!-- Loops back to -idle so the hint stays readable as often as you like. -->

@@ -3926,7 +3926,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
+#collapse-bench-dropped:not(:checked) ~ #position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -3940,7 +3940,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
+#collapse-bench-dropped:not(:checked) ~ #position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4003,7 +4003,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#lever7-done:checked ~ #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4031,7 +4031,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#lever7-done:checked ~ #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4059,14 +4059,14 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
+#last-lever-armed:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
+#collapse-bench-dropped:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4080,7 +4080,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
+#last-lever-armed:not(:checked) ~ #position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4143,7 +4143,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#lever7-done:checked ~ #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4171,7 +4171,7 @@ input {
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
-#lever7-done:checked ~ #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4374,7 +4374,7 @@ input {
   transition: opacity 0s 2s, visibility 0s 2s;
 }
 
-#position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
+#collapse-bench-dropped:not(:checked) ~ #position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4507,7 +4507,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
+#collapse-bench-dropped:not(:checked) ~ #position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4535,7 +4535,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
+#collapse-bench-dropped:not(:checked) ~ #position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4549,14 +4549,14 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
+#last-lever-armed:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
+#collapse-bench-dropped:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4570,7 +4570,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
+#collapse-bench-dropped:not(:checked) ~ #position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4647,7 +4647,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4675,7 +4675,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4717,14 +4717,14 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#lever7-done:checked ~ #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#lever7-done:checked ~ #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4745,14 +4745,14 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
+#last-lever-armed:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
+#collapse-bench-dropped:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4773,7 +4773,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4801,7 +4801,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
+#last-lever-armed:not(:checked) ~ #position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4850,14 +4850,14 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
+#last-lever-armed:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
+#collapse-bench-dropped:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4892,7 +4892,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
+#last-lever-armed:not(:checked) ~ #position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -4962,7 +4962,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5004,7 +5004,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5039,7 +5039,7 @@ input {
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
 
-#lever7-done:checked ~ #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5060,7 +5060,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5095,7 +5095,7 @@ input {
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
 }
 
-#lever7-done:checked ~ #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
+#lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -5998,6 +5998,10 @@ input {
 }
 #lever7-done:checked ~ .game .object--waterfall {
   opacity: 0;
+}
+
+#lever7-done:checked ~ #last-lever-armed:checked ~ .game .object--waterfall {
+  opacity: 1;
 }
 
 #lever7-done:not(:checked) ~ #waterfall-hint-idle:checked ~ :is(#position-21, [id^=position-21--]):checked ~ .game .object--waterfall-hint-21,
@@ -7012,11 +7016,342 @@ input {
 }
 
 #last-lever-armed:checked ~ .game .viewport {
-  animation: intro-screen-shake 0.4s ease-in-out infinite;
+  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out infinite;
 }
 
 #debug-grid:checked ~ #last-lever-armed:checked ~ .game .viewport {
   animation: none;
+}
+
+.object--waterfall-collapse {
+  position: absolute;
+  left: 1344px;
+  top: 448px;
+  width: 192px;
+  height: 1344px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+  animation: collapse-shaft-loop 0.8s steps(1, end) infinite;
+  z-index: 1;
+}
+
+#last-lever-armed:checked ~ .game .object--waterfall-collapse {
+  opacity: 1;
+}
+
+@keyframes collapse-shaft-loop {
+  0%, 100% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_003.png");
+  }
+  75% {
+    background-image: url("../assets/world/obstacles/waterfall/frame_004.png");
+  }
+}
+.object--waterfall-collapse-far {
+  position: absolute;
+  left: 896px;
+  top: 128px;
+  width: 256px;
+  height: 640px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+#last-lever-armed:checked ~ .game .object--waterfall-collapse-far {
+  opacity: 0.4;
+}
+
+.object--collapse-hint-21,
+.object--collapse-hint-30,
+.object--collapse-hint-23 {
+  position: absolute;
+  width: 128px;
+  height: 64px;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--collapse-hint-21,
+.object--collapse-hint-30 {
+  left: 704px;
+}
+
+.object--collapse-hint-21 {
+  top: 1088px;
+}
+
+.object--collapse-hint-30 {
+  top: 1536px;
+}
+
+.object--collapse-hint-23 {
+  left: 1280px;
+  top: 1088px;
+}
+
+#last-lever-armed:checked ~ #collapse-hint-idle:checked ~ :is(#position-21, [id^=position-21--]):checked ~ .game .object--collapse-hint-21,
+#last-lever-armed:checked ~ #collapse-hint-idle:checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--collapse-hint-30,
+#last-lever-armed:checked ~ #collapse-hint-idle:checked ~ :is(#position-23, [id^=position-23--]):checked ~ .game .object--collapse-hint-23 {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#collapse-hint-blocked:checked ~ .game .dialogue[data-step=collapse-hint-blocked] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.object--collapse-bench-rock {
+  position: absolute;
+  left: 960px;
+  top: 1024px;
+  width: 192px;
+  height: 192px;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+}
+
+#last-lever-armed:checked ~ #position-23--from-22:checked ~ .game .object--collapse-bench-rock {
+  animation: collapse-bench-rock-drop 0.6s ease-in both;
+  animation-delay: 1.2s;
+}
+
+#collapse-bench-dropped:checked ~ .game .object--collapse-bench-rock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes collapse-bench-rock-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-512px);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.object--collapse-upper-rock {
+  position: absolute;
+  left: 832px;
+  top: 576px;
+  width: 192px;
+  height: 192px;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+}
+
+#last-lever-armed:checked ~ #position-23--from-22:checked ~ .game .object--collapse-upper-rock {
+  animation: collapse-upper-rock-drop 0.6s ease-in both;
+  animation-delay: 1.2s;
+}
+
+#collapse-bench-dropped:checked ~ .game .object--collapse-upper-rock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes collapse-upper-rock-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-384px);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#last-lever-armed:checked ~ #collapse-bench-dropped:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#last-lever-armed:checked ~ #collapse-bench-dropped:not(:checked) ~ #position-23--from-22:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 1.8s forwards;
+}
+
+#collapse-bench-dropped:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none;
+}
+
+.collapse-debris {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.collapse-debris__piece {
+  position: absolute;
+  top: -15%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.collapse-debris--back .collapse-debris__piece {
+  width: 24px;
+  height: 24px;
+}
+
+.collapse-debris--front .collapse-debris__piece {
+  width: 48px;
+  height: 48px;
+}
+
+#last-lever-armed:checked ~ .game .collapse-debris--back .collapse-debris__piece {
+  opacity: 0.4;
+}
+
+#last-lever-armed:checked ~ .game .collapse-debris--front .collapse-debris__piece {
+  opacity: 1;
+}
+
+.collapse-debris__piece--1 {
+  left: 8 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris__piece--2 {
+  left: 24 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris__piece--3 {
+  left: 40 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris__piece--4 {
+  left: 56 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris__piece--5 {
+  left: 72 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris__piece--6 {
+  left: 88 %;
+  background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
+}
+
+.collapse-debris--back .collapse-debris__piece--1 {
+  animation: collapse-debris-fall-back 6s linear infinite;
+  animation-delay: 0s;
+}
+
+.collapse-debris--back .collapse-debris__piece--2 {
+  animation: collapse-debris-fall-back 7s linear infinite;
+  animation-delay: 1.2s;
+}
+
+.collapse-debris--back .collapse-debris__piece--3 {
+  animation: collapse-debris-fall-back 5.5s linear infinite;
+  animation-delay: 2.4s;
+}
+
+.collapse-debris--back .collapse-debris__piece--4 {
+  animation: collapse-debris-fall-back 8s linear infinite;
+  animation-delay: 0.6s;
+}
+
+.collapse-debris--back .collapse-debris__piece--5 {
+  animation: collapse-debris-fall-back 6.5s linear infinite;
+  animation-delay: 3s;
+}
+
+.collapse-debris--back .collapse-debris__piece--6 {
+  animation: collapse-debris-fall-back 7.5s linear infinite;
+  animation-delay: 1.8s;
+}
+
+.collapse-debris--front .collapse-debris__piece--1 {
+  animation: collapse-debris-fall-front 3s linear infinite;
+  animation-delay: 0.3s;
+}
+
+.collapse-debris--front .collapse-debris__piece--2 {
+  animation: collapse-debris-fall-front 3.5s linear infinite;
+  animation-delay: 1.5s;
+}
+
+.collapse-debris--front .collapse-debris__piece--3 {
+  animation: collapse-debris-fall-front 2.8s linear infinite;
+  animation-delay: 0.9s;
+}
+
+.collapse-debris--front .collapse-debris__piece--4 {
+  animation: collapse-debris-fall-front 4s linear infinite;
+  animation-delay: 2.1s;
+}
+
+.collapse-debris--front .collapse-debris__piece--5 {
+  animation: collapse-debris-fall-front 3.2s linear infinite;
+  animation-delay: 0s;
+}
+
+.collapse-debris--front .collapse-debris__piece--6 {
+  animation: collapse-debris-fall-front 3.8s linear infinite;
+  animation-delay: 2.7s;
+}
+
+@keyframes collapse-debris-fall-back {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(115vh) rotate(180deg);
+  }
+}
+@keyframes collapse-debris-fall-front {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(115vh) rotate(-220deg);
+  }
+}
+#debug-grid:checked ~ #last-lever-armed:checked ~ .game .collapse-debris__piece {
+  animation: none;
+  opacity: 0;
 }
 
 .dev-controls__button--intro-start {
