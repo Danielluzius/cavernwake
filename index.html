@@ -68,6 +68,7 @@
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
      <!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
           and the three vine barrier states (see scss/world/_obstacles.scss) —
           only referenced inside @keyframes/background-image, same first-use
@@ -527,15 +528,8 @@
                          </div>
 
                          <div class="world-layer world-layer--objects">
-                              <!-- Placeholder for the collapsing-bridge tile
-                             (col 10 / row 4, one below node 4) — visible
-                             from the very start, disappears the moment the
-                             fall triggers, see scss/intro/_intro.scss. -->
-                              <div class="story-object story-object--bridge"></div>
-
-                              <!-- Placeholder for the intro's backpack pickup
-                             (col 17 / row 10, one tile right of node 14) —
-                             real object art/positioning comes later, see
+                              <!-- Intro backpack pickup (col 17 / row 10.5,
+                             one tile right of node 14), see
                              scss/intro/_intro.scss. -->
                               <label class="story-object story-object--backpack" for="intro-10"></label>
 
@@ -582,9 +576,7 @@
                               <!-- Node-7 lever, see scss/world/_lever.scss. Only
                              clickable while lever7-idle is current; one-time
                              use, no way back once lever7-done is checked. -->
-                              <label class="object object--lever" for="lever7-confirm">
-                                   <div class="object__placeholder"></div>
-                              </label>
+                              <label class="object object--lever" for="lever7-confirm"></label>
 
                               <!-- Pickaxe pickup (scss/world/_pickaxe.scss) and
                              the rock barrier (scss/world/_rock.scss); the

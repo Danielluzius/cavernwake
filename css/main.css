@@ -1293,19 +1293,6 @@ input {
   cursor: pointer;
 }
 
-.object__placeholder {
-  width: 70%;
-  height: 70%;
-  background-color: rgba(255, 200, 0, 0.85);
-  border: 2px dashed #fff;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-#object-backpack-collected:checked ~ .game .object--backpack {
-  display: none;
-}
-
 .lamp-glow--backpack {
   position: absolute;
   left: 1120px;
@@ -5989,18 +5976,21 @@ input {
 
 .object--lever {
   position: absolute;
-  left: 1344px;
-  top: 192px;
+  left: 1336px;
+  top: 160px;
+  width: 128px;
+  height: 128px;
+  background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
   pointer-events: none;
 }
 
 #lever7-idle:checked ~ :is(#position-7, [id^=position-7--]):checked ~ .game .object--lever {
   pointer-events: auto;
   cursor: pointer;
-}
-
-#lever7-done:checked ~ .game .object--lever .object__placeholder {
-  opacity: 0.4;
 }
 
 #lever7-confirm:checked ~ .game .direction-controls__button--edge[data-position] {
@@ -6013,7 +6003,12 @@ input {
 
 #lever7-confirm:checked ~ .game .player__action {
   opacity: 1;
-  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-item-pickup-left 0.6s steps(1, end);
+}
+
+#lever7-confirm:checked ~ .game .object--lever {
+  animation: last-lever-socket-pull 0.6s steps(1, end);
 }
 
 #lever7-confirm:checked ~ .game .viewport {
@@ -6021,9 +6016,10 @@ input {
 }
 
 #lever7-confirm:checked ~ .game .dialogue[data-step=lever7-confirm] .dialogue__box {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: dialogue-show-after-delay 0s 0.6s forwards;
 }
 
 .object--pickaxe {
@@ -7454,25 +7450,6 @@ input {
   pointer-events: auto;
 }
 
-.story-object--bridge {
-  left: 640px;
-  top: 256px;
-  width: 64px;
-  height: 64px;
-  background-color: rgba(150, 100, 50, 0.5);
-  border: 2px solid #963;
-  cursor: default;
-}
-
-#position-1:checked ~ #intro-dark:checked ~ .game .story-object--bridge,
-#position-1:checked ~ #intro-fade:checked ~ .game .story-object--bridge,
-#position-1:checked ~ #intro-1:checked ~ .game .story-object--bridge,
-#position-1:checked ~ #intro-2:checked ~ .game .story-object--bridge,
-#position-1:checked ~ #intro-3:checked ~ .game .story-object--bridge,
-#position-1:checked ~ #intro-4:checked ~ .game .story-object--bridge {
-  display: block;
-}
-
 .story-object {
   position: absolute;
   display: none;
@@ -7485,8 +7462,10 @@ input {
   top: 672px;
   width: 64px;
   height: 64px;
-  background-color: rgba(255, 200, 0, 0.5);
-  border: 2px solid #fc0;
+  background-image: url("../assets/objects/inventory/backpack.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
