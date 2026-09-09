@@ -7059,9 +7059,9 @@ input {
 .object--waterfall-collapse-far {
   position: absolute;
   left: 896px;
-  top: 128px;
+  top: 64px;
   width: 256px;
-  height: 640px;
+  height: 704px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
