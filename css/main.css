@@ -3810,6 +3810,7 @@ input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
   display: grid;
   grid-template-columns: 64px 168px 64px;
   grid-template-rows: 64px 168px 64px;
@@ -5724,7 +5725,7 @@ input {
 .inventory {
   position: absolute;
   inset: 0;
-  z-index: 50;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5755,7 +5756,6 @@ input {
 
 .inventory__panel {
   position: relative;
-  z-index: 1;
   display: none;
   flex-direction: column;
   align-items: center;

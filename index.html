@@ -827,13 +827,56 @@
                          <div class="collapse-debris__piece collapse-debris__piece--6"></div>
                     </div>
 
-                    <!-- Inventory lives inside .viewport so the vision-field
-                     ellipse clips it (behind the oval, not over the black
-                     frame). Toggle stays in .direction-controls. -->
-                    <!-- Inventory overlay (toggle lives in .direction-controls, top-right;
-                         the same label opens and closes the bag). Intro and play share the
-                         open-bag art and a 3×3 slot grid; the lamp slot is the intro click
-                         target (for="intro-11"). -->
+                    <!-- Stepped vignette rings: each is a plain clip-path
+                     ellipse (same safe technique as the vision field
+                     itself), stacked smallest-on-top so only the ring
+                     between each pair of edges stays visible, faking a
+                     soft edge out of hard steps — fits the pixel-art look. -->
+                    <div class="vignette-ring vignette-ring--outer"></div>
+                    <div class="vignette-ring vignette-ring--inner"></div>
+               </div>
+
+               <!-- Sibling of .viewport on purpose: .blackout is position:fixed
+                 and must stay pinned to the real browser viewport even
+                 while .viewport itself is transformed (e.g. the intro's
+                 screen shake) — a transformed ancestor would otherwise
+                 become its containing block and shake it too. -->
+               <div class="blackout"></div>
+
+               <!-- Detonation flash, sibling of .viewport for the exact same
+                 reason as .blackout above — it fires while .viewport is
+                 being shaken by a transform. See scss/world/_stone-wall.scss. -->
+               <div class="blast-flash"></div>
+
+               <!-- Ending overlay — placeholder until real end art/copy exist. -->
+               <div class="end-screen">
+                    <h1 class="end-screen__title">CAVERNWAKE</h1>
+                    <p class="end-screen__credit">made by Daniel Luzius</p>
+                    <a class="end-screen__button" href="./index.html">WEITER</a>
+               </div>
+
+               <div class="ui">
+                    <div class="dev-controls">
+                         <label class="dev-controls__button dev-controls__button--debug-grid"
+                              for="debug-grid">GRID</label>
+                         <label class="dev-controls__button dev-controls__button--debug-colors"
+                              for="debug-colors">COLORS</label>
+                         <!-- Dev-only for now: kicks off the intro chain (see
+                         scss/intro/_intro.scss). Becomes the real game's
+                         start button later, once the title screen leads
+                         straight into it instead of the free-roam stub. -->
+                         <label class="dev-controls__button dev-controls__button--intro-start"
+                              for="intro-dark">START</label>
+                    </div>
+
+                    <!-- Inventory overlays the vision field (sibling of
+                         .viewport, inside .ui). Toggle stays in
+                         .direction-controls, after this include so the
+                         backpack icon stays clickable on top of the bag. -->
+                    <!-- Inventory overlay in .ui (over the vision field). Toggle lives in
+                         .direction-controls, top-right; the same label opens and closes the
+                         bag. Intro and play share the open-bag art and a 3×3 slot grid; the
+                         lamp slot is the intro click target (for="intro-11"). -->
                     <div class="inventory">
                          <div class="inventory__hit"></div>
 
@@ -882,49 +925,6 @@
                               </div>
                          </div>
                     </div>
-
-                    <!-- Stepped vignette rings: each is a plain clip-path
-                     ellipse (same safe technique as the vision field
-                     itself), stacked smallest-on-top so only the ring
-                     between each pair of edges stays visible, faking a
-                     soft edge out of hard steps — fits the pixel-art look. -->
-                    <div class="vignette-ring vignette-ring--outer"></div>
-                    <div class="vignette-ring vignette-ring--inner"></div>
-               </div>
-
-               <!-- Sibling of .viewport on purpose: .blackout is position:fixed
-                 and must stay pinned to the real browser viewport even
-                 while .viewport itself is transformed (e.g. the intro's
-                 screen shake) — a transformed ancestor would otherwise
-                 become its containing block and shake it too. -->
-               <div class="blackout"></div>
-
-               <!-- Detonation flash, sibling of .viewport for the exact same
-                 reason as .blackout above — it fires while .viewport is
-                 being shaken by a transform. See scss/world/_stone-wall.scss. -->
-               <div class="blast-flash"></div>
-
-               <!-- Ending overlay — placeholder until real end art/copy exist. -->
-               <div class="end-screen">
-                    <h1 class="end-screen__title">CAVERNWAKE</h1>
-                    <p class="end-screen__credit">made by Daniel Luzius</p>
-                    <a class="end-screen__button" href="./index.html">WEITER</a>
-               </div>
-
-               <div class="ui">
-                    <div class="dev-controls">
-                         <label class="dev-controls__button dev-controls__button--debug-grid"
-                              for="debug-grid">GRID</label>
-                         <label class="dev-controls__button dev-controls__button--debug-colors"
-                              for="debug-colors">COLORS</label>
-                         <!-- Dev-only for now: kicks off the intro chain (see
-                         scss/intro/_intro.scss). Becomes the real game's
-                         start button later, once the title screen leads
-                         straight into it instead of the free-roam stub. -->
-                         <label class="dev-controls__button dev-controls__button--intro-start"
-                              for="intro-dark">START</label>
-                    </div>
-
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
                                          scss/intro/_intro.scss for which #intro-N reveals
                                          which box and for how long. Placeholder copy only. -->
