@@ -69,6 +69,7 @@
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/lamp.png" />
      <!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
           and the three vine barrier states (see scss/world/_obstacles.scss) —
           only referenced inside @keyframes/background-image, same first-use
@@ -326,6 +327,17 @@
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-fitted" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-using" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="lift-6-14-unlocked" class="world-position-input" />
+
+     <!-- Inventory UI (see scss/components/_inventory.scss). Must sit before
+         every #position-* radio so sibling ~ chains reach .game.
+         #inventory-open is the tutorial overlay (intro-10). After the lamp
+         that checkbox may stay on; #inventory-open-play is the real toggle
+         from intro-11 onward so reopening inventory cannot replay dialogue.
+         #intro-explore-pending starts checked; WEITER unchecks it once. -->
+     <input type="checkbox" id="inventory-open" class="world-position-input" />
+     <input type="checkbox" id="inventory-open-play" class="world-position-input" />
+     <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
+     <input type="checkbox" id="lamp-on" class="world-position-input" />
 
      <!-- Current position in the room/position graph (see
           assets/world/logic-map.png and vars.$positions in
@@ -853,6 +865,63 @@
                               for="intro-dark">START</label>
                     </div>
 
+                    <!-- Inventory overlay (toggle lives in .direction-controls, see
+                         html/index.html). The backpack sprite IS the window. -->
+                    <div class="inventory">
+                         <div class="inventory__hit"></div>
+                         <div class="inventory__backpack">
+                              <h2 class="inventory__heading">WERKZEUGE</h2>
+                              <div class="inventory__grid inventory__grid--tools">
+                                   <div class="inventory__slot inventory__slot--sickle" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Sichel</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--pickaxe" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Spitzhacke</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--shovel" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Schaufel</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--bomb" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Bombe</span>
+                                   </div>
+                              </div>
+
+                              <h2 class="inventory__heading">GEGENSTÄNDE</h2>
+                              <div class="inventory__grid inventory__grid--items">
+                                   <div class="inventory__slot inventory__slot--lamp" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Laterne</span>
+                                        <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
+                                             aria-label="Laterne anzünden"></label>
+                                        <label class="inventory__use inventory__use--lamp" for="lamp-on"
+                                             aria-label="Laterne anzünden"></label>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--bomb-shell" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Bombenschale</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--bomb-powder" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Schwarzpulver</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--bomb-fuse" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Zündschnur</span>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--last-lever" tabindex="0">
+                                        <div class="inventory__icon"></div>
+                                        <span class="inventory__caption">Hebel</span>
+                                   </div>
+                              </div>
+
+                              <label class="inventory__back inventory__back--tutorial" for="inventory-open">ZURÜCK</label>
+                              <label class="inventory__back inventory__back--play" for="inventory-open-play">ZURÜCK</label>
+                         </div>
+                    </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
                                          scss/intro/_intro.scss for which #intro-N reveals
                                          which box and for how long. Placeholder copy only. -->
@@ -918,8 +987,13 @@
                     </div>
                     <div class="dialogue" data-intro-step="10">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=10</p>
-                            <label class="dialogue__button" for="intro-11">WEITER</label>
+                            <p class="dialogue__text">placeholder: Rucksack-Icon anklicken</p>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="11">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">placeholder: ich sollte die Höhle erkunden</p>
+                            <label class="dialogue__button" for="intro-explore-pending">WEITER</label>
                         </div>
                     </div>
 
@@ -1239,6 +1313,10 @@
                      components/_components.scss. Auto-generated from
                      logic-map.png via scripts/extract_positions.py. -->
                     <div class="direction-controls">
+                         <label class="inventory__toggle inventory__toggle--tutorial"
+                              for="inventory-open" aria-label="Inventar"></label>
+                         <label class="inventory__toggle inventory__toggle--play"
+                              for="inventory-open-play" aria-label="Inventar"></label>
                          <div class="direction-controls__button direction-controls__button--up">▲</div>
                          <div class="direction-controls__button direction-controls__button--left">◀</div>
                          <div class="direction-controls__button direction-controls__button--right">▶</div>
