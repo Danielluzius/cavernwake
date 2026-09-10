@@ -5661,7 +5661,7 @@ input {
 }
 
 .inventory__toggle {
-  grid-column: 1;
+  grid-column: 3;
   grid-row: 1;
   z-index: 2;
   justify-self: center;
@@ -5709,13 +5709,6 @@ input {
   pointer-events: none;
 }
 
-#inventory-open:checked ~ .game .inventory__toggle--tutorial,
-#inventory-open-play:checked ~ .game .inventory__toggle--play {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
 @keyframes inventory-toggle-pulse {
   0%, 100% {
     transform: scale(1);
@@ -5728,22 +5721,10 @@ input {
   animation: inventory-toggle-pulse 1s ease-in-out infinite;
 }
 
-.inventory__use--lamp-intro {
-  pointer-events: none;
-}
-
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__use--lamp-intro {
-  pointer-events: auto;
-}
-
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__use--lamp {
-  pointer-events: none;
-}
-
 .inventory {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 100;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5772,49 +5753,54 @@ input {
   pointer-events: auto;
 }
 
-.inventory__backpack {
+.inventory__panel {
   position: relative;
   z-index: 1;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 280px;
-  height: 320px;
-  padding: 36px 40px 28px;
-  background: url("../assets/objects/inventory/backpack.png") center/contain no-repeat;
-  image-rendering: pixelated;
+  gap: 10px;
   pointer-events: auto;
+  transform: translateY(-36px);
 }
 
-.inventory__heading {
-  margin: 0;
-  color: #fff;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-align: center;
-  text-shadow: 0 1px 2px #000;
+#inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+#inventory-open-play:checked ~ .game .inventory__panel {
+  display: flex;
+}
+
+.inventory__art {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  image-rendering: pixelated;
+  background: url("../assets/objects/inventory/inventory-background.png") center/contain no-repeat;
 }
 
 .inventory__grid {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 38%;
+  bottom: 10%;
   display: grid;
-  grid-template-columns: repeat(4, 48px);
-  gap: 6px;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(3, 44px);
+  gap: 8px;
   justify-content: center;
+  align-content: center;
 }
 
 .inventory__slot {
   position: relative;
-  width: 48px;
-  height: 48px;
-  background-color: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 4px;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(28, 16, 10, 0.55);
+  border: 1px solid rgba(255, 220, 180, 0.28);
   outline: none;
 }
 .inventory__slot:focus-within {
-  border-color: #fff;
+  border-color: rgba(255, 220, 180, 0.7);
 }
 
 .inventory__icon {
@@ -5859,34 +5845,12 @@ input {
   pointer-events: none;
 }
 
-.inventory__back {
-  margin-top: 4px;
-  padding: 4px 14px;
-  font-weight: bold;
-  font-size: 12px;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  cursor: pointer;
-  user-select: none;
-}
-
-.inventory__back--tutorial {
-  display: none;
-}
-
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__back--tutorial {
-  display: inline-block;
-}
-
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__back--play {
-  display: none;
+#position-1:checked ~ #intro-10:checked ~ .game .inventory__use--lamp-intro {
+  pointer-events: auto;
 }
 
 .inventory__slot--sickle .inventory__icon {
-  background-image: url("../assets/world/obstacles/obstacle-vines-with-sickle.png");
-  background-size: 200% auto;
-  background-position: right center;
+  background-image: url("../assets/objects/inventory/sickle.png");
 }
 
 :is(#vine30-armed, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ .game .inventory__slot--sickle .inventory__icon {
@@ -5894,7 +5858,7 @@ input {
 }
 
 .inventory__slot--pickaxe .inventory__icon {
-  background-image: url("../assets/world/obstacles/big-rock/pikeaxe-before.png");
+  background-image: url("../assets/objects/inventory/pikeaxe.png");
 }
 
 #pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__icon {
@@ -5902,7 +5866,7 @@ input {
 }
 
 .inventory__slot--shovel .inventory__icon {
-  background-image: url("../assets/world/obstacles/mud/shovel-before.png");
+  background-image: url("../assets/objects/inventory/shovel.png");
 }
 
 #shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__icon {
@@ -5948,15 +5912,6 @@ input {
 #position-1:checked ~ #intro-8:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-9:checked ~ .game .inventory__slot--lamp .inventory__icon {
   opacity: 0;
-}
-
-#lamp-on:not(:checked) ~ .game .inventory__slot--lamp .inventory__use--lamp {
-  pointer-events: auto;
-}
-
-#lamp-on:checked ~ .game .inventory__slot--lamp .inventory__use--lamp {
-  pointer-events: none;
-  cursor: default;
 }
 
 .inventory__slot--bomb-shell .inventory__icon {

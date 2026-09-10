@@ -69,6 +69,7 @@
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/inventory-background.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/lamp.png" />
      <!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
           and the three vine barrier states (see scss/world/_obstacles.scss) —
@@ -121,6 +122,9 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lever/lever-down.png" />
      <!-- Bomb parts, the workbench that assembles them and the wall it opens
           (see scss/world/_tools.scss, _workbench.scss, _stone-wall.scss). -->
+     <link rel="preload" as="image" href="./assets/objects/inventory/sickle.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/pikeaxe.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/shovel.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/bomb-shell.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/bomb-gunpowder.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/bomb-fuse.png" />
@@ -823,6 +827,62 @@
                          <div class="collapse-debris__piece collapse-debris__piece--6"></div>
                     </div>
 
+                    <!-- Inventory lives inside .viewport so the vision-field
+                     ellipse clips it (behind the oval, not over the black
+                     frame). Toggle stays in .direction-controls. -->
+                    <!-- Inventory overlay (toggle lives in .direction-controls, top-right;
+                         the same label opens and closes the bag). Intro and play share the
+                         open-bag art and a 3×3 slot grid; the lamp slot is the intro click
+                         target (for="intro-11"). -->
+                    <div class="inventory">
+                         <div class="inventory__hit"></div>
+
+                         <div class="inventory__panel">
+                              <div class="inventory__art">
+                                   <div class="inventory__grid">
+                                        <div class="inventory__slot inventory__slot--sickle" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Sichel</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--pickaxe" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Spitzhacke</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--shovel" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Schaufel</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--bomb" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Bombe</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--lamp" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Laterne</span>
+                                             <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
+                                                  aria-label="Laterne anzünden"></label>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--bomb-shell" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Bombenschale</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--bomb-powder" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Schwarzpulver</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--bomb-fuse" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Zündschnur</span>
+                                        </div>
+                                        <div class="inventory__slot inventory__slot--last-lever" tabindex="0">
+                                             <div class="inventory__icon"></div>
+                                             <span class="inventory__caption">Hebel</span>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
                     <!-- Stepped vignette rings: each is a plain clip-path
                      ellipse (same safe technique as the vision field
                      itself), stacked smallest-on-top so only the ring
@@ -865,63 +925,6 @@
                               for="intro-dark">START</label>
                     </div>
 
-                    <!-- Inventory overlay (toggle lives in .direction-controls, see
-                         html/index.html). The backpack sprite IS the window. -->
-                    <div class="inventory">
-                         <div class="inventory__hit"></div>
-                         <div class="inventory__backpack">
-                              <h2 class="inventory__heading">WERKZEUGE</h2>
-                              <div class="inventory__grid inventory__grid--tools">
-                                   <div class="inventory__slot inventory__slot--sickle" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Sichel</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--pickaxe" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Spitzhacke</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--shovel" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Schaufel</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--bomb" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Bombe</span>
-                                   </div>
-                              </div>
-
-                              <h2 class="inventory__heading">GEGENSTÄNDE</h2>
-                              <div class="inventory__grid inventory__grid--items">
-                                   <div class="inventory__slot inventory__slot--lamp" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Laterne</span>
-                                        <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
-                                             aria-label="Laterne anzünden"></label>
-                                        <label class="inventory__use inventory__use--lamp" for="lamp-on"
-                                             aria-label="Laterne anzünden"></label>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--bomb-shell" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Bombenschale</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--bomb-powder" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Schwarzpulver</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--bomb-fuse" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Zündschnur</span>
-                                   </div>
-                                   <div class="inventory__slot inventory__slot--last-lever" tabindex="0">
-                                        <div class="inventory__icon"></div>
-                                        <span class="inventory__caption">Hebel</span>
-                                   </div>
-                              </div>
-
-                              <label class="inventory__back inventory__back--tutorial" for="inventory-open">ZURÜCK</label>
-                              <label class="inventory__back inventory__back--play" for="inventory-open-play">ZURÜCK</label>
-                         </div>
-                    </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
                                          scss/intro/_intro.scss for which #intro-N reveals
                                          which box and for how long. Placeholder copy only. -->
