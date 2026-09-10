@@ -1,7 +1,7 @@
 :root {
-  --tile-size: 64px;
-  --character-size: 168px;
-  --movement-step: 192px;
+  --tile-size: 96px;
+  --character-size: 252px;
+  --movement-step: 288px;
   --walk-frame-count: 4;
   --idle-frame-count: 4;
 }
@@ -83,7 +83,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  clip-path: ellipse(256px 171px at 50% calc(50% - 32px));
+  clip-path: ellipse(384px 256.5px at 50% calc(50% - 48px));
   animation: vision-field-pulse 4s ease-in-out infinite;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -97,10 +97,10 @@ input {
 
 @keyframes vision-field-pulse {
   0%, 100% {
-    clip-path: ellipse(256px 171px at 50% calc(50% - 32px));
+    clip-path: ellipse(384px 256.5px at 50% calc(50% - 48px));
   }
   50% {
-    clip-path: ellipse(252px 167px at 50% calc(50% - 32px));
+    clip-path: ellipse(378px 250.5px at 50% calc(50% - 48px));
   }
 }
 .world {
@@ -115,650 +115,650 @@ input {
 }
 
 #position-1:checked ~ .game .world {
-  --world-offset: -96px;
-  --world-offset-y: -224px;
+  --world-offset: -144px;
+  --world-offset-y: -336px;
 }
 
 #position-2:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -224px;
+  --world-offset: -432px;
+  --world-offset-y: -336px;
 }
 
 #position-3:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -224px;
+  --world-offset: -720px;
+  --world-offset-y: -336px;
 }
 
 #position-4:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
 }
 
 #position-5:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -224px;
+  --world-offset: -1296px;
+  --world-offset-y: -336px;
 }
 
 #position-6:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -224px;
+  --world-offset: -1584px;
+  --world-offset-y: -336px;
 }
 
 #position-7:checked ~ .game .world {
-  --world-offset: -1440px;
-  --world-offset-y: -224px;
+  --world-offset: -2160px;
+  --world-offset-y: -336px;
 }
 
 #position-8:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -224px;
+  --world-offset: -2448px;
+  --world-offset-y: -336px;
 }
 
 #position-9:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -224px;
+  --world-offset: -3024px;
+  --world-offset-y: -336px;
 }
 
 #position-10:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -224px;
+  --world-offset: -3312px;
+  --world-offset-y: -336px;
 }
 
 #position-11:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -672px;
+  --world-offset: -432px;
+  --world-offset-y: -1008px;
 }
 
 #position-12:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -672px;
+  --world-offset: -720px;
+  --world-offset-y: -1008px;
 }
 
 #position-13:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -672px;
+  --world-offset: -1296px;
+  --world-offset-y: -1008px;
 }
 
 #position-14:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
 }
 
 #position-15:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -672px;
+  --world-offset: -1872px;
+  --world-offset-y: -1008px;
 }
 
 #position-16:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -672px;
+  --world-offset: -2448px;
+  --world-offset-y: -1008px;
 }
 
 #position-17:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
 }
 
 #position-18:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -672px;
+  --world-offset: -3024px;
+  --world-offset-y: -1008px;
 }
 
 #position-19:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -1120px;
+  --world-offset: -720px;
+  --world-offset-y: -1680px;
 }
 
 #position-20:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1120px;
+  --world-offset: -1008px;
+  --world-offset-y: -1680px;
 }
 
 #position-21:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1120px;
+  --world-offset: -1296px;
+  --world-offset-y: -1680px;
 }
 
 #position-22:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1120px;
+  --world-offset: -1584px;
+  --world-offset-y: -1680px;
 }
 
 #position-23:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1120px;
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
 }
 
 #position-24:checked ~ .game .world {
-  --world-offset: -1440px;
-  --world-offset-y: -1120px;
+  --world-offset: -2160px;
+  --world-offset-y: -1680px;
 }
 
 #position-25:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1120px;
+  --world-offset: -2448px;
+  --world-offset-y: -1680px;
 }
 
 #position-26:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1120px;
+  --world-offset: -2736px;
+  --world-offset-y: -1680px;
 }
 
 #position-27:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -1568px;
+  --world-offset: -432px;
+  --world-offset-y: -2352px;
 }
 
 #position-28:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -1568px;
+  --world-offset: -720px;
+  --world-offset-y: -2352px;
 }
 
 #position-29:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1568px;
+  --world-offset: -1008px;
+  --world-offset-y: -2352px;
 }
 
 #position-30:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1568px;
+  --world-offset: -1296px;
+  --world-offset-y: -2352px;
 }
 
 #position-31:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1568px;
+  --world-offset: -1584px;
+  --world-offset-y: -2352px;
 }
 
 #position-32:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1568px;
+  --world-offset: -1872px;
+  --world-offset-y: -2352px;
 }
 
 #position-33:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1568px;
+  --world-offset: -2448px;
+  --world-offset-y: -2352px;
 }
 
 #position-34:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1568px;
+  --world-offset: -2736px;
+  --world-offset-y: -2352px;
 }
 
 #position-35:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -1568px;
+  --world-offset: -3024px;
+  --world-offset-y: -2352px;
 }
 
 #position-36:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -1568px;
+  --world-offset: -3312px;
+  --world-offset-y: -2352px;
 }
 
 #position-2--from-1:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -224px;
+  --world-offset: -432px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-3--from-2:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -224px;
+  --world-offset: -720px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-1--from-2:checked ~ .game .world {
-  --world-offset: -96px;
-  --world-offset-y: -224px;
+  --world-offset: -144px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-4--from-3:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-2--from-3:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -224px;
+  --world-offset: -432px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-5--from-4:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -224px;
+  --world-offset: -1296px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-3--from-4:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -224px;
+  --world-offset: -720px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-6--from-5:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -224px;
+  --world-offset: -1584px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-4--from-5:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-14--from-6:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
 #position-5--from-6:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -224px;
+  --world-offset: -1296px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-8--from-7:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -224px;
+  --world-offset: -2448px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-16--from-8:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -672px;
+  --world-offset: -2448px;
+  --world-offset-y: -1008px;
   transition-duration: 1.8s;
 }
 
 #position-7--from-8:checked ~ .game .world {
-  --world-offset: -1440px;
-  --world-offset-y: -224px;
+  --world-offset: -2160px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-10--from-9:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -224px;
+  --world-offset: -3312px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-36--from-10:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -1568px;
+  --world-offset: -3312px;
+  --world-offset-y: -2352px;
   transition-duration: 4s;
 }
 
 #position-9--from-10:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -224px;
+  --world-offset: -3024px;
+  --world-offset-y: -336px;
   transition-duration: 1.2s;
 }
 
 #position-12--from-11:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -672px;
+  --world-offset: -720px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-27--from-11:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -1568px;
+  --world-offset: -432px;
+  --world-offset-y: -2352px;
   transition-duration: 3s;
 }
 
 #position-11--from-12:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -672px;
+  --world-offset: -432px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-14--from-13:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-6--from-14:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -224px;
+  --world-offset: -1584px;
+  --world-offset-y: -336px;
   transition-duration: 2s;
 }
 
 #position-15--from-14:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -672px;
+  --world-offset: -1872px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-13--from-14:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -672px;
+  --world-offset: -1296px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-23--from-15:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1120px;
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
   transition-duration: 1.8s;
 }
 
 #position-14--from-15:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-8--from-16:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -224px;
+  --world-offset: -2448px;
+  --world-offset-y: -336px;
   transition-duration: 1.8s;
 }
 
 #position-17--from-16:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-18--from-17:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -672px;
+  --world-offset: -3024px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-26--from-17:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1120px;
+  --world-offset: -2736px;
+  --world-offset-y: -1680px;
   transition-duration: 2s;
 }
 
 #position-16--from-17:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -672px;
+  --world-offset: -2448px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
   transition-duration: 1.2s;
 }
 
 #position-20--from-19:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1120px;
+  --world-offset: -1008px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-21--from-20:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1120px;
+  --world-offset: -1296px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-19--from-20:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -1120px;
+  --world-offset: -720px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-22--from-21:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1120px;
+  --world-offset: -1584px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-30--from-21:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1568px;
+  --world-offset: -1296px;
+  --world-offset-y: -2352px;
   transition-duration: 1.8s;
 }
 
 #position-20--from-21:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1120px;
+  --world-offset: -1008px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-23--from-22:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1120px;
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-21--from-22:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1120px;
+  --world-offset: -1296px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-15--from-23:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -672px;
+  --world-offset: -1872px;
+  --world-offset-y: -1008px;
   transition-duration: 1.8s;
 }
 
 #position-24--from-23:checked ~ .game .world {
-  --world-offset: -1440px;
-  --world-offset-y: -1120px;
+  --world-offset: -2160px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-22--from-23:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1120px;
+  --world-offset: -1584px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-25--from-24:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1120px;
+  --world-offset: -2448px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-23--from-24:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1120px;
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-26--from-25:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1120px;
+  --world-offset: -2736px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-33--from-25:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1568px;
+  --world-offset: -2448px;
+  --world-offset-y: -2352px;
   transition-duration: 1.8s;
 }
 
 #position-24--from-25:checked ~ .game .world {
-  --world-offset: -1440px;
-  --world-offset-y: -1120px;
+  --world-offset: -2160px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-17--from-26:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
 #position-25--from-26:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1120px;
+  --world-offset: -2448px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
 #position-11--from-27:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -672px;
+  --world-offset: -432px;
+  --world-offset-y: -1008px;
   transition-duration: 3s;
 }
 
 #position-28--from-27:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -1568px;
+  --world-offset: -720px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-29--from-28:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1568px;
+  --world-offset: -1008px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-27--from-28:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -1568px;
+  --world-offset: -432px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-30--from-29:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1568px;
+  --world-offset: -1296px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-28--from-29:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -1568px;
+  --world-offset: -720px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-21--from-30:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1120px;
+  --world-offset: -1296px;
+  --world-offset-y: -1680px;
   transition-duration: 1.8s;
 }
 
 #position-31--from-30:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1568px;
+  --world-offset: -1584px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-29--from-30:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -1568px;
+  --world-offset: -1008px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-32--from-31:checked ~ .game .world {
-  --world-offset: -1248px;
-  --world-offset-y: -1568px;
+  --world-offset: -1872px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-30--from-31:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1568px;
+  --world-offset: -1296px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-31--from-32:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1568px;
+  --world-offset: -1584px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-25--from-33:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1120px;
+  --world-offset: -2448px;
+  --world-offset-y: -1680px;
   transition-duration: 1.8s;
 }
 
 #position-34--from-33:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1568px;
+  --world-offset: -2736px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-35--from-34:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -1568px;
+  --world-offset: -3024px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-33--from-34:checked ~ .game .world {
-  --world-offset: -1632px;
-  --world-offset-y: -1568px;
+  --world-offset: -2448px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-36--from-35:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -1568px;
+  --world-offset: -3312px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-34--from-35:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1568px;
+  --world-offset: -2736px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-10--from-36:checked ~ .game .world {
-  --world-offset: -2208px;
-  --world-offset-y: -224px;
+  --world-offset: -3312px;
+  --world-offset-y: -336px;
   transition-duration: 4s;
 }
 
 #position-35--from-36:checked ~ .game .world {
-  --world-offset: -2016px;
-  --world-offset-y: -1568px;
+  --world-offset: -3024px;
+  --world-offset-y: -2352px;
   transition-duration: 1.2s;
 }
 
 #position-6--from-14--right:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -224px;
+  --world-offset: -1584px;
+  --world-offset-y: -336px;
   transition-duration: 2s;
 }
 
 #position-6--from-14--left:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -224px;
+  --world-offset: -1584px;
+  --world-offset-y: -336px;
   transition-duration: 2s;
 }
 
 #position-26--from-17--right:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1120px;
+  --world-offset: -2736px;
+  --world-offset-y: -1680px;
   transition-duration: 2s;
 }
 
 #position-26--from-17--left:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -1120px;
+  --world-offset: -2736px;
+  --world-offset-y: -1680px;
   transition-duration: 2s;
 }
 
 #position-14--from-6--right:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
 #position-14--from-6--left:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
 #position-17--from-26--right:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
 #position-17--from-26--left:checked ~ .game .world {
-  --world-offset: -1824px;
-  --world-offset-y: -672px;
+  --world-offset: -2736px;
+  --world-offset-y: -1008px;
   transition-duration: 2s;
 }
 
@@ -790,8 +790,8 @@ input {
 .room {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--room-cols, 1), 64px);
-  grid-template-rows: repeat(var(--room-rows, 1), 64px);
+  grid-template-columns: repeat(var(--room-cols, 1), 96px);
+  grid-template-rows: repeat(var(--room-rows, 1), 96px);
 }
 
 .cell-x-1 {
@@ -999,222 +999,222 @@ input {
 }
 
 .vertex-x-0 {
-  left: calc(0 * 64px - 32px);
+  left: calc(0 * 96px - 48px);
 }
 
 .vertex-x-1 {
-  left: calc(1 * 64px - 32px);
+  left: calc(1 * 96px - 48px);
 }
 
 .vertex-x-2 {
-  left: calc(2 * 64px - 32px);
+  left: calc(2 * 96px - 48px);
 }
 
 .vertex-x-3 {
-  left: calc(3 * 64px - 32px);
+  left: calc(3 * 96px - 48px);
 }
 
 .vertex-x-4 {
-  left: calc(4 * 64px - 32px);
+  left: calc(4 * 96px - 48px);
 }
 
 .vertex-x-5 {
-  left: calc(5 * 64px - 32px);
+  left: calc(5 * 96px - 48px);
 }
 
 .vertex-x-6 {
-  left: calc(6 * 64px - 32px);
+  left: calc(6 * 96px - 48px);
 }
 
 .vertex-x-7 {
-  left: calc(7 * 64px - 32px);
+  left: calc(7 * 96px - 48px);
 }
 
 .vertex-x-8 {
-  left: calc(8 * 64px - 32px);
+  left: calc(8 * 96px - 48px);
 }
 
 .vertex-x-9 {
-  left: calc(9 * 64px - 32px);
+  left: calc(9 * 96px - 48px);
 }
 
 .vertex-x-10 {
-  left: calc(10 * 64px - 32px);
+  left: calc(10 * 96px - 48px);
 }
 
 .vertex-x-11 {
-  left: calc(11 * 64px - 32px);
+  left: calc(11 * 96px - 48px);
 }
 
 .vertex-x-12 {
-  left: calc(12 * 64px - 32px);
+  left: calc(12 * 96px - 48px);
 }
 
 .vertex-x-13 {
-  left: calc(13 * 64px - 32px);
+  left: calc(13 * 96px - 48px);
 }
 
 .vertex-x-14 {
-  left: calc(14 * 64px - 32px);
+  left: calc(14 * 96px - 48px);
 }
 
 .vertex-x-15 {
-  left: calc(15 * 64px - 32px);
+  left: calc(15 * 96px - 48px);
 }
 
 .vertex-x-16 {
-  left: calc(16 * 64px - 32px);
+  left: calc(16 * 96px - 48px);
 }
 
 .vertex-x-17 {
-  left: calc(17 * 64px - 32px);
+  left: calc(17 * 96px - 48px);
 }
 
 .vertex-x-18 {
-  left: calc(18 * 64px - 32px);
+  left: calc(18 * 96px - 48px);
 }
 
 .vertex-x-19 {
-  left: calc(19 * 64px - 32px);
+  left: calc(19 * 96px - 48px);
 }
 
 .vertex-x-20 {
-  left: calc(20 * 64px - 32px);
+  left: calc(20 * 96px - 48px);
 }
 
 .vertex-x-21 {
-  left: calc(21 * 64px - 32px);
+  left: calc(21 * 96px - 48px);
 }
 
 .vertex-x-22 {
-  left: calc(22 * 64px - 32px);
+  left: calc(22 * 96px - 48px);
 }
 
 .vertex-x-23 {
-  left: calc(23 * 64px - 32px);
+  left: calc(23 * 96px - 48px);
 }
 
 .vertex-x-24 {
-  left: calc(24 * 64px - 32px);
+  left: calc(24 * 96px - 48px);
 }
 
 .vertex-x-25 {
-  left: calc(25 * 64px - 32px);
+  left: calc(25 * 96px - 48px);
 }
 
 .vertex-x-26 {
-  left: calc(26 * 64px - 32px);
+  left: calc(26 * 96px - 48px);
 }
 
 .vertex-x-27 {
-  left: calc(27 * 64px - 32px);
+  left: calc(27 * 96px - 48px);
 }
 
 .vertex-x-28 {
-  left: calc(28 * 64px - 32px);
+  left: calc(28 * 96px - 48px);
 }
 
 .vertex-x-29 {
-  left: calc(29 * 64px - 32px);
+  left: calc(29 * 96px - 48px);
 }
 
 .vertex-x-30 {
-  left: calc(30 * 64px - 32px);
+  left: calc(30 * 96px - 48px);
 }
 
 .vertex-x-31 {
-  left: calc(31 * 64px - 32px);
+  left: calc(31 * 96px - 48px);
 }
 
 .vertex-x-32 {
-  left: calc(32 * 64px - 32px);
+  left: calc(32 * 96px - 48px);
 }
 
 .vertex-x-33 {
-  left: calc(33 * 64px - 32px);
+  left: calc(33 * 96px - 48px);
 }
 
 .vertex-x-34 {
-  left: calc(34 * 64px - 32px);
+  left: calc(34 * 96px - 48px);
 }
 
 .vertex-x-35 {
-  left: calc(35 * 64px - 32px);
+  left: calc(35 * 96px - 48px);
 }
 
 .vertex-x-36 {
-  left: calc(36 * 64px - 32px);
+  left: calc(36 * 96px - 48px);
 }
 
 .vertex-x-37 {
-  left: calc(37 * 64px - 32px);
+  left: calc(37 * 96px - 48px);
 }
 
 .vertex-x-38 {
-  left: calc(38 * 64px - 32px);
+  left: calc(38 * 96px - 48px);
 }
 
 .vertex-x-39 {
-  left: calc(39 * 64px - 32px);
+  left: calc(39 * 96px - 48px);
 }
 
 .vertex-x-40 {
-  left: calc(40 * 64px - 32px);
+  left: calc(40 * 96px - 48px);
 }
 
 .vertex-y-0 {
-  top: calc(0 * 64px - 32px);
+  top: calc(0 * 96px - 48px);
 }
 
 .vertex-y-1 {
-  top: calc(1 * 64px - 32px);
+  top: calc(1 * 96px - 48px);
 }
 
 .vertex-y-2 {
-  top: calc(2 * 64px - 32px);
+  top: calc(2 * 96px - 48px);
 }
 
 .vertex-y-3 {
-  top: calc(3 * 64px - 32px);
+  top: calc(3 * 96px - 48px);
 }
 
 .vertex-y-4 {
-  top: calc(4 * 64px - 32px);
+  top: calc(4 * 96px - 48px);
 }
 
 .vertex-y-5 {
-  top: calc(5 * 64px - 32px);
+  top: calc(5 * 96px - 48px);
 }
 
 .vertex-y-6 {
-  top: calc(6 * 64px - 32px);
+  top: calc(6 * 96px - 48px);
 }
 
 .vertex-y-7 {
-  top: calc(7 * 64px - 32px);
+  top: calc(7 * 96px - 48px);
 }
 
 .vertex-y-8 {
-  top: calc(8 * 64px - 32px);
+  top: calc(8 * 96px - 48px);
 }
 
 .vertex-y-9 {
-  top: calc(9 * 64px - 32px);
+  top: calc(9 * 96px - 48px);
 }
 
 .vertex-y-10 {
-  top: calc(10 * 64px - 32px);
+  top: calc(10 * 96px - 48px);
 }
 
 .environment-map {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2496px;
-  height: 1792px;
+  width: 3744px;
+  height: 2688px;
   pointer-events: none;
   background-image: url("../assets/world/carvernwake-main-background.png");
-  background-size: 2496px 1792px;
+  background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
@@ -1223,11 +1223,11 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2496px;
-  height: 1792px;
+  width: 3744px;
+  height: 2688px;
   pointer-events: none;
   background-image: url("../assets/world/carvernwake-last-background.png");
-  background-size: 2496px 1792px;
+  background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
@@ -1236,11 +1236,11 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2496px;
-  height: 1792px;
+  width: 3744px;
+  height: 2688px;
   pointer-events: none;
   background-image: url("../assets/world/carvernwake-forground.png");
-  background-size: 2496px 1792px;
+  background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
@@ -1249,13 +1249,13 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2496px;
-  height: 1792px;
+  width: 3744px;
+  height: 2688px;
   pointer-events: none;
   display: none;
   opacity: 0.15;
   background-image: url("../assets/world/logic-map-colors.png");
-  background-size: 2496px 1792px;
+  background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
@@ -1264,12 +1264,12 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2496px;
-  height: 1792px;
+  width: 3744px;
+  height: 2688px;
   pointer-events: none;
   display: none;
   background-image: url("../assets/world/logic-map-grid.png");
-  background-size: 2496px 1792px;
+  background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
 }
@@ -1285,8 +1285,8 @@ input {
 .object {
   position: relative;
   z-index: 1;
-  width: 64px;
-  height: 64px;
+  width: 96px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1295,8 +1295,8 @@ input {
 
 .lamp-glow--backpack {
   position: absolute;
-  left: 1120px;
-  top: 704px;
+  left: 1680px;
+  top: 1056px;
   z-index: 40;
   opacity: 0;
   visibility: hidden;
@@ -1307,32 +1307,32 @@ input {
 .lift-basket,
 .lift-door {
   position: absolute;
-  left: 1024px;
-  width: 64px;
+  left: 1536px;
+  width: 96px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
 }
 
 .lift-rope {
-  top: 192px;
-  height: calc((var(--lift-6-14-row) - 3) * 64px);
+  top: 288px;
+  height: calc((var(--lift-6-14-row) - 3) * 96px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
-  background-size: 64px 64px;
+  background-size: 96px 96px;
   transition: height 2s ease-in-out;
 }
 
 .lift-basket {
-  top: calc(var(--lift-6-14-row) * 64px);
-  height: 128px;
+  top: calc(var(--lift-6-14-row) * 96px);
+  height: 192px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door {
-  top: calc((var(--lift-6-14-row) + 1) * 64px);
-  height: 64px;
+  top: calc((var(--lift-6-14-row) + 1) * 96px);
+  height: 96px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
@@ -1358,32 +1358,32 @@ input {
 .lift-basket--17-26,
 .lift-door--17-26 {
   position: absolute;
-  left: 1792px;
-  width: 64px;
+  left: 2688px;
+  width: 96px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
 }
 
 .lift-rope--17-26 {
-  top: 640px;
-  height: calc((var(--lift-17-26-row) - 10) * 64px);
+  top: 960px;
+  height: calc((var(--lift-17-26-row) - 10) * 96px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
-  background-size: 64px 64px;
+  background-size: 96px 96px;
   transition: height 2s ease-in-out;
 }
 
 .lift-basket--17-26 {
-  top: calc(var(--lift-17-26-row) * 64px);
-  height: 128px;
+  top: calc(var(--lift-17-26-row) * 96px);
+  height: 192px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door--17-26 {
-  top: calc((var(--lift-17-26-row) + 1) * 64px);
-  height: 64px;
+  top: calc((var(--lift-17-26-row) + 1) * 96px);
+  height: 96px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
@@ -1407,10 +1407,10 @@ input {
 
 .lift-call-button--17-26 {
   position: absolute;
-  left: 1664px;
-  top: 1088px;
-  width: 64px;
-  height: 64px;
+  left: 2496px;
+  top: 1632px;
+  width: 96px;
+  height: 96px;
   pointer-events: none;
   cursor: default;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
@@ -1450,10 +1450,10 @@ input {
 
 .lift-barrier--17-26 {
   position: absolute;
-  left: 1728px;
-  top: 1088px;
-  width: 128px;
-  height: 128px;
+  left: 2592px;
+  top: 1632px;
+  width: 192px;
+  height: 192px;
   background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
   background-repeat: no-repeat;
   background-size: contain;
@@ -1469,32 +1469,32 @@ input {
 .lift-basket--11-27,
 .lift-door--11-27 {
   position: absolute;
-  left: 256px;
-  width: 64px;
+  left: 384px;
+  width: 96px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
 }
 
 .lift-rope--11-27 {
-  top: 640px;
-  height: calc((var(--lift-11-27-row) - 10) * 64px);
+  top: 960px;
+  height: calc((var(--lift-11-27-row) - 10) * 96px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
-  background-size: 64px 64px;
+  background-size: 96px 96px;
   transition: height 3s ease-in-out;
 }
 
 .lift-basket--11-27 {
-  top: calc(var(--lift-11-27-row) * 64px);
-  height: 128px;
+  top: calc(var(--lift-11-27-row) * 96px);
+  height: 192px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 3s ease-in-out;
 }
 
 .lift-door--11-27 {
-  top: calc((var(--lift-11-27-row) + 1) * 64px);
-  height: 64px;
+  top: calc((var(--lift-11-27-row) + 1) * 96px);
+  height: 96px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 3s ease-in-out;
   pointer-events: none;
@@ -1518,10 +1518,10 @@ input {
 
 .lift-call-button--11-27 {
   position: absolute;
-  left: 384px;
-  top: 1536px;
-  width: 64px;
-  height: 64px;
+  left: 576px;
+  top: 2304px;
+  width: 96px;
+  height: 96px;
   pointer-events: none;
   cursor: default;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
@@ -1561,10 +1561,10 @@ input {
 
 .lift-barrier--11-27 {
   position: absolute;
-  left: 256px;
-  top: 1536px;
-  width: 128px;
-  height: 128px;
+  left: 384px;
+  top: 2304px;
+  width: 192px;
+  height: 192px;
   background-image: url("../assets/world/obstacles/lift-barrier/lift-block-left.png");
   background-repeat: no-repeat;
   background-size: contain;
@@ -1580,32 +1580,32 @@ input {
 .lift-basket--10-36,
 .lift-door--10-36 {
   position: absolute;
-  left: 2176px;
-  width: 64px;
+  left: 3264px;
+  width: 96px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
 }
 
 .lift-rope--10-36 {
-  top: 192px;
-  height: calc((var(--lift-10-36-row) - 3) * 64px);
+  top: 288px;
+  height: calc((var(--lift-10-36-row) - 3) * 96px);
   background-image: url("../assets/objects/lift/rope.png");
   background-repeat: repeat-y;
-  background-size: 64px 64px;
+  background-size: 96px 96px;
   transition: height 4s ease-in-out;
 }
 
 .lift-basket--10-36 {
-  top: calc(var(--lift-10-36-row) * 64px);
-  height: 128px;
+  top: calc(var(--lift-10-36-row) * 96px);
+  height: 192px;
   background-image: url("../assets/objects/lift/basked.png");
   transition: top 4s ease-in-out;
 }
 
 .lift-door--10-36 {
-  top: calc((var(--lift-10-36-row) + 1) * 64px);
-  height: 64px;
+  top: calc((var(--lift-10-36-row) + 1) * 96px);
+  height: 96px;
   background-image: url("../assets/objects/lift/basked-door.png");
   transition: top 4s ease-in-out;
   pointer-events: none;
@@ -1629,10 +1629,10 @@ input {
 
 .lift-call-button--10-36 {
   position: absolute;
-  left: 2048px;
-  top: 1536px;
-  width: 64px;
-  height: 64px;
+  left: 3072px;
+  top: 2304px;
+  width: 96px;
+  height: 96px;
   pointer-events: none;
   cursor: default;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
@@ -1672,10 +1672,10 @@ input {
 
 .lift-barrier--10-36 {
   position: absolute;
-  left: 2112px;
-  top: 1536px;
-  width: 128px;
-  height: 128px;
+  left: 3168px;
+  top: 2304px;
+  width: 192px;
+  height: 192px;
   background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
   background-repeat: no-repeat;
   background-size: contain;
@@ -1691,11 +1691,11 @@ input {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 168px;
-  height: 168px;
+  width: 252px;
+  height: 252px;
   --player-extra-offset: 0px;
   --player-extra-offset-y: 0px;
-  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1 + var(--player-extra-offset))) translateY(calc(var(--world-offset-y) * -1 + var(--player-extra-offset-y))) translateY(12px);
+  transform: translate(-50%, -50%) translateX(calc(var(--world-offset) * -1 + var(--player-extra-offset))) translateY(calc(var(--world-offset-y) * -1 + var(--player-extra-offset-y))) translateY(18px);
   transition: transform 0.6s ease-in-out;
   will-change: transform;
   z-index: 30;
@@ -2450,13 +2450,13 @@ input {
   animation: lamp-glow-pulse 3s ease-in-out infinite;
 }
 .lamp-glow__layer:nth-child(1) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2805,2952 A195,95 0 1,0 3195,2952 A195,95 0 1,0 2805,2952 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2707.5,2928 A292.5,142.5 0 1,0 3292.5,2928 A292.5,142.5 0 1,0 2707.5,2928 Z");
 }
 .lamp-glow__layer:nth-child(2) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2765,2952 A235,115 0 1,0 3235,2952 A235,115 0 1,0 2765,2952 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2647.5,2928 A352.5,172.5 0 1,0 3352.5,2928 A352.5,172.5 0 1,0 2647.5,2928 Z");
 }
 .lamp-glow__layer:nth-child(3) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,2952 A256,171 0 1,0 3256,2952 A256,171 0 1,0 2744,2952 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2616,2928 A384,256.5 0 1,0 3384,2928 A384,256.5 0 1,0 2616,2928 Z");
 }
 .lamp-glow__layer:last-child {
   background: rgba(0, 0, 0, 0.5);
@@ -3812,9 +3812,9 @@ input {
   transform: translate(-50%, -50%);
   z-index: 2;
   display: grid;
-  grid-template-columns: 64px 168px 64px;
-  grid-template-rows: 64px 168px 64px;
-  gap: 32px;
+  grid-template-columns: 96px 252px 96px;
+  grid-template-rows: 96px 252px 96px;
+  gap: 48px;
 }
 
 .direction-controls__button {
@@ -3835,25 +3835,25 @@ input {
 .direction-controls__button--up {
   grid-column: 2;
   grid-row: 1;
-  width: 64px;
+  width: 96px;
   justify-self: center;
 }
 .direction-controls__button--left {
   grid-column: 1;
   grid-row: 2;
-  height: 64px;
+  height: 96px;
   align-self: center;
 }
 .direction-controls__button--right {
   grid-column: 3;
   grid-row: 2;
-  height: 64px;
+  height: 96px;
   align-self: center;
 }
 .direction-controls__button--down {
   grid-column: 2;
   grid-row: 3;
-  width: 64px;
+  width: 96px;
   justify-self: center;
 }
 
@@ -5667,8 +5667,8 @@ input {
   z-index: 2;
   justify-self: center;
   align-self: end;
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -5761,7 +5761,7 @@ input {
   align-items: center;
   gap: 10px;
   pointer-events: auto;
-  transform: translateY(-36px);
+  transform: translateY(-54px);
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
@@ -5771,8 +5771,8 @@ input {
 
 .inventory__art {
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: 480px;
+  height: 480px;
   image-rendering: pixelated;
   background: url("../assets/objects/inventory/inventory-background.png") center/contain no-repeat;
 }
@@ -5784,8 +5784,8 @@ input {
   top: 38%;
   bottom: 10%;
   display: grid;
-  grid-template-columns: repeat(3, 44px);
-  grid-template-rows: repeat(3, 44px);
+  grid-template-columns: repeat(3, 66px);
+  grid-template-rows: repeat(3, 66px);
   gap: 8px;
   justify-content: center;
   align-content: center;
@@ -5793,8 +5793,8 @@ input {
 
 .inventory__slot {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 66px;
+  height: 66px;
   background-color: rgba(28, 16, 10, 0.55);
   border: 1px solid rgba(255, 220, 180, 0.28);
   outline: none;
@@ -5992,10 +5992,10 @@ input {
 .object--vines-24-cut,
 .object--vines-24-gone {
   position: absolute;
-  left: 1472px;
-  top: 960px;
-  width: 64px;
-  height: 256px;
+  left: 2208px;
+  top: 1440px;
+  width: 96px;
+  height: 384px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6066,10 +6066,10 @@ input {
 .object--vines-30-cut,
 .object--vines-30-gone {
   position: absolute;
-  left: 896px;
-  top: 1408px;
-  width: 64px;
-  height: 256px;
+  left: 1344px;
+  top: 2112px;
+  width: 96px;
+  height: 384px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6144,10 +6144,10 @@ input {
 .object--vines-12-cut,
 .object--vines-12-gone {
   position: absolute;
-  left: 512px;
-  top: 512px;
-  width: 64px;
-  height: 256px;
+  left: 768px;
+  top: 768px;
+  width: 96px;
+  height: 384px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6280,8 +6280,8 @@ input {
 }
 
 #position-30--from-21--post:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -1568px;
+  --world-offset: -1296px;
+  --world-offset-y: -2352px;
   transition-duration: 1.8s;
 }
 
@@ -6306,10 +6306,10 @@ input {
 .object--waterfall,
 .object--waterfall-back {
   position: absolute;
-  left: 576px;
-  top: 960px;
-  width: 192px;
-  height: 832px;
+  left: 864px;
+  top: 1440px;
+  width: 288px;
+  height: 1248px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6332,49 +6332,49 @@ input {
 }
 
 .object--waterfall-far--1 {
-  left: 576px;
+  left: 864px;
   top: 0;
-  width: 192px;
-  height: 832px;
+  width: 288px;
+  height: 1248px;
 }
 
 .object--waterfall-far--2 {
   left: 0;
-  top: 896px;
-  width: 192px;
-  height: 896px;
+  top: 1344px;
+  width: 288px;
+  height: 1344px;
 }
 
 .object--waterfall-far--3 {
-  left: 2304px;
-  top: 896px;
-  width: 192px;
-  height: 896px;
+  left: 3456px;
+  top: 1344px;
+  width: 288px;
+  height: 1344px;
 }
 
 .object--waterfall-far--4 {
-  left: 1856px;
-  top: 384px;
-  width: 192px;
-  height: 896px;
+  left: 2784px;
+  top: 576px;
+  width: 288px;
+  height: 1344px;
 }
 
 .object--waterfall-hint-21,
 .object--waterfall-hint-30 {
   position: absolute;
-  left: 704px;
-  width: 128px;
-  height: 64px;
+  left: 1056px;
+  width: 192px;
+  height: 96px;
   pointer-events: none;
   cursor: default;
 }
 
 .object--waterfall-hint-21 {
-  top: 1088px;
+  top: 1632px;
 }
 
 .object--waterfall-hint-30 {
-  top: 1536px;
+  top: 2304px;
 }
 
 @keyframes waterfall-loop {
@@ -6413,10 +6413,10 @@ input {
 
 .object--lever {
   position: absolute;
-  left: 1336px;
-  top: 160px;
-  width: 128px;
-  height: 128px;
+  left: 2004px;
+  top: 240px;
+  width: 192px;
+  height: 192px;
   background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6461,10 +6461,10 @@ input {
 
 .object--pickaxe {
   position: absolute;
-  left: 320px;
-  top: 1088px;
-  width: 128px;
-  height: 128px;
+  left: 480px;
+  top: 1632px;
+  width: 192px;
+  height: 192px;
   background-image: url("../assets/world/obstacles/big-rock/pikeaxe-before.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6523,10 +6523,10 @@ input {
 
 .object--shovel {
   position: absolute;
-  left: 1920px;
-  top: 176px;
-  width: 64px;
-  height: 128px;
+  left: 2880px;
+  top: 264px;
+  width: 96px;
+  height: 192px;
   background-image: url("../assets/world/obstacles/mud/shovel-before.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6585,10 +6585,10 @@ input {
 
 .object--bomb-shell {
   position: absolute;
-  left: 512px;
-  top: 632px;
-  width: 64px;
-  height: 64px;
+  left: 768px;
+  top: 948px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/bomb-shell.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6647,10 +6647,10 @@ input {
 
 .object--bomb-powder {
   position: absolute;
-  left: 1928px;
-  top: 248px;
-  width: 64px;
-  height: 64px;
+  left: 2892px;
+  top: 372px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6709,10 +6709,10 @@ input {
 
 .object--bomb-fuse {
   position: absolute;
-  left: 2048px;
-  top: 640px;
-  width: 64px;
-  height: 64px;
+  left: 3072px;
+  top: 960px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/bomb-fuse.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6771,10 +6771,10 @@ input {
 
 .object--last-lever {
   position: absolute;
-  left: 1280px;
-  top: 1536px;
-  width: 64px;
-  height: 64px;
+  left: 1920px;
+  top: 2304px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/last-lever-item.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -6835,10 +6835,10 @@ input {
 .object--rock-cut,
 .object--rock-gone {
   position: absolute;
-  left: 1856px;
-  top: 1472px;
-  width: 192px;
-  height: 192px;
+  left: 2784px;
+  top: 2208px;
+  width: 288px;
+  height: 288px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -6921,10 +6921,10 @@ input {
 .object--mud-cut,
 .object--mud-gone {
   position: absolute;
-  left: 320px;
-  top: 1440px;
-  width: 320px;
-  height: 256px;
+  left: 480px;
+  top: 2160px;
+  width: 480px;
+  height: 384px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7006,10 +7006,10 @@ input {
 
 .object--mud-pickaxe {
   position: absolute;
-  left: 320px;
-  top: 1440px;
-  width: 320px;
-  height: 256px;
+  left: 480px;
+  top: 2160px;
+  width: 480px;
+  height: 384px;
   pointer-events: none;
   cursor: default;
 }
@@ -7046,10 +7046,10 @@ input {
 .object--workbench-craft,
 .object--workbench-take {
   position: absolute;
-  left: 960px;
-  top: 1024px;
-  width: 192px;
-  height: 192px;
+  left: 1440px;
+  top: 1536px;
+  width: 288px;
+  height: 288px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7125,8 +7125,8 @@ input {
 }
 
 #position-22--from-21--post:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1120px;
+  --world-offset: -1584px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
@@ -7140,8 +7140,8 @@ input {
 }
 
 #position-22--from-23--post:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -1120px;
+  --world-offset: -1584px;
+  --world-offset-y: -1680px;
   transition-duration: 1.2s;
 }
 
@@ -7198,10 +7198,10 @@ input {
 .object--stone-wall-cut,
 .object--stone-wall-front {
   position: absolute;
-  left: 960px;
-  top: 1344px;
-  width: 384px;
-  height: 384px;
+  left: 1440px;
+  top: 2016px;
+  width: 576px;
+  height: 576px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7238,10 +7238,10 @@ input {
 
 .object--wall-bomb {
   position: absolute;
-  left: 1088px;
-  top: 1568px;
-  width: 64px;
-  height: 64px;
+  left: 1632px;
+  top: 2352px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/bomb.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -7406,10 +7406,10 @@ input {
 .object--last-lever-socket-fit,
 .object--last-lever-socket-pull {
   position: absolute;
-  left: 1280px;
-  top: 576px;
-  width: 128px;
-  height: 128px;
+  left: 1920px;
+  top: 864px;
+  width: 192px;
+  height: 192px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7501,10 +7501,10 @@ input {
 
 .object--waterfall-collapse {
   position: absolute;
-  left: 1344px;
-  top: 448px;
-  width: 192px;
-  height: 1344px;
+  left: 2016px;
+  top: 672px;
+  width: 288px;
+  height: 2016px;
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7534,10 +7534,10 @@ input {
 }
 .object--waterfall-collapse-far {
   position: absolute;
-  left: 896px;
-  top: 64px;
-  width: 256px;
-  height: 704px;
+  left: 1344px;
+  top: 96px;
+  width: 384px;
+  height: 1056px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -7554,28 +7554,28 @@ input {
 .object--collapse-hint-30,
 .object--collapse-hint-23 {
   position: absolute;
-  width: 128px;
-  height: 64px;
+  width: 192px;
+  height: 96px;
   pointer-events: none;
   cursor: default;
 }
 
 .object--collapse-hint-21,
 .object--collapse-hint-30 {
-  left: 704px;
+  left: 1056px;
 }
 
 .object--collapse-hint-21 {
-  top: 1088px;
+  top: 1632px;
 }
 
 .object--collapse-hint-30 {
-  top: 1536px;
+  top: 2304px;
 }
 
 .object--collapse-hint-23 {
-  left: 1280px;
-  top: 1088px;
+  left: 1920px;
+  top: 1632px;
 }
 
 #last-lever-armed:checked ~ #collapse-hint-idle:checked ~ :is(#position-21, [id^=position-21--]):checked ~ .game .object--collapse-hint-21,
@@ -7593,10 +7593,10 @@ input {
 
 .object--collapse-bench-rock {
   position: absolute;
-  left: 960px;
-  top: 1024px;
-  width: 192px;
-  height: 192px;
+  left: 1440px;
+  top: 1536px;
+  width: 288px;
+  height: 288px;
   background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -7618,7 +7618,7 @@ input {
 @keyframes collapse-bench-rock-drop {
   0% {
     opacity: 0;
-    transform: translateY(-512px);
+    transform: translateY(-768px);
   }
   15% {
     opacity: 1;
@@ -7630,10 +7630,10 @@ input {
 }
 .object--collapse-upper-rock {
   position: absolute;
-  left: 832px;
-  top: 576px;
-  width: 192px;
-  height: 192px;
+  left: 1248px;
+  top: 864px;
+  width: 288px;
+  height: 288px;
   background-image: url("../assets/world/obstacles/big-rock/rock-before.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -7655,7 +7655,7 @@ input {
 @keyframes collapse-upper-rock-drop {
   0% {
     opacity: 0;
-    transform: translateY(-384px);
+    transform: translateY(-576px);
   }
   15% {
     opacity: 1;
@@ -7840,65 +7840,65 @@ input {
 
 #position-1:checked ~ #intro-dark:checked ~ .game .world,
 #position-1:checked ~ #intro-fade:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -224px;
+  --world-offset: -432px;
+  --world-offset-y: -336px;
   transition: none;
 }
 
 #position-1:checked ~ #intro-1:checked ~ .game .world {
-  --world-offset: -288px;
-  --world-offset-y: -224px;
+  --world-offset: -432px;
+  --world-offset-y: -336px;
   transition: none;
 }
 
 #position-1:checked ~ #intro-2:checked ~ .game .world,
 #position-1:checked ~ #intro-3:checked ~ .game .world {
-  --world-offset: -480px;
-  --world-offset-y: -224px;
+  --world-offset: -720px;
+  --world-offset-y: -336px;
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .world {
-  --world-offset: -672px;
-  --world-offset-y: -224px;
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -672px;
+  --world-offset: -1296px;
+  --world-offset-y: -1008px;
   transition: none;
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .world,
 #position-1:checked ~ #intro-7:checked ~ .game .world,
 #position-1:checked ~ #intro-8:checked ~ .game .world {
-  --world-offset: -864px;
-  --world-offset-y: -672px;
+  --world-offset: -1296px;
+  --world-offset-y: -1008px;
 }
 
 #position-1:checked ~ #intro-9:checked ~ .game .world,
 #position-1:checked ~ #intro-10:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
 }
 
 #position-1:checked ~ #intro-11:checked ~ .game .world {
-  --world-offset: -1056px;
-  --world-offset-y: -672px;
+  --world-offset: -1584px;
+  --world-offset-y: -1008px;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .player,
 #position-1:checked ~ #intro-fade:checked ~ .game .player {
-  --player-extra-offset: -192px;
+  --player-extra-offset: -288px;
   transition: none;
 }
 
@@ -7995,11 +7995,11 @@ input {
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
-  --player-extra-offset-y: 448px;
+  --player-extra-offset-y: 672px;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
-  --player-extra-offset-y: 448px;
+  --player-extra-offset-y: 672px;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .player {
@@ -8111,26 +8111,26 @@ input {
 
 @keyframes intro-lamp-open-1 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2952 A1,1 0 1,0 3001,2952 A1,1 0 1,0 2999,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2805,2952 A195,95 0 1,0 3195,2952 A195,95 0 1,0 2805,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2707.5,2928 A292.5,142.5 0 1,0 3292.5,2928 A292.5,142.5 0 1,0 2707.5,2928 Z");
   }
 }
 @keyframes intro-lamp-open-2 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2952 A1,1 0 1,0 3001,2952 A1,1 0 1,0 2999,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2765,2952 A235,115 0 1,0 3235,2952 A235,115 0 1,0 2765,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2647.5,2928 A352.5,172.5 0 1,0 3352.5,2928 A352.5,172.5 0 1,0 2647.5,2928 Z");
   }
 }
 @keyframes intro-lamp-open-3 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2952 A1,1 0 1,0 3001,2952 A1,1 0 1,0 2999,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2744,2952 A256,171 0 1,0 3256,2952 A256,171 0 1,0 2744,2952 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2616,2928 A384,256.5 0 1,0 3384,2928 A384,256.5 0 1,0 2616,2928 Z");
   }
 }
 #position-1:checked ~ #intro-11:checked ~ .game .player.lamp-glow-anchor .lamp-glow {
@@ -8441,10 +8441,10 @@ input {
 
 .story-object--backpack {
   display: block;
-  left: 1088px;
-  top: 672px;
-  width: 64px;
-  height: 64px;
+  left: 1632px;
+  top: 1008px;
+  width: 96px;
+  height: 96px;
   background-image: url("../assets/objects/inventory/backpack.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -8486,7 +8486,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ :is(#outro-to-1, #outro-end, #outro-fade, #outro-credits):checked ~ .game .player {
-  --player-extra-offset: -640px;
+  --player-extra-offset: -960px;
 }
 
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-to-1:checked ~ .game .player {
