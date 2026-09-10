@@ -83,24 +83,39 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  clip-path: ellipse(384px 256.5px at 50% calc(50% - 48px));
-  animation: vision-field-pulse 4s ease-in-out infinite;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
-#debug-grid:checked ~ .game .viewport {
+.vision-field {
+  position: relative;
+  flex-shrink: 0;
+  width: 640px;
+  height: 640px;
+  margin-top: 0px;
+  overflow: hidden;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
+  animation: vision-field-pulse 4s ease-in-out infinite;
+}
+
+#debug-grid:checked ~ .game .vision-field {
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  overflow: visible;
+  border-radius: 0;
   clip-path: none;
   animation: none;
 }
 
 @keyframes vision-field-pulse {
   0%, 100% {
-    clip-path: ellipse(384px 256.5px at 50% calc(50% - 48px));
+    clip-path: circle(50% at 50% 50%);
   }
   50% {
-    clip-path: ellipse(378px 250.5px at 50% calc(50% - 48px));
+    clip-path: circle(calc(50% - 6px) at 50% 50%);
   }
 }
 .world {
@@ -2437,6 +2452,10 @@ input {
   z-index: 45;
 }
 
+.player.lamp-glow-anchor .lamp-glow__layer {
+  top: calc(50% - 18px);
+}
+
 .lamp-glow__layer {
   position: absolute;
   top: 50%;
@@ -2450,13 +2469,13 @@ input {
   animation: lamp-glow-pulse 3s ease-in-out infinite;
 }
 .lamp-glow__layer:nth-child(1) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2707.5,2928 A292.5,142.5 0 1,0 3292.5,2928 A292.5,142.5 0 1,0 2707.5,2928 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2781.12,3000 A218.88,218.88 0 1,0 3218.88,3000 A218.88,218.88 0 1,0 2781.12,3000 Z");
 }
 .lamp-glow__layer:nth-child(2) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2647.5,2928 A352.5,172.5 0 1,0 3352.5,2928 A352.5,172.5 0 1,0 2647.5,2928 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2735.04,3000 A264.96,264.96 0 1,0 3264.96,3000 A264.96,264.96 0 1,0 2735.04,3000 Z");
 }
 .lamp-glow__layer:nth-child(3) {
-  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2616,2928 A384,256.5 0 1,0 3384,2928 A384,256.5 0 1,0 2616,2928 Z");
+  clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2712,3000 A288,288 0 1,0 3288,3000 A288,288 0 1,0 2712,3000 Z");
 }
 .lamp-glow__layer:last-child {
   background: rgba(0, 0, 0, 0.5);
@@ -6890,8 +6909,8 @@ input {
 }
 
 #rock-cutting:checked ~ .game .viewport {
-  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 1;
-  animation-delay: 0s, 0.3s;
+  animation: intro-screen-shake 0.4s ease-in-out 1;
+  animation-delay: 0.3s;
 }
 
 :is(#rock-blocked, #rock-cut-prompt, #rock-cutting):checked ~ .game .direction-controls__button--edge[data-position] {
@@ -7316,8 +7335,8 @@ input {
 }
 
 #wall-pickaxe-swing:checked ~ .game .viewport {
-  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 1;
-  animation-delay: 0s, 0.3s;
+  animation: intro-screen-shake 0.4s ease-in-out 1;
+  animation-delay: 0.3s;
 }
 
 #wall-pickaxe-swing:checked ~ .game .dialogue[data-step=wall-pickaxe-fail] .dialogue__box {
@@ -7335,8 +7354,8 @@ input {
 }
 
 #wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .viewport {
-  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out 3;
-  animation-delay: 0s, 1.8s;
+  animation: intro-screen-shake 0.4s ease-in-out 3;
+  animation-delay: 1.8s;
 }
 
 .blast-flash {
@@ -7492,7 +7511,7 @@ input {
 }
 
 #last-lever-armed:checked ~ .game .viewport {
-  animation: vision-field-pulse 4s ease-in-out infinite, intro-screen-shake 0.4s ease-in-out infinite;
+  animation: intro-screen-shake 0.4s ease-in-out infinite;
 }
 
 #debug-grid:checked ~ #last-lever-armed:checked ~ .game .viewport {
@@ -8111,26 +8130,26 @@ input {
 
 @keyframes intro-lamp-open-1 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,3000 A1,1 0 1,0 3001,3000 A1,1 0 1,0 2999,3000 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2707.5,2928 A292.5,142.5 0 1,0 3292.5,2928 A292.5,142.5 0 1,0 2707.5,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2781.12,3000 A218.88,218.88 0 1,0 3218.88,3000 A218.88,218.88 0 1,0 2781.12,3000 Z");
   }
 }
 @keyframes intro-lamp-open-2 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,3000 A1,1 0 1,0 3001,3000 A1,1 0 1,0 2999,3000 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2647.5,2928 A352.5,172.5 0 1,0 3352.5,2928 A352.5,172.5 0 1,0 2647.5,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2735.04,3000 A264.96,264.96 0 1,0 3264.96,3000 A264.96,264.96 0 1,0 2735.04,3000 Z");
   }
 }
 @keyframes intro-lamp-open-3 {
   from {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,2928 A1,1 0 1,0 3001,2928 A1,1 0 1,0 2999,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2999,3000 A1,1 0 1,0 3001,3000 A1,1 0 1,0 2999,3000 Z");
   }
   to {
-    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2616,2928 A384,256.5 0 1,0 3384,2928 A384,256.5 0 1,0 2616,2928 Z");
+    clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2712,3000 A288,288 0 1,0 3288,3000 A288,288 0 1,0 2712,3000 Z");
   }
 }
 #position-1:checked ~ #intro-11:checked ~ .game .player.lamp-glow-anchor .lamp-glow {

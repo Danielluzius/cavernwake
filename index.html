@@ -541,6 +541,10 @@
           <section class="scene scene--game">
 
                <div class="viewport" id="viewport">
+                    <!-- Pixel-sized circular mask: width/height in tile px so
+                     the visible area zooms with the world. clip-path on the
+                     full-window .viewport does not track browser zoom. -->
+                    <div class="vision-field">
 
                     <div class="world-layer world-layer--background"></div>
 
@@ -808,8 +812,8 @@
                     </div>
 
                     <!-- Screen-space debris during the cave collapse (see
-                     scss/world/_collapse.scss) — viewport siblings so the
-                     rocks fall through the oval, not the world grid. -->
+                     scss/world/_collapse.scss) — vision-field children so
+                     the rocks fall through the circle, not the world grid. -->
                     <div class="collapse-debris collapse-debris--back">
                          <div class="collapse-debris__piece collapse-debris__piece--1"></div>
                          <div class="collapse-debris__piece collapse-debris__piece--2"></div>
@@ -834,6 +838,7 @@
                      soft edge out of hard steps — fits the pixel-art look. -->
                     <div class="vignette-ring vignette-ring--outer"></div>
                     <div class="vignette-ring vignette-ring--inner"></div>
+                    </div>
                </div>
 
                <!-- Sibling of .viewport on purpose: .blackout is position:fixed
