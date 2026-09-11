@@ -3810,8 +3810,8 @@ input {
   z-index: 0;
   box-sizing: border-box;
   background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
-  border: 3px solid #010000;
   pointer-events: none;
+  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
 }
 
 .dialogue__text {
@@ -3829,18 +3829,20 @@ input {
 }
 
 .dialogue__button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 3px solid #010000;
+  border: 0;
   border-radius: 0;
   background: #2f6b32;
   font-size: 0;
   color: transparent;
   user-select: none;
+  box-shadow: 0 6px 0 #010000, 0 -6px 0 #010000, 6px 0 0 #010000, -6px 0 0 #010000;
 }
 .dialogue__button::after {
   content: "";
@@ -3868,6 +3870,12 @@ input {
 }
 .dialogue__button:hover {
   transform: translateX(9px);
+}
+.dialogue__button:active {
+  transform: translateX(0) translateY(3px);
+}
+.dialogue__button:hover:active {
+  transform: translateX(9px) translateY(3px);
 }
 
 @keyframes dialogue-arrow-in {
@@ -3956,18 +3964,20 @@ input {
 }
 
 .direction-controls__button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 3px solid #010000;
+  border: 0;
   border-radius: 0;
   background: #2f6b32;
   font-size: 0;
   color: transparent;
   user-select: none;
+  box-shadow: 0 6px 0 #010000, 0 -6px 0 #010000, 6px 0 0 #010000, -6px 0 0 #010000;
 }
 .direction-controls__button::after {
   content: "";
@@ -3986,42 +3996,34 @@ input {
   position: absolute;
   left: 0;
   top: 0;
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   font-size: 0;
   color: transparent;
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  background: color-mix(in srgb, #2f6b32 55%, transparent);
-  border-color: color-mix(in srgb, #010000 55%, transparent);
-}
-.direction-controls__button::after {
-  opacity: 0.55;
-}
-.direction-controls__button:hover {
-  background: #3a8240;
-  border-color: #010000;
-}
-.direction-controls__button:hover::after {
-  opacity: 1;
+  --press: 0px;
 }
 .direction-controls__button--up {
-  transform: translate(-50%, -50%) translateY(calc(-1 * 240px)) rotate(-90deg);
+  transform: translate(-50%, -50%) translateY(var(--press)) translateY(calc(-1 * 240px)) rotate(-90deg);
   margin-top: 9px;
 }
 .direction-controls__button--left {
-  transform: translate(-50%, -50%) translateX(calc(-1 * 240px)) rotate(180deg);
+  transform: translate(-50%, -50%) translateY(var(--press)) translateX(calc(-1 * 240px)) rotate(180deg);
   margin-left: 9px;
 }
 .direction-controls__button--right {
-  transform: translate(-50%, -50%) translateX(240px);
+  transform: translate(-50%, -50%) translateY(var(--press)) translateX(240px);
   margin-left: calc(-1 * 9px);
 }
 .direction-controls__button--down {
-  transform: translate(-50%, -50%) translateY(240px) rotate(90deg);
+  transform: translate(-50%, -50%) translateY(var(--press)) translateY(240px) rotate(90deg);
   margin-top: calc(-1 * 9px);
+}
+.direction-controls__button:active {
+  --press: 3px;
 }
 
 .direction-controls__button--edge {
