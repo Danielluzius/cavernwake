@@ -6,6 +6,13 @@
   --idle-frame-count: 4;
 }
 
+@font-face {
+  font-family: "Fusion Pixel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/fusion-pixel-8px-proportional-latin.woff2") format("woff2");
+}
 *,
 *::before,
 *::after {
@@ -22,7 +29,9 @@ body {
 body {
   overflow: hidden;
   background-color: #000;
-  font-family: "Courier New", monospace;
+  font-family: "Fusion Pixel", "Courier New", monospace;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
 }
 
 img,
@@ -3766,6 +3775,118 @@ input {
     background-image: url("../assets/characters/with-backpack/use-item/workbench/frame_008.png");
   }
 }
+.dialogue {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-100% - 88.8px));
+  z-index: 100;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.dialogue__box {
+  --dialogue-px: 3px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  width: 240px;
+  padding: 9px 15px 21px;
+  background: transparent;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0s, visibility 0s;
+}
+.dialogue__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  box-sizing: border-box;
+  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
+  border: 3px solid #010000;
+  pointer-events: none;
+}
+
+.dialogue__text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 100%;
+  color: #2a1810;
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 1.25;
+  text-align: center;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.dialogue__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 3px solid #010000;
+  border-radius: 0;
+  background: #2f6b32;
+  font-size: 0;
+  color: transparent;
+  user-select: none;
+}
+.dialogue__button::after {
+  content: "";
+  display: block;
+  width: 28%;
+  height: 28%;
+  margin-right: 12%;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transform: rotate(45deg);
+}
+.dialogue__button:hover {
+  background: #3a8240;
+}
+.dialogue__button {
+  position: absolute;
+  right: calc(-1 * 10px);
+  bottom: calc(-1 * 10px);
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(calc(-1 * 9px));
+}
+.dialogue__button:hover {
+  transform: translateX(9px);
+}
+
+@keyframes dialogue-arrow-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * 9px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes dialogue-show-after-delay {
+  to {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
 .ui {
   position: absolute;
   top: 0;
@@ -3828,1701 +3949,1959 @@ input {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  transform: translateY(0px);
   z-index: 2;
-  display: grid;
-  grid-template-columns: 96px 252px 96px;
-  grid-template-rows: 96px 252px 96px;
-  gap: 48px;
 }
 
 .direction-controls__button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.3);
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 3px solid #010000;
+  border-radius: 0;
+  background: #2f6b32;
+  font-size: 0;
+  color: transparent;
+  user-select: none;
+}
+.direction-controls__button::after {
+  content: "";
+  display: block;
+  width: 28%;
+  height: 28%;
+  margin-right: 12%;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transform: rotate(45deg);
+}
+.direction-controls__button:hover {
+  background: #3a8240;
+}
+.direction-controls__button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  font-size: 0;
+  color: transparent;
   cursor: not-allowed;
   pointer-events: none;
-  user-select: none;
   opacity: 0;
   visibility: hidden;
+  background: color-mix(in srgb, #2f6b32 55%, transparent);
+  border-color: color-mix(in srgb, #010000 55%, transparent);
+}
+.direction-controls__button::after {
+  opacity: 0.55;
+}
+.direction-controls__button:hover {
+  background: #3a8240;
+  border-color: #010000;
+}
+.direction-controls__button:hover::after {
+  opacity: 1;
 }
 .direction-controls__button--up {
-  grid-column: 2;
-  grid-row: 1;
-  width: 96px;
-  justify-self: center;
+  transform: translate(-50%, -50%) translateY(calc(-1 * 240px)) rotate(-90deg);
+  margin-top: 9px;
 }
 .direction-controls__button--left {
-  grid-column: 1;
-  grid-row: 2;
-  height: 96px;
-  align-self: center;
+  transform: translate(-50%, -50%) translateX(calc(-1 * 240px)) rotate(180deg);
+  margin-left: 9px;
 }
 .direction-controls__button--right {
-  grid-column: 3;
-  grid-row: 2;
-  height: 96px;
-  align-self: center;
+  transform: translate(-50%, -50%) translateX(240px);
+  margin-left: calc(-1 * 9px);
 }
 .direction-controls__button--down {
-  grid-column: 2;
-  grid-row: 3;
-  width: 96px;
-  justify-self: center;
+  transform: translate(-50%, -50%) translateY(240px) rotate(90deg);
+  margin-top: calc(-1 * 9px);
 }
 
 .direction-controls__button--edge {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-color: #fff;
   cursor: pointer;
-  transition: opacity 0s, visibility 0s;
+  transition: opacity 0s, visibility 0s, margin 0s;
 }
 
 #position-1:checked ~ .game .direction-controls__button--right[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-2:checked ~ .game .direction-controls__button--right[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-2:checked ~ .game .direction-controls__button--left[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-3:checked ~ .game .direction-controls__button--right[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-3:checked ~ .game .direction-controls__button--left[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-4:checked ~ .game .direction-controls__button--right[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-4:checked ~ .game .direction-controls__button--left[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-5:checked ~ .game .direction-controls__button--right[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-5:checked ~ .game .direction-controls__button--left[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-6:checked ~ .game .direction-controls__button--left[data-position="6"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-7:checked ~ .game .direction-controls__button--right[data-position="7"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-8:checked ~ .game .direction-controls__button--down[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-8:checked ~ .game .direction-controls__button--left[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-9:checked ~ .game .direction-controls__button--right[data-position="9"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-10:checked ~ .game .direction-controls__button--down[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-10:checked ~ .game .direction-controls__button--left[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-11:checked ~ .game .direction-controls__button--right[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-11:checked ~ .game .direction-controls__button--down[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-12:checked ~ .game .direction-controls__button--left[data-position="12"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-15:checked ~ .game .direction-controls__button--down[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-15:checked ~ .game .direction-controls__button--left[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-16:checked ~ .game .direction-controls__button--up[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-16:checked ~ .game .direction-controls__button--right[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-17:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-17:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-18:checked ~ .game .direction-controls__button--left[data-position="18"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-19:checked ~ .game .direction-controls__button--right[data-position="19"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-20:checked ~ .game .direction-controls__button--left[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-21:checked ~ .game .direction-controls__button--right[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-21:checked ~ .game .direction-controls__button--down[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-22:checked ~ .game .direction-controls__button--right[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-22:checked ~ .game .direction-controls__button--left[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-23:checked ~ .game .direction-controls__button--up[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #vine24-done:checked ~ #position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lift-17-26-unlocked:checked ~ #position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-25:checked ~ .game .direction-controls__button--down[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #vine24-done:checked ~ #position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-26:checked ~ .game .direction-controls__button--left[data-position="26"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-27:checked ~ .game .direction-controls__button--up[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-27:checked ~ .game .direction-controls__button--right[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #mud-done:checked ~ #position-28:checked ~ .game .direction-controls__button--right[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lift-11-27-unlocked:checked ~ #position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #mud-done:checked ~ #position-29:checked ~ .game .direction-controls__button--left[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-30:checked ~ .game .direction-controls__button--up[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #vine30-done:checked ~ #position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #wall-done:checked ~ #position-31:checked ~ .game .direction-controls__button--right[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #vine30-done:checked ~ #position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #wall-done:checked ~ #position-32:checked ~ .game .direction-controls__button--left[data-position="32"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-33:checked ~ .game .direction-controls__button--up[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-33:checked ~ .game .direction-controls__button--right[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #rock-done:checked ~ #position-34:checked ~ .game .direction-controls__button--right[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-34:checked ~ .game .direction-controls__button--left[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #lift-10-36-unlocked:checked ~ #position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #rock-done:checked ~ #position-35:checked ~ .game .direction-controls__button--left[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-36:checked ~ .game .direction-controls__button--up[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-36:checked ~ .game .direction-controls__button--left[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--right[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--left[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--right[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--left[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-1--from-2:checked ~ .game .direction-controls__button--right[data-position="1"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--right[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--left[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--right[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--left[data-position="2"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--right[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--left[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--right[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--left[data-position="3"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--left[data-position="6"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--right[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--left[data-position="4"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-14--from-6:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--right[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--left[data-position="5"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--down[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--left[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--up[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--right[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-7--from-8:checked ~ .game .direction-controls__button--right[data-position="7"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--down[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--left[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--up[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 4s, visibility 0s 4s;
+  margin: 0;
+  transition: opacity 0.4s 4s ease-out, margin 0.4s 4s ease-out, visibility 0s 4s;
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--left[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 4s, visibility 0s 4s;
+  margin: 0;
+  transition: opacity 0.4s 4s ease-out, margin 0.4s 4s ease-out, visibility 0s 4s;
 }
 
 #position-9--from-10:checked ~ .game .direction-controls__button--right[data-position="9"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-12--from-11:checked ~ .game .direction-controls__button--left[data-position="12"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--up[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 3s, visibility 0s 3s;
+  margin: 0;
+  transition: opacity 0.4s 3s ease-out, margin 0.4s 3s ease-out, visibility 0s 3s;
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--right[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 3s, visibility 0s 3s;
+  margin: 0;
+  transition: opacity 0.4s 3s ease-out, margin 0.4s 3s ease-out, visibility 0s 3s;
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--right[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--down[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-14--from-13:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-6--from-14:checked ~ .game .direction-controls__button--left[data-position="6"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--down[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--left[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-23--from-15:checked ~ .game .direction-controls__button--up[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-14--from-15:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--down[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--left[data-position="8"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-18--from-17:checked ~ .game .direction-controls__button--left[data-position="18"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-26--from-17:checked ~ .game .direction-controls__button--left[data-position="26"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--up[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--right[data-position="16"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-20--from-19:checked ~ .game .direction-controls__button--left[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--right[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--down[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-19--from-20:checked ~ .game .direction-controls__button--right[data-position="19"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--right[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--left[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-30--from-21:checked ~ .game .direction-controls__button--up[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #vine30-done:checked ~ #position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-20--from-21:checked ~ .game .direction-controls__button--left[data-position="20"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-23--from-22:checked ~ .game .direction-controls__button--up[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--right[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--down[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--down[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--left[data-position="15"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #vine24-done:checked ~ #position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--right[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--left[data-position="22"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-17-26-unlocked:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-25--from-24:checked ~ .game .direction-controls__button--down[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine24-done:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-23--from-24:checked ~ .game .direction-controls__button--up[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #collapse-bench-dropped:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--left[data-position="26"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--up[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--right[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #vine24-done:checked ~ #position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #last-lever-armed:not(:checked) ~ #position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #lift-17-26-unlocked:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-25--from-26:checked ~ .game .direction-controls__button--down[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine24-done:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--right[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 3s, visibility 0s 3s;
+  margin: 0;
+  transition: opacity 0.4s 3s ease-out, margin 0.4s 3s ease-out, visibility 0s 3s;
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--down[data-position="11"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 3s, visibility 0s 3s;
+  margin: 0;
+  transition: opacity 0.4s 3s ease-out, margin 0.4s 3s ease-out, visibility 0s 3s;
 }
 
 #mud-done:checked ~ #position-28--from-27:checked ~ .game .direction-controls__button--right[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-11-27-unlocked:checked ~ #position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #mud-done:checked ~ #position-29--from-28:checked ~ .game .direction-controls__button--left[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--up[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--right[data-position="27"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-30--from-29:checked ~ .game .direction-controls__button--up[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine30-done:checked ~ #position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #mud-done:checked ~ #position-28--from-29:checked ~ .game .direction-controls__button--right[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-11-27-unlocked:checked ~ #position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--right[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--down[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #wall-done:checked ~ #position-31--from-30:checked ~ .game .direction-controls__button--right[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine30-done:checked ~ #position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #mud-done:checked ~ #position-29--from-30:checked ~ .game .direction-controls__button--left[data-position="29"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #wall-done:checked ~ #position-32--from-31:checked ~ .game .direction-controls__button--left[data-position="32"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-30--from-31:checked ~ .game .direction-controls__button--up[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine30-done:checked ~ #position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #wall-done:checked ~ #position-31--from-32:checked ~ .game .direction-controls__button--right[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #vine30-done:checked ~ #position-31--from-32:checked ~ .game .direction-controls__button--left[data-position="31"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-17-26-unlocked:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #position-25--from-33:checked ~ .game .direction-controls__button--down[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #vine24-done:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 #rock-done:checked ~ #position-34--from-33:checked ~ .game .direction-controls__button--right[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-34--from-33:checked ~ .game .direction-controls__button--left[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-10-36-unlocked:checked ~ #position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #rock-done:checked ~ #position-35--from-34:checked ~ .game .direction-controls__button--left[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--up[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--right[data-position="33"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--up[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--left[data-position="36"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #rock-done:checked ~ #position-34--from-35:checked ~ .game .direction-controls__button--right[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-34--from-35:checked ~ .game .direction-controls__button--left[data-position="34"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--down[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 4s, visibility 0s 4s;
+  margin: 0;
+  transition: opacity 0.4s 4s ease-out, margin 0.4s 4s ease-out, visibility 0s 4s;
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--left[data-position="10"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 4s, visibility 0s 4s;
+  margin: 0;
+  transition: opacity 0.4s 4s ease-out, margin 0.4s 4s ease-out, visibility 0s 4s;
 }
 
 #lift-10-36-unlocked:checked ~ #position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #rock-done:checked ~ #position-35--from-36:checked ~ .game .direction-controls__button--left[data-position="35"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-13:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-15:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  margin: 0;
+  transition: opacity 0.4s 0.6s ease-out, margin 0.4s 0.6s ease-out, visibility 0s 0.6s;
 }
 
 #position-6--from-14--right:checked ~ .game .direction-controls__button--left[data-position="6"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-6--from-14--left:checked ~ .game .direction-controls__button--left[data-position="6"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-26--from-17--right:checked ~ .game .direction-controls__button--left[data-position="26"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-26--from-17--left:checked ~ .game .direction-controls__button--left[data-position="26"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-6--from-14--right:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-6--from-14--left:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-26--from-17--right:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 #position-26--from-17--left:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6--right:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-14--from-6--right:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-14--from-6--right:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6--left:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-14--from-6--left:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-14--from-6--left:checked ~ .game .direction-controls__button--left[data-position="14"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--right[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=left] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--left[data-position="17"] {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  margin: 0;
+  transition: opacity 0.4s 2s ease-out, margin 0.4s 2s ease-out, visibility 0s 2s;
 }
 
 @keyframes lift-call-wait {
@@ -5638,56 +6017,15 @@ input {
   text-decoration: none;
 }
 
-.dialogue {
-  position: fixed;
-  left: 50%;
-  bottom: 120px;
-  transform: translateX(-50%);
-  z-index: 100;
-  pointer-events: none;
-}
-
-.dialogue__box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  max-width: 480px;
-  padding: 16px 24px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 2px solid #fff;
-  border-radius: 8px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0s, visibility 0s;
-}
-
-.dialogue__text {
-  margin: 0;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-}
-
-.dialogue__button {
-  padding: 6px 18px;
-  font-weight: bold;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 2px solid #fff;
-  cursor: pointer;
-  user-select: none;
-}
-
 .inventory__toggle {
-  grid-column: 3;
-  grid-row: 1;
+  position: absolute;
   z-index: 2;
-  justify-self: center;
-  align-self: end;
+  left: 240px;
+  top: calc(-1 * 240px);
   width: 72px;
   height: 72px;
+  margin-left: calc(72px / -2);
+  margin-top: calc(72px / -2);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6000,13 +6338,6 @@ input {
   display: none;
 }
 
-@keyframes dialogue-show-after-delay {
-  to {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-}
 .object--vines-24,
 .object--vines-24-cut,
 .object--vines-24-gone {
@@ -6067,11 +6398,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#vine24-blocked:checked ~ .game .dialogue[data-step=vine24-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #vine24-cut-prompt:checked ~ .game .dialogue[data-step=vine24-cut-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#vine24-cut-prompt:checked ~ .game .dialogue[data-step=vine24-cut-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #vine24-cutting:checked ~ .game .dialogue[data-step=vine24-cut-confirm] .dialogue__box {
@@ -6079,6 +6418,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#vine24-cutting:checked ~ .game .dialogue[data-step=vine24-cut-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--vines-30,
@@ -6145,11 +6488,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#vine30-blocked:checked ~ .game .dialogue[data-step=vine30-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #vine30-cut-prompt:checked ~ .game .dialogue[data-step=vine30-cut-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#vine30-cut-prompt:checked ~ .game .dialogue[data-step=vine30-cut-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #vine30-cutting:checked ~ .game .dialogue[data-step=vine30-cut-confirm] .dialogue__box {
@@ -6157,6 +6508,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#vine30-cutting:checked ~ .game .dialogue[data-step=vine30-cut-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--vines-12,
@@ -6219,11 +6574,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#vine12-blocked:checked ~ .game .dialogue[data-step=vine12-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #vine12-cut-prompt:checked ~ .game .dialogue[data-step=vine12-cut-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#vine12-cut-prompt:checked ~ .game .dialogue[data-step=vine12-cut-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #vine12-cutting:checked ~ .game .dialogue[data-step=vine12-cut-confirm] .dialogue__box {
@@ -6231,6 +6594,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#vine12-cutting:checked ~ .game .dialogue[data-step=vine12-cut-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--vines-24 {
@@ -6272,6 +6639,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#vine30-pickup:checked ~ .game .dialogue[data-step=vine30-found] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 #vine30-idle:checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--vines-30,
@@ -6319,7 +6690,8 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  margin: 0;
+  transition: opacity 0.4s 1.8s ease-out, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
 .object--waterfall,
@@ -6429,6 +6801,10 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#waterfall-hint-blocked:checked ~ .game .dialogue[data-step=waterfall-hint-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 .object--lever {
   position: absolute;
@@ -6476,6 +6852,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#lever7-confirm:checked ~ .game .dialogue[data-step=lever7-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--pickaxe {
@@ -6532,12 +6912,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#pickaxe-prompt:checked ~ .game .dialogue[data-step=pickaxe-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #pickaxe-pickup:checked ~ .game .dialogue[data-step=pickaxe-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#pickaxe-pickup:checked ~ .game .dialogue[data-step=pickaxe-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--shovel {
@@ -6594,12 +6982,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#shovel-prompt:checked ~ .game .dialogue[data-step=shovel-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #shovel-pickup:checked ~ .game .dialogue[data-step=shovel-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#shovel-pickup:checked ~ .game .dialogue[data-step=shovel-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--bomb-shell {
@@ -6656,12 +7052,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#bomb-shell-prompt:checked ~ .game .dialogue[data-step=bomb-shell-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #bomb-shell-pickup:checked ~ .game .dialogue[data-step=bomb-shell-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#bomb-shell-pickup:checked ~ .game .dialogue[data-step=bomb-shell-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--bomb-powder {
@@ -6718,12 +7122,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#bomb-powder-prompt:checked ~ .game .dialogue[data-step=bomb-powder-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #bomb-powder-pickup:checked ~ .game .dialogue[data-step=bomb-powder-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#bomb-powder-pickup:checked ~ .game .dialogue[data-step=bomb-powder-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--bomb-fuse {
@@ -6780,12 +7192,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#bomb-fuse-prompt:checked ~ .game .dialogue[data-step=bomb-fuse-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #bomb-fuse-pickup:checked ~ .game .dialogue[data-step=bomb-fuse-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#bomb-fuse-pickup:checked ~ .game .dialogue[data-step=bomb-fuse-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--last-lever {
@@ -6842,12 +7262,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#last-lever-prompt:checked ~ .game .dialogue[data-step=last-lever-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #last-lever-pickup:checked ~ .game .dialogue[data-step=last-lever-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#last-lever-pickup:checked ~ .game .dialogue[data-step=last-lever-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--rock,
@@ -6922,11 +7350,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#rock-blocked:checked ~ .game .dialogue[data-step=rock-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #rock-cut-prompt:checked ~ .game .dialogue[data-step=rock-cut-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#rock-cut-prompt:checked ~ .game .dialogue[data-step=rock-cut-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #rock-cutting:checked ~ .game .dialogue[data-step=rock-cut-confirm] .dialogue__box {
@@ -6934,6 +7370,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#rock-cutting:checked ~ .game .dialogue[data-step=rock-cut-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--mud,
@@ -7003,11 +7443,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#mud-blocked:checked ~ .game .dialogue[data-step=mud-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #mud-blocked-2:checked ~ .game .dialogue[data-step=mud-blocked-2] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#mud-blocked-2:checked ~ .game .dialogue[data-step=mud-blocked-2] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #mud-cut-prompt:checked ~ .game .dialogue[data-step=mud-cut-prompt] .dialogue__box {
@@ -7015,12 +7463,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#mud-cut-prompt:checked ~ .game .dialogue[data-step=mud-cut-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #mud-cutting:checked ~ .game .dialogue[data-step=mud-cut-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#mud-cutting:checked ~ .game .dialogue[data-step=mud-cut-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--mud-pickaxe {
@@ -7059,6 +7515,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#mud-pickaxe-swing:checked ~ .game .dialogue[data-step=mud-pickaxe-fail] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--workbench,
@@ -7178,7 +7638,8 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  margin: 0;
+  transition: opacity 0.4s 1.2s ease-out, margin 0.4s 1.2s ease-out, visibility 0s 1.2s;
 }
 
 :is(#workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-take):checked ~ .game .direction-controls__button--edge[data-position] {
@@ -7190,11 +7651,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#workbench-incomplete:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #workbench-craft-prompt:checked ~ .game .dialogue[data-step=workbench-craft-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#workbench-craft-prompt:checked ~ .game .dialogue[data-step=workbench-craft-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #workbench-crafting:checked ~ .game .dialogue[data-step=workbench-craft-confirm] .dialogue__box {
@@ -7203,12 +7672,20 @@ input {
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 1.2s forwards;
 }
+#workbench-crafting:checked ~ .game .dialogue[data-step=workbench-craft-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.95s;
+}
 
 #workbench-take:checked ~ .game .dialogue[data-step=workbench-take] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#workbench-take:checked ~ .game .dialogue[data-step=workbench-take] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 .object--stone-wall,
@@ -7345,12 +7822,20 @@ input {
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 1.2s forwards;
 }
+#wall-pickaxe-swing:checked ~ .game .dialogue[data-step=wall-pickaxe-fail] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.95s;
+}
 
 #wall-shovel-swing:checked ~ .game .dialogue[data-step=wall-shovel-fail] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#wall-shovel-swing:checked ~ .game .dialogue[data-step=wall-shovel-fail] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 #wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .viewport {
@@ -7394,11 +7879,19 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#wall-blocked:checked ~ .game .dialogue[data-step=wall-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #wall-blast-prompt:checked ~ .game .dialogue[data-step=wall-blast-prompt] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+#wall-blast-prompt:checked ~ .game .dialogue[data-step=wall-blast-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #wall-lantern-fire:checked ~ .game .dialogue[data-step=wall-lantern-fire] .dialogue__box {
@@ -7406,6 +7899,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.9s forwards;
+}
+#wall-lantern-fire:checked ~ .game .dialogue[data-step=wall-lantern-fire] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.65s;
 }
 
 #wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-lantern-fire] .dialogue__box {
@@ -7419,6 +7916,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 3s forwards;
+}
+#wall-lantern-fire:checked ~ #position-30--from-31:checked ~ .game .dialogue[data-step=wall-blast-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 3.75s;
 }
 
 .object--last-lever-socket,
@@ -7495,6 +7996,10 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#last-lever-socket-hint:checked ~ .game .dialogue[data-step=last-lever-socket-hint] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #last-lever-socket-fitting:checked ~ .game .dialogue[data-step=last-lever-socket-prompt] .dialogue__box {
   opacity: 0;
@@ -7502,12 +8007,20 @@ input {
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
 }
+#last-lever-socket-fitting:checked ~ .game .dialogue[data-step=last-lever-socket-prompt] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
+}
 
 #last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 0.6s forwards;
+}
+#last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.35s;
 }
 
 #last-lever-armed:checked ~ .game .viewport {
@@ -7609,6 +8122,10 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#collapse-hint-blocked:checked ~ .game .dialogue[data-step=collapse-hint-blocked] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 .object--collapse-bench-rock {
   position: absolute;
@@ -7693,6 +8210,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 1.8s forwards;
+}
+#last-lever-armed:checked ~ #collapse-bench-dropped:not(:checked) ~ #position-23--from-22:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.55s;
 }
 
 #collapse-bench-dropped:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box {
@@ -7855,6 +8376,10 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+.dev-controls__button--intro-start .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .world,
@@ -8317,12 +8842,20 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#position-1:checked ~ #intro-dark:checked ~ .game .dialogue[data-intro-step=dark] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 2.2s, visibility 0s 2.2s;
+}
+#position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.95s;
 }
 
 #position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box {
@@ -8331,12 +8864,20 @@ input {
   pointer-events: auto;
   transition: opacity 0s 1.4s, visibility 0s 1.4s;
 }
+#position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.15s;
+}
 
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.4s, visibility 0s 1.4s;
+}
+#position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.15s;
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box {
@@ -8345,12 +8886,20 @@ input {
   pointer-events: auto;
   transition: opacity 0s 1.8s, visibility 0s 1.8s;
 }
+#position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.55s;
+}
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
+}
+#position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.95s;
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box {
@@ -8359,12 +8908,20 @@ input {
   pointer-events: auto;
   transition: opacity 0s 2.6s, visibility 0s 2.6s;
 }
+#position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 3.35s;
+}
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 2.2s, visibility 0s 2.2s;
+}
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.95s;
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box {
@@ -8373,6 +8930,10 @@ input {
   pointer-events: auto;
   transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
+#position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.95s;
+}
 
 #position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box {
   opacity: 1;
@@ -8380,12 +8941,20 @@ input {
   pointer-events: auto;
   transition: opacity 0s 1.4s, visibility 0s 1.4s;
 }
+#position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.15s;
+}
 
 #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.2s, visibility 0s 1.2s;
+}
+#position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.95s;
 }
 
 #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
@@ -8400,6 +8969,10 @@ input {
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 1.4s, visibility 0s 1.4s;
+}
+#intro-explore-pending:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 2.15s;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .direction-controls__button--edge[data-position],
@@ -8417,31 +8990,32 @@ input {
 #position-1:checked ~ #intro-9:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-10:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--edge[data-position] {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .direction-controls__button--intro-arrow {
-  display: none;
-  opacity: 1;
-  visibility: visible;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-color: #fff;
   cursor: pointer;
-  pointer-events: auto;
+  transition: opacity 0s, visibility 0s, margin 0s;
 }
 
 #position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="3"],
 #position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"] {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s 0s ease-out, margin 0.4s 0s ease-out, visibility 0s 0s;
 }
 
 #intro-explore-pending:not(:checked) ~ #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--right[data-position="14"],
 #intro-explore-pending:not(:checked) ~ #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  display: flex;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s 0s ease-out, margin 0.4s 0s ease-out, visibility 0s 0s;
 }
 
 #inventory-open-play:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .direction-controls__button--right[data-position="14"],
@@ -8485,6 +9059,16 @@ input {
   visibility: visible;
   pointer-events: auto;
 }
+#position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-9:checked ~ .game .story-object--backpack .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
 
 #position-1:checked ~ #intro-10:checked ~ .game .story-object--backpack {
   opacity: 0;
@@ -8502,6 +9086,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 1.2s forwards;
+}
+#lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-idle:checked ~ .game .dialogue[data-step=outro-idle] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 1.95s;
 }
 
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ :is(#outro-to-1, #outro-end, #outro-fade, #outro-credits):checked ~ .game .player {
@@ -8536,6 +9124,10 @@ input {
   visibility: hidden;
   pointer-events: none;
   animation: dialogue-show-after-delay 0s 4s forwards;
+}
+#outro-to-1:checked ~ .game .dialogue[data-step=outro-end] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: 4.75s;
 }
 
 #outro-fade:checked ~ .game .blackout {

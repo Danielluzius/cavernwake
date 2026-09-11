@@ -158,6 +158,9 @@
      <!-- Cave collapse debris reuses rock-before (see scss/world/_collapse.scss)
           until collapse-debris/ sprites land; shaft reuses the waterfall frames
           already preloaded above. -->
+     <!-- UI pixel font (see scss/base/_fonts.scss). -->
+     <link rel="preload" as="font" type="font/woff2" crossorigin
+          href="./assets/fonts/fusion-pixel-8px-proportional-latin.woff2" />
 </head>
 
 <body>
@@ -936,61 +939,61 @@
                     <div class="dialogue" data-intro-step="dark">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=dark</p>
-                            <label class="dialogue__button" for="intro-fade">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-fade"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="fade">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=fade</p>
-                            <label class="dialogue__button" for="intro-1">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-1"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="1">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=1</p>
-                            <label class="dialogue__button" for="intro-2">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-2"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="2">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=2</p>
-                            <label class="dialogue__button" for="intro-3">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-3"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="4">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=4</p>
-                            <label class="dialogue__button" for="intro-fall">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-fall"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="fall">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=fall</p>
-                            <label class="dialogue__button" for="intro-dark-hold">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-dark-hold"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="dark-hold">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=dark-hold</p>
-                            <label class="dialogue__button" for="intro-5">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-5"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="5">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=5</p>
-                            <label class="dialogue__button" for="intro-6">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-6"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="6">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=6</p>
-                            <label class="dialogue__button" for="intro-7">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-7"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="7">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=7</p>
-                            <label class="dialogue__button" for="intro-8">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-8"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="10">
@@ -1001,7 +1004,7 @@
                     <div class="dialogue" data-intro-step="11">
                         <div class="dialogue__box">
                             <p class="dialogue__text">placeholder: ich sollte die Höhle erkunden</p>
-                            <label class="dialogue__button" for="intro-explore-pending">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="intro-explore-pending"></label>
                         </div>
                     </div>
 
@@ -1014,181 +1017,181 @@
                     <div class="dialogue" data-step="vine24-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine24-blocked</p>
-                            <label class="dialogue__button" for="vine24-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine24-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine24-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine24-cut-prompt</p>
-                            <label class="dialogue__button" for="vine24-cutting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine24-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine24-cut-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine24-cut-confirm</p>
-                            <label class="dialogue__button" for="vine24-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine24-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine30-blocked</p>
-                            <label class="dialogue__button" for="vine30-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine30-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-found">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine30-found</p>
-                            <label class="dialogue__button" for="vine30-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine30-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine30-cut-prompt</p>
-                            <label class="dialogue__button" for="vine30-cutting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine30-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-cut-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine30-cut-confirm</p>
-                            <label class="dialogue__button" for="vine30-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine30-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine12-blocked</p>
-                            <label class="dialogue__button" for="vine12-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine12-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine12-cut-prompt</p>
-                            <label class="dialogue__button" for="vine12-cutting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine12-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-cut-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine12-cut-confirm</p>
-                            <label class="dialogue__button" for="vine12-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine12-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="waterfall-hint-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">waterfall-hint-blocked</p>
-                            <label class="dialogue__button" for="waterfall-hint-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="waterfall-hint-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="lever7-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">lever7-confirm</p>
-                            <label class="dialogue__button" for="lever7-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="lever7-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="pickaxe-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">pickaxe-prompt</p>
-                            <label class="dialogue__button" for="pickaxe-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="pickaxe-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="pickaxe-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">pickaxe-confirm</p>
-                            <label class="dialogue__button" for="pickaxe-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="pickaxe-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">rock-blocked</p>
-                            <label class="dialogue__button" for="rock-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="rock-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">rock-cut-prompt</p>
-                            <label class="dialogue__button" for="rock-cutting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="rock-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-cut-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">rock-cut-confirm</p>
-                            <label class="dialogue__button" for="rock-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="rock-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="shovel-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">shovel-prompt</p>
-                            <label class="dialogue__button" for="shovel-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="shovel-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="shovel-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">shovel-confirm</p>
-                            <label class="dialogue__button" for="shovel-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="shovel-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-blocked</p>
-                            <label class="dialogue__button" for="mud-blocked-2">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-blocked-2"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-blocked-2">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-blocked-2</p>
-                            <label class="dialogue__button" for="mud-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-pickaxe-fail">
                         <div class="dialogue__box">
                             <p class="dialogue__text">Das ist zu weich, das bringt nichts.</p>
-                            <label class="dialogue__button" for="mud-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-cut-prompt</p>
-                            <label class="dialogue__button" for="mud-cutting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-cut-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-cut-confirm</p>
-                            <label class="dialogue__button" for="mud-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-shell-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-shell-prompt</p>
-                            <label class="dialogue__button" for="bomb-shell-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-shell-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-shell-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-shell-confirm</p>
-                            <label class="dialogue__button" for="bomb-shell-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-shell-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-powder-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-powder-prompt</p>
-                            <label class="dialogue__button" for="bomb-powder-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-powder-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-powder-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-powder-confirm</p>
-                            <label class="dialogue__button" for="bomb-powder-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-powder-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-fuse-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-fuse-prompt</p>
-                            <label class="dialogue__button" for="bomb-fuse-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-fuse-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-fuse-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">bomb-fuse-confirm</p>
-                            <label class="dialogue__button" for="bomb-fuse-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="bomb-fuse-armed"></label>
                         </div>
                     </div>
                     <!-- Shown on every workbench click until all three parts are in; loops back
@@ -1196,49 +1199,49 @@
                     <div class="dialogue" data-step="workbench-incomplete">
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-incomplete</p>
-                            <label class="dialogue__button" for="workbench-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="workbench-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-craft-prompt</p>
-                            <label class="dialogue__button" for="workbench-crafting">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="workbench-crafting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-craft-confirm</p>
-                            <label class="dialogue__button" for="workbench-crafted">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="workbench-crafted"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-take">
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-take</p>
-                            <label class="dialogue__button" for="workbench-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="workbench-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blocked</p>
-                            <label class="dialogue__button" for="wall-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-pickaxe-fail">
                         <div class="dialogue__box">
                             <p class="dialogue__text">Die Wand ist zu hart und zu groß — da komme ich nicht durch.</p>
-                            <label class="dialogue__button" for="wall-pickaxe-failed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-pickaxe-failed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-shovel-fail">
                         <div class="dialogue__box">
                             <p class="dialogue__text">Die Wand ist zu hart zum Durchgraben.</p>
-                            <label class="dialogue__button" for="wall-tools-failed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-tools-failed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blast-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-prompt</p>
-                            <label class="dialogue__button" for="wall-lantern-fire">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-lantern-fire"></label>
                         </div>
                     </div>
                     <!-- The one WEITER in the game that moves the player instead of advancing
@@ -1246,31 +1249,31 @@
                     <div class="dialogue" data-step="wall-lantern-fire">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-lantern-fire</p>
-                            <label class="dialogue__button" for="position-30--from-31">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="position-30--from-31"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blast-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-confirm</p>
-                            <label class="dialogue__button" for="wall-done">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-prompt</p>
-                            <label class="dialogue__button" for="last-lever-pickup">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-confirm</p>
-                            <label class="dialogue__button" for="last-lever-armed">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="collapse-hint-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">collapse-hint-blocked</p>
-                            <label class="dialogue__button" for="collapse-hint-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="collapse-hint-idle"></label>
                         </div>
                     </div>
                     <!-- Appears after the workbench rock finishes falling; WEITER permanently
@@ -1278,20 +1281,20 @@
                     <div class="dialogue" data-step="collapse-bench">
                         <div class="dialogue__box">
                             <p class="dialogue__text">collapse-bench</p>
-                            <label class="dialogue__button" for="collapse-bench-dropped">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="collapse-bench-dropped"></label>
                         </div>
                     </div>
                     <!-- Loops back to -idle so the hint stays readable as often as you like. -->
                     <div class="dialogue" data-step="last-lever-socket-hint">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-hint</p>
-                            <label class="dialogue__button" for="last-lever-socket-idle">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-socket-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-socket-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-prompt</p>
-                            <label class="dialogue__button" for="last-lever-socket-fitted">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-socket-fitted"></label>
                         </div>
                     </div>
                     <!-- This WEITER is what actually repairs the lift: #lift-6-14-unlocked is the
@@ -1299,19 +1302,19 @@
                     <div class="dialogue" data-step="last-lever-socket-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-confirm</p>
-                            <label class="dialogue__button" for="lift-6-14-unlocked">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="lift-6-14-unlocked"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-idle">
                         <div class="dialogue__box">
                             <p class="dialogue__text">outro-idle</p>
-                            <label class="dialogue__button" for="outro-to-1">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="outro-to-1"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-end">
                         <div class="dialogue__box">
                             <p class="dialogue__text">outro-end</p>
-                            <label class="dialogue__button" for="outro-fade">WEITER</label>
+                            <label class="dialogue__button" aria-label="Weiter" for="outro-fade"></label>
                         </div>
                     </div>
                     <!-- Dimmed placeholders (always present, define the ring's
