@@ -155,9 +155,7 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_001.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_002.png" />
-     <!-- Cave collapse debris reuses rock-before (see scss/world/_collapse.scss)
-          until collapse-debris/ sprites land; shaft reuses the waterfall frames
-          already preloaded above. -->
+     <!-- Shaft flood reuses the waterfall frames already preloaded above. -->
      <!-- UI pixel font (see scss/base/_fonts.scss). -->
      <link rel="preload" as="font" type="font/woff2" crossorigin
           href="./assets/fonts/fusion-pixel-8px-proportional-latin.woff2" />
@@ -339,8 +337,8 @@
 
      <!-- Cave collapse flags (see scss/world/_collapse.scss). Must sit after
          #last-lever-armed and before every #position-* radio so sibling ~
-         chains reach the game scene. #collapse-bench-dropped is a one-way
-         checkbox: set by the bench-rock dialogue WEITER and never reset. -->
+         chains reach the game scene. #collapse-bench-dropped is unused
+         (the drop now keys off last-lever-armed + the 22->23 arrival). -->
      <input type="checkbox" id="collapse-bench-dropped" class="world-position-input" />
      <input type="radio" name="collapse-hint-step" id="collapse-hint-idle" class="world-position-input" checked />
      <input type="radio" name="collapse-hint-step" id="collapse-hint-blocked" class="world-position-input" />
@@ -687,9 +685,8 @@
                               <label class="object object--rock" for="rock-spark-seen"></label>
                               <label class="object object--rock-cut" for="rock-cut-prompt"></label>
 
-                              <!-- Shovel pickup (scss/world/_shovel.scss) and the
-                             mud barrier (scss/world/_mud.scss), same
-                             two-stacked-labels trick as the rock. -->
+                              <!-- Mud art (before + after) is the foreground
+                             twin .object--mud-gone; these are click hits. -->
                               <label class="object object--shovel" for="shovel-prompt"></label>
                               <label class="object object--mud" for="mud-spark-seen"></label>
                               <label class="object object--mud-pickaxe" for="mud-pickaxe-swing"></label>
@@ -787,8 +784,8 @@
                              scss/world/_rock.scss). -->
                               <div class="object object--rock-gone"></div>
 
-                              <!-- Cleared-mud twin, same reasoning (see
-                             scss/world/_mud.scss). -->
+                              <!-- Mud before/after, above the player (see
+                             scss/world/_barriers.scss). -->
                               <div class="object object--mud-gone"></div>
 
                               <!-- Stone wall, rendered above the player: the
@@ -855,26 +852,6 @@
                               <div class="lamp-glow__layer"></div>
                               <div class="lamp-glow__layer"></div>
                          </div>
-                    </div>
-
-                    <!-- Screen-space debris during the cave collapse (see
-                     scss/world/_collapse.scss) — vision-field children so
-                     the rocks fall through the circle, not the world grid. -->
-                    <div class="collapse-debris collapse-debris--back">
-                         <div class="collapse-debris__piece collapse-debris__piece--1"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--2"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--3"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--4"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--5"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--6"></div>
-                    </div>
-                    <div class="collapse-debris collapse-debris--front">
-                         <div class="collapse-debris__piece collapse-debris__piece--1"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--2"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--3"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--4"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--5"></div>
-                         <div class="collapse-debris__piece collapse-debris__piece--6"></div>
                     </div>
 
                     <!-- Stepped vignette rings: each is a plain clip-path
@@ -1354,6 +1331,7 @@
                             <label class="dialogue__button" aria-label="Weiter" for="position-30--from-31"></label>
                         </div>
                     </div>
+                    <!-- After the run left; WEITER detonates. See scss/world/_stone-wall.scss. -->
                     <div class="dialogue" data-step="wall-blast-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-confirm</p>
@@ -1377,12 +1355,10 @@
                             <p class="dialogue__text">collapse-hint-blocked</p>
                         </div>
                     </div>
-                    <!-- Appears after the workbench rock finishes falling; WEITER permanently
-                         seals the walk back (see scss/world/_collapse.scss). -->
+                    <!-- Appears after the workbench rock finishes falling (one-way). -->
                     <div class="dialogue" data-step="collapse-bench">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">collapse-bench</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="collapse-bench-dropped"></label>
+                            <p class="dialogue__text">collapse-bench: oh nein ich muss schnell raus</p>
                         </div>
                     </div>
                     <!-- Loops back to -idle so the hint stays readable as often as you like. -->
