@@ -346,6 +346,20 @@
      <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
      <input type="checkbox" id="lamp-on" class="world-position-input" />
 
+     <!-- Inspect quotes (scss/components/_inventory.scss): one radio per
+         item. Clicking the world hit resets to idle so the same item can
+         play again. -->
+     <input type="radio" name="item-quote" id="item-quote-idle" class="world-position-input" checked />
+     <input type="radio" name="item-quote" id="item-quote-sickle" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-pickaxe" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-shovel" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-lamp" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-shell" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-powder" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-fuse" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-last-lever" class="world-position-input" />
+
      <!-- Current position in the room/position graph (see
           assets/world/logic-map.png and vars.$positions in
           base/_variables.scss) — exactly one is ever checked. Position 1
@@ -882,53 +896,112 @@
                          .direction-controls so they sit above the bag. -->
                     <!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
                          of the vision-field square; the open bag grows left beside it. Close
-                         via the right-pointing back arrow on the icon slot. -->
+                         via the right-pointing back arrow on the icon slot. World click (hit)
+                         also resets the item-quote radio so the same item can be inspected
+                         again. -->
                     <div class="inventory">
-                         <div class="inventory__hit"></div>
+                         <label class="inventory__hit" for="item-quote-idle"></label>
 
                          <div class="inventory__panel">
                               <div class="inventory__art">
                                    <div class="inventory__grid">
-                                        <div class="inventory__slot inventory__slot--sickle" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Sichel</span>
+                                        <div class="inventory__slot inventory__slot--sickle">
+                                             <label class="inventory__icon" for="item-quote-sickle">
+                                                  <span class="inventory__caption">Sichel</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--pickaxe" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Spitzhacke</span>
+                                        <div class="inventory__slot inventory__slot--pickaxe">
+                                             <label class="inventory__icon" for="item-quote-pickaxe">
+                                                  <span class="inventory__caption">Spitzhacke</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--shovel" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Schaufel</span>
+                                        <div class="inventory__slot inventory__slot--shovel">
+                                             <label class="inventory__icon" for="item-quote-shovel">
+                                                  <span class="inventory__caption">Schaufel</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--bomb" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Bombe</span>
+                                        <div class="inventory__slot inventory__slot--bomb">
+                                             <label class="inventory__icon" for="item-quote-bomb">
+                                                  <span class="inventory__caption">Bombe</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--lamp" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Laterne</span>
+                                        <div class="inventory__slot inventory__slot--lamp">
+                                             <label class="inventory__icon" for="item-quote-lamp">
+                                                  <span class="inventory__caption">Laterne</span>
+                                             </label>
                                              <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
                                                   aria-label="Laterne anzünden"></label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--bomb-shell" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Bombenschale</span>
+                                        <div class="inventory__slot inventory__slot--bomb-shell">
+                                             <label class="inventory__icon" for="item-quote-bomb-shell">
+                                                  <span class="inventory__caption">Bombenschale</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--bomb-powder" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Schwarzpulver</span>
+                                        <div class="inventory__slot inventory__slot--bomb-powder">
+                                             <label class="inventory__icon" for="item-quote-bomb-powder">
+                                                  <span class="inventory__caption">Schwarzpulver</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--bomb-fuse" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Zündschnur</span>
+                                        <div class="inventory__slot inventory__slot--bomb-fuse">
+                                             <label class="inventory__icon" for="item-quote-bomb-fuse">
+                                                  <span class="inventory__caption">Zündschnur</span>
+                                             </label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--last-lever" tabindex="0">
-                                             <div class="inventory__icon"></div>
-                                             <span class="inventory__caption">Hebel</span>
+                                        <div class="inventory__slot inventory__slot--last-lever">
+                                             <label class="inventory__icon" for="item-quote-last-lever">
+                                                  <span class="inventory__caption">Hebel</span>
+                                             </label>
                                         </div>
                                    </div>
                               </div>
+                         </div>
+                    </div>
+
+                    <!-- Inspect quotes sit with the other speech bubbles (above the player).
+                         Placeholder copy only — auto-fade, no WEITER. -->
+                    <div class="dialogue dialogue--item-quote" data-item="sickle">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: sichel</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="pickaxe">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: spitzhacke</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="shovel">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: schaufel</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="bomb">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: bombe</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="lamp">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: laterne</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="bomb-shell">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: bombenschale</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="bomb-powder">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: schwarzpulver</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="bomb-fuse">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: zündschnur</p>
+                         </div>
+                    </div>
+                    <div class="dialogue dialogue--item-quote" data-item="last-lever">
+                         <div class="dialogue__box">
+                              <p class="dialogue__text">placeholder: hebel</p>
                          </div>
                     </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
