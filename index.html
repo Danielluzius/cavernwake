@@ -29,6 +29,14 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+     <!-- Title-screen trip (see scss/components/_title-screen.scss) — only
+              referenced inside @keyframes, same first-use flash reasoning. -->
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_002.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_003.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_005.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_006.png" />
      <!-- Elevator idle-cycle frames (see animations/_animations.scss,
               both the plain per-shaft and the dual-access facing variants) —
               same first-use flash reasoning, only referenced inside
@@ -175,35 +183,47 @@
      <input type="checkbox" id="debug-colors" class="world-position-input" />
 
      <!-- One-way spark flags (scss/world/_click-hint.scss). Unseen stays
-         checked until the matching hotspot is clicked; nothing ever points
-         back, so the spark cannot return. Separate from the gameplay radio
-         groups so a hint click cannot strand idle/cut/craft. Waterfall and
-         collapse reuse their existing idle/blocked groups. -->
+         checked until the matching hotspot is clicked; -seen holds the
+         dialogue (WEITER, walk pads down); -done is the dismiss so the
+         spark cannot return. Separate from the gameplay radio groups so a
+         hint click cannot strand idle/cut/craft. Waterfall and collapse
+         reuse their own idle/blocked/done groups. -->
      <input type="radio" name="vine24-spark" id="vine24-spark" class="world-position-input" checked />
      <input type="radio" name="vine24-spark" id="vine24-spark-seen" class="world-position-input" />
+     <input type="radio" name="vine24-spark" id="vine24-spark-done" class="world-position-input" />
      <input type="radio" name="vine12-spark" id="vine12-spark" class="world-position-input" checked />
      <input type="radio" name="vine12-spark" id="vine12-spark-seen" class="world-position-input" />
+     <input type="radio" name="vine12-spark" id="vine12-spark-done" class="world-position-input" />
      <input type="radio" name="rock-spark" id="rock-spark" class="world-position-input" checked />
      <input type="radio" name="rock-spark" id="rock-spark-seen" class="world-position-input" />
+     <input type="radio" name="rock-spark" id="rock-spark-done" class="world-position-input" />
      <input type="radio" name="mud-spark" id="mud-spark" class="world-position-input" checked />
      <input type="radio" name="mud-spark" id="mud-spark-seen" class="world-position-input" />
+     <input type="radio" name="mud-spark" id="mud-spark-done" class="world-position-input" />
      <input type="radio" name="workbench-spark" id="workbench-spark" class="world-position-input" checked />
      <input type="radio" name="workbench-spark" id="workbench-spark-seen" class="world-position-input" />
+     <input type="radio" name="workbench-spark" id="workbench-spark-done" class="world-position-input" />
      <input type="radio" name="wall-spark" id="wall-spark" class="world-position-input" checked />
      <input type="radio" name="wall-spark" id="wall-spark-seen" class="world-position-input" />
+     <input type="radio" name="wall-spark" id="wall-spark-done" class="world-position-input" />
      <input type="radio" name="socket-spark" id="socket-spark" class="world-position-input" checked />
      <input type="radio" name="socket-spark" id="socket-spark-seen" class="world-position-input" />
+     <input type="radio" name="socket-spark" id="socket-spark-done" class="world-position-input" />
 
      <!-- One-way activation per lift shaft (see scss/world/_lift.scss and
          vars.$lifts): stays checked forever once that shaft's call button
          is clicked, never needs to be reset. Until then the car idles at
          the top and the walk button leading to the bottom station stays
          hidden — see lift-gate() in scss/components/_components.scss.
+         *-call-done is the WEITER dismiss for that shaft's call line.
          Shaft 6<->14's own unlock is not here: it is the final step of the
          last-lever socket group further down (scss/world/_last-lever.scss). -->
      <input type="checkbox" id="lift-17-26-unlocked" class="world-position-input" />
+     <input type="checkbox" id="lift-17-26-call-done" class="world-position-input" />
      <input type="checkbox" id="lift-11-27-unlocked" class="world-position-input" />
+     <input type="checkbox" id="lift-11-27-call-done" class="world-position-input" />
      <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
+     <input type="checkbox" id="lift-10-36-call-done" class="world-position-input" />
 
      <!-- Vine barriers (node 24, node 30 — node 30's also holds the sickle).
          ONE radio group per barrier and nothing else: every WEITER button
@@ -243,9 +263,11 @@
      <input type="radio" name="lever7-step" id="lever7-done" class="world-position-input" />
 
      <!-- Waterfall hint (blocked path left of nodes 21 / 30 — see
-         scss/world/_waterfall.scss). Loops while the waterfall is still up. -->
+         scss/world/_waterfall.scss). One-shot: idle spark, blocked holds
+         the line, done is the dismiss. -->
      <input type="radio" name="waterfall-hint-step" id="waterfall-hint-idle" class="world-position-input" checked />
      <input type="radio" name="waterfall-hint-step" id="waterfall-hint-blocked" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-done" class="world-position-input" />
 
      <!-- Pickaxe pickup left of node 19 (scss/world/_pickaxe.scss) and the
          rock barrier it opens between node 34 and 35
@@ -340,10 +362,14 @@
      <!-- Cave collapse flags (see scss/world/_collapse.scss). Must sit after
          #last-lever-armed and before every #position-* radio so sibling ~
          chains reach the game scene. #collapse-bench-dropped is unused
-         (the drop now keys off last-lever-armed + the 22->23 arrival). -->
+         (the drop now keys off last-lever-armed + the 22->23 arrival).
+         #collapse-bench-seen is the WEITER dismiss for that landing line.
+         Collapse path hints are idle / blocked / done (one-shot). -->
      <input type="checkbox" id="collapse-bench-dropped" class="world-position-input" />
+     <input type="checkbox" id="collapse-bench-seen" class="world-position-input" />
      <input type="radio" name="collapse-hint-step" id="collapse-hint-idle" class="world-position-input" checked />
      <input type="radio" name="collapse-hint-step" id="collapse-hint-blocked" class="world-position-input" />
+     <input type="radio" name="collapse-hint-step" id="collapse-hint-done" class="world-position-input" />
 
      <!-- Final step keeps the id the lift system already reads, so it must
          stay last: anything after it would uncheck it and raise the car. -->
@@ -584,9 +610,9 @@
      <main class="game" id="game">
 
           <!-- Title screen (scss/components/_title-screen.scss): title
-             emerges, then credit, then the preload bar + walker.
-             WEITER is a test skip — later the overlay fades into the
-             intro with no click. -->
+             emerges, then credit, then the preload bar + walker who
+             trips at the end. WEITER is a test skip — later the overlay
+             fades into the intro with no click. -->
           <section class="scene scene--intro">
                <div class="title-screen">
                     <h1 class="title-screen__title">CAVERNWAKE</h1>
@@ -1227,11 +1253,12 @@
                          for which step reveals which box. Placeholder copy only (named after
                          their own [data-step]); every WEITER points at the next step of the
                          SAME radio group, which is what closes the box it sits in.
-                         vine24-blocked is the one that loops back to -idle on purpose: the
-                         "I need a tool" hint stays readable as often as you like. -->
+                         No-tool vine hints (24/12) live on the spark group: one-shot, WEITER
+                         goes to -spark-done so the green pad cannot return. -->
                     <div class="dialogue" data-step="vine24-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine24-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine24-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine24-cut-prompt">
@@ -1273,6 +1300,7 @@
                     <div class="dialogue" data-step="vine12-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">vine12-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="vine12-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-cut-prompt">
@@ -1290,6 +1318,7 @@
                     <div class="dialogue" data-step="waterfall-hint-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">waterfall-hint-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="waterfall-hint-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="lever7-confirm">
@@ -1313,6 +1342,7 @@
                     <div class="dialogue" data-step="rock-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">rock-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="rock-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-cut-prompt">
@@ -1342,6 +1372,7 @@
                     <div class="dialogue" data-step="mud-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="mud-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-blocked-2">
@@ -1398,11 +1429,11 @@
                             <label class="dialogue__button" aria-label="Weiter" for="bomb-fuse-armed"></label>
                         </div>
                     </div>
-                    <!-- Shown on every workbench click until all three parts are in; loops back
-                         to -idle so the hint can be re-read as often as you like. -->
+                    <!-- One-shot until all three parts are in; WEITER is spark-done. -->
                     <div class="dialogue" data-step="workbench-incomplete">
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-incomplete</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="workbench-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-prompt">
@@ -1426,6 +1457,7 @@
                     <div class="dialogue" data-step="wall-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="wall-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-pickaxe-fail">
@@ -1493,18 +1525,21 @@
                     <div class="dialogue" data-step="collapse-hint-blocked">
                         <div class="dialogue__box">
                             <p class="dialogue__text">collapse-hint-blocked</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="collapse-hint-done"></label>
                         </div>
                     </div>
                     <!-- Appears after the workbench rock finishes falling (one-way). -->
                     <div class="dialogue" data-step="collapse-bench">
                         <div class="dialogue__box">
                             <p class="dialogue__text">collapse-bench: oh nein ich muss schnell raus</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="collapse-bench-seen"></label>
                         </div>
                     </div>
-                    <!-- Loops back to -idle so the hint stays readable as often as you like. -->
+                    <!-- One-shot socket hint; WEITER is spark-done. -->
                     <div class="dialogue" data-step="last-lever-socket-hint">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-hint</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="socket-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-socket-prompt">
@@ -1521,21 +1556,25 @@
                             <label class="dialogue__button" aria-label="Weiter" for="lift-6-14-unlocked"></label>
                         </div>
                     </div>
-                    <!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes are the
-                         seen flags; no WEITER. 6<->14 uses the socket confirm instead. -->
+                    <!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes start
+                         the car; *-call-done is the WEITER dismiss. 6<->14 uses the socket
+                         confirm instead. -->
                     <div class="dialogue" data-step="lift-17-26-call">
                         <div class="dialogue__box">
                             <p class="dialogue__text">lift-17-26-call</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="lift-17-26-call-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="lift-11-27-call">
                         <div class="dialogue__box">
                             <p class="dialogue__text">lift-11-27-call</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="lift-11-27-call-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="lift-10-36-call">
                         <div class="dialogue__box">
                             <p class="dialogue__text">lift-10-36-call</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="lift-10-36-call-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-idle">
