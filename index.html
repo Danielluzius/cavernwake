@@ -366,19 +366,28 @@
      <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
      <input type="checkbox" id="lamp-on" class="world-position-input" />
 
-     <!-- Inspect quotes (scss/components/_inventory.scss): one radio per
-         item. Clicking the world hit resets to idle so the same item can
-         play again. -->
+     <!-- Inspect quotes (scss/components/_inventory.scss): two radios per
+         item so a second click on the same slot restarts the bubble.
+         World hit still resets to idle. -->
      <input type="radio" name="item-quote" id="item-quote-idle" class="world-position-input" checked />
-     <input type="radio" name="item-quote" id="item-quote-sickle" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-pickaxe" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-shovel" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-bomb" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-lamp" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-bomb-shell" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-bomb-powder" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-bomb-fuse" class="world-position-input" />
-     <input type="radio" name="item-quote" id="item-quote-last-lever" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-sickle-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-sickle-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-pickaxe-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-pickaxe-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-shovel-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-shovel-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-lamp-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-lamp-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-shell-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-shell-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-powder-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-powder-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-fuse-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-bomb-fuse-b" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-last-lever-a" class="world-position-input" />
+     <input type="radio" name="item-quote" id="item-quote-last-lever-b" class="world-position-input" />
 
      <!-- Current position in the room/position graph (see
           assets/world/logic-map.png and vars.$positions in
@@ -629,15 +638,15 @@
                               <div class="lift-basket"></div>
                               <div class="lift-rope--17-26"></div>
                               <div class="lift-basket--17-26"></div>
-                              <label class="lift-call-button--17-26" for="lift-17-26-unlocked"></label>
+                              <label class="object lift-call-button--17-26" for="lift-17-26-unlocked"></label>
 
                               <div class="lift-rope--11-27"></div>
                               <div class="lift-basket--11-27"></div>
-                              <label class="lift-call-button--11-27" for="lift-11-27-unlocked"></label>
+                              <label class="object lift-call-button--11-27" for="lift-11-27-unlocked"></label>
 
                               <div class="lift-rope--10-36"></div>
                               <div class="lift-basket--10-36"></div>
-                              <label class="lift-call-button--10-36" for="lift-10-36-unlocked"></label>
+                              <label class="object lift-call-button--10-36" for="lift-10-36-unlocked"></label>
 
                               <!-- Two stacked labels per barrier: the visible one
                              starts the "no sickle yet" branch, the
@@ -917,8 +926,8 @@
                     <!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
                          of the vision-field square; the open bag grows left beside it. Close
                          via the right-pointing back arrow on the icon slot. World click (hit)
-                         also resets the item-quote radio so the same item can be inspected
-                         again. -->
+                         resets the item-quote radio. Each slot has two labels (a/b) so the
+                         same item can be inspected again without clicking the world first. -->
                     <div class="inventory">
                          <label class="inventory__hit" for="item-quote-idle"></label>
 
@@ -926,51 +935,60 @@
                               <div class="inventory__art">
                                    <div class="inventory__grid">
                                         <div class="inventory__slot inventory__slot--sickle">
-                                             <label class="inventory__icon" for="item-quote-sickle">
+                                             <label class="inventory__icon" for="item-quote-sickle-a">
                                                   <span class="inventory__caption">Sichel</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-sickle-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--pickaxe">
-                                             <label class="inventory__icon" for="item-quote-pickaxe">
+                                             <label class="inventory__icon" for="item-quote-pickaxe-a">
                                                   <span class="inventory__caption">Spitzhacke</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-pickaxe-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--shovel">
-                                             <label class="inventory__icon" for="item-quote-shovel">
+                                             <label class="inventory__icon" for="item-quote-shovel-a">
                                                   <span class="inventory__caption">Schaufel</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-shovel-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb">
-                                             <label class="inventory__icon" for="item-quote-bomb">
+                                             <label class="inventory__icon" for="item-quote-bomb-a">
                                                   <span class="inventory__caption">Bombe</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--lamp">
-                                             <label class="inventory__icon" for="item-quote-lamp">
+                                             <label class="inventory__icon" for="item-quote-lamp-a">
                                                   <span class="inventory__caption">Laterne</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
                                              <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
                                                   aria-label="Laterne anzünden"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-shell">
-                                             <label class="inventory__icon" for="item-quote-bomb-shell">
+                                             <label class="inventory__icon" for="item-quote-bomb-shell-a">
                                                   <span class="inventory__caption">Bombenschale</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-shell-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-powder">
-                                             <label class="inventory__icon" for="item-quote-bomb-powder">
+                                             <label class="inventory__icon" for="item-quote-bomb-powder-a">
                                                   <span class="inventory__caption">Schwarzpulver</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-powder-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-fuse">
-                                             <label class="inventory__icon" for="item-quote-bomb-fuse">
+                                             <label class="inventory__icon" for="item-quote-bomb-fuse-a">
                                                   <span class="inventory__caption">Zündschnur</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-fuse-b"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--last-lever">
-                                             <label class="inventory__icon" for="item-quote-last-lever">
+                                             <label class="inventory__icon" for="item-quote-last-lever-a">
                                                   <span class="inventory__caption">Hebel</span>
                                              </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-last-lever-b"></label>
                                         </div>
                                    </div>
                               </div>
@@ -978,7 +996,7 @@
                     </div>
 
                     <!-- Inspect quotes sit with the other speech bubbles (above the player).
-                         Placeholder copy only — auto-fade, no WEITER. -->
+                         Placeholder copy only — auto-fade, no WEITER. Replayable. -->
                     <div class="dialogue dialogue--item-quote" data-item="sickle">
                          <div class="dialogue__box">
                               <p class="dialogue__text">placeholder: sichel</p>
@@ -1385,6 +1403,23 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-confirm</p>
                             <label class="dialogue__button" aria-label="Weiter" for="lift-6-14-unlocked"></label>
+                        </div>
+                    </div>
+                    <!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes are the
+                         seen flags; no WEITER. 6<->14 uses the socket confirm instead. -->
+                    <div class="dialogue" data-step="lift-17-26-call">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">lift-17-26-call</p>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-11-27-call">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">lift-11-27-call</p>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-10-36-call">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">lift-10-36-call</p>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-idle">
