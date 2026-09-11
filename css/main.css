@@ -1371,6 +1371,10 @@ input {
   overflow: visible;
 }
 
+.dialogue--center {
+  transform: translate(-50%, -50%);
+}
+
 .dialogue__box {
   --dialogue-px: 3px;
   position: relative;
@@ -10802,6 +10806,28 @@ input {
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
   animation-delay: 2.55s;
+}
+
+@keyframes intro-dialogue-shake {
+  0%, 100% {
+    transform: translate(-50%, calc(-100% - 88.8px));
+  }
+  20% {
+    transform: translate(-50%, calc(-100% - 88.8px)) translate(-6px, 4px);
+  }
+  40% {
+    transform: translate(-50%, calc(-100% - 88.8px)) translate(5px, -5px);
+  }
+  60% {
+    transform: translate(-50%, calc(-100% - 88.8px)) translate(-4px, 6px);
+  }
+  80% {
+    transform: translate(-50%, calc(-100% - 88.8px)) translate(6px, -3px);
+  }
+}
+#position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] {
+  animation: intro-dialogue-shake 0.4s ease-in-out infinite;
+  animation-delay: 1.8s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
