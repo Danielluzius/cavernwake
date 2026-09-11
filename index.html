@@ -68,6 +68,7 @@
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/world/settings-button.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/inventory-background.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/lamp.png" />
@@ -273,7 +274,6 @@
      <input type="radio" name="mud-step" id="mud-idle" class="world-position-input" checked />
      <input type="radio" name="mud-step" id="mud-blocked" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-blocked-2" class="world-position-input" />
-     <input type="radio" name="mud-step" id="mud-pickaxe-swing" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-cut-prompt" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-cutting" class="world-position-input" />
      <input type="radio" name="mud-step" id="mud-done" class="world-position-input" />
@@ -307,11 +307,11 @@
      <input type="radio" name="workbench-step" id="workbench-take" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-done" class="world-position-input" />
 
-     <!-- No -blasting step on purpose: lighting the fuse checks the ordinary
-          #position-30--from-31 arrival radio instead, so the walk back to
-          node 30 comes from the position graph. Pickaxe/shovel fails are
-          resting steps so a later bomb click still works. See
-          scss/world/_stone-wall.scss. -->
+     <!-- No -blasting step on purpose: lighting the fuse checks
+          #position-30--from-31--right instead, so the walk back to node 30
+          still comes from the position graph but the rest pose keeps
+          facing the wall. Pickaxe/shovel fails are resting steps so a
+          later bomb click still works. See scss/world/_stone-wall.scss. -->
      <input type="radio" name="wall-step" id="wall-idle" class="world-position-input" checked />
      <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-pickaxe-swing" class="world-position-input" />
@@ -333,6 +333,8 @@
      <input type="radio" name="last-lever-step" id="last-lever-idle" class="world-position-input" checked />
      <input type="radio" name="last-lever-step" id="last-lever-prompt" class="world-position-input" />
      <input type="radio" name="last-lever-step" id="last-lever-pickup" class="world-position-input" />
+     <input type="radio" name="last-lever-step" id="last-lever-notice" class="world-position-input" />
+     <input type="radio" name="last-lever-step" id="last-lever-turn" class="world-position-input" />
      <input type="radio" name="last-lever-step" id="last-lever-armed" class="world-position-input" />
 
      <!-- Cave collapse flags (see scss/world/_collapse.scss). Must sit after
@@ -363,6 +365,18 @@
      <input type="checkbox" id="inventory-open-play" class="world-position-input" />
      <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
      <input type="checkbox" id="lamp-on" class="world-position-input" />
+
+     <!-- Settings overlay (scss/components/_settings.scss). Same sibling
+         position as inventory so ~ chains reach .game. Hints default on,
+         language default DE, panel starts on the menu page. -->
+     <input type="checkbox" id="settings-open" class="world-position-input" />
+     <input type="radio" name="hints-vis" id="hints-on" class="world-position-input" checked />
+     <input type="radio" name="hints-vis" id="hints-off" class="world-position-input" />
+     <input type="radio" name="ui-lang" id="lang-de" class="world-position-input" checked />
+     <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" />
+     <input type="radio" name="settings-page" id="settings-page-menu" class="world-position-input" checked />
+     <input type="radio" name="settings-page" id="settings-page-imprint" class="world-position-input" />
+     <input type="radio" name="settings-page" id="settings-page-restart" class="world-position-input" />
 
      <!-- Inspect quotes (scss/components/_inventory.scss): two radios per
          item so a second click on the same slot restarts the bubble.
@@ -523,6 +537,10 @@
      <input type="radio" name="position" id="position-29--from-30" class="world-position-input" />
      <input type="radio" name="position" id="position-32--from-31" class="world-position-input" />
      <input type="radio" name="position" id="position-30--from-31" class="world-position-input" />
+     <!-- Cover run after lighting the wall bomb (see scss/world/_stone-wall.scss):
+              same 31→30 walk, but the rest pose stays facing the wall. Hand-added,
+              not part of extract_positions.py's output. -->
+     <input type="radio" name="position" id="position-30--from-31--right" class="world-position-input" />
      <input type="radio" name="position" id="position-31--from-32" class="world-position-input" />
      <input type="radio" name="position" id="position-25--from-33" class="world-position-input" />
      <input type="radio" name="position" id="position-34--from-33" class="world-position-input" />
@@ -565,15 +583,22 @@
 
      <main class="game" id="game">
 
-          <!-- Title screen only — placeholder text/loading-bar art, real
-             title/logo/credit copy and a timed auto-fade come later. -->
+          <!-- Title screen (scss/components/_title-screen.scss): title
+             emerges, then credit, then the preload bar + walker.
+             WEITER is a test skip — later the overlay fades into the
+             intro with no click. -->
           <section class="scene scene--intro">
                <div class="title-screen">
                     <h1 class="title-screen__title">CAVERNWAKE</h1>
-                    <div class="title-screen__loading-bar">
-                         <div class="title-screen__loading-bar-fill"></div>
-                    </div>
                     <p class="title-screen__credit">made by Daniel Luzius</p>
+                    <div class="title-screen__load">
+                         <div class="title-screen__walker-shift">
+                              <div class="title-screen__walker"></div>
+                         </div>
+                         <div class="title-screen__loading-bar">
+                              <div class="title-screen__loading-bar-fill"></div>
+                         </div>
+                    </div>
                     <label class="title-screen__button" for="title-dismissed">WEITER</label>
                </div>
           </section>
@@ -584,6 +609,14 @@
              separate pre-drawn image layers, this is structure only. -->
           <section class="scene scene--game">
 
+               <!-- One shake wrapper per gated shaft, nested like
+                    .player__body--* (scss/world/_lift.scss). Call rumble
+                    used to live on .scene--game; that shared element kept
+                    the first unlock's finished animation, so later calls
+                    (11<->27) never restarted. -->
+               <div class="lift-call-shake lift-call-shake--17-26">
+               <div class="lift-call-shake lift-call-shake--11-27">
+               <div class="lift-call-shake lift-call-shake--10-36">
                <div class="viewport" id="viewport">
                     <!-- Pixel-sized circular mask: width/height in tile px so
                      the visible area zooms with the world. clip-path on the
@@ -689,7 +722,6 @@
                              twin .object--mud-gone; these are click hits. -->
                               <label class="object object--shovel" for="shovel-prompt"></label>
                               <label class="object object--mud" for="mud-spark-seen"></label>
-                              <label class="object object--mud-pickaxe" for="mud-pickaxe-swing"></label>
                               <label class="object object--mud-cut" for="mud-cut-prompt"></label>
 
                               <!-- Bomb parts (scss/world/_tools.scss) — same
@@ -724,6 +756,7 @@
                              socket replaces this shaft's old placeholder
                              call button. -->
                               <label class="object object--last-lever" for="last-lever-prompt"></label>
+                              <div class="object object--last-lever-socket-art"></div>
                               <label class="object object--last-lever-socket" for="socket-spark-seen"></label>
                               <label class="object object--last-lever-socket-fit" for="last-lever-socket-fitting"></label>
                               <label class="object object--last-lever-socket-pull" for="last-lever-socket-using"></label>
@@ -862,6 +895,9 @@
                     <div class="vignette-ring vignette-ring--outer"></div>
                     <div class="vignette-ring vignette-ring--inner"></div>
                     </div>
+               </div>
+               </div>
+               </div>
                </div>
 
                <!-- Sibling of .viewport on purpose: .blackout is position:fixed
@@ -1017,6 +1053,99 @@
                     <div class="dialogue dialogue--item-quote" data-item="last-lever">
                          <div class="dialogue__box">
                               <p class="dialogue__text">placeholder: hebel</p>
+                         </div>
+                    </div>
+                    <!-- Settings overlay in .ui. Toggle and back sit in the top-right corner
+                         of the vision-field square; the panel opens right of the field. Close
+                         via the left-pointing back arrow on the icon slot. -->
+                    <div class="settings">
+                         <div class="settings__hit"></div>
+
+                         <div class="settings__panel">
+                              <div class="settings__art">
+                              <div class="settings__body">
+                              <div class="settings__page settings__page--menu">
+                                   <h2 class="settings__title">
+                                        <span class="i18n i18n--de">Einstellungen</span>
+                                        <span class="i18n i18n--en">Settings</span>
+                                   </h2>
+
+                                   <div class="settings__row">
+                                        <span class="settings__row-label">
+                                             <span class="i18n i18n--de">Hinweise</span>
+                                             <span class="i18n i18n--en">Hints</span>
+                                        </span>
+                                        <div class="settings__choices">
+                                             <label class="settings__choice" for="hints-on">
+                                                  <span class="i18n i18n--de">An</span>
+                                                  <span class="i18n i18n--en">On</span>
+                                             </label>
+                                             <label class="settings__choice" for="hints-off">
+                                                  <span class="i18n i18n--de">Aus</span>
+                                                  <span class="i18n i18n--en">Off</span>
+                                             </label>
+                                        </div>
+                                   </div>
+
+                                   <div class="settings__row">
+                                        <span class="settings__row-label">
+                                             <span class="i18n i18n--de">Sprache</span>
+                                             <span class="i18n i18n--en">Language</span>
+                                        </span>
+                                        <div class="settings__choices">
+                                             <label class="settings__choice" for="lang-de">DE</label>
+                                             <label class="settings__choice" for="lang-en">EN</label>
+                                        </div>
+                                   </div>
+
+                                   <label class="settings__row settings__row--link" for="settings-page-imprint">
+                                        <span class="i18n i18n--de">Impressum</span>
+                                        <span class="i18n i18n--en">Imprint</span>
+                                   </label>
+
+                                   <label class="settings__row settings__row--link" for="settings-page-restart">
+                                        <span class="i18n i18n--de">Neustart</span>
+                                        <span class="i18n i18n--en">Restart</span>
+                                   </label>
+                              </div>
+
+                              <div class="settings__page settings__page--imprint">
+                                   <h2 class="settings__title">
+                                        <span class="i18n i18n--de">Impressum</span>
+                                        <span class="i18n i18n--en">Imprint</span>
+                                   </h2>
+                                   <p class="settings__copy">
+                                        <span class="i18n i18n--de">Platzhalter. Name, Anschrift und Kontakt folgen.</span>
+                                        <span class="i18n i18n--en">Placeholder. Name, address and contact to follow.</span>
+                                   </p>
+                                   <label class="settings__row settings__row--link" for="settings-page-menu">
+                                        <span class="i18n i18n--de">Zurück</span>
+                                        <span class="i18n i18n--en">Back</span>
+                                   </label>
+                              </div>
+
+                              <div class="settings__page settings__page--restart">
+                                   <h2 class="settings__title">
+                                        <span class="i18n i18n--de">Neustart</span>
+                                        <span class="i18n i18n--en">Restart</span>
+                                   </h2>
+                                   <p class="settings__copy">
+                                        <span class="i18n i18n--de">Spiel neu starten? Der aktuelle Fortschritt geht verloren.</span>
+                                        <span class="i18n i18n--en">Restart the game? Current progress will be lost.</span>
+                                   </p>
+                                   <div class="settings__choices settings__choices--confirm">
+                                        <a class="settings__choice settings__choice--link" href="./index.html">
+                                             <span class="i18n i18n--de">Ja</span>
+                                             <span class="i18n i18n--en">Yes</span>
+                                        </a>
+                                        <label class="settings__choice" for="settings-page-menu">
+                                             <span class="i18n i18n--de">Nein</span>
+                                             <span class="i18n i18n--en">No</span>
+                                        </label>
+                                   </div>
+                              </div>
+                              </div>
+                              </div>
                          </div>
                     </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
@@ -1221,12 +1350,6 @@
                             <label class="dialogue__button" aria-label="Weiter" for="mud-idle"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-step="mud-pickaxe-fail">
-                        <div class="dialogue__box">
-                            <p class="dialogue__text">Das ist zu weich, das bringt nichts.</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="mud-idle"></label>
-                        </div>
-                    </div>
                     <div class="dialogue" data-step="mud-cut-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">mud-cut-prompt</p>
@@ -1328,10 +1451,15 @@
                     <div class="dialogue" data-step="wall-lantern-fire">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-lantern-fire</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="position-30--from-31"></label>
+                            <label class="dialogue__button" aria-label="Weiter" for="position-30--from-31--right"></label>
                         </div>
                     </div>
-                    <!-- After the run left; WEITER detonates. See scss/world/_stone-wall.scss. -->
+                    <!-- After the run left; one-way, then look right, blast, then confirm. -->
+                    <div class="dialogue" data-step="wall-blast-run">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">wall-blast-run</p>
+                        </div>
+                    </div>
                     <div class="dialogue" data-step="wall-blast-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-confirm</p>
@@ -1347,6 +1475,18 @@
                     <div class="dialogue" data-step="last-lever-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-confirm</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-notice"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="last-lever-notice">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-notice</p>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-turn"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="last-lever-turn">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">last-lever-turn: ohje ich muss hier schnell raus die höhle bricht ein.</p>
                             <label class="dialogue__button" aria-label="Weiter" for="last-lever-armed"></label>
                         </div>
                     </div>
@@ -1426,6 +1566,10 @@
                               for="inventory-open" aria-label="Zurück"></label>
                          <label class="inventory__back inventory__back--play"
                               for="inventory-open-play" aria-label="Zurück"></label>
+                         <label class="settings__toggle" for="settings-open"
+                              aria-label="Einstellungen"></label>
+                         <label class="settings__back" for="settings-open"
+                              aria-label="Zurück"></label>
                          <div class="direction-controls__button direction-controls__button--up">▲</div>
                          <div class="direction-controls__button direction-controls__button--left">◀</div>
                          <div class="direction-controls__button direction-controls__button--right">▶</div>
