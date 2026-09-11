@@ -3996,8 +3996,8 @@ input {
   position: absolute;
   left: 0;
   top: 0;
-  width: 32px;
-  height: 32px;
+  width: 38.4px;
+  height: 38.4px;
   font-size: 0;
   color: transparent;
   cursor: not-allowed;
@@ -6021,13 +6021,13 @@ input {
 
 .inventory__toggle {
   position: absolute;
-  z-index: 2;
-  left: 240px;
-  top: calc(-1 * 240px);
+  left: -266px;
+  top: -266px;
   width: 72px;
   height: 72px;
   margin-left: calc(72px / -2);
   margin-top: calc(72px / -2);
+  z-index: 2;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6035,6 +6035,7 @@ input {
   image-rendering: pixelated;
   cursor: pointer;
   user-select: none;
+  transition: opacity 0.15s 0.45s, visibility 0s 0.45s;
 }
 
 #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--tutorial {
@@ -6043,7 +6044,8 @@ input {
   pointer-events: auto;
 }
 
-#title-dismissed:checked ~ .game .inventory__toggle--play {
+#title-dismissed:checked ~ .game .inventory__toggle--play,
+#intro-11:checked ~ .game .inventory__toggle--play {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -6062,8 +6064,7 @@ input {
 #position-1:checked ~ #intro-7:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-8:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-9:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--play,
-#intro-explore-pending:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .inventory__toggle--play {
+#position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--play {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6081,17 +6082,22 @@ input {
   animation: inventory-toggle-pulse 1s ease-in-out infinite;
 }
 
+#inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
+#inventory-open-play:checked ~ .game .inventory__toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s, visibility 0s;
+}
+
 .inventory {
   position: absolute;
   inset: 0;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0s, visibility 0s;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 
 #inventory-open:checked ~ .game .inventory,
@@ -6099,12 +6105,14 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s, visibility 0s;
 }
 
 #inventory-open:checked ~ #inventory-open-play:not(:checked) ~ #intro-11:checked ~ .game .inventory {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  transition: opacity 0s, visibility 0s;
 }
 
 .inventory__hit {
@@ -6114,18 +6122,77 @@ input {
 }
 
 .inventory__panel {
-  position: relative;
-  display: none;
+  position: absolute;
+  top: calc(50% + 0px);
+  left: calc(50% + -320px);
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  pointer-events: auto;
-  transform: translateY(-54px);
+  pointer-events: none;
+  transform-origin: 100% 50%;
+  transform: translate(-100%, -50%) translate(90px, -266px) scale(0.15);
+  transition: transform 0.45s ease-out;
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
 #inventory-open-play:checked ~ .game .inventory__panel {
+  pointer-events: auto;
+  transform: translate(-100%, -50%) scale(1);
+}
+
+.inventory__back {
+  position: relative;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: #2f6b32;
+  font-size: 0;
+  color: transparent;
+  user-select: none;
+  box-shadow: 0 6px 0 #010000, 0 -6px 0 #010000, 6px 0 0 #010000, -6px 0 0 #010000;
+}
+.inventory__back::after {
+  content: "";
+  display: block;
+  width: 28%;
+  height: 28%;
+  margin-right: 12%;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transform: rotate(45deg);
+}
+.inventory__back:hover {
+  background: #3a8240;
+}
+.inventory__back {
+  position: absolute;
+  left: -266px;
+  top: -266px;
+  width: 38.4px;
+  height: 38.4px;
+  margin-left: calc(38.4px / -2);
+  margin-top: calc(38.4px / -2);
+  z-index: 3;
+  display: flex;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s, visibility 0s;
+}
+
+#inventory-open:checked ~ #intro-10:checked ~ .game .inventory__back--tutorial,
+#inventory-open-play:checked ~ .game .inventory__back--play {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.2s 0.45s, visibility 0s 0.45s;
 }
 
 .inventory__art {

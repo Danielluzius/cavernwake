@@ -878,13 +878,11 @@
                     </div>
 
                     <!-- Inventory overlays the vision field (sibling of
-                         .viewport, inside .ui). Toggle stays in
-                         .direction-controls, after this include so the
-                         backpack icon stays clickable on top of the bag. -->
-                    <!-- Inventory overlay in .ui (over the vision field). Toggle lives in
-                         .direction-controls, top-right; the same label opens and closes the
-                         bag. Intro and play share the open-bag art and a 3×3 slot grid; the
-                         lamp slot is the intro click target (for="intro-11"). -->
+                         .viewport, inside .ui). Toggle + back stay in
+                         .direction-controls so they sit above the bag. -->
+                    <!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
+                         of the vision-field square; the open bag grows left beside it. Close
+                         via the right-pointing back arrow on the icon slot. -->
                     <div class="inventory">
                          <div class="inventory__hit"></div>
 
@@ -1317,10 +1315,11 @@
                             <label class="dialogue__button" aria-label="Weiter" for="outro-fade"></label>
                         </div>
                     </div>
-                    <!-- Dimmed placeholders (always present, define the ring's
-                     shape) plus one clickable overlay label per (position,
-                     direction) edge in vars.$positions — only the edge(s)
-                     matching the CURRENT position are revealed, see
+                    <!-- Dimmed placeholders (always present, one slot per
+                     direction on the vision-field grid lines) plus one
+                     clickable overlay label per (position, direction) edge
+                     in vars.$positions — only the edge(s) matching the
+                     CURRENT position are revealed, see
                      components/_components.scss. Auto-generated from
                      logic-map.png via scripts/extract_positions.py. -->
                     <div class="direction-controls">
@@ -1328,6 +1327,10 @@
                               for="inventory-open" aria-label="Inventar"></label>
                          <label class="inventory__toggle inventory__toggle--play"
                               for="inventory-open-play" aria-label="Inventar"></label>
+                         <label class="inventory__back inventory__back--tutorial"
+                              for="inventory-open" aria-label="Zurück"></label>
+                         <label class="inventory__back inventory__back--play"
+                              for="inventory-open-play" aria-label="Zurück"></label>
                          <div class="direction-controls__button direction-controls__button--up">▲</div>
                          <div class="direction-controls__button direction-controls__button--left">◀</div>
                          <div class="direction-controls__button direction-controls__button--right">▶</div>
