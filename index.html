@@ -176,7 +176,10 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_001.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_002.png" />
-     <!-- Cave-shake stumble after last-lever confirm WEITER. -->
+     <!-- Cave-shake surprised look-up after last-lever confirm WEITER. -->
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/suprised/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/suprised/frame_002.png" />
+     <!-- Outro trip on the intro bridge (see scss/outro/_outro.scss). -->
      <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_001.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_002.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_003.png" />
@@ -391,7 +394,7 @@
          (scss/world/_tools.scss, same pattern as the bomb parts) and fitted
          into the broken winch beside node 15 (scss/world/_last-lever.scss),
          which repairs the 6<->14 lift. Confirm WEITER after picking it up
-         starts the cave collapse (shake + stumble), hence #last-lever-armed
+         starts the cave collapse (shake + surprised), hence #last-lever-armed
          doubling as the walk-unlock trigger once the extra lines are done.
          Order is load-bearing twice over: the socket reads the pickup group
          as a preceding sibling, and #lift-6-14-unlocked has to stay ahead of
