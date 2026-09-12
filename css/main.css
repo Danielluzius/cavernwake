@@ -1664,27 +1664,27 @@ input {
 
 .lift-call-button--17-26 {
   position: absolute;
-  left: 2524.8px;
-  top: 1643.52px;
-  width: 62.4px;
-  height: 76.8px;
+  left: 2499px;
+  top: 1632px;
+  width: 96px;
+  height: 96px;
   overflow: visible;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
   background-repeat: no-repeat;
-  background-size: 96px 96px;
-  background-position: -28.8px -11.52px;
+  background-size: 84px 84px;
+  background-position: 50% 50%;
   image-rendering: pixelated;
 }
 
 #lift-17-26-unlocked:not(:checked) ~ :is(#position-25, [id^=position-25--]):checked ~ .game .lift-call-button--17-26 {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   --click-hint: 1;
 }
 
@@ -1703,7 +1703,7 @@ input {
   animation-delay: calc(0s + 0.75s);
 }
 
-#lift-17-26-unlocked:checked ~ #lift-17-26-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position]:not(.direction-controls__button--right[data-position="25"]) {
+#lift-17-26-unlocked:checked ~ #lift-17-26-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -1762,8 +1762,17 @@ input {
   pointer-events: none;
 }
 
+@keyframes lift-barrier-hold-17-26 {
+  0% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
+  }
+  100% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
+  }
+}
 #lift-17-26-unlocked:checked ~ .game .lift-barrier--17-26 {
   background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
+  animation: lift-barrier-hold-17-26 1s steps(1, end);
 }
 
 .lift-rope--11-27,
@@ -1819,27 +1828,27 @@ input {
 
 .lift-call-button--11-27 {
   position: absolute;
-  left: 580.8px;
-  top: 2315.52px;
-  width: 62.4px;
-  height: 76.8px;
+  left: 579px;
+  top: 2304px;
+  width: 96px;
+  height: 96px;
   overflow: visible;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
   background-repeat: no-repeat;
-  background-size: 96px 96px;
-  background-position: -4.8px -11.52px;
+  background-size: 84px 84px;
+  background-position: 50% 50%;
   image-rendering: pixelated;
 }
 
 #lift-11-27-unlocked:not(:checked) ~ :is(#position-28, [id^=position-28--]):checked ~ .game .lift-call-button--11-27 {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   --click-hint: 1;
 }
 
@@ -1858,7 +1867,7 @@ input {
   animation-delay: calc(0s + 0.75s);
 }
 
-#lift-11-27-unlocked:checked ~ #lift-11-27-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position]:not(.direction-controls__button--left[data-position="28"]) {
+#lift-11-27-unlocked:checked ~ #lift-11-27-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -1917,8 +1926,17 @@ input {
   pointer-events: none;
 }
 
+@keyframes lift-barrier-hold-11-27 {
+  0% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-block-left.png");
+  }
+  100% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-open-left.png");
+  }
+}
 #lift-11-27-unlocked:checked ~ .game .lift-barrier--11-27 {
   background-image: url("../assets/world/obstacles/lift-barrier/lift-open-left.png");
+  animation: lift-barrier-hold-11-27 2s steps(1, end);
 }
 
 .lift-rope--10-36,
@@ -1974,27 +1992,27 @@ input {
 
 .lift-call-button--10-36 {
   position: absolute;
-  left: 3100.8px;
-  top: 2315.52px;
-  width: 62.4px;
-  height: 76.8px;
+  left: 3075px;
+  top: 2304px;
+  width: 96px;
+  height: 96px;
   overflow: visible;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   background-image: url("../assets/characters/with-backpack/use-item/lever/lever-up.png");
   background-repeat: no-repeat;
-  background-size: 96px 96px;
-  background-position: -28.8px -11.52px;
+  background-size: 84px 84px;
+  background-position: 50% 50%;
   image-rendering: pixelated;
 }
 
 #lift-10-36-unlocked:not(:checked) ~ :is(#position-35, [id^=position-35--]):checked ~ .game .lift-call-button--10-36 {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 23.7px;
+  --click-hint-top: 40.5px;
+  --click-hint-left: 40.5px;
   --click-hint: 1;
 }
 
@@ -2013,7 +2031,7 @@ input {
   animation-delay: calc(0s + 0.75s);
 }
 
-#lift-10-36-unlocked:checked ~ #lift-10-36-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position]:not(.direction-controls__button--right[data-position="35"]) {
+#lift-10-36-unlocked:checked ~ #lift-10-36-call-done:not(:checked) ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -2072,8 +2090,17 @@ input {
   pointer-events: none;
 }
 
+@keyframes lift-barrier-hold-10-36 {
+  0% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-block-right.png");
+  }
+  100% {
+    background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
+  }
+}
 #lift-10-36-unlocked:checked ~ .game .lift-barrier--10-36 {
   background-image: url("../assets/world/obstacles/lift-barrier/lift-open-right.png");
+  animation: lift-barrier-hold-10-36 3s steps(1, end);
 }
 
 #position-14--from-6:checked ~ .game .vision-field {
@@ -8776,6 +8803,111 @@ input {
   transition: opacity 0.15s ease, margin 0.4s 1.8s ease-out, visibility 0s 1.8s;
 }
 
+#vine24-done:not(:checked) ~ .game .direction-controls__button[data-arrival=skip][data-position="23"],
+#vine24-done:not(:checked) ~ .game .direction-controls__button[data-arrival=skip][data-position="25"],
+#last-lever-armed:checked ~ .game .direction-controls__button[data-arrival=skip][data-position="25"] {
+  display: none;
+}
+
+#vine24-done:checked ~ .game .direction-controls__button--right[data-position="23"]:not([data-arrival]),
+#vine24-done:checked ~ #last-lever-armed:not(:checked) ~ .game .direction-controls__button--left[data-position="25"]:not([data-arrival]) {
+  display: none;
+}
+
+@keyframes player-walk-from-23-to-25 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+@keyframes player-walk-from-25-to-23 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+  }
+}
+#position-25--from-23:checked ~ .game .world {
+  --world-offset: -2448px;
+  --world-offset-y: -1680px;
+  transition-duration: calc(var(--walk-duration) * 2);
+}
+
+#position-25--from-23:checked ~ .game .player {
+  transition-duration: calc(var(--walk-duration) * 2);
+}
+
+#position-25--from-23:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-23-to-25 var(--walk-cycle-duration) steps(1, end) 4;
+}
+
+#position-23--from-25:checked ~ .game .world {
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
+  transition-duration: calc(var(--walk-duration) * 2);
+}
+
+#position-23--from-25:checked ~ .game .player {
+  transition-duration: calc(var(--walk-duration) * 2);
+}
+
+#position-23--from-25:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-25-to-23 var(--walk-cycle-duration) steps(1, end) 4;
+}
+
+#position-23--from-25:checked ~ .game .direction-controls__button--up[data-position="23"],
+#position-23--from-25:checked ~ .game .direction-controls__button--left[data-position="23"],
+#last-lever-armed:not(:checked) ~ #position-23--from-25:checked ~ .game .direction-controls__button--right[data-position="23"] {
+  opacity: 0.4;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s calc(var(--walk-duration) * 2) ease-out, margin 0.4s calc(var(--walk-duration) * 2) ease-out, visibility 0s calc(var(--walk-duration) * 2);
+}
+#position-23--from-25:checked ~ .game .direction-controls__button--up[data-position="23"]:hover, #position-23--from-25:checked ~ .game .direction-controls__button--up[data-position="23"]:active,
+#position-23--from-25:checked ~ .game .direction-controls__button--left[data-position="23"]:hover,
+#position-23--from-25:checked ~ .game .direction-controls__button--left[data-position="23"]:active,
+#last-lever-armed:not(:checked) ~ #position-23--from-25:checked ~ .game .direction-controls__button--right[data-position="23"]:hover,
+#last-lever-armed:not(:checked) ~ #position-23--from-25:checked ~ .game .direction-controls__button--right[data-position="23"]:active {
+  opacity: 1;
+  transition: opacity 0.15s ease, margin 0.4s calc(var(--walk-duration) * 2) ease-out, visibility 0s calc(var(--walk-duration) * 2);
+}
+
+#position-25--from-23:checked ~ .game .direction-controls__button--down[data-position="25"],
+#lift-17-26-unlocked:checked ~ #position-25--from-23:checked ~ .game .direction-controls__button--right[data-position="25"],
+#vine24-done:checked ~ #last-lever-armed:not(:checked) ~ #position-25--from-23:checked ~ .game .direction-controls__button--left[data-position="25"] {
+  opacity: 0.4;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s calc(var(--walk-duration) * 2) ease-out, margin 0.4s calc(var(--walk-duration) * 2) ease-out, visibility 0s calc(var(--walk-duration) * 2);
+}
+#position-25--from-23:checked ~ .game .direction-controls__button--down[data-position="25"]:hover, #position-25--from-23:checked ~ .game .direction-controls__button--down[data-position="25"]:active,
+#lift-17-26-unlocked:checked ~ #position-25--from-23:checked ~ .game .direction-controls__button--right[data-position="25"]:hover,
+#lift-17-26-unlocked:checked ~ #position-25--from-23:checked ~ .game .direction-controls__button--right[data-position="25"]:active,
+#vine24-done:checked ~ #last-lever-armed:not(:checked) ~ #position-25--from-23:checked ~ .game .direction-controls__button--left[data-position="25"]:hover,
+#vine24-done:checked ~ #last-lever-armed:not(:checked) ~ #position-25--from-23:checked ~ .game .direction-controls__button--left[data-position="25"]:active {
+  opacity: 1;
+  transition: opacity 0.15s ease, margin 0.4s calc(var(--walk-duration) * 2) ease-out, visibility 0s calc(var(--walk-duration) * 2);
+}
+
 .object--waterfall,
 .object--waterfall-back {
   position: absolute;
@@ -9899,7 +10031,7 @@ input {
 .object--workbench-take {
   position: absolute;
   left: 1476.48px;
-  top: 1651.2px;
+  top: 1636.8px;
   width: 64.32px;
   height: 64.32px;
   z-index: 1;
@@ -10137,12 +10269,19 @@ input {
   top: 2367.84px;
   width: 64.32px;
   height: 64.32px;
+  background: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.object--wall-bomb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: url("../assets/objects/inventory/bomb.png");
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
-  opacity: 0;
-  pointer-events: none;
   transform: scaleX(-1);
   transform-origin: center center;
 }
@@ -10153,18 +10292,28 @@ input {
 
 #wall-lantern-fire:checked ~ .game .object--wall-bomb {
   opacity: 1;
+}
+
+#wall-lantern-fire:checked ~ .game .object--wall-bomb::after {
   background-image: url("../assets/objects/inventory/bomb-fire.png");
-  animation: wall-bomb-pulse 0.6s ease-in-out 0.9s infinite;
+  animation: wall-bomb-pulse 0.6s ease-in-out 0.9s infinite backwards;
 }
 
 #wall-lantern-fire:checked ~ #position-30--from-31--right:checked ~ .game .object--wall-bomb {
   opacity: 1;
+}
+
+#wall-lantern-fire:checked ~ #position-30--from-31--right:checked ~ .game .object--wall-bomb::after {
   background-image: url("../assets/objects/inventory/bomb-fire.png");
   animation: wall-bomb-pulse 0.6s ease-in-out infinite, wall-bomb-vanish 0s 2.25s forwards;
 }
 
 #wall-done:checked ~ .game .object--wall-bomb {
   animation: wall-bomb-vanish 0s forwards;
+}
+
+#wall-done:checked ~ .game .object--wall-bomb::after {
+  animation: none;
 }
 
 @keyframes wall-bomb-pulse {

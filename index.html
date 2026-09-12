@@ -542,6 +542,10 @@
      <input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
      <input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
      <input type="radio" name="position" id="position-24--from-23" class="world-position-input" />
+     <!-- Corridor skip after vine24-done: 23↔25, skipping empty node 24
+          (see scss/world/_obstacles.scss). Hand-added, not part of
+          extract_positions.py's output. -->
+     <input type="radio" name="position" id="position-25--from-23" class="world-position-input" />
      <input type="radio" name="position" id="position-22--from-23" class="world-position-input" />
      <input type="radio" name="position" id="position-22--from-23--post" class="world-position-input" />
      <input type="radio" name="position" id="position-25--from-24" class="world-position-input" />
@@ -549,6 +553,7 @@
      <input type="radio" name="position" id="position-26--from-25" class="world-position-input" />
      <input type="radio" name="position" id="position-33--from-25" class="world-position-input" />
      <input type="radio" name="position" id="position-24--from-25" class="world-position-input" />
+     <input type="radio" name="position" id="position-23--from-25" class="world-position-input" />
      <!-- Elevator ride BACK from a dual-access end's simple partner (see
               base/_variables.scss vars.$elevator-reverse-duals). Hand-added,
               not part of extract_positions.py's output. -->
@@ -1714,6 +1719,8 @@
                              data-position="23" for="position-15--from-23">▲</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="23" for="position-24--from-23">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="23" data-arrival="skip" for="position-25--from-23">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="23" for="position-22--from-23">◀</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
@@ -1728,6 +1735,8 @@
                              data-position="25" for="position-33--from-25">▼</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="25" for="position-24--from-25">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="25" data-arrival="skip" for="position-23--from-25">◀</label>
                          <label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
                              data-position="26" data-facing="right" for="position-17--from-26--right">▲</label>
                          <label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
