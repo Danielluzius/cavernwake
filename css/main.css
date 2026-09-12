@@ -7525,7 +7525,7 @@ input {
 }
 
 #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory__toggle {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__toggle {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -7543,7 +7543,7 @@ input {
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -7576,7 +7576,7 @@ input {
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory__panel {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
   pointer-events: auto;
   transform: translate(-100%, -50%) scale(1);
 }
@@ -7634,7 +7634,8 @@ input {
 #vine30-choosing:checked ~ .game .inventory__back--vine30,
 #rock-choosing:checked ~ .game .inventory__back--rock,
 #mud-choosing:checked ~ .game .inventory__back--mud,
-#wall-choosing:checked ~ .game .inventory__back--wall {
+#wall-choosing:checked ~ .game .inventory__back--wall,
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__back--workbench {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -7798,8 +7799,13 @@ input {
 .inventory__use--vine30,
 .inventory__use--rock,
 .inventory__use--mud,
-.inventory__use--wall {
+.inventory__use--wall,
+.inventory__use[class*=inventory__use--wb-] {
   z-index: 5;
+}
+
+.inventory__use[class*=inventory__use--wb-] {
+  z-index: 6;
 }
 
 #position-1:checked ~ #intro-10:checked ~ .game .inventory__use--lamp-intro {
@@ -7970,8 +7976,8 @@ input {
 
 #inventory-open:checked ~ #intro-11:not(:checked) ~ .game .direction-controls__button--edge,
 #inventory-open:checked ~ #intro-11:not(:checked) ~ .game .direction-controls__button--intro-arrow,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .direction-controls__button--edge,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .direction-controls__button--intro-arrow {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--edge,
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--intro-arrow {
   display: none;
 }
 
@@ -8119,11 +8125,11 @@ input {
   animation: dialogue-ephemeral-replay 2s ease-out forwards;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory__slot .inventory__icon {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot .inventory__icon {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .dialogue--item-quote .dialogue__box {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-quote .dialogue__box {
   animation: none;
   opacity: 0;
   visibility: hidden;
@@ -8140,6 +8146,51 @@ input {
 #shovel-armed:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #debug-pre-bomb:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall {
+  pointer-events: auto;
+}
+
+#bomb-shell-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-shell,
+#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-shell,
+#bomb-powder-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-powder,
+#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-powder,
+#bomb-fuse-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-fuse,
+#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-fuse,
+#bomb-powder-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sp,
+#debug-pre-bomb:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sp,
+#bomb-fuse-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sf,
+#debug-pre-bomb:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sf,
+#bomb-shell-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-ps,
+#debug-pre-bomb:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-ps,
+#bomb-fuse-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-pf,
+#debug-pre-bomb:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-pf,
+#bomb-shell-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fs,
+#debug-pre-bomb:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fs,
+#bomb-powder-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fp,
+#debug-pre-bomb:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fp,
+#bomb-fuse-armed:checked ~ #workbench-b-shell-powder:checked ~ .game .inventory__use--wb-ok,
+#debug-pre-bomb:checked ~ #workbench-b-shell-powder:checked ~ .game .inventory__use--wb-ok,
+#bomb-powder-armed:checked ~ #workbench-b-shell-fuse:checked ~ .game .inventory__use--wb-bad-sfp,
+#debug-pre-bomb:checked ~ #workbench-b-shell-fuse:checked ~ .game .inventory__use--wb-bad-sfp,
+#bomb-fuse-armed:checked ~ #workbench-b-powder-shell:checked ~ .game .inventory__use--wb-bad-psf,
+#debug-pre-bomb:checked ~ #workbench-b-powder-shell:checked ~ .game .inventory__use--wb-bad-psf,
+#bomb-shell-armed:checked ~ #workbench-b-powder-fuse:checked ~ .game .inventory__use--wb-bad-pfs,
+#debug-pre-bomb:checked ~ #workbench-b-powder-fuse:checked ~ .game .inventory__use--wb-bad-pfs,
+#bomb-powder-armed:checked ~ #workbench-b-fuse-shell:checked ~ .game .inventory__use--wb-bad-fsp,
+#debug-pre-bomb:checked ~ #workbench-b-fuse-shell:checked ~ .game .inventory__use--wb-bad-fsp,
+#bomb-shell-armed:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps,
+#debug-pre-bomb:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps {
+  pointer-events: auto;
+}
+
+:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
+#pickaxe-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
+#shovel-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
+#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game :is(.inventory__slot--sickle,
+.inventory__slot--pickaxe,
+.inventory__slot--shovel) .inventory__use--fail,
+#title-dismissed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail,
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail {
   pointer-events: auto;
 }
 
@@ -8191,19 +8242,19 @@ input {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ #item-use-fail-a:not(:checked) ~ .game .inventory__slot .inventory__use--fail-b {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:not(:checked) ~ .game .inventory__slot .inventory__use--fail-b {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ #item-use-fail-a:checked ~ .game .inventory__slot .inventory__use--fail:not(.inventory__use--fail-b) {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:checked ~ .game .inventory__slot .inventory__use--fail:not(.inventory__use--fail-b) {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ #item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
   animation: dialogue-ephemeral 2s ease-out forwards;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ #item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
   animation: dialogue-ephemeral-replay 2s ease-out forwards;
 }
 
@@ -8476,8 +8527,8 @@ input {
 
 #title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings,
 #title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings__back,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .settings,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .settings__back,
+#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
+#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
 #inventory-open:checked ~ .game .settings,
 #inventory-open:checked ~ .game .settings__back {
   opacity: 0;
@@ -10054,23 +10105,7 @@ input {
   background-image: url("../assets/world/workbench.png");
 }
 
-#workbench-spark:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-#workbench-spark:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
-  --click-hint-top: 24px;
-  --click-hint-left: 136.5px;
-  --click-hint: 1;
-}
-
-:is(#debug-pre-bomb:checked, #bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked) ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
-  pointer-events: none;
-  cursor: default;
-}
-
-:is(#debug-pre-bomb:checked, #bomb-shell-armed:checked ~ #bomb-powder-armed:checked ~ #bomb-fuse-armed:checked) ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-craft {
+#workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
   pointer-events: auto;
   cursor: pointer;
   --click-hint-top: 24px;
@@ -10137,8 +10172,8 @@ input {
   background-image: url("../assets/characters/with-backpack/base/base-up.png");
 }
 
-:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--right[data-position="21"][data-arrival=post],
-:is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--left[data-position="23"][data-arrival=post] {
+:is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--right[data-position="21"][data-arrival=post],
+:is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ .game .direction-controls__button--left[data-position="23"][data-arrival=post] {
   display: none;
 }
 
@@ -10192,7 +10227,7 @@ input {
   transition: opacity 0.15s ease, margin 0.4s var(--walk-duration) ease-out, visibility 0s var(--walk-duration);
 }
 
-:is(#workbench-craft-prompt, #workbench-crafting, #workbench-take):checked ~ .game .direction-controls__button--edge[data-position] {
+:is(#workbench-crafting, #workbench-take):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -10262,6 +10297,140 @@ input {
   animation-delay: calc(0.6s + 0.75s);
 }
 
+.craft-tray {
+  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
+  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  z-index: 8;
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+}
+
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .craft-tray {
+  opacity: 1;
+  visibility: visible;
+}
+
+.craft-tray__slot {
+  box-sizing: border-box;
+  width: 96px;
+  height: 96px;
+  background-color: rgba(0, 0, 0, 0.28);
+  background-size: 70% 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+:is(#workbench-a-shell, #workbench-b-shell-powder, #workbench-b-shell-fuse):checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+:is(#workbench-a-powder, #workbench-b-powder-shell, #workbench-b-powder-fuse):checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+:is(#workbench-a-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder):checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+:is(#workbench-b-powder-shell, #workbench-b-fuse-shell):checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+:is(#workbench-b-shell-powder, #workbench-b-fuse-powder):checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+:is(#workbench-b-shell-fuse, #workbench-b-powder-fuse):checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--3 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--3 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--3 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--3 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--1 {
+  background-image: url("../assets/objects/inventory/bomb-fuse.png");
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--2 {
+  background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--3 {
+  background-image: url("../assets/objects/inventory/bomb-shell.png");
+}
+
+@keyframes craft-tray-eject {
+  0%, 35% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+:is(#workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .craft-tray__slot {
+  animation: craft-tray-eject 0.45s ease-in forwards;
+}
+
+:is(#workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .viewport {
+  animation: intro-screen-shake 0.4s ease-in-out 1;
+}
+
 .object--stone-wall,
 .object--stone-wall-pickaxe,
 .object--stone-wall-shovel,
@@ -10281,7 +10450,7 @@ input {
   --click-hint-left: 115.2px;
 }
 
-#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
+#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
 #pickaxe-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
 #shovel-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
 :is(#vine30-armed,
@@ -10295,7 +10464,7 @@ input {
   cursor: pointer;
 }
 
-#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
+#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
   --click-hint-top: 244.8px;
   --click-hint-left: 115.2px;
   --click-hint: 1;

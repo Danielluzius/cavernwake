@@ -350,6 +350,21 @@
 
      <input type="radio" name="workbench-step" id="workbench-idle" class="world-position-input" checked />
      <input type="radio" name="workbench-step" id="workbench-incomplete" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-choosing" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-a-shell" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-a-powder" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-a-fuse" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-shell-powder" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-shell-fuse" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-powder-shell" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-powder-fuse" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-fuse-shell" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-b-fuse-powder" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-bad-sfp" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-bad-psf" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-bad-pfs" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-bad-fsp" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-bad-fps" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-craft-prompt" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-crafting" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-crafted" class="world-position-input" />
@@ -814,12 +829,10 @@
                               <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
 
                               <!-- Workbench at node 22 (scss/world/_workbench.scss):
-                             the visible label is the "nothing to do here"
-                             branch, the second the "build it" branch that
-                             only goes live once all three parts are in, the
-                             third the finished bomb on the table. -->
-                              <label class="object object--workbench" for="workbench-spark-seen"></label>
-                              <label class="object object--workbench-craft" for="workbench-craft-prompt"></label>
+                             always opens the craft tray + inventory.
+                             Take is the finished bomb on the table. -->
+                              <label class="object object--workbench" for="workbench-choosing"></label>
+                              <label class="object object--workbench-craft" for="workbench-choosing"></label>
                               <label class="object object--workbench-take" for="workbench-take"></label>
 
                               <!-- Stone wall between node 31 and 32
@@ -982,6 +995,14 @@
                      soft edge out of hard steps — fits the pixel-art look. -->
                     <div class="vignette-ring vignette-ring--outer"></div>
                     <div class="vignette-ring vignette-ring--inner"></div>
+
+                    <!-- Craft tray (scss/world/_workbench.scss): three sockets
+                         in the vision field, filled in click order. -->
+                    <div class="craft-tray">
+                         <div class="craft-tray__slot craft-tray__slot--1"></div>
+                         <div class="craft-tray__slot craft-tray__slot--2"></div>
+                         <div class="craft-tray__slot craft-tray__slot--3"></div>
+                    </div>
                     </div>
                </div>
                </div>
@@ -1085,6 +1106,11 @@
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-shell-b"></label>
                                              <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                              <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                                             <label class="inventory__use inventory__use--wb-a-shell" for="workbench-a-shell"></label>
+                                             <label class="inventory__use inventory__use--wb-b-ps" for="workbench-b-powder-shell"></label>
+                                             <label class="inventory__use inventory__use--wb-b-fs" for="workbench-b-fuse-shell"></label>
+                                             <label class="inventory__use inventory__use--wb-bad-pfs" for="workbench-bad-pfs"></label>
+                                             <label class="inventory__use inventory__use--wb-bad-fps" for="workbench-bad-fps"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-powder">
                                              <label class="inventory__icon" for="item-quote-bomb-powder-a">
@@ -1093,6 +1119,11 @@
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-powder-b"></label>
                                              <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                              <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                                             <label class="inventory__use inventory__use--wb-a-powder" for="workbench-a-powder"></label>
+                                             <label class="inventory__use inventory__use--wb-b-sp" for="workbench-b-shell-powder"></label>
+                                             <label class="inventory__use inventory__use--wb-b-fp" for="workbench-b-fuse-powder"></label>
+                                             <label class="inventory__use inventory__use--wb-bad-sfp" for="workbench-bad-sfp"></label>
+                                             <label class="inventory__use inventory__use--wb-bad-fsp" for="workbench-bad-fsp"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-fuse">
                                              <label class="inventory__icon" for="item-quote-bomb-fuse-a">
@@ -1101,6 +1132,11 @@
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-fuse-b"></label>
                                              <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                              <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                                             <label class="inventory__use inventory__use--wb-a-fuse" for="workbench-a-fuse"></label>
+                                             <label class="inventory__use inventory__use--wb-b-sf" for="workbench-b-shell-fuse"></label>
+                                             <label class="inventory__use inventory__use--wb-b-pf" for="workbench-b-powder-fuse"></label>
+                                             <label class="inventory__use inventory__use--wb-ok" for="workbench-crafting"></label>
+                                             <label class="inventory__use inventory__use--wb-bad-psf" for="workbench-bad-psf"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb">
                                              <label class="inventory__icon" for="item-quote-bomb-a">
@@ -1742,6 +1778,8 @@
                               for="mud-idle" aria-label="Zurück"></label>
                          <label class="inventory__back inventory__back--wall"
                               for="wall-idle" aria-label="Zurück"></label>
+                         <label class="inventory__back inventory__back--workbench"
+                              for="workbench-idle" aria-label="Zurück"></label>
                          <label class="settings__toggle" for="settings-open"
                               aria-label="Einstellungen"></label>
                          <label class="settings__back" for="settings-open"
