@@ -79,7 +79,8 @@
      <link rel="preload" as="image" href="./assets/world/settings-button.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
      <link rel="preload" as="image" href="./assets/objects/inventory/inventory-background.png" />
-     <link rel="preload" as="image" href="./assets/objects/inventory/lamp.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/lamp-before.png" />
+     <link rel="preload" as="image" href="./assets/objects/inventory/lamp-after.png" />
      <!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
           and the three vine barrier states (see scss/world/_obstacles.scss) —
           only referenced inside @keyframes/background-image, same first-use
@@ -972,6 +973,9 @@
 
                          <div class="inventory__panel">
                               <div class="inventory__art">
+                                   <!-- 2x3 over the brown body: tools on top, craft parts below.
+                                        Bomb spans the bottom row after crafting; lever sits in
+                                        the middle pocket after the wall blast. -->
                                    <div class="inventory__grid">
                                         <div class="inventory__slot inventory__slot--sickle">
                                              <label class="inventory__icon" for="item-quote-sickle-a">
@@ -991,20 +995,6 @@
                                              </label>
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-shovel-b"></label>
                                         </div>
-                                        <div class="inventory__slot inventory__slot--bomb">
-                                             <label class="inventory__icon" for="item-quote-bomb-a">
-                                                  <span class="inventory__caption">Bombe</span>
-                                             </label>
-                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-b"></label>
-                                        </div>
-                                        <div class="inventory__slot inventory__slot--lamp">
-                                             <label class="inventory__icon" for="item-quote-lamp-a">
-                                                  <span class="inventory__caption">Laterne</span>
-                                             </label>
-                                             <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
-                                             <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
-                                                  aria-label="Laterne anzünden"></label>
-                                        </div>
                                         <div class="inventory__slot inventory__slot--bomb-shell">
                                              <label class="inventory__icon" for="item-quote-bomb-shell-a">
                                                   <span class="inventory__caption">Bombenschale</span>
@@ -1023,12 +1013,26 @@
                                              </label>
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-fuse-b"></label>
                                         </div>
+                                        <div class="inventory__slot inventory__slot--bomb">
+                                             <label class="inventory__icon" for="item-quote-bomb-a">
+                                                  <span class="inventory__caption">Bombe</span>
+                                             </label>
+                                             <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-b"></label>
+                                        </div>
                                         <div class="inventory__slot inventory__slot--last-lever">
                                              <label class="inventory__icon" for="item-quote-last-lever-a">
                                                   <span class="inventory__caption">Hebel</span>
                                              </label>
                                              <label class="inventory__icon inventory__icon--b" for="item-quote-last-lever-b"></label>
                                         </div>
+                                   </div>
+                                   <div class="inventory__slot inventory__slot--lamp">
+                                        <label class="inventory__icon" for="item-quote-lamp-a">
+                                             <span class="inventory__caption">Laterne</span>
+                                        </label>
+                                        <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
+                                        <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
+                                             aria-label="Laterne anzünden"></label>
                                    </div>
                               </div>
                          </div>

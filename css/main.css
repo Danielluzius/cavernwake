@@ -7576,25 +7576,58 @@ input {
 
 .inventory__grid {
   position: absolute;
-  left: 18%;
-  right: 18%;
-  top: 38%;
-  bottom: 10%;
+  left: 11%;
+  width: 58%;
+  top: 40%;
+  height: 50%;
   display: grid;
-  grid-template-columns: repeat(3, 66px);
-  grid-template-rows: repeat(3, 66px);
-  gap: 8px;
-  justify-content: center;
-  align-content: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  align-items: stretch;
+  justify-items: stretch;
 }
 
 .inventory__slot {
   position: relative;
-  width: 66px;
-  height: 66px;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
   background: none;
   border: 0;
   outline: none;
+}
+
+.inventory__slot--bomb {
+  grid-column: 1/-1;
+  grid-row: 2;
+  width: 42%;
+  height: 118%;
+  justify-self: center;
+  align-self: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.inventory__slot--last-lever {
+  grid-column: 2;
+  grid-row: 2;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.inventory__slot--lamp {
+  position: absolute;
+  left: 82%;
+  top: 32%;
+  width: 19%;
+  height: 44%;
+  z-index: 2;
+}
+
+.inventory__slot--lamp .inventory__icon {
+  background-position: top center;
 }
 
 .inventory__icon {
@@ -7692,13 +7725,25 @@ input {
   pointer-events: auto;
 }
 
+#workbench-done:checked ~ .game .inventory__slot--bomb {
+  z-index: 2;
+}
+
 #wall-done:checked ~ .game .inventory__slot--bomb .inventory__icon {
   opacity: 0;
   pointer-events: none;
 }
 
+#wall-done:checked ~ .game .inventory__slot--bomb {
+  z-index: 0;
+}
+
 .inventory__slot--lamp .inventory__icon {
-  background-image: url("../assets/objects/inventory/lamp.png");
+  background-image: url("../assets/objects/inventory/lamp-after.png");
+}
+
+#intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon {
+  background-image: url("../assets/objects/inventory/lamp-before.png");
 }
 
 #intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon,
@@ -7787,6 +7832,10 @@ input {
 :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__icon {
   opacity: 1;
   pointer-events: auto;
+}
+
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever {
+  z-index: 2;
 }
 
 :is(#last-lever-socket-fitting,
