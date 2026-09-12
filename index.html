@@ -1169,6 +1169,9 @@
                                    </div>
                               </div>
                          </div>
+                         <!-- Eats the opening click's mouseup so it cannot land on a use/fail
+                              label (lamp sits on the field edge once the bag morphs open). -->
+                         <div class="inventory__click-guard"></div>
                     </div>
 
                     <!-- Inspect quotes sit with the other speech bubbles (above the player).
@@ -1576,6 +1579,11 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">workbench-incomplete</p>
                             <label class="dialogue__button" aria-label="Weiter" for="workbench-spark-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="workbench-look">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">placeholder: hm, was kann man hier machen?</p>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-prompt">

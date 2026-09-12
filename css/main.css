@@ -7561,6 +7561,23 @@ input {
   cursor: default;
 }
 
+@keyframes inventory-click-guard-off {
+  to {
+    pointer-events: none;
+  }
+}
+.inventory__click-guard {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__click-guard {
+  pointer-events: auto;
+  animation: inventory-click-guard-off 0.01s 0.28s linear forwards;
+}
+
 .inventory__panel {
   position: absolute;
   top: calc(50% + 0px);
@@ -7569,6 +7586,7 @@ input {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  overflow: hidden;
   pointer-events: none;
   transform-origin: 100% 50%;
   transform: translate(-100%, -50%) translate(90px, -266px) scale(0.15);
@@ -8194,8 +8212,14 @@ input {
   pointer-events: auto;
 }
 
-#debug-pre-bomb:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing):checked ~ #pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
+#debug-pre-bomb:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game :is(.inventory__slot--pickaxe,
+.inventory__slot--shovel,
+.inventory__slot--bomb-shell,
+.inventory__slot--bomb-powder,
+.inventory__slot--bomb-fuse,
+.inventory__slot--sickle,
+.inventory__slot--bomb) .inventory__use--fail,
 #pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing):checked ~ #shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__use--fail,
 #shovel-armed:checked ~ :is(#mud-choosing, #wall-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
@@ -8250,11 +8274,19 @@ input {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+.dialogue--item-use-fail {
+  visibility: hidden;
+}
+
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-use-fail {
+  visibility: visible;
+}
+
+#item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
   animation: dialogue-ephemeral 2s ease-out forwards;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+#item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
   animation: dialogue-ephemeral-replay 2s ease-out forwards;
 }
 
@@ -8702,7 +8734,7 @@ input {
   animation: player-sickle-swing 0.6s steps(1, end);
 }
 
-:is(#vine30-armed, #vine30-done):checked ~ #position-30--from-21:checked ~ .game .player__sprite {
+:is(#vine30-blocked, #vine30-armed, #vine30-choosing, #vine30-done):checked ~ #position-30--from-21:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
@@ -10235,19 +10267,8 @@ input {
   display: none;
 }
 
-#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box.dialogue__box {
-  transition: none;
-  animation: dialogue-box-in 0.4s ease-out both;
-  animation-delay: 0s;
-}
-#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box .dialogue__button {
-  animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+#workbench-choosing:checked ~ .game .dialogue[data-step=workbench-look] .dialogue__box {
+  animation: dialogue-ephemeral 2s ease-out forwards;
 }
 
 #workbench-craft-prompt:checked ~ .game .dialogue[data-step=workbench-craft-prompt] .dialogue__box {
@@ -10302,7 +10323,7 @@ input {
   box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
   position: absolute;
   left: 50%;
-  bottom: 14%;
+  bottom: calc(14% + 96px);
   z-index: 8;
   display: flex;
   gap: 12px;
@@ -12818,12 +12839,12 @@ input {
 }
 #lift-6-14-unlocked:checked ~ #position-4--from-6:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-from-6-to-4 var(--walk-cycle-duration) steps(1, end) 2, escape-bridge-sprite-hide 0.6s steps(1, end) calc(var(--walk-duration) * 1);
+  animation: player-walk-from-6-to-4 var(--walk-cycle-duration) steps(1, end) 2, escape-bridge-sprite-hide 0.6s steps(1, end) calc(calc(var(--walk-duration) * 1) - 0.4s);
 }
 
 #lift-6-14-unlocked:checked ~ #position-4--from-6:checked ~ .game .player__action {
   transform: scaleX(-1);
-  animation: escape-bridge-action-show 0.6s steps(1, end) calc(var(--walk-duration) * 1), player-stumble 0.6s steps(1, end) calc(var(--walk-duration) * 1);
+  animation: escape-bridge-action-show 0.6s steps(1, end) calc(calc(var(--walk-duration) * 1) - 0.4s), player-stumble 0.6s steps(1, end) calc(calc(var(--walk-duration) * 1) - 0.4s);
 }
 
 #lift-6-14-unlocked:checked ~ #position-4--from-6:checked ~ .game .direction-controls__button--edge[data-position] {
@@ -12834,16 +12855,16 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s calc(calc(var(--walk-duration) * 1) + 0.6s + 0.4s), visibility 0s calc(calc(var(--walk-duration) * 1) + 0.6s + 0.4s);
+  transition: opacity 0s calc(calc(calc(var(--walk-duration) * 1) - 0.4s) + 0.6s + 0.4s), visibility 0s calc(calc(calc(var(--walk-duration) * 1) - 0.4s) + 0.6s + 0.4s);
 }
 #lift-6-14-unlocked:checked ~ #position-4--from-6:checked ~ .game .dialogue[data-step=escape-bridge] .dialogue__box.dialogue__box {
   transition: none;
   animation: dialogue-box-in 0.4s ease-out both;
-  animation-delay: calc(calc(var(--walk-duration) * 1) + 0.6s + 0.4s);
+  animation-delay: calc(calc(calc(var(--walk-duration) * 1) - 0.4s) + 0.6s + 0.4s);
 }
 #lift-6-14-unlocked:checked ~ #position-4--from-6:checked ~ .game .dialogue[data-step=escape-bridge] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(calc(calc(var(--walk-duration) * 1) + 0.6s + 0.4s) + 0.75s);
+  animation-delay: calc(calc(calc(calc(var(--walk-duration) * 1) - 0.4s) + 0.6s + 0.4s) + 0.75s);
 }
 
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ :is(#outro-idle, #outro-to-1, #outro-end, #outro-fade, #outro-credits):checked ~ .game .direction-controls__button--edge[data-position] {
