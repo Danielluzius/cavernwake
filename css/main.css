@@ -9411,26 +9411,26 @@ input {
 
 .object--last-lever {
   position: absolute;
-  left: 1929.6px;
-  top: 2313.6px;
-  width: 76.8px;
-  height: 76.8px;
+  left: 1915.2px;
+  top: 2299.2px;
+  width: 105.6px;
+  height: 105.6px;
   background-image: url("../assets/objects/inventory/last-lever-item.png");
-  background-size: 76.8px 76.8px;
+  background-size: 105.6px 105.6px;
   background-position: 0px 0px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 30.9px;
+  --click-hint-top: 45.3px;
+  --click-hint-left: 45.3px;
 }
 
 #last-lever-idle:checked ~ :is(#position-32, [id^=position-32--]):checked ~ .game .object--last-lever {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 30.9px;
-  --click-hint-left: 30.9px;
+  --click-hint-top: 45.3px;
+  --click-hint-left: 45.3px;
   --click-hint: 1;
 }
 
@@ -9493,6 +9493,16 @@ input {
 #last-lever-pickup:checked ~ .game .dialogue[data-step=last-lever-confirm] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
   animation-delay: calc(0.6s + 0.75s);
+}
+
+.object--bomb-powder {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#shovel-armed:checked ~ .game .object--bomb-powder {
+  opacity: 1;
+  visibility: visible;
 }
 
 :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .object--last-lever {
@@ -9835,8 +9845,7 @@ input {
 }
 
 .object--workbench,
-.object--workbench-craft,
-.object--workbench-take {
+.object--workbench-craft {
   position: absolute;
   left: 1440px;
   top: 1536px;
@@ -9852,7 +9861,7 @@ input {
 }
 
 .object--workbench {
-  background-image: url("../assets/world/workbench-before.png");
+  background-image: url("../assets/world/workbench.png");
 }
 
 #workbench-spark:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
@@ -9882,22 +9891,40 @@ input {
 #workbench-crafted:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-take {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 24px;
-  --click-hint-left: 136.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
   --click-hint: 1;
 }
 
-@keyframes workbench-craft-swap {
-  to {
-    background-image: url("../assets/world/workbench-with-bomb.png");
-  }
-}
-#workbench-crafting:checked ~ .game .object--workbench {
-  animation: workbench-craft-swap 0s 1.2s forwards;
+.object--workbench-take {
+  position: absolute;
+  left: 1476.48px;
+  top: 1651.2px;
+  width: 64.32px;
+  height: 64.32px;
+  z-index: 1;
+  background-image: url("../assets/objects/inventory/bomb.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
 }
 
-:is(#workbench-crafted, #workbench-take):checked ~ .game .object--workbench {
-  background-image: url("../assets/world/workbench-with-bomb.png");
+@keyframes workbench-bomb-show {
+  to {
+    opacity: 1;
+  }
+}
+#workbench-crafting:checked ~ .game .object--workbench-take {
+  animation: workbench-bomb-show 0s 1.2s forwards;
+}
+
+:is(#workbench-crafted, #workbench-take):checked ~ .game .object--workbench-take {
+  opacity: 1;
 }
 
 :is(#workbench-crafting, #workbench-take):checked ~ .game .player__sprite {
@@ -10116,6 +10143,8 @@ input {
   image-rendering: pixelated;
   opacity: 0;
   pointer-events: none;
+  transform: scaleX(-1);
+  transform-origin: center center;
 }
 
 #wall-blast-prompt:checked ~ .game .object--wall-bomb {
@@ -10124,11 +10153,13 @@ input {
 
 #wall-lantern-fire:checked ~ .game .object--wall-bomb {
   opacity: 1;
+  background-image: url("../assets/objects/inventory/bomb-fire.png");
   animation: wall-bomb-pulse 0.6s ease-in-out 0.9s infinite;
 }
 
 #wall-lantern-fire:checked ~ #position-30--from-31--right:checked ~ .game .object--wall-bomb {
   opacity: 1;
+  background-image: url("../assets/objects/inventory/bomb-fire.png");
   animation: wall-bomb-pulse 0.6s ease-in-out infinite, wall-bomb-vanish 0s 2.25s forwards;
 }
 
@@ -10139,11 +10170,11 @@ input {
 @keyframes wall-bomb-pulse {
   0%, 100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scaleX(-1) scale(1);
   }
   50% {
     opacity: 0.55;
-    transform: scale(1.25);
+    transform: scaleX(-1) scale(1.25);
   }
 }
 @keyframes wall-bomb-vanish {
