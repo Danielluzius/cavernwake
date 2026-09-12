@@ -562,12 +562,15 @@
      <input type="radio" name="position" id="position-25--from-26" class="world-position-input" />
      <input type="radio" name="position" id="position-11--from-27" class="world-position-input" />
      <input type="radio" name="position" id="position-28--from-27" class="world-position-input" />
+     <input type="radio" name="position" id="position-29--from-27" class="world-position-input" />
      <input type="radio" name="position" id="position-29--from-28" class="world-position-input" />
      <input type="radio" name="position" id="position-27--from-28" class="world-position-input" />
+     <input type="radio" name="position" id="position-27--from-29" class="world-position-input" />
      <input type="radio" name="position" id="position-30--from-29" class="world-position-input" />
      <input type="radio" name="position" id="position-28--from-29" class="world-position-input" />
      <input type="radio" name="position" id="position-21--from-30" class="world-position-input" />
      <input type="radio" name="position" id="position-31--from-30" class="world-position-input" />
+     <input type="radio" name="position" id="position-32--from-30" class="world-position-input" />
      <input type="radio" name="position" id="position-29--from-30" class="world-position-input" />
      <input type="radio" name="position" id="position-32--from-31" class="world-position-input" />
      <input type="radio" name="position" id="position-30--from-31" class="world-position-input" />
@@ -576,14 +579,19 @@
               not part of extract_positions.py's output. -->
      <input type="radio" name="position" id="position-30--from-31--right" class="world-position-input" />
      <input type="radio" name="position" id="position-31--from-32" class="world-position-input" />
+     <input type="radio" name="position" id="position-30--from-32" class="world-position-input" />
      <input type="radio" name="position" id="position-25--from-33" class="world-position-input" />
      <input type="radio" name="position" id="position-34--from-33" class="world-position-input" />
+     <input type="radio" name="position" id="position-35--from-33" class="world-position-input" />
+     <input type="radio" name="position" id="position-36--from-33" class="world-position-input" />
      <input type="radio" name="position" id="position-35--from-34" class="world-position-input" />
      <input type="radio" name="position" id="position-33--from-34" class="world-position-input" />
      <input type="radio" name="position" id="position-36--from-35" class="world-position-input" />
      <input type="radio" name="position" id="position-34--from-35" class="world-position-input" />
+     <input type="radio" name="position" id="position-33--from-35" class="world-position-input" />
      <input type="radio" name="position" id="position-10--from-36" class="world-position-input" />
      <input type="radio" name="position" id="position-35--from-36" class="world-position-input" />
+     <input type="radio" name="position" id="position-33--from-36" class="world-position-input" />
 
      <!-- Opening cutscene, own linear radio chain (name="intro"), entirely
           decoupled from the position graph above (see scss/intro/_intro.scss
@@ -1748,6 +1756,8 @@
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="27" for="position-28--from-27">▶</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="27" data-arrival="skip" for="position-29--from-27">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="28" for="position-29--from-28">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="28" for="position-27--from-28">◀</label>
@@ -1755,10 +1765,14 @@
                              data-position="29" for="position-30--from-29">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="29" for="position-28--from-29">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="29" data-arrival="skip" for="position-27--from-29">◀</label>
                          <label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
                              data-position="30" for="position-21--from-30">▲</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="30" for="position-31--from-30">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="30" data-arrival="skip" for="position-32--from-30">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="30" for="position-29--from-30">◀</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
@@ -1767,10 +1781,16 @@
                              data-position="31" for="position-30--from-31">◀</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="32" for="position-31--from-32">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="32" data-arrival="skip" for="position-30--from-32">◀</label>
                          <label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
                              data-position="33" for="position-25--from-33">▲</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="33" for="position-34--from-33">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="33" data-arrival="skip" for="position-35--from-33">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="33" data-arrival="skip-lift" for="position-36--from-33">▶</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="34" for="position-35--from-34">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
@@ -1779,10 +1799,14 @@
                              data-position="35" for="position-36--from-35">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="35" for="position-34--from-35">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="35" data-arrival="skip" for="position-33--from-35">◀</label>
                          <label class="direction-controls__button direction-controls__button--up direction-controls__button--edge"
                              data-position="36" for="position-10--from-36">▲</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="36" for="position-35--from-36">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="36" data-arrival="skip-lift" for="position-33--from-36">◀</label>
 
                          <!-- Intro-only stand-ins for the two arrow clicks that
                          advance the cutscene (see scss/intro/_intro.scss) —
