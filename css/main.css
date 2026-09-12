@@ -7411,6 +7411,10 @@ input {
   transition: opacity 0.15s 0.45s, visibility 0s 0.45s;
 }
 
+.inventory__toggle--tutorial {
+  background-image: url("../assets/objects/inventory/backpack-before.png");
+}
+
 #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--tutorial {
   opacity: 1;
   visibility: visible;
@@ -11159,6 +11163,7 @@ input {
   }
 }
 #position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right-before.png");
   animation: player-backpack-interact 0.6s steps(1, end);
 }
 
@@ -11540,7 +11545,7 @@ input {
   top: 1008px;
   width: 96px;
   height: 96px;
-  background-image: url("../assets/objects/inventory/backpack.png");
+  background-image: url("../assets/objects/inventory/backpack-before.png");
   background-size: contain;
   background-repeat: no-repeat;
   image-rendering: pixelated;
