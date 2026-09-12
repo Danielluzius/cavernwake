@@ -30,6 +30,14 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_002.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_003.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_004.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png" />
      <!-- Title-screen trip (see scss/components/_title-screen.scss) — only
               referenced inside @keyframes, same first-use flash reasoning. -->
      <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_001.png" />
@@ -181,9 +189,11 @@
      <input type="checkbox" id="title-dismissed" class="world-position-input" />
 
      <!-- Dev-only, independent of everything else: toggles the visual
-         debug grid/colors overlays (see scss/world/_room.scss). -->
+         debug grid/colors overlays (see scss/world/_room.scss) and the
+         pre-bomb inventory cheat (scss/world/_debug-pre-bomb.scss). -->
      <input type="checkbox" id="debug-grid" class="world-position-input" checked />
      <input type="checkbox" id="debug-colors" class="world-position-input" />
+     <input type="checkbox" id="debug-pre-bomb" class="world-position-input" />
 
      <!-- One-way spark flags (scss/world/_click-hint.scss). Unseen stays
          checked until the matching hotspot is clicked; -seen holds the
@@ -527,6 +537,7 @@
      <input type="radio" name="position" id="position-16--from-17" class="world-position-input" />
      <input type="radio" name="position" id="position-17--from-18" class="world-position-input" />
      <input type="radio" name="position" id="position-20--from-19" class="world-position-input" />
+     <input type="radio" name="position" id="position-21--from-19" class="world-position-input" />
      <input type="radio" name="position" id="position-21--from-20" class="world-position-input" />
      <input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
      <input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
@@ -538,6 +549,7 @@
           the sickle interaction — see scss/world/_obstacles.scss. -->
      <input type="radio" name="position" id="position-30--from-21--post" class="world-position-input" />
      <input type="radio" name="position" id="position-20--from-21" class="world-position-input" />
+     <input type="radio" name="position" id="position-19--from-21" class="world-position-input" />
      <input type="radio" name="position" id="position-23--from-22" class="world-position-input" />
      <input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
      <input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
@@ -963,10 +975,14 @@
 
                <div class="ui">
                     <div class="dev-controls">
-                         <label class="dev-controls__button dev-controls__button--debug-grid"
-                              for="debug-grid">GRID</label>
-                         <label class="dev-controls__button dev-controls__button--debug-colors"
-                              for="debug-colors">COLORS</label>
+                         <div class="dev-controls__toggles">
+                              <label class="dev-controls__button dev-controls__button--debug-grid"
+                                   for="debug-grid">GRID</label>
+                              <label class="dev-controls__button dev-controls__button--debug-colors"
+                                   for="debug-colors">COLORS</label>
+                              <label class="dev-controls__button dev-controls__button--debug-pre-bomb"
+                                   for="debug-pre-bomb">PRE-BOMB</label>
+                         </div>
                          <!-- Dev-only for now: kicks off the intro chain (see
                          scss/intro/_intro.scss). Becomes the real game's
                          start button later, once the title screen leads
@@ -1706,6 +1722,8 @@
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="19" for="position-20--from-19">▶</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="19" data-arrival="skip" for="position-21--from-19">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="20" for="position-21--from-20">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="20" for="position-19--from-20">◀</label>
@@ -1719,6 +1737,8 @@
                              data-position="21" data-arrival="post" for="position-30--from-21--post">▼</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="21" for="position-20--from-21">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="21" data-arrival="skip" for="position-19--from-21">◀</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="22" for="position-23--from-22">▶</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
