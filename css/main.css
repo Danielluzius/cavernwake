@@ -7933,7 +7933,6 @@ input {
 
 :is(#last-lever-socket-fitting,
 #last-lever-socket-fitted,
-#last-lever-socket-using,
 #lift-6-14-unlocked):checked ~ .game .inventory__slot--last-lever .inventory__icon {
   opacity: 0;
   pointer-events: none;
@@ -11073,6 +11072,108 @@ input {
   transition: opacity 0.15s ease, margin 0.4s calc(var(--walk-duration) * 1) ease-out, visibility 0s calc(var(--walk-duration) * 1);
 }
 
+@keyframes player-walk-from-21-to-23 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_004.png");
+  }
+}
+#position-23--from-21:checked ~ .game .world {
+  --world-offset: -1872px;
+  --world-offset-y: -1680px;
+  transition-duration: calc(var(--walk-duration) * 1);
+}
+
+#position-23--from-21:checked ~ .game .player {
+  transition-duration: calc(var(--walk-duration) * 1);
+}
+
+#position-23--from-21:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-walk-from-21-to-23 var(--walk-cycle-duration) steps(1, end) 2;
+}
+
+#last-lever-armed:not(:checked) ~ .game .direction-controls__button[data-arrival=skip-escape][data-position="21"] {
+  display: none;
+}
+
+#last-lever-armed:checked ~ .game .direction-controls__button--right[data-position="21"]:not([data-arrival=skip-escape]) {
+  display: none;
+}
+
+#last-lever-armed:checked ~ #collapse-bench-seen:checked ~ #position-23--from-21:checked ~ .game .direction-controls__button--up[data-position="23"] {
+  opacity: 0.4;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s 0s ease-out, margin 0.4s 0s ease-out, visibility 0s 0s;
+}
+#last-lever-armed:checked ~ #collapse-bench-seen:checked ~ #position-23--from-21:checked ~ .game .direction-controls__button--up[data-position="23"]:hover, #last-lever-armed:checked ~ #collapse-bench-seen:checked ~ #position-23--from-21:checked ~ .game .direction-controls__button--up[data-position="23"]:active {
+  opacity: 1;
+  transition: opacity 0.15s ease, margin 0.4s 0s ease-out, visibility 0s 0s;
+}
+
+@keyframes player-walk-from-6-to-4 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png");
+  }
+}
+#position-4--from-6:checked ~ .game .world {
+  --world-offset: -1008px;
+  --world-offset-y: -336px;
+  transition-duration: calc(var(--walk-duration) * 1);
+}
+
+#position-4--from-6:checked ~ .game .player {
+  transition-duration: calc(var(--walk-duration) * 1);
+}
+
+#position-4--from-6:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: player-walk-from-6-to-4 var(--walk-cycle-duration) steps(1, end) 2;
+}
+
+#lift-6-14-unlocked:not(:checked) ~ .game .direction-controls__button[data-arrival=skip-escape][data-position="6"] {
+  display: none;
+}
+
+#lift-6-14-unlocked:checked ~ .game .direction-controls__button--left[data-position="6"]:not([data-arrival]) {
+  display: none;
+}
+
+#lift-6-14-unlocked:checked ~ .game .direction-controls__button--right[data-position="4"] {
+  display: none;
+}
+
+#position-4--from-6:checked ~ .game .direction-controls__button--left[data-position="4"] {
+  opacity: 0.4;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.4s calc(var(--walk-duration) * 1) ease-out, margin 0.4s calc(var(--walk-duration) * 1) ease-out, visibility 0s calc(var(--walk-duration) * 1);
+}
+#position-4--from-6:checked ~ .game .direction-controls__button--left[data-position="4"]:hover, #position-4--from-6:checked ~ .game .direction-controls__button--left[data-position="4"]:active {
+  opacity: 1;
+  transition: opacity 0.15s ease, margin 0.4s calc(var(--walk-duration) * 1) ease-out, visibility 0s calc(var(--walk-duration) * 1);
+}
+
 .object--last-lever-socket,
 .object--last-lever-socket-fit,
 .object--last-lever-socket-pull {
@@ -11101,7 +11202,7 @@ input {
   pointer-events: none;
 }
 
-:is(#last-lever-socket-fitting, #last-lever-socket-fitted, #last-lever-socket-using, #lift-6-14-unlocked):checked ~ .game .object--last-lever-socket-art {
+:is(#last-lever-socket-fitting, #last-lever-socket-fitted, #lift-6-14-unlocked):checked ~ .game .object--last-lever-socket-art {
   background-image: url("../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png");
 }
 
@@ -11137,11 +11238,11 @@ input {
   --click-hint: 1;
 }
 
-:is(#last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .player__sprite {
+:is(#last-lever-socket-fitting):checked ~ .game .player__sprite {
   opacity: 0;
 }
 
-:is(#last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .player__action {
+:is(#last-lever-socket-fitting):checked ~ .game .player__action {
   opacity: 1;
 }
 
@@ -11150,16 +11251,35 @@ input {
   animation: player-item-pickup-right 0.6s steps(1, end);
 }
 
-#last-lever-socket-using:checked ~ .game .object--last-lever-socket-art {
+#lift-6-14-unlocked:checked ~ .game .object--last-lever-socket-art {
   animation: last-lever-socket-pull 0.6s steps(1, end);
 }
 
-#last-lever-socket-using:checked ~ .game .player__action {
+#lift-6-14-unlocked:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .player__action {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
-  animation: player-item-pickup-right 0.6s steps(1, end);
+  opacity: 1;
+  animation: player-item-pickup-right 0.6s steps(1, end), last-lever-action-hide 0s 0.6s forwards;
 }
 
-:is(#last-lever-socket-fitting, #last-lever-socket-using):checked ~ .game .direction-controls__button--edge[data-position] {
+#lift-6-14-unlocked:checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  animation: last-lever-sprite-after-pull 0.6s steps(1, end) forwards;
+}
+
+@keyframes last-lever-action-hide {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes last-lever-sprite-after-pull {
+  from, 99% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+:is(#last-lever-socket-fitting):checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
@@ -11198,20 +11318,24 @@ input {
   animation-delay: calc(0.6s + 0.75s);
 }
 
-#last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box {
+#lift-6-14-unlocked:checked ~ #last-lever-way-seen:not(:checked) ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
-#last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box.dialogue__box {
+#lift-6-14-unlocked:checked ~ #last-lever-way-seen:not(:checked) ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box.dialogue__box {
   transition: none;
   animation: dialogue-box-in 0.4s ease-out both;
   animation-delay: 0.6s;
 }
-#last-lever-socket-using:checked ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box .dialogue__button {
+#lift-6-14-unlocked:checked ~ #last-lever-way-seen:not(:checked) ~ .game .dialogue[data-step=last-lever-socket-confirm] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
   animation-delay: calc(0.6s + 0.75s);
+}
+
+#lift-6-14-unlocked:checked ~ #last-lever-way-seen:not(:checked):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
 }
 
 #last-lever-pickup:checked ~ .game .viewport,
@@ -11225,9 +11349,17 @@ input {
   animation: none;
 }
 
-#last-lever-armed:checked ~ .game {
-  --walk-cycle-duration: 0.4s;
-  --walk-duration: 0.8s;
+#lift-6-14-unlocked:not(:checked) ~ .game .direction-controls__button--left[data-position="15"] {
+  display: none;
+}
+
+#last-lever-armed:checked ~ .game .direction-controls__button--down[data-position="15"],
+#last-lever-armed:checked ~ .game .direction-controls__button--down[data-position="21"] {
+  display: none;
+}
+
+#last-lever-armed:checked ~ :is(#last-lever-socket-fitting, #last-lever-socket-fitted):checked ~ :is(#position-15, [id^=position-15--]):checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
 .object--waterfall-collapse {
@@ -11387,7 +11519,7 @@ input {
   opacity: 0;
 }
 
-#last-lever-armed:checked ~ #position-23--from-22:checked ~ .game .object--collapse-bench-rock {
+#last-lever-armed:checked ~ :is(#position-23--from-22, #position-23--from-21):checked ~ .game .object--collapse-bench-rock {
   animation: collapse-bench-rock-drop 0.6s ease-in both;
   animation-delay: var(--walk-duration);
 }
@@ -11420,7 +11552,7 @@ input {
 }
 .object--collapse-upper-rock {
   position: absolute;
-  left: 1248px;
+  left: 1536px;
   top: 864px;
   width: 288px;
   height: 288px;
@@ -11432,7 +11564,7 @@ input {
   opacity: 0;
 }
 
-#last-lever-armed:checked ~ #position-23--from-22:checked ~ .game .object--collapse-upper-rock {
+#last-lever-armed:checked ~ :is(#position-23--from-22, #position-23--from-21):checked ~ .game .object--collapse-upper-rock {
   animation: collapse-upper-rock-drop 0.6s ease-in both;
   animation-delay: var(--walk-duration);
 }
@@ -11467,22 +11599,26 @@ input {
   animation: player-walk-from-22-to-23 var(--walk-cycle-duration) steps(1, end) 2, collapse-bench-face-left 0s calc(var(--walk-duration) + 0.6s) forwards;
 }
 
-#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ #position-23--from-22:checked:checked ~ .game .direction-controls__button--edge[data-position] {
+#last-lever-armed:checked ~ #position-23--from-21:checked ~ .game .player__sprite {
+  animation: player-walk-from-21-to-23 var(--walk-cycle-duration) steps(1, end) 2, collapse-bench-face-left 0s calc(var(--walk-duration) + 0.6s) forwards;
+}
+
+#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ :is(#position-23--from-22, #position-23--from-21):checked:checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
 }
 
-#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ #position-23--from-22:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box {
+#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ :is(#position-23--from-22, #position-23--from-21):checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0s calc(calc(var(--walk-duration) + 0.6s) + 0.4s), visibility 0s calc(calc(var(--walk-duration) + 0.6s) + 0.4s);
 }
-#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ #position-23--from-22:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box.dialogue__box {
+#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ :is(#position-23--from-22, #position-23--from-21):checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box.dialogue__box {
   transition: none;
   animation: dialogue-box-in 0.4s ease-out both;
   animation-delay: calc(calc(var(--walk-duration) + 0.6s) + 0.4s);
 }
-#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ #position-23--from-22:checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box .dialogue__button {
+#last-lever-armed:checked ~ #collapse-bench-seen:not(:checked) ~ :is(#position-23--from-22, #position-23--from-21):checked ~ .game .dialogue[data-step=collapse-bench] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
   animation-delay: calc(calc(calc(var(--walk-duration) + 0.6s) + 0.4s) + 0.75s);
 }
@@ -12330,42 +12466,42 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-to-1:checked ~ .game .player {
-  transition-duration: 4s;
+  transition-duration: 2s;
 }
 
 @keyframes player-walk-outro-to-1 {
   0% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png");
   }
   25% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png");
   }
   50% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png");
   }
   75%, 100% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-left/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png");
   }
 }
 #lift-6-14-unlocked:checked ~ #position-3--from-4:checked ~ #outro-to-1:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/base/base-left.png");
-  animation: player-walk-outro-to-1 0.6s steps(1, end) 6.6666666667;
+  animation: player-walk-outro-to-1 0.6s steps(1, end) 3.3333333333;
 }
 
 #outro-to-1:checked ~ .game .dialogue[data-step=outro-end] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 4s, visibility 0s 4s;
+  transition: opacity 0s 2s, visibility 0s 2s;
 }
 #outro-to-1:checked ~ .game .dialogue[data-step=outro-end] .dialogue__box.dialogue__box {
   transition: none;
   animation: dialogue-box-in 0.4s ease-out both;
-  animation-delay: 4s;
+  animation-delay: 2s;
 }
 #outro-to-1:checked ~ .game .dialogue[data-step=outro-end] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(4s + 0.75s);
+  animation-delay: calc(2s + 0.75s);
 }
 
 #outro-fade:checked ~ .game .blackout {

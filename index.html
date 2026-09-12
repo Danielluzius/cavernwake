@@ -384,15 +384,16 @@
      <input type="radio" name="collapse-hint-step" id="collapse-hint-blocked" class="world-position-input" />
      <input type="radio" name="collapse-hint-step" id="collapse-hint-done" class="world-position-input" />
 
-     <!-- Final step keeps the id the lift system already reads, so it must
-         stay last: anything after it would uncheck it and raise the car. -->
+     <!-- Final radio keeps the id the lift system already reads, so it must
+         stay last in the group: anything after it would uncheck it and
+         raise the car. last-lever-way-seen is a checkbox after that. -->
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-idle" class="world-position-input"
           checked />
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-hint" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-fitting" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="last-lever-socket-fitted" class="world-position-input" />
-     <input type="radio" name="last-lever-socket-step" id="last-lever-socket-using" class="world-position-input" />
      <input type="radio" name="last-lever-socket-step" id="lift-6-14-unlocked" class="world-position-input" />
+     <input type="checkbox" id="last-lever-way-seen" class="world-position-input" />
 
      <!-- Inventory UI (see scss/components/_inventory.scss). Must sit before
          every #position-* radio so sibling ~ chains reach .game.
@@ -507,6 +508,7 @@
      <input type="radio" name="position" id="position-14--from-6--right" class="world-position-input" />
      <input type="radio" name="position" id="position-14--from-6--left" class="world-position-input" />
      <input type="radio" name="position" id="position-5--from-6" class="world-position-input" />
+     <input type="radio" name="position" id="position-4--from-6" class="world-position-input" />
      <input type="radio" name="position" id="position-8--from-7" class="world-position-input" />
      <input type="radio" name="position" id="position-16--from-8" class="world-position-input" />
      <input type="radio" name="position" id="position-7--from-8" class="world-position-input" />
@@ -544,6 +546,7 @@
      <!-- Second arrival for the same walk edge, used for every return AFTER
           the workbench interaction — see scss/world/_workbench.scss. -->
      <input type="radio" name="position" id="position-22--from-21--post" class="world-position-input" />
+     <input type="radio" name="position" id="position-23--from-21" class="world-position-input" />
      <input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
      <!-- Second arrival for the same ladder edge, used for every return AFTER
           the sickle interaction — see scss/world/_obstacles.scss. -->
@@ -627,7 +630,8 @@
      <input type="radio" name="intro" id="intro-11" class="world-position-input" />
 
      <!-- Outro / ending sequence (see scss/outro/_outro.scss) — gated on
-         #lift-6-14-unlocked and the player walking 4 -> 3. -->
+         #lift-6-14-unlocked and the player walking 4 -> 3 or the escape
+         skip 6 -> 4, then the last click 4 -> 3. -->
      <input type="radio" name="outro" id="outro-idle" class="world-position-input" checked />
      <input type="radio" name="outro" id="outro-to-1" class="world-position-input" />
      <input type="radio" name="outro" id="outro-end" class="world-position-input" />
@@ -812,7 +816,7 @@
                               <div class="object object--last-lever-socket-art"></div>
                               <label class="object object--last-lever-socket" for="socket-spark-seen"></label>
                               <label class="object object--last-lever-socket-fit" for="last-lever-socket-fitting"></label>
-                              <label class="object object--last-lever-socket-pull" for="last-lever-socket-using"></label>
+                              <label class="object object--last-lever-socket-pull" for="lift-6-14-unlocked"></label>
                          </div>
 
                          <div class="player">
@@ -1582,12 +1586,12 @@
                             <label class="dialogue__button" aria-label="Weiter" for="last-lever-socket-fitted"></label>
                         </div>
                     </div>
-                    <!-- This WEITER is what actually repairs the lift: #lift-6-14-unlocked is the
-                         socket group's final step, and the car starts coming down on it. -->
+                    <!-- Pull already checks #lift-6-14-unlocked (car starts immediately).
+                         This line plays over the descent; WEITER only dismisses it. -->
                     <div class="dialogue" data-step="last-lever-socket-confirm">
                         <div class="dialogue__box">
                             <p class="dialogue__text">last-lever-socket-confirm</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="lift-6-14-unlocked"></label>
+                            <label class="dialogue__button" aria-label="Weiter" for="last-lever-way-seen"></label>
                         </div>
                     </div>
                     <!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes start
@@ -1672,6 +1676,8 @@
                              data-position="6" data-facing="left" for="position-14--from-6--left">▼</label>
                          <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
                              data-position="6" for="position-5--from-6">◀</label>
+                         <label class="direction-controls__button direction-controls__button--left direction-controls__button--edge"
+                             data-position="6" data-arrival="skip-escape" for="position-4--from-6">◀</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="7" for="position-8--from-7">▶</label>
                          <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
@@ -1730,6 +1736,8 @@
                              data-position="21" for="position-22--from-21">▶</label>
                          <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
                              data-position="21" data-arrival="post" for="position-22--from-21--post">▶</label>
+                         <label class="direction-controls__button direction-controls__button--right direction-controls__button--edge"
+                             data-position="21" data-arrival="skip-escape" for="position-23--from-21">▶</label>
                          <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
                              data-position="21" for="position-30--from-21">▼</label>
                          <label class="direction-controls__button direction-controls__button--down direction-controls__button--edge"
