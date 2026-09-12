@@ -7587,7 +7587,7 @@ input {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 3px;
-  row-gap: 6px;
+  row-gap: 0;
   grid-template-rows: repeat(2, calc((100% - 15px) / 2));
   align-content: center;
   align-items: stretch;
@@ -9153,26 +9153,26 @@ input {
 
 .object--bomb-shell {
   position: absolute;
-  left: 768px;
-  top: 948px;
-  width: 96px;
-  height: 96px;
+  left: 783.84px;
+  top: 963.84px;
+  width: 64.32px;
+  height: 64.32px;
   background-image: url("../assets/objects/inventory/bomb-shell.png");
-  background-size: 96px 96px;
+  background-size: 64.32px 64.32px;
   background-position: 0px 0px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
 }
 
 #vine12-done:checked ~ #bomb-shell-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--bomb-shell {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
   --click-hint: 1;
 }
 
@@ -9239,26 +9239,26 @@ input {
 
 .object--bomb-powder {
   position: absolute;
-  left: 2892px;
-  top: 372px;
-  width: 96px;
-  height: 96px;
+  left: 2907.84px;
+  top: 387.84px;
+  width: 64.32px;
+  height: 64.32px;
   background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
-  background-size: 96px 96px;
+  background-size: 64.32px 64.32px;
   background-position: 0px 0px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
 }
 
 #shovel-armed:checked ~ #bomb-powder-idle:checked ~ :is(#position-9, [id^=position-9--]):checked ~ .game .object--bomb-powder {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
   --click-hint: 1;
 }
 
@@ -9325,26 +9325,26 @@ input {
 
 .object--bomb-fuse {
   position: absolute;
-  left: 3072px;
-  top: 960px;
-  width: 96px;
-  height: 96px;
+  left: 3087.84px;
+  top: 975.84px;
+  width: 64.32px;
+  height: 64.32px;
   background-image: url("../assets/objects/inventory/bomb-fuse.png");
-  background-size: 96px 96px;
+  background-size: 64.32px 64.32px;
   background-position: 0px 0px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
 }
 
 #bomb-fuse-idle:checked ~ :is(#position-18, [id^=position-18--]):checked ~ .game .object--bomb-fuse {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 40.5px;
-  --click-hint-left: 40.5px;
+  --click-hint-top: 24.66px;
+  --click-hint-left: 24.66px;
   --click-hint: 1;
 }
 
@@ -9411,26 +9411,26 @@ input {
 
 .object--last-lever {
   position: absolute;
-  left: 1953.6px;
-  top: 2328px;
-  width: 52.8px;
-  height: 57.6px;
+  left: 1929.6px;
+  top: 2313.6px;
+  width: 76.8px;
+  height: 76.8px;
   background-image: url("../assets/objects/inventory/last-lever-item.png");
-  background-size: 96px 96px;
-  background-position: -33.6px -24px;
+  background-size: 76.8px 76.8px;
+  background-position: 0px 0px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  --click-hint-top: 21.3px;
-  --click-hint-left: 18.9px;
+  --click-hint-top: 30.9px;
+  --click-hint-left: 30.9px;
 }
 
 #last-lever-idle:checked ~ :is(#position-32, [id^=position-32--]):checked ~ .game .object--last-lever {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 21.3px;
-  --click-hint-left: 18.9px;
+  --click-hint-top: 30.9px;
+  --click-hint-left: 30.9px;
   --click-hint: 1;
 }
 
@@ -9497,6 +9497,13 @@ input {
 
 :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .object--last-lever {
   background-image: none;
+}
+
+.object--last-lever {
+  background-size: contain;
+  background-position: center;
+  transform: rotate(22deg);
+  transform-origin: center center;
 }
 
 #last-lever-notice:checked ~ .game .player__sprite {
@@ -10099,10 +10106,10 @@ input {
 
 .object--wall-bomb {
   position: absolute;
-  left: 1632px;
-  top: 2352px;
-  width: 96px;
-  height: 96px;
+  left: 1647.84px;
+  top: 2367.84px;
+  width: 64.32px;
+  height: 64.32px;
   background-image: url("../assets/objects/inventory/bomb.png");
   background-size: contain;
   background-repeat: no-repeat;
