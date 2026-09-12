@@ -7580,14 +7580,16 @@ input {
 
 .inventory__grid {
   position: absolute;
-  left: 11%;
-  width: 58%;
-  top: 40%;
+  left: 28%;
+  width: 44%;
+  top: 42%;
   height: 50%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 6px;
+  column-gap: 3px;
+  row-gap: 6px;
+  grid-template-rows: repeat(2, calc((100% - 15px) / 2));
+  align-content: center;
   align-items: stretch;
   justify-items: stretch;
 }
@@ -7603,6 +7605,36 @@ input {
   outline: none;
 }
 
+.inventory__slot--sickle {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.inventory__slot--pickaxe {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.inventory__slot--shovel {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.inventory__slot--bomb-shell {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.inventory__slot--bomb-powder {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.inventory__slot--bomb-fuse {
+  grid-column: 3;
+  grid-row: 2;
+}
+
 .inventory__slot--bomb {
   grid-column: 1/-1;
   grid-row: 2;
@@ -7610,14 +7642,14 @@ input {
   height: 118%;
   justify-self: center;
   align-self: center;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
 }
 
 .inventory__slot--last-lever {
   grid-column: 2;
   grid-row: 2;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
 }
 
