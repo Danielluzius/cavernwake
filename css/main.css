@@ -1549,6 +1549,11 @@ input {
   margin: 18px auto 0;
 }
 
+.dialogue--caption-silent .dialogue__box {
+  background: none;
+  padding: 0;
+}
+
 @keyframes dialogue-arrow-in {
   from {
     opacity: 0;
