@@ -7762,6 +7762,7 @@ input {
   height: 100%;
   min-width: 0;
   min-height: 0;
+  overflow: visible;
   background: none;
   border: 0;
   outline: none;
@@ -7852,19 +7853,25 @@ input {
 }
 
 .inventory__caption {
-  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
-  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
+  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
   position: absolute;
   left: 50%;
   bottom: calc(100% + 6px);
   z-index: 2;
   transform: translateX(-50%);
+  box-sizing: border-box;
+  overflow: visible;
   padding: 9px 15px 21px;
+  border: 0;
+  background: #ebcba0;
   color: #2a1810;
+  font-family: inherit;
   font-size: 24px;
   line-height: 1.25;
+  text-align: center;
   white-space: nowrap;
   -webkit-font-smoothing: none;
+  font-smooth: never;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
