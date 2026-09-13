@@ -446,12 +446,10 @@
          #inventory-open is the tutorial overlay (intro-10). After the lamp
          that checkbox may stay on; #inventory-open-play is the real toggle
          from intro-11 onward so reopening inventory cannot replay dialogue.
-         #intro-explore-pending starts checked; the last lamp WEITER
-         unchecks it once. #intro-shake-line is the second lamp line. -->
+         Last intro WEITER checks #position-14 so the graph takes over. -->
      <input type="checkbox" id="inventory-open" class="world-position-input" />
      <input type="checkbox" id="inventory-open-play" class="world-position-input" />
      <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
-     <input type="checkbox" id="intro-shake-line" class="world-position-input" />
      <input type="checkbox" id="lamp-on" class="world-position-input" />
 
      <!-- Settings overlay (scss/components/_settings.scss). Same sibling
@@ -673,10 +671,11 @@
      <input type="radio" name="intro" id="intro-fade" class="world-position-input" />
      <input type="radio" name="intro" id="intro-1" class="world-position-input" />
      <input type="radio" name="intro" id="intro-2" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-lantern" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-home" class="world-position-input" />
      <input type="radio" name="intro" id="intro-3" class="world-position-input" />
      <input type="radio" name="intro" id="intro-anyway" class="world-position-input" />
      <input type="radio" name="intro" id="intro-4" class="world-position-input" />
-     <input type="radio" name="intro" id="intro-look" class="world-position-input" />
      <input type="radio" name="intro" id="intro-sit" class="world-position-input" />
      <input type="radio" name="intro" id="intro-fall" class="world-position-input" />
      <input type="radio" name="intro" id="intro-dark-hold" class="world-position-input" />
@@ -689,6 +688,9 @@
      <input type="radio" name="intro" id="intro-9" class="world-position-input" />
      <input type="radio" name="intro" id="intro-10" class="world-position-input" />
      <input type="radio" name="intro" id="intro-11" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-12" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-13" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-14" class="world-position-input" />
 
      <!-- Outro / ending sequence (see scss/outro/_outro.scss) — gated on
          #lift-6-14-unlocked and 4 -> 3 after the bridge stumble. -->
@@ -737,18 +739,48 @@
                     </div>
                     <div class="title-screen__legal">
                          <div class="title-screen__legal-panel">
+                              <label
+                                   class="title-screen__legal-close"
+                                   for="title-imprint-open"
+                                   aria-label="Close"
+                              >
+                                   <span class="i18n i18n--de">Schließen</span>
+                                   <span class="i18n i18n--en">Close</span>
+                              </label>
                               <h2 class="title-screen__legal-title">
                                    <span class="i18n i18n--de">Impressum</span>
                                    <span class="i18n i18n--en">Imprint</span>
                               </h2>
-                              <p class="title-screen__legal-copy">
-                                   <span class="i18n i18n--de">Platzhalter. Name, Anschrift und Kontakt folgen.</span>
-                                   <span class="i18n i18n--en">Placeholder. Name, address and contact to follow.</span>
-                              </p>
-                              <label class="title-screen__button" for="title-imprint-open">
-                                   <span class="i18n i18n--de">Zurück</span>
-                                   <span class="i18n i18n--en">Back</span>
-                              </label>
+                              <div class="title-screen__legal-copy">
+                                   <div class="imprint i18n i18n--de">
+                                        <p>
+                                             Daniel Luzius<br />
+                                             Hauptstraße 125<br />
+                                             63500 Seligenstadt<br />
+                                             Deutschland<br />
+                                             <a href="mailto:kontakt@danielluzius.dev">kontakt@danielluzius.dev</a>
+                                        </p>
+                                        <p class="imprint__meta">§ 5 DDG · § 18 Abs. 2 MStV</p>
+                                        <p>
+                                             Datenschutz: keine Cookies, kein Tracking, kein Verkauf.
+                                             Beim Aufruf kann der Hoster die IP-Adresse technisch speichern.
+                                        </p>
+                                   </div>
+                                   <div class="imprint i18n i18n--en">
+                                        <p>
+                                             Daniel Luzius<br />
+                                             Hauptstraße 125<br />
+                                             63500 Seligenstadt<br />
+                                             Germany<br />
+                                             <a href="mailto:kontakt@danielluzius.dev">kontakt@danielluzius.dev</a>
+                                        </p>
+                                        <p class="imprint__meta">§ 5 DDG · § 18 (2) MStV</p>
+                                        <p>
+                                             Privacy: no cookies, no tracking, nothing is sold.
+                                             The host may store the IP address as a technical log when the page is loaded.
+                                        </p>
+                                   </div>
+                              </div>
                          </div>
                     </div>
                </div>
@@ -1107,7 +1139,7 @@
                          .direction-controls so they sit above the bag. -->
                     <!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
                          of the vision-field square; the open bag grows left beside it. Close
-                         via the right-pointing back arrow on the icon slot. World click (hit)
+                         via the X on the icon slot. World click (hit)
                          resets the item-quote radio. Each slot has two labels (a/b) so the
                          same item can be inspected again without clicking the world first.
                          Use-layers sit on top during obstacle -choosing: the matching tool
@@ -1286,7 +1318,7 @@
                     </div>
                     <!-- Settings overlay in .ui. Toggle and back sit in the top-right corner
                          of the vision-field square; the panel opens right of the field. Close
-                         via the left-pointing back arrow on the icon slot. -->
+                         via the X on the icon slot. -->
                     <div class="settings">
                          <div class="settings__hit"></div>
 
@@ -1327,15 +1359,17 @@
                                         </div>
                                    </div>
 
-                                   <label class="settings__row settings__row--link" for="settings-page-imprint">
-                                        <span class="i18n i18n--de">Impressum</span>
-                                        <span class="i18n i18n--en">Imprint</span>
-                                   </label>
+                                   <div class="settings__footer">
+                                        <label class="settings__row settings__row--link" for="settings-page-imprint">
+                                             <span class="i18n i18n--de">Impressum</span>
+                                             <span class="i18n i18n--en">Imprint</span>
+                                        </label>
 
-                                   <label class="settings__row settings__row--link" for="settings-page-restart">
-                                        <span class="i18n i18n--de">Neustart</span>
-                                        <span class="i18n i18n--en">Restart</span>
-                                   </label>
+                                        <label class="settings__row settings__row--link" for="settings-page-restart">
+                                             <span class="i18n i18n--de">Neustart</span>
+                                             <span class="i18n i18n--en">Restart</span>
+                                        </label>
+                                   </div>
                               </div>
 
                               <div class="settings__page settings__page--imprint">
@@ -1343,10 +1377,36 @@
                                         <span class="i18n i18n--de">Impressum</span>
                                         <span class="i18n i18n--en">Imprint</span>
                                    </h2>
-                                   <p class="settings__copy">
-                                        <span class="i18n i18n--de">Platzhalter. Name, Anschrift und Kontakt folgen.</span>
-                                        <span class="i18n i18n--en">Placeholder. Name, address and contact to follow.</span>
-                                   </p>
+                                   <div class="settings__copy settings__copy--imprint">
+                                        <div class="imprint i18n i18n--de">
+                                             <p>
+                                                  Daniel Luzius<br />
+                                                  Hauptstraße 125<br />
+                                                  63500 Seligenstadt<br />
+                                                  Deutschland<br />
+                                                  <a href="mailto:kontakt@danielluzius.dev">kontakt@danielluzius.dev</a>
+                                             </p>
+                                             <p class="imprint__meta">§ 5 DDG · § 18 Abs. 2 MStV</p>
+                                             <p>
+                                                  Datenschutz: keine Cookies, kein Tracking, kein Verkauf.
+                                                  Beim Aufruf kann der Hoster die IP-Adresse technisch speichern.
+                                             </p>
+                                        </div>
+                                        <div class="imprint i18n i18n--en">
+                                             <p>
+                                                  Daniel Luzius<br />
+                                                  Hauptstraße 125<br />
+                                                  63500 Seligenstadt<br />
+                                                  Germany<br />
+                                                  <a href="mailto:kontakt@danielluzius.dev">kontakt@danielluzius.dev</a>
+                                             </p>
+                                             <p class="imprint__meta">§ 5 DDG · § 18 (2) MStV</p>
+                                             <p>
+                                                  Privacy: no cookies, no tracking, nothing is sold.
+                                                  The host may store the IP address as a technical log when the page is loaded.
+                                             </p>
+                                        </div>
+                                   </div>
                                    <label class="settings__row settings__row--link" for="settings-page-menu">
                                         <span class="i18n i18n--de">Zurück</span>
                                         <span class="i18n i18n--en">Back</span>
@@ -1381,53 +1441,58 @@
                                          scss/intro/_intro.scss for which #intro-N reveals
                                          which box and for how long. EN copy first; DE later
                                          via .i18n spans like the rest of the UI.
-                                         .dialogue--caption = short scene card (black, fall,
-                                         time skip). Fade is caption-silent: WEITER only.
-                                         Player speech starts on intro-1 off-screen.
-                                         default .dialogue = player speech (bubble + tail). -->
+                                         .dialogue--caption = scene cards (opening + fall /
+                                         time skip auto-play). Player speech after Start
+                                         lives on #intro-dark; Argh lives on #intro-fall.
+                                         default .dialogue = player speech. -->
                     <div class="dialogue dialogue--caption" data-intro-step="dark">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">A dark cave.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-fade"></label>
+                            <p class="dialogue__text">A new adventure begins</p>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--caption dialogue--caption-silent" data-intro-step="fade">
+                    <div class="dialogue dialogue--caption" data-intro-step="fade">
                         <div class="dialogue__box">
-                            <label class="dialogue__button" aria-label="Continue" for="intro-1"></label>
+                            <p class="dialogue__text">The cave entrance</p>
                         </div>
                     </div>
                     <div class="dialogue dialogue--center" data-intro-step="1">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Last one on the list.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-2"></label>
+                            <p class="dialogue__text">Last cave exploration for today.</p>
+                            <label class="dialogue__button dialogue__button--teach" aria-label="Continue" for="intro-2"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="2">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Looks easy enough.</p>
+                            <p class="dialogue__text">Pretty dark in here.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-lantern"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="lantern">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Good thing I brought a lantern.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-home"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="home">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Just this one and then back home.</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-3"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="3">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">That bridge, though.</p>
+                            <p class="dialogue__text">A bridge?</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-anyway"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="anyway">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Only way through.</p>
+                            <p class="dialogue__text">I hope it's actually sturdy.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="4">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Whoa.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-look"></label>
-                        </div>
-                    </div>
-                    <div class="dialogue" data-intro-step="look">
-                        <div class="dialogue__box">
-                            <p class="dialogue__text">The whole cave just moved.</p>
+                            <p class="dialogue__text">What the…?</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-sit"></label>
                         </div>
                     </div>
@@ -1439,43 +1504,35 @@
                     </div>
                     <div class="dialogue dialogue--caption" data-intro-step="fall">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Over the edge.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-dark-hold"></label>
+                            <p class="dialogue__text">Into the unknown...</p>
                         </div>
                     </div>
                     <div class="dialogue dialogue--caption" data-intro-step="dark-hold">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Some time later.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-5"></label>
+                            <p class="dialogue__text">Some time later</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="5">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Still breathing.</p>
+                            <p class="dialogue__text">Argh.</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-6"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="6">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Dark, though.</p>
+                            <p class="dialogue__text">Dark down here.</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-7"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="7">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Of course I fall off a stupid bridge like that.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-pack"></label>
-                        </div>
-                    </div>
-                    <div class="dialogue" data-intro-step="pack">
-                        <div class="dialogue__box">
-                            <p class="dialogue__text">Pack's gone. Came off on the way down.</p>
+                            <p class="dialogue__text">My pack must have come off on the way down.</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-8"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="8">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Same drop. Can't be far.</p>
+                            <p class="dialogue__text">It's got to be around here somewhere.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="9">
@@ -1485,19 +1542,31 @@
                     </div>
                     <div class="dialogue" data-intro-step="10">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Lamp first.</p>
+                            <p class="dialogue__text">First I need some light.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="11">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">I need a way out.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-shake-line"></label>
+                            <p class="dialogue__text">Ah. That's better.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-12"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="12">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">That won't be the last shake.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="intro-explore-pending"></label>
+                            <p class="dialogue__text">No climbing back that way.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-13"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="13">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Is that an earthquake?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-14"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="14">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">I need to find a way out — fast.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="position-14"></label>
                         </div>
                     </div>
 
@@ -1874,29 +1943,29 @@
                          <label class="inventory__toggle inventory__toggle--play"
                               for="inventory-open-play" aria-label="Inventar"></label>
                          <label class="inventory__back inventory__back--tutorial"
-                              for="inventory-open" aria-label="Zurück"></label>
+                              for="inventory-open" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--play"
-                              for="inventory-open-play" aria-label="Zurück"></label>
+                              for="inventory-open-play" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--vine24"
-                              for="vine24-idle" aria-label="Zurück"></label>
+                              for="vine24-idle" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--vine12"
-                              for="vine12-idle" aria-label="Zurück"></label>
+                              for="vine12-idle" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--vine30"
-                              for="vine30-armed" aria-label="Zurück"></label>
+                              for="vine30-armed" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--rock"
-                              for="rock-idle" aria-label="Zurück"></label>
+                              for="rock-idle" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--mud"
-                              for="mud-idle" aria-label="Zurück"></label>
+                              for="mud-idle" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--wall"
-                              for="wall-idle" aria-label="Zurück"></label>
+                              for="wall-idle" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--wall-fuse"
-                              for="wall-placed" aria-label="Zurück"></label>
+                              for="wall-placed" aria-label="Schließen"></label>
                          <label class="inventory__back inventory__back--workbench"
-                              for="workbench-idle" aria-label="Zurück"></label>
+                              for="workbench-idle" aria-label="Schließen"></label>
                          <label class="settings__toggle" for="settings-open"
                               aria-label="Einstellungen"></label>
                          <label class="settings__back" for="settings-open"
-                              aria-label="Zurück"></label>
+                              aria-label="Schließen"></label>
                          <div class="direction-controls__button direction-controls__button--up">▲</div>
                          <div class="direction-controls__button direction-controls__button--left">◀</div>
                          <div class="direction-controls__button direction-controls__button--right">▶</div>
