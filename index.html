@@ -196,6 +196,9 @@
          (.scene--intro), checked reveals the real game (.scene--game) —
          see components/_title-screen.scss and game/_game.scss. -->
      <input type="checkbox" id="title-dismissed" class="world-position-input" />
+     <!-- Imprint overlay on the title screen (independent of in-game
+         settings). Same checkbox opens and closes it. -->
+     <input type="checkbox" id="title-imprint-open" class="world-position-input" />
 
      <!-- Dev-only, independent of everything else: toggles the visual
          debug grid/colors overlays (see scss/world/_room.scss) and the
@@ -446,12 +449,13 @@
 
      <!-- Settings overlay (scss/components/_settings.scss). Same sibling
          position as inventory so ~ chains reach .game. Hints default on,
-         language default DE, panel starts on the menu page. -->
+         language default EN (title-screen toggle), panel starts on the
+         menu page. -->
      <input type="checkbox" id="settings-open" class="world-position-input" />
      <input type="radio" name="hints-vis" id="hints-on" class="world-position-input" checked />
      <input type="radio" name="hints-vis" id="hints-off" class="world-position-input" />
-     <input type="radio" name="ui-lang" id="lang-de" class="world-position-input" checked />
-     <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" />
+     <input type="radio" name="ui-lang" id="lang-de" class="world-position-input" />
+     <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" checked />
      <input type="radio" name="settings-page" id="settings-page-menu" class="world-position-input" checked />
      <input type="radio" name="settings-page" id="settings-page-imprint" class="world-position-input" />
      <input type="radio" name="settings-page" id="settings-page-restart" class="world-position-input" />
@@ -684,23 +688,57 @@
 
      <main class="game" id="game">
 
-          <!-- Title screen (scss/components/_title-screen.scss): title
-             emerges, then credit, then the preload bar + walker who
-             trips at the end. WEITER is a test skip — later the overlay
-             fades into the intro with no click. -->
+          <!-- Title screen: after the bar fills, Deutsch?/English? +
+             Impressum fade in between credit and bar. Picking a language
+             crossfades those pads to Start in the same slot. Corner
+             WEITER is a debug skip (#title-dismissed) — remove later. -->
           <section class="scene scene--intro">
                <div class="title-screen">
-                    <h1 class="title-screen__title">CAVERNWAKE</h1>
-                    <p class="title-screen__credit">made by Daniel Luzius</p>
-                    <div class="title-screen__load">
-                         <div class="title-screen__walker-shift">
-                              <div class="title-screen__walker"></div>
+                    <label class="title-screen__skip" for="title-dismissed">WEITER</label>
+                    <div class="title-screen__brand">
+                         <div class="title-screen__masthead">
+                              <h1 class="title-screen__title">CAVERNWAKE</h1>
+                              <p class="title-screen__credit">made by Daniel Luzius</p>
+                              <div class="title-screen__choices">
+                                   <div class="title-screen__cta">
+                                        <label class="title-screen__button title-screen__lang" for="lang-en">English</label>
+                                        <label class="title-screen__button title-screen__start" for="intro-dark">
+                                             <span class="i18n i18n--de">Start</span>
+                                             <span class="i18n i18n--en">Start</span>
+                                        </label>
+                                        <label class="title-screen__button title-screen__lang" for="lang-de">Deutsch</label>
+                                   </div>
+                                   <label class="title-screen__legal-link" for="title-imprint-open">
+                                        <span class="i18n i18n--de">Impressum</span>
+                                        <span class="i18n i18n--en">Imprint</span>
+                                   </label>
+                              </div>
                          </div>
-                         <div class="title-screen__loading-bar">
-                              <div class="title-screen__loading-bar-fill"></div>
+                         <div class="title-screen__load">
+                              <div class="title-screen__walker-shift">
+                                   <div class="title-screen__walker"></div>
+                              </div>
+                              <div class="title-screen__loading-bar">
+                                   <div class="title-screen__loading-bar-fill"></div>
+                              </div>
                          </div>
                     </div>
-                    <label class="title-screen__button" for="title-dismissed">WEITER</label>
+                    <div class="title-screen__legal">
+                         <div class="title-screen__legal-panel">
+                              <h2 class="title-screen__legal-title">
+                                   <span class="i18n i18n--de">Impressum</span>
+                                   <span class="i18n i18n--en">Imprint</span>
+                              </h2>
+                              <p class="title-screen__legal-copy">
+                                   <span class="i18n i18n--de">Platzhalter. Name, Anschrift und Kontakt folgen.</span>
+                                   <span class="i18n i18n--en">Placeholder. Name, address and contact to follow.</span>
+                              </p>
+                              <label class="title-screen__button" for="title-imprint-open">
+                                   <span class="i18n i18n--de">Zurück</span>
+                                   <span class="i18n i18n--en">Back</span>
+                              </label>
+                         </div>
+                    </div>
                </div>
           </section>
 
@@ -755,7 +793,7 @@
                          </div>
 
                          <div class="world-layer world-layer--objects">
-                              <!-- Intro backpack pickup (col 17 / row 10.5,
+                              <!-- Intro backpack pickup (col 17 / row 10.625,
                              one tile right of node 14), see
                              scss/intro/_intro.scss. -->
                               <label class="story-object story-object--backpack" for="intro-10"></label>
@@ -1324,14 +1362,16 @@
                     </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
                                          scss/intro/_intro.scss for which #intro-N reveals
-                                         which box and for how long. Placeholder copy only. -->
-                    <div class="dialogue dialogue--center" data-intro-step="dark">
+                                         which box and for how long. Placeholder copy only.
+                                         .dialogue--caption = scene card (blackout / time);
+                                         default .dialogue = player speech (bubble + tail). -->
+                    <div class="dialogue dialogue--caption" data-intro-step="dark">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=dark</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-fade"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--center" data-intro-step="fade">
+                    <div class="dialogue dialogue--caption" data-intro-step="fade">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=fade</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-1"></label>
@@ -1355,25 +1395,25 @@
                             <label class="dialogue__button" aria-label="Weiter" for="intro-fall"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--center" data-intro-step="fall">
+                    <div class="dialogue dialogue--caption" data-intro-step="fall">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=fall</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-dark-hold"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--center" data-intro-step="dark-hold">
+                    <div class="dialogue dialogue--caption" data-intro-step="dark-hold">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=dark-hold</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-5"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--center" data-intro-step="5">
+                    <div class="dialogue" data-intro-step="5">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=5</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-6"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--center" data-intro-step="6">
+                    <div class="dialogue" data-intro-step="6">
                         <div class="dialogue__box">
                             <p class="dialogue__text">step=6</p>
                             <label class="dialogue__button" aria-label="Weiter" for="intro-7"></label>
