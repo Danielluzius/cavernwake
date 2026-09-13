@@ -82,7 +82,7 @@ input {
   display: none;
 }
 
-:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .scene--intro {
+:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .scene--intro {
   pointer-events: none;
 }
 
@@ -90,7 +90,7 @@ input {
   display: block;
 }
 
-:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .scene--game {
+:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .scene--game {
   display: block;
   opacity: 0;
   animation: title-scene-in 0.8s ease-out 2s both;
@@ -139,7 +139,7 @@ input {
   animation: none;
 }
 
-#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .vision-field {
+#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .vision-field {
   width: 640px;
   height: 640px;
   margin-top: 0px;
@@ -1336,7 +1336,7 @@ input {
   display: block;
 }
 
-#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .debug-grid-map {
+#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .debug-grid-map {
   display: none;
 }
 
@@ -1527,53 +1527,26 @@ input {
 .dialogue--caption .dialogue__box {
   width: auto;
   max-width: 480px;
-  padding: 9px 15px 0;
+  padding: 24px 36px 12px;
   margin-left: 0;
   transform: none;
-  background: none;
+  background: radial-gradient(ellipse 62% 58% at 50% 48%, rgba(5, 4, 10, 0.88) 0%, rgba(5, 4, 10, 0.78) 55%, rgba(5, 4, 10, 0) 100%);
   box-shadow: none;
   transition: opacity 0.4s ease-in, visibility 0s 0.4s;
 }
 .dialogue--caption .dialogue__text {
   color: #ebcba0;
-  letter-spacing: 0.06em;
-  text-shadow: 3px 0 0 #010000, -3px 0 0 #010000, 0 3px 0 #010000, 0 -3px 0 #010000;
-}
-.dialogue--caption .dialogue__text::before, .dialogue--caption .dialogue__text::after {
-  content: "";
-  display: block;
-  width: 40%;
-  height: 3px;
-  margin: 12px auto;
-  background: #ebcba0;
-  box-shadow: 3px 0 0 #010000, -3px 0 0 #010000, 0 3px 0 #010000, 0 -3px 0 #010000;
-}
-.dialogue--caption .dialogue__text::after {
-  margin-bottom: 6px;
+  font-size: 36px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1.4;
+  text-shadow: 3px 0 0 #010000, -3px 0 0 #010000, 0 3px 0 #010000, 0 -3px 0 #010000, 0 6px 0 #ca946e;
 }
 .dialogue--caption .dialogue__button {
   position: relative;
   right: auto;
   bottom: auto;
-  margin: 0 auto;
-  background: transparent;
-  box-shadow: none;
-}
-.dialogue--caption .dialogue__button::after {
-  border-top-color: #2f6b32;
-  border-right-color: #2f6b32;
-}
-.dialogue--caption .dialogue__button:hover, .dialogue--caption .dialogue__button:active, .dialogue--caption .dialogue__button:hover:active {
-  background: transparent;
-  box-shadow: none;
-  transform: none;
-}
-.dialogue--caption .dialogue__button:hover::after {
-  border-top-color: #3a8240;
-  border-right-color: #3a8240;
-}
-.dialogue--caption .dialogue__button:active {
-  transform: translateY(3px);
+  margin: 18px auto 0;
 }
 
 @keyframes dialogue-arrow-in {
@@ -7151,7 +7124,7 @@ input {
   display: grid;
 }
 
-:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .title-screen {
+:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .title-screen {
   pointer-events: none;
   animation: title-overlay-out 2s ease-out forwards;
 }
@@ -7568,12 +7541,17 @@ input {
 #position-1:checked ~ #intro-1:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-2:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-3:checked ~ .game .inventory__toggle--play,
+#position-1:checked ~ #intro-anyway:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-4:checked ~ .game .inventory__toggle--play,
+#position-1:checked ~ #intro-look:checked ~ .game .inventory__toggle--play,
+#position-1:checked ~ #intro-sit:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-fall:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-5:checked ~ .game .inventory__toggle--play,
+#position-1:checked ~ #intro-breathe:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-6:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-7:checked ~ .game .inventory__toggle--play,
+#position-1:checked ~ #intro-pack:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-8:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-9:checked ~ .game .inventory__toggle--play,
 #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--play {
@@ -8029,12 +8007,17 @@ input {
 #position-1:checked ~ #intro-1:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-2:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-3:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-anyway:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-4:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-look:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-sit:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-fall:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-5:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-breathe:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-6:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-7:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-pack:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-8:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-9:checked ~ .game .inventory__slot--lamp .inventory__icon {
   opacity: 0;
@@ -8442,7 +8425,7 @@ input {
 }
 
 #title-dismissed:checked ~ .game .settings__toggle,
-:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .settings__toggle {
+:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .settings__toggle {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -8450,7 +8433,7 @@ input {
 
 #title-dismissed:checked ~ #settings-open:checked ~ .game .settings__toggle,
 #title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings__toggle,
-#settings-open:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-4, #intro-fall, #intro-dark-hold, #intro-5, #intro-6, #intro-7, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .settings__toggle,
+#settings-open:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-3, #intro-anyway, #intro-4, #intro-look, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11):checked ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
 #inventory-open-play:checked ~ .game .settings__toggle {
   opacity: 0;
@@ -8506,12 +8489,12 @@ input {
 }
 
 .settings__body {
-  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
-  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
+  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
   box-sizing: border-box;
+  background: #ebcba0;
   width: 100%;
   height: 100%;
-  padding: 18px 30px 42px;
+  padding: 18px 30px;
   color: #2a1810;
   font-size: 24px;
   line-height: 1.25;
@@ -8585,7 +8568,7 @@ input {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 18px;
   height: 100%;
 }
 
@@ -8596,7 +8579,7 @@ input {
 }
 
 .settings__title {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: 24px;
   font-weight: 400;
   text-align: center;
@@ -8610,28 +8593,43 @@ input {
 }
 
 .settings__row {
-  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
-  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   margin: 0;
-  padding: 9px 15px 21px;
+  padding: 0 6px;
   cursor: default;
 }
 
 .settings__row--link {
-  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 6px 15px;
+  border: 0;
+  border-radius: 0;
+  background: #ebcba0;
+  color: #2a1810;
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
   text-decoration: none;
-  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
 }
-
-.settings__row--link:hover,
-.settings__choice:hover {
+.settings__row--link:hover {
   background: #2f6b32;
   color: #fff;
+  box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+.settings__row--link:active {
+  transform: translateY(3px);
 }
 
 .settings__row-label {
@@ -8640,7 +8638,7 @@ input {
 
 .settings__choices {
   display: flex;
-  gap: 8px;
+  gap: 15px;
 }
 
 .settings__choices--confirm {
@@ -8648,21 +8646,36 @@ input {
 }
 
 .settings__choice {
-  background: linear-gradient(to top, #ca946e 0, #ca946e 12px, #ebcba0 12px);
-  box-shadow: 0 9px 0 #010000, 0 -9px 0 #010000, 9px 0 0 #010000, -9px 0 0 #010000;
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
   margin: 0;
-  padding: 9px 15px 21px;
-  cursor: pointer;
-  color: inherit;
+  padding: 6px 15px;
+  border: 0;
+  border-radius: 0;
+  background: #ebcba0;
+  color: #2a1810;
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
   text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
 }
-
-.settings__choice--link {
-  box-sizing: border-box;
+.settings__choice:hover {
+  background: #2f6b32;
+  color: #fff;
+  box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+.settings__choice:active {
+  transform: translateY(3px);
+}
+.settings__choice {
+  min-width: 42px;
 }
 
 #hints-on:checked ~ .game .settings__choice[for=hints-on],
@@ -8671,6 +8684,19 @@ input {
 #lang-en:checked ~ .game .settings__choice[for=lang-en] {
   background: #2f6b32;
   color: #fff;
+  box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+
+.settings__choice:hover {
+  background: #3a8240;
+  color: #fff;
+  box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+
+.settings__row--link:hover {
+  background: #3a8240;
+  color: #fff;
+  box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
 }
 
 #lang-de:checked ~ .game .i18n--en,
@@ -12179,29 +12205,28 @@ input {
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .world,
-#position-1:checked ~ #intro-fade:checked ~ .game .world {
+#position-1:checked ~ #intro-fade:checked ~ .game .world,
+#position-1:checked ~ #intro-1:checked ~ .game .world,
+#position-1:checked ~ #intro-2:checked ~ .game .world {
   --world-offset: -432px;
   --world-offset-y: -336px;
-  transition: none;
 }
 
+#position-1:checked ~ #intro-dark:checked ~ .game .world,
+#position-1:checked ~ #intro-fade:checked ~ .game .world,
 #position-1:checked ~ #intro-1:checked ~ .game .world {
-  --world-offset: -432px;
-  --world-offset-y: -336px;
   transition: none;
 }
 
-#position-1:checked ~ #intro-2:checked ~ .game .world,
-#position-1:checked ~ #intro-3:checked ~ .game .world {
+#position-1:checked ~ #intro-3:checked ~ .game .world,
+#position-1:checked ~ #intro-anyway:checked ~ .game .world {
   --world-offset: -720px;
   --world-offset-y: -336px;
 }
 
-#position-1:checked ~ #intro-4:checked ~ .game .world {
-  --world-offset: -1008px;
-  --world-offset-y: -336px;
-}
-
+#position-1:checked ~ #intro-4:checked ~ .game .world,
+#position-1:checked ~ #intro-look:checked ~ .game .world,
+#position-1:checked ~ #intro-sit:checked ~ .game .world,
 #position-1:checked ~ #intro-fall:checked ~ .game .world {
   --world-offset: -1008px;
   --world-offset-y: -336px;
@@ -12218,8 +12243,10 @@ input {
   transition: none;
 }
 
+#position-1:checked ~ #intro-breathe:checked ~ .game .world,
 #position-1:checked ~ #intro-6:checked ~ .game .world,
 #position-1:checked ~ #intro-7:checked ~ .game .world,
+#position-1:checked ~ #intro-pack:checked ~ .game .world,
 #position-1:checked ~ #intro-8:checked ~ .game .world {
   --world-offset: -1296px;
   --world-offset-y: -1008px;
@@ -12237,32 +12264,15 @@ input {
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .player,
-#position-1:checked ~ #intro-fade:checked ~ .game .player {
-  --player-extra-offset: -288px;
+#position-1:checked ~ #intro-fade:checked ~ .game .player,
+#position-1:checked ~ #intro-1:checked ~ .game .player {
+  --player-extra-offset: -960px;
   transition: none;
 }
 
-#position-1:checked ~ #intro-1:checked ~ .game .player {
+#position-1:checked ~ #intro-2:checked ~ .game .player {
   --player-extra-offset: 0px;
-  transition-duration: 1.2s;
-}
-
-@keyframes player-walk-intro-1 {
-  0% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
-  }
-  25% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
-  }
-  50% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
-  }
-  75%, 100% {
-    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
-  }
-}
-#position-1:checked ~ #intro-1:checked ~ .game .player__sprite {
-  animation: player-walk-intro-1 0.6s steps(1, end) 2;
+  transition-duration: 4s;
 }
 
 @keyframes player-walk-intro-2 {
@@ -12280,11 +12290,34 @@ input {
   }
 }
 #position-1:checked ~ #intro-2:checked ~ .game .player__sprite {
-  animation: player-walk-intro-2 0.6s steps(1, end) 2;
+  animation: player-walk-intro-2 0.6s steps(1, end) 6.6666666667;
+}
+
+@keyframes player-walk-intro-3 {
+  0% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
+  }
+}
+#position-1:checked ~ #intro-3:checked ~ .game .player__sprite {
+  animation: player-walk-intro-3 0.6s steps(1, end) 2;
 }
 
 #position-1:checked ~ #intro-2:checked ~ .game .world,
 #position-1:checked ~ #intro-2:checked ~ .game .player {
+  transition-duration: 4s;
+}
+
+#position-1:checked ~ #intro-3:checked ~ .game .world,
+#position-1:checked ~ #intro-3:checked ~ .game .player {
   transition-duration: 1.2s;
 }
 
@@ -12302,13 +12335,40 @@ input {
     background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_004.png");
   }
 }
+@keyframes player-intro-stumble {
+  0% {
+    background-image: url("../assets/characters/with-backpack/stumble/frame_001.png");
+  }
+  25% {
+    background-image: url("../assets/characters/with-backpack/stumble/frame_002.png");
+  }
+  50% {
+    background-image: url("../assets/characters/with-backpack/stumble/frame_003.png");
+  }
+  75%, 100% {
+    background-image: url("../assets/characters/with-backpack/stumble/frame_004.png");
+  }
+}
 #position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
-  animation: player-walk-intro-4 0.6s steps(1, end) 2, player-bridge-tip 0.6s steps(1, end) forwards 1.2s;
+  animation: player-walk-intro-4 0.6s steps(1, end) 2, player-intro-stumble 0.6s steps(1, end) 0.6s;
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .world,
 #position-1:checked ~ #intro-4:checked ~ .game .player {
   transition-duration: 1.2s;
+}
+
+@keyframes player-intro-look {
+  0%, 45% {
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
+  }
+  50%, 100% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+}
+#position-1:checked ~ #intro-look:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  animation: player-intro-look 1.4s steps(1, end) forwards;
 }
 
 @keyframes player-walk-intro-9 {
@@ -12336,6 +12396,8 @@ input {
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
   --player-extra-offset-y: 672px;
+  transition-duration: 0.6s;
+  transition-timing-function: ease-in;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
@@ -12359,6 +12421,22 @@ input {
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .lamp-glow--backpack {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#position-1:checked ~ #intro-breathe:checked ~ .game .player.lamp-glow-anchor .lamp-glow {
+  opacity: 1;
+  visibility: visible;
+}
+
+#position-1:checked ~ #intro-breathe:checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer {
+  animation: none;
+  clip-path: none;
+  transform: translate(-50%, -50%);
+}
+
+#position-1:checked ~ #intro-breathe:checked ~ .game .lamp-glow--backpack {
   opacity: 0;
   visibility: hidden;
 }
@@ -12391,6 +12469,22 @@ input {
 }
 
 #position-1:checked ~ #intro-7:checked ~ .game .lamp-glow--backpack {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .player.lamp-glow-anchor .lamp-glow {
+  opacity: 1;
+  visibility: visible;
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer {
+  animation: none;
+  clip-path: none;
+  transform: translate(-50%, -50%);
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .lamp-glow--backpack {
   opacity: 0;
   visibility: hidden;
 }
@@ -12491,7 +12585,8 @@ input {
   animation: intro-lamp-open-3 0.8s ease-out, lamp-glow-pulse 3s ease-in-out 0.8s infinite;
 }
 
-#position-1:checked ~ #intro-5:checked ~ .game .player__sprite {
+#position-1:checked ~ #intro-5:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-breathe:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
 }
 
@@ -12505,7 +12600,7 @@ input {
 }
 #position-1:checked ~ #intro-6:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/passed-out/passed-out.png");
-  animation: player-wake-blink 1.6s steps(1, end);
+  animation: player-wake-blink 2.4s steps(1, end);
 }
 
 @keyframes player-stand-up {
@@ -12523,13 +12618,35 @@ input {
   }
 }
 #position-1:checked ~ #intro-7:checked ~ .game .player__sprite {
-  animation: player-stand-up 0.8s steps(1, end);
+  animation: player-stand-up 0.8s steps(1, end), player-intro-wake-look-left 0.5s linear 0.8s forwards;
 }
 
+@keyframes player-intro-wake-look-left {
+  from, to {
+    transform: scaleX(-1);
+  }
+}
 #position-1:checked ~ #intro-7:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-pack:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-8:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/without-backpack/base/base-right.png");
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .player__sprite {
+  transform: scaleX(-1);
+}
+
+@keyframes player-intro-wake-turn {
+  0%, 45% {
+    transform: scaleX(-1);
+  }
+  50%, 100% {
+    transform: none;
+  }
+}
+#position-1:checked ~ #intro-8:checked ~ .game .player__sprite {
+  animation: player-intro-wake-turn 1.4s steps(1, end);
 }
 
 @keyframes player-backpack-interact {
@@ -12551,7 +12668,7 @@ input {
   animation: player-backpack-interact 0.6s steps(1, end);
 }
 
-@keyframes player-bridge-tip {
+@keyframes player-intro-fall {
   0% {
     background-image: url("../assets/characters/with-backpack/fall/frame_001.png");
   }
@@ -12568,11 +12685,33 @@ input {
     background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
   }
 }
+#position-1:checked ~ #intro-sit:checked ~ .game .player__sprite {
+  background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
+  animation: player-intro-fall 0.6s steps(1, end) forwards;
+}
+
 #position-1:checked ~ #intro-fall:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player__sprite {
   background-image: url("../assets/characters/with-backpack/fall/frame_005.png");
 }
 
+@keyframes intro-screen-shake-light {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-2px, 3px);
+  }
+  80% {
+    transform: translate(3px, -1px);
+  }
+}
 @keyframes intro-screen-shake {
   0%, 100% {
     transform: translate(0, 0);
@@ -12590,11 +12729,15 @@ input {
     transform: translate(6px, -3px);
   }
 }
-#position-1:checked ~ #intro-4:checked ~ .game .viewport,
+#position-1:checked ~ #intro-4:checked ~ .game .viewport {
+  animation: intro-screen-shake-light 0.4s ease-in-out 2;
+  animation-delay: 0.6s;
+}
+
+#position-1:checked ~ #intro-sit:checked ~ .game .viewport,
 #position-1:checked ~ #intro-fall:checked ~ .game .viewport,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .viewport {
   animation: intro-screen-shake 0.4s ease-in-out infinite;
-  animation-delay: 1.2s;
 }
 
 .blackout {
@@ -12617,9 +12760,10 @@ input {
 
 #position-1:checked ~ #intro-fade:checked ~ .game .blackout {
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 3s ease-in-out;
 }
 
+#position-1:checked ~ #intro-sit:checked ~ .game .blackout,
 #position-1:checked ~ #intro-fall:checked ~ .game .blackout {
   transition: none;
 }
@@ -12631,87 +12775,151 @@ input {
 
 #position-1:checked ~ #intro-5:checked ~ .game .blackout {
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 3s ease-in-out;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .dialogue[data-intro-step=dark] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2s, visibility 0s 2s;
+  transition: opacity 0s 3.4s, visibility 0s 3.4s;
 }
 #position-1:checked ~ #intro-dark:checked ~ .game .dialogue[data-intro-step=dark] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 2s;
+  animation-delay: 3.4s;
 }
 #position-1:checked ~ #intro-dark:checked ~ .game .dialogue[data-intro-step=dark] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(2s + 0.75s);
+  animation-delay: calc(3.4s + 0.75s);
 }
 
 #position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2.2s, visibility 0s 2.2s;
+  transition: opacity 0s 3.9s, visibility 0s 3.9s;
 }
 #position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 2.2s;
+  animation-delay: 3.9s;
 }
 #position-1:checked ~ #intro-fade:checked ~ .game .dialogue[data-intro-step=fade] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(2.2s + 0.75s);
+  animation-delay: calc(3.9s + 0.75s);
 }
 
 #position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.4s, visibility 0s 1.4s;
+  transition: opacity 0s 0.5s, visibility 0s 0.5s;
 }
 #position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.4s;
+  animation-delay: 0.5s;
 }
 #position-1:checked ~ #intro-1:checked ~ .game .dialogue[data-intro-step="1"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.4s + 0.75s);
+  animation-delay: calc(0.5s + 0.75s);
 }
 
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.4s, visibility 0s 1.4s;
+  transition: opacity 0s 4.9s, visibility 0s 4.9s;
 }
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.4s;
+  animation-delay: 4.9s;
 }
 #position-1:checked ~ #intro-2:checked ~ .game .dialogue[data-intro-step="2"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.4s + 0.75s);
+  animation-delay: calc(4.9s + 0.75s);
+}
+
+#position-1:checked ~ #intro-3:checked ~ .game .dialogue[data-intro-step="3"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 2.1s, visibility 0s 2.1s;
+}
+#position-1:checked ~ #intro-3:checked ~ .game .dialogue[data-intro-step="3"] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 2.1s;
+}
+#position-1:checked ~ #intro-3:checked ~ .game .dialogue[data-intro-step="3"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(2.1s + 0.75s);
+}
+
+#position-1:checked ~ #intro-anyway:checked ~ .game .dialogue[data-intro-step=anyway] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.5s, visibility 0s 0.5s;
+}
+#position-1:checked ~ #intro-anyway:checked ~ .game .dialogue[data-intro-step=anyway] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0.5s;
+}
+#position-1:checked ~ #intro-anyway:checked ~ .game .dialogue[data-intro-step=anyway] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(0.5s + 0.75s);
 }
 
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.8s, visibility 0s 1.8s;
+  transition: opacity 0s 1.35s, visibility 0s 1.35s;
 }
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.8s;
+  animation-delay: 1.35s;
 }
 #position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.8s + 0.75s);
+  animation-delay: calc(1.35s + 0.75s);
+}
+
+#position-1:checked ~ #intro-look:checked ~ .game .dialogue[data-intro-step=look] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 2.3s, visibility 0s 2.3s;
+}
+#position-1:checked ~ #intro-look:checked ~ .game .dialogue[data-intro-step=look] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 2.3s;
+}
+#position-1:checked ~ #intro-look:checked ~ .game .dialogue[data-intro-step=look] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(2.3s + 0.75s);
+}
+
+#position-1:checked ~ #intro-sit:checked ~ .game .dialogue[data-intro-step=sit] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.75s, visibility 0s 0.75s;
+}
+#position-1:checked ~ #intro-sit:checked ~ .game .dialogue[data-intro-step=sit] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0.75s;
+}
+#position-1:checked ~ #intro-sit:checked ~ .game .dialogue[data-intro-step=sit] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(0.75s + 0.75s);
 }
 
 @keyframes intro-dialogue-shake {
@@ -12731,25 +12939,25 @@ input {
     transform: translate(6px, -3px);
   }
 }
-#position-1:checked ~ #intro-4:checked ~ .game .dialogue[data-intro-step="4"] {
+#position-1:checked ~ #intro-sit:checked ~ .game .dialogue[data-intro-step=sit] {
   animation: intro-dialogue-shake 0.4s ease-in-out infinite;
-  animation-delay: 1.8s;
+  animation-delay: 0.75s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  transition: opacity 0s 1.5s, visibility 0s 1.5s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.2s;
+  animation-delay: 1.5s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.2s + 0.75s);
+  animation-delay: calc(1.5s + 0.75s);
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] {
@@ -12760,32 +12968,52 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2.6s, visibility 0s 2.6s;
+  transition: opacity 0s 4.4s, visibility 0s 4.4s;
 }
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 2.6s;
+  animation-delay: 4.4s;
 }
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(2.6s + 0.75s);
+  animation-delay: calc(4.4s + 0.75s);
+}
+
+#position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] {
+  bottom: calc(50% + 88.8px - 48px);
+}
+
+#position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.9s, visibility 0s 0.9s;
+}
+#position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0.9s;
+}
+#position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(0.9s + 0.75s);
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2.2s, visibility 0s 2.2s;
+  transition: opacity 0s 3s, visibility 0s 3s;
 }
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 2.2s;
+  animation-delay: 3s;
 }
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(2.2s + 0.75s);
+  animation-delay: calc(3s + 0.75s);
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] {
@@ -12796,48 +13024,88 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 2.2s, visibility 0s 2.2s;
+  transition: opacity 0s 3.3s, visibility 0s 3.3s;
 }
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 2.2s;
+  animation-delay: 3.3s;
 }
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(2.2s + 0.75s);
+  animation-delay: calc(3.3s + 0.75s);
 }
 
 #position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.4s, visibility 0s 1.4s;
+  transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
 #position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.4s;
+  animation-delay: 2.2s;
 }
 #position-1:checked ~ #intro-7:checked ~ .game .dialogue[data-intro-step="7"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.4s + 0.75s);
+  animation-delay: calc(2.2s + 0.75s);
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .dialogue[data-intro-step=pack] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.9s, visibility 0s 0.9s;
+}
+#position-1:checked ~ #intro-pack:checked ~ .game .dialogue[data-intro-step=pack] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0.9s;
+}
+#position-1:checked ~ #intro-pack:checked ~ .game .dialogue[data-intro-step=pack] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(0.9s + 0.75s);
+}
+
+#position-1:checked ~ #intro-8:checked ~ .game .dialogue[data-intro-step="8"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 2.3s, visibility 0s 2.3s;
+}
+#position-1:checked ~ #intro-8:checked ~ .game .dialogue[data-intro-step="8"] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 2.3s;
+}
+#position-1:checked ~ #intro-8:checked ~ .game .dialogue[data-intro-step="8"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(2.3s + 0.75s);
+}
+
+#position-1:checked ~ #intro-9:checked ~ .game .dialogue[data-intro-step="9"] .dialogue__box {
+  animation: dialogue-ephemeral 2s ease-out both;
+  animation-delay: 1.7s;
+}
+#position-1:checked ~ #intro-9:checked ~ .game .dialogue[data-intro-step="9"] .dialogue__box .dialogue__button {
+  display: none;
 }
 
 #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.2s, visibility 0s 1.2s;
+  transition: opacity 0s 1.5s, visibility 0s 1.5s;
 }
 #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.2s;
+  animation-delay: 1.5s;
 }
 #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.2s + 0.75s);
+  animation-delay: calc(1.5s + 0.75s);
 }
 
 #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .dialogue[data-intro-step="10"] .dialogue__box {
@@ -12847,20 +13115,35 @@ input {
   transition: opacity 0s, visibility 0s;
 }
 
-#intro-explore-pending:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box {
+#intro-explore-pending:checked ~ #intro-shake-line:not(:checked) ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 1.4s, visibility 0s 1.4s;
+  transition: opacity 0s 2.2s, visibility 0s 2.2s;
 }
-#intro-explore-pending:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box.dialogue__box {
+#intro-explore-pending:checked ~ #intro-shake-line:not(:checked) ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 1.4s;
+  animation-delay: 2.2s;
 }
-#intro-explore-pending:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box .dialogue__button {
+#intro-explore-pending:checked ~ #intro-shake-line:not(:checked) ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="11"] .dialogue__box .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
-  animation-delay: calc(1.4s + 0.75s);
+  animation-delay: calc(2.2s + 0.75s);
+}
+
+#intro-explore-pending:checked ~ #intro-shake-line:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="12"] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+#intro-explore-pending:checked ~ #intro-shake-line:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="12"] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0s;
+}
+#intro-explore-pending:checked ~ #intro-shake-line:checked ~ #position-1:checked ~ #intro-11:checked ~ .game .dialogue[data-intro-step="12"] .dialogue__box .dialogue__button {
+  animation: dialogue-arrow-in 0.4s ease-out both;
+  animation-delay: calc(0s + 0.75s);
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .direction-controls__button--edge[data-position],
@@ -12868,12 +13151,17 @@ input {
 #position-1:checked ~ #intro-1:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-2:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-anyway:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-4:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-look:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-sit:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-fall:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-5:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-breathe:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-6:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-7:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-pack:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-9:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-10:checked ~ .game .direction-controls__button--edge[data-position],
@@ -12888,17 +13176,25 @@ input {
   transition: opacity 0s, visibility 0s, margin 0s;
 }
 
-#position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="3"],
+#position-1:checked ~ #intro-anyway:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step=anyway] {
+  opacity: 0.4;
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition: opacity 0.15s ease, margin 0.4s 0.5s ease-out, visibility 0s 0.5s;
+}
+#position-1:checked ~ #intro-anyway:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step=anyway]:hover, #position-1:checked ~ #intro-anyway:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step=anyway]:active {
+  opacity: 1;
+}
+
 #position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"] {
   opacity: 0.4;
   visibility: visible;
   pointer-events: auto;
   margin: 0;
-  transition: opacity 0.15s ease, margin 0.4s 0s ease-out, visibility 0s 0s;
+  transition: opacity 0.15s ease, margin 0.4s 2.3s ease-out, visibility 0s 2.3s;
 }
-#position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="3"]:hover, #position-1:checked ~ #intro-3:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="3"]:active,
-#position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"]:hover,
-#position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"]:active {
+#position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"]:hover, #position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"]:active {
   opacity: 1;
 }
 
@@ -12947,31 +13243,40 @@ input {
   transition: opacity 0s, visibility 0s;
 }
 
+#position-1:checked ~ #intro-sit:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-breathe:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-pack:checked ~ .game .story-object--backpack,
 #position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
+#position-1:checked ~ #intro-sit:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack.dialogue__box,
+#position-1:checked ~ #intro-breathe:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack.dialogue__box,
+#position-1:checked ~ #intro-pack:checked ~ .game .story-object--backpack.dialogue__box,
 #position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
   animation-delay: 0s;
 }
+#position-1:checked ~ #intro-sit:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-breathe:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack .dialogue__button,
+#position-1:checked ~ #intro-pack:checked ~ .game .story-object--backpack .dialogue__button,
 #position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack .dialogue__button {
   animation: dialogue-arrow-in 0.4s ease-out both;
   animation-delay: calc(0s + 0.75s);

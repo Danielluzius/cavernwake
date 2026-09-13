@@ -445,10 +445,12 @@
          #inventory-open is the tutorial overlay (intro-10). After the lamp
          that checkbox may stay on; #inventory-open-play is the real toggle
          from intro-11 onward so reopening inventory cannot replay dialogue.
-         #intro-explore-pending starts checked; WEITER unchecks it once. -->
+         #intro-explore-pending starts checked; the last lamp WEITER
+         unchecks it once. #intro-shake-line is the second lamp line. -->
      <input type="checkbox" id="inventory-open" class="world-position-input" />
      <input type="checkbox" id="inventory-open-play" class="world-position-input" />
      <input type="checkbox" id="intro-explore-pending" class="world-position-input" checked />
+     <input type="checkbox" id="intro-shake-line" class="world-position-input" />
      <input type="checkbox" id="lamp-on" class="world-position-input" />
 
      <!-- Settings overlay (scss/components/_settings.scss). Same sibling
@@ -671,12 +673,17 @@
      <input type="radio" name="intro" id="intro-1" class="world-position-input" />
      <input type="radio" name="intro" id="intro-2" class="world-position-input" />
      <input type="radio" name="intro" id="intro-3" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-anyway" class="world-position-input" />
      <input type="radio" name="intro" id="intro-4" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-look" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-sit" class="world-position-input" />
      <input type="radio" name="intro" id="intro-fall" class="world-position-input" />
      <input type="radio" name="intro" id="intro-dark-hold" class="world-position-input" />
      <input type="radio" name="intro" id="intro-5" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-breathe" class="world-position-input" />
      <input type="radio" name="intro" id="intro-6" class="world-position-input" />
      <input type="radio" name="intro" id="intro-7" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-pack" class="world-position-input" />
      <input type="radio" name="intro" id="intro-8" class="world-position-input" />
      <input type="radio" name="intro" id="intro-9" class="world-position-input" />
      <input type="radio" name="intro" id="intro-10" class="world-position-input" />
@@ -1371,78 +1378,132 @@
                     </div>
                     <!-- Opening-cutscene dialogue boxes — one per beat, see
                                          scss/intro/_intro.scss for which #intro-N reveals
-                                         which box and for how long. Placeholder copy only.
-                                         .dialogue--caption = scene card (blackout / time);
+                                         which box and for how long. EN copy first; DE later
+                                         via .i18n spans like the rest of the UI.
+                                         .dialogue--caption = short scene card (black, fade-in,
+                                         fall, time skip). Player speech starts on intro-1
+                                         off-screen, then he walks in.
                                          default .dialogue = player speech (bubble + tail). -->
                     <div class="dialogue dialogue--caption" data-intro-step="dark">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=dark</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-fade"></label>
+                            <p class="dialogue__text">A dark cave</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-fade"></label>
                         </div>
                     </div>
                     <div class="dialogue dialogue--caption" data-intro-step="fade">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=fade</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-1"></label>
+                            <p class="dialogue__text">The cave mouth</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-1"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-intro-step="1">
+                    <div class="dialogue dialogue--center" data-intro-step="1">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=1</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-2"></label>
+                            <p class="dialogue__text">The last cave on the trail.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-2"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="2">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=2</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-3"></label>
+                            <p class="dialogue__text">Open path. Easy walking.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-3"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="3">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Still feels like a bad idea.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-anyway"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="anyway">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">I'm going anyway.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="4">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=4</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-fall"></label>
+                            <p class="dialogue__text">Whoa.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-look"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="look">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">The whole cave just moved.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-sit"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="sit">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">I'm slipping.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-fall"></label>
                         </div>
                     </div>
                     <div class="dialogue dialogue--caption" data-intro-step="fall">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=fall</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-dark-hold"></label>
+                            <p class="dialogue__text">Over the edge</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-dark-hold"></label>
                         </div>
                     </div>
                     <div class="dialogue dialogue--caption" data-intro-step="dark-hold">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=dark-hold</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-5"></label>
+                            <p class="dialogue__text">Some time later</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-5"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="5">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=5</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-6"></label>
+                            <p class="dialogue__text">Long drop.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-breathe"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="breathe">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Still breathing.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-6"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="6">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=6</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-7"></label>
+                            <p class="dialogue__text">Dark, though.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-7"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="7">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">step=7</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-8"></label>
+                            <p class="dialogue__text">Of course I fall off a stupid bridge like that.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-pack"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="pack">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Pack's gone. Came off on the way down.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-8"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="8">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Same shaft. It has to be close.</p>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="9">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">There.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="10">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">placeholder: Rucksack-Icon anklicken</p>
+                            <p class="dialogue__text">Lamp first.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="11">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">placeholder: ich sollte die Höhle erkunden</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="intro-explore-pending"></label>
+                            <p class="dialogue__text">I need a way out.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-shake-line"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="12">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">That won't be the last shake.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-explore-pending"></label>
                         </div>
                     </div>
 
@@ -2038,7 +2099,7 @@
                          to the intro chain instead of the position graph. -->
                          <label
                               class="direction-controls__button direction-controls__button--right direction-controls__button--intro-arrow"
-                              for="intro-4" data-intro-step="3">▶</label>
+                              for="intro-4" data-intro-step="anyway">▶</label>
                          <label
                               class="direction-controls__button direction-controls__button--right direction-controls__button--intro-arrow"
                               for="intro-9" data-intro-step="8">▶</label>
