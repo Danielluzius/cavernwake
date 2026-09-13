@@ -7666,6 +7666,7 @@ input {
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
 :is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
   pointer-events: auto;
+  overflow: visible;
   transform: translate(-100%, -50%) scale(1);
 }
 
@@ -7858,23 +7859,33 @@ input {
   left: 50%;
   bottom: calc(100% + 6px);
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translateX(-50%);
   box-sizing: border-box;
   overflow: visible;
-  padding: 9px 15px 21px;
+  padding: 9px 15px;
   border: 0;
   background: #ebcba0;
   color: #2a1810;
   font-family: inherit;
   font-size: 24px;
-  line-height: 1.25;
+  line-height: 1;
   text-align: center;
+  text-transform: uppercase;
   white-space: nowrap;
   -webkit-font-smoothing: none;
   font-smooth: never;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
+}
+
+.inventory__slot--lamp .inventory__caption {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 
 .inventory__slot:hover .inventory__caption,
@@ -8672,6 +8683,7 @@ input {
 }
 
 #title-dismissed:checked ~ #settings-open:checked ~ .game .inventory__toggle,
+#settings-open:checked ~ #intro-11:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ .game .inventory__back,
 #settings-open:checked ~ .game .inventory {
@@ -8681,12 +8693,12 @@ input {
   transition: opacity 0.12s, visibility 0s;
 }
 
-#title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings,
-#title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings__back,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
-#inventory-open:checked ~ .game .settings,
-#inventory-open:checked ~ .game .settings__back {
+#inventory-open-play:checked ~ .game .settings,
+#inventory-open-play:checked ~ .game .settings__back,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__back {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
