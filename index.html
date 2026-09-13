@@ -48,6 +48,11 @@
      <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_004.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_005.png" />
      <link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_006.png" />
+     <!-- End-screen trip (see scss/components/_end-screen.scss). -->
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_001.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_002.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_003.png" />
+     <link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_004.png" />
      <!-- Elevator idle-cycle frames (see animations/_animations.scss,
               both the plain per-shaft and the dual-access facing variants) —
               same first-use flash reasoning, only referenced inside
@@ -250,6 +255,17 @@
      <input type="checkbox" id="lift-11-27-call-done" class="world-position-input" />
      <input type="checkbox" id="lift-10-36-unlocked" class="world-position-input" />
      <input type="checkbox" id="lift-10-36-call-done" class="world-position-input" />
+     <!-- Call-lever look → hope → unlock. Unlock stays a checkbox so the
+         car/rattle CSS can keep reading the same id. -->
+     <input type="radio" name="lift-17-26-step" id="lift-17-26-idle" class="world-position-input" checked />
+     <input type="radio" name="lift-17-26-step" id="lift-17-26-look" class="world-position-input" />
+     <input type="radio" name="lift-17-26-step" id="lift-17-26-hope" class="world-position-input" />
+     <input type="radio" name="lift-11-27-step" id="lift-11-27-idle" class="world-position-input" checked />
+     <input type="radio" name="lift-11-27-step" id="lift-11-27-look" class="world-position-input" />
+     <input type="radio" name="lift-11-27-step" id="lift-11-27-hope" class="world-position-input" />
+     <input type="radio" name="lift-10-36-step" id="lift-10-36-idle" class="world-position-input" checked />
+     <input type="radio" name="lift-10-36-step" id="lift-10-36-look" class="world-position-input" />
+     <input type="radio" name="lift-10-36-step" id="lift-10-36-hope" class="world-position-input" />
 
      <!-- Vine barriers (node 24, node 30 — node 30's also holds the sickle).
          ONE radio group per barrier and nothing else: every WEITER button
@@ -291,15 +307,26 @@
          unlocking the 20<->21 / 29<->30 walk edges (vars.$obstacles). Same
          one radio group idle/confirm/done pattern as the vine barriers. -->
      <input type="radio" name="lever7-step" id="lever7-idle" class="world-position-input" checked />
+     <input type="radio" name="lever7-step" id="lever7-look" class="world-position-input" />
      <input type="radio" name="lever7-step" id="lever7-confirm" class="world-position-input" />
+     <input type="radio" name="lever7-step" id="lever7-wonder" class="world-position-input" />
      <input type="radio" name="lever7-step" id="lever7-done" class="world-position-input" />
 
-     <!-- Waterfall hint (blocked path left of nodes 21 / 30 — see
-         scss/world/_waterfall.scss). One-shot: idle spark, blocked holds
-         the line, done is the dismiss. -->
-     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-idle" class="world-position-input" checked />
-     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-blocked" class="world-position-input" />
-     <input type="radio" name="waterfall-hint-step" id="waterfall-hint-done" class="world-position-input" />
+     <!-- Waterfall hints — one group per stand (20 / 21 upper, 29 / 30
+         lower) so dismissing one does not kill the others
+         (scss/world/_waterfall.scss). -->
+     <input type="radio" name="waterfall-hint-20-step" id="waterfall-hint-20-idle" class="world-position-input" checked />
+     <input type="radio" name="waterfall-hint-20-step" id="waterfall-hint-20-blocked" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-20-step" id="waterfall-hint-20-done" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-21-step" id="waterfall-hint-21-idle" class="world-position-input" checked />
+     <input type="radio" name="waterfall-hint-21-step" id="waterfall-hint-21-blocked" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-21-step" id="waterfall-hint-21-done" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-29-step" id="waterfall-hint-29-idle" class="world-position-input" checked />
+     <input type="radio" name="waterfall-hint-29-step" id="waterfall-hint-29-blocked" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-29-step" id="waterfall-hint-29-done" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-30-step" id="waterfall-hint-30-idle" class="world-position-input" checked />
+     <input type="radio" name="waterfall-hint-30-step" id="waterfall-hint-30-blocked" class="world-position-input" />
+     <input type="radio" name="waterfall-hint-30-step" id="waterfall-hint-30-done" class="world-position-input" />
 
      <!-- Pickaxe pickup left of node 19 (scss/world/_pickaxe.scss) and the
          rock barrier it opens between node 34 and 35
@@ -395,6 +422,7 @@
      <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-placed" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-fuse-choosing" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-fuse-prompt" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-lantern-fire" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
 
@@ -422,9 +450,17 @@
          Collapse path hints are idle / blocked / done (one-shot). -->
      <input type="checkbox" id="collapse-bench-dropped" class="world-position-input" />
      <input type="checkbox" id="collapse-bench-seen" class="world-position-input" />
-     <input type="radio" name="collapse-hint-step" id="collapse-hint-idle" class="world-position-input" checked />
-     <input type="radio" name="collapse-hint-step" id="collapse-hint-blocked" class="world-position-input" />
-     <input type="radio" name="collapse-hint-step" id="collapse-hint-done" class="world-position-input" />
+     <input type="radio" name="collapse-bench-look-step" id="collapse-bench-look-idle" class="world-position-input" checked />
+     <input type="radio" name="collapse-bench-look-step" id="collapse-bench-look" class="world-position-input" />
+     <input type="radio" name="collapse-hint-21-step" id="collapse-hint-21-idle" class="world-position-input" checked />
+     <input type="radio" name="collapse-hint-21-step" id="collapse-hint-21-blocked" class="world-position-input" />
+     <input type="radio" name="collapse-hint-21-step" id="collapse-hint-21-done" class="world-position-input" />
+     <input type="radio" name="collapse-hint-30-step" id="collapse-hint-30-idle" class="world-position-input" checked />
+     <input type="radio" name="collapse-hint-30-step" id="collapse-hint-30-blocked" class="world-position-input" />
+     <input type="radio" name="collapse-hint-30-step" id="collapse-hint-30-done" class="world-position-input" />
+     <input type="radio" name="collapse-hint-23-step" id="collapse-hint-23-idle" class="world-position-input" checked />
+     <input type="radio" name="collapse-hint-23-step" id="collapse-hint-23-blocked" class="world-position-input" />
+     <input type="radio" name="collapse-hint-23-step" id="collapse-hint-23-done" class="world-position-input" />
 
      <!-- Final radio keeps the id the lift system already reads, so it must
          stay last in the group: anything after it would uncheck it and
@@ -563,6 +599,7 @@
      <input type="radio" name="position" id="position-14--from-6--left" class="world-position-input" />
      <input type="radio" name="position" id="position-5--from-6" class="world-position-input" />
      <input type="radio" name="position" id="position-4--from-6" class="world-position-input" />
+     <input type="radio" name="position" id="position-2--from-4" class="world-position-input" />
      <input type="radio" name="position" id="position-8--from-7" class="world-position-input" />
      <input type="radio" name="position" id="position-16--from-8" class="world-position-input" />
      <input type="radio" name="position" id="position-7--from-8" class="world-position-input" />
@@ -690,10 +727,11 @@
      <input type="radio" name="intro" id="intro-11" class="world-position-input" />
      <input type="radio" name="intro" id="intro-12" class="world-position-input" />
      <input type="radio" name="intro" id="intro-13" class="world-position-input" />
+     <input type="radio" name="intro" id="intro-hurry" class="world-position-input" />
      <input type="radio" name="intro" id="intro-14" class="world-position-input" />
 
      <!-- Outro / ending sequence (see scss/outro/_outro.scss) — gated on
-         #lift-6-14-unlocked and 4 -> 3 after the bridge stumble. -->
+         #lift-6-14-unlocked and 4 -> 2 after the bridge stumble. -->
      <input type="radio" name="outro" id="outro-idle" class="world-position-input" checked />
      <input type="radio" name="outro" id="outro-to-1" class="world-position-input" />
      <input type="radio" name="outro" id="outro-end" class="world-position-input" />
@@ -708,7 +746,10 @@
              WEITER is a debug skip (#title-dismissed) — remove later. -->
           <section class="scene scene--intro">
                <div class="title-screen">
-                    <label class="title-screen__skip" for="title-dismissed">WEITER</label>
+                    <div class="title-screen__skips">
+                         <label class="title-screen__skip" for="outro-fade">ENDE</label>
+                         <label class="title-screen__skip" for="title-dismissed">WEITER</label>
+                    </div>
                     <div class="title-screen__brand">
                          <div class="title-screen__masthead">
                               <h1 class="title-screen__title">CAVERNWAKE</h1>
@@ -786,6 +827,29 @@
                </div>
           </section>
 
+          <!-- Ending overlay sits on .game (not inside .scene--game) so
+               the title-screen ENDE skip can show it without revealing
+               the cave. See scss/components/_end-screen.scss. -->
+          <div class="end-screen">
+               <div class="end-screen__brand">
+                    <div class="end-screen__masthead">
+                         <h1 class="end-screen__title">CAVERNWAKE</h1>
+                         <p class="end-screen__credit">made by Daniel Luzius</p>
+                         <div class="end-screen__choices">
+                              <a class="end-screen__button" href="./index.html">
+                                   <span class="i18n i18n--de">Zum Titel</span>
+                                   <span class="i18n i18n--en">Back to title</span>
+                              </a>
+                         </div>
+                    </div>
+               </div>
+               <div class="end-screen__run" aria-hidden="true">
+                    <div class="end-screen__walker">
+                         <p class="end-screen__line">Puh..</p>
+                    </div>
+               </div>
+          </div>
+
           <!-- Real game scene, unlocked once the title screen is dismissed.
              Single stub room (segment 1 of the logic-map, see
              assets/world/logic-map.png) — real tile art is added later as
@@ -852,15 +916,15 @@
                               <div class="lift-basket"></div>
                               <div class="lift-rope--17-26"></div>
                               <div class="lift-basket--17-26"></div>
-                              <label class="object lift-call-button--17-26" for="lift-17-26-unlocked"></label>
+                              <label class="object lift-call-button--17-26" for="lift-17-26-look"></label>
 
                               <div class="lift-rope--11-27"></div>
                               <div class="lift-basket--11-27"></div>
-                              <label class="object lift-call-button--11-27" for="lift-11-27-unlocked"></label>
+                              <label class="object lift-call-button--11-27" for="lift-11-27-look"></label>
 
                               <div class="lift-rope--10-36"></div>
                               <div class="lift-basket--10-36"></div>
-                              <label class="object lift-call-button--10-36" for="lift-10-36-unlocked"></label>
+                              <label class="object lift-call-button--10-36" for="lift-10-36-look"></label>
 
                               <!-- Two stacked labels per barrier: the visible one
                              starts the "no sickle yet" branch, the
@@ -879,18 +943,21 @@
                               <label class="object object--vines-12-cut" for="vine12-choosing"></label>
 
                               <!-- Waterfall hint hitboxes (see scss/world/_waterfall.scss). -->
-                              <label class="object object--waterfall-hint-21" for="waterfall-hint-blocked"></label>
-                              <label class="object object--waterfall-hint-30" for="waterfall-hint-blocked"></label>
+                              <label class="object object--waterfall-hint-20" for="waterfall-hint-20-blocked"></label>
+                              <label class="object object--waterfall-hint-21" for="waterfall-hint-21-blocked"></label>
+                              <label class="object object--waterfall-hint-29" for="waterfall-hint-29-blocked"></label>
+                              <label class="object object--waterfall-hint-30" for="waterfall-hint-30-blocked"></label>
 
                               <!-- Collapse hint hitboxes (see scss/world/_collapse.scss). -->
-                              <label class="object object--collapse-hint-21" for="collapse-hint-blocked"></label>
-                              <label class="object object--collapse-hint-30" for="collapse-hint-blocked"></label>
-                              <label class="object object--collapse-hint-23" for="collapse-hint-blocked"></label>
+                              <label class="object object--collapse-hint-21" for="collapse-hint-21-blocked"></label>
+                              <label class="object object--collapse-hint-30" for="collapse-hint-30-blocked"></label>
+                              <label class="object object--collapse-hint-23" for="collapse-hint-23-blocked"></label>
+                              <label class="object object--collapse-bench-rock-hit" for="collapse-bench-look"></label>
 
                               <!-- Node-7 lever, see scss/world/_lever.scss. Only
                              clickable while lever7-idle is current; one-time
                              use, no way back once lever7-done is checked. -->
-                              <label class="object object--lever" for="lever7-confirm"></label>
+                              <label class="object object--lever" for="lever7-look"></label>
 
                               <!-- Pickaxe pickup (scss/world/_pickaxe.scss) and
                              the rock barrier (scss/world/_rock.scss); the
@@ -1109,14 +1176,8 @@
                  being shaken by a transform. See scss/world/_stone-wall.scss. -->
                <div class="blast-flash"></div>
 
-               <!-- Ending overlay — placeholder until real end art/copy exist. -->
-               <div class="end-screen">
-                    <h1 class="end-screen__title">CAVERNWAKE</h1>
-                    <p class="end-screen__credit">made by Daniel Luzius</p>
-                    <a class="end-screen__button" href="./index.html">WEITER</a>
-               </div>
-
                <div class="ui">
+                    <label class="end-skip" for="outro-fade">ENDE</label>
                     <div class="dev-controls">
                          <div class="dev-controls__toggles">
                               <label class="dev-controls__button dev-controls__button--debug-grid"
@@ -1252,7 +1313,7 @@
                                         <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
                                         <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
                                              aria-label="Laterne anzünden"></label>
-                                        <label class="inventory__use inventory__use--lamp-fuse" for="wall-lantern-fire"
+                                        <label class="inventory__use inventory__use--lamp-fuse" for="wall-fuse-prompt"
                                              aria-label="Laterne benutzen"></label>
                                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
@@ -1265,55 +1326,55 @@
                     </div>
 
                     <!-- Inspect quotes sit with the other speech bubbles (above the player).
-                         Placeholder copy only — auto-fade, no WEITER. Replayable. -->
+                         Auto-fade, no WEITER. Replayable asides — no new spoilers. -->
                     <div class="dialogue dialogue--item-quote" data-item="sickle">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: sichel</p>
+                              <p class="dialogue__text">Still sharp. That's all I need to know.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="pickaxe">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: spitzhacke</p>
+                              <p class="dialogue__text">Heavy. This was made for rock, not people.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="shovel">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: schaufel</p>
+                              <p class="dialogue__text">Mud, gravel, whatever's in the way.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: bombe</p>
+                              <p class="dialogue__text">I really don't want to drop this.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="lamp">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: laterne</p>
+                              <p class="dialogue__text">Still burning. Stay that way.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-shell">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: bombenschale</p>
+                              <p class="dialogue__text">Empty. Waiting for something to fill it.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-powder">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: schwarzpulver</p>
+                              <p class="dialogue__text">Black dust. Keep the bag closed.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-fuse">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: zündschnur</p>
+                              <p class="dialogue__text">Thin cord. Smells like it would catch fast.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="last-lever">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: hebel</p>
+                              <p class="dialogue__text">Torn out of its mount. Still intact.</p>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-use-fail">
                          <div class="dialogue__box">
-                              <p class="dialogue__text">placeholder: das funktioniert hier nicht</p>
+                              <p class="dialogue__text">That's not doing anything here.</p>
                          </div>
                     </div>
                     <!-- Settings overlay in .ui. Toggle and back sit in the top-right corner
@@ -1559,13 +1620,19 @@
                     </div>
                     <div class="dialogue" data-intro-step="13">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Is that an earthquake?</p>
+                            <p class="dialogue__text">Again?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="intro-hurry"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-intro-step="hurry">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">I shouldn't be here longer than needed!</p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-14"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-intro-step="14">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">I need to find a way out — fast.</p>
+                            <p class="dialogue__text">Let's find a way out here — fast!</p>
                             <label class="dialogue__button" aria-label="Continue" for="position-14"></label>
                         </div>
                     </div>
@@ -1574,182 +1641,212 @@
                          (or a position radio for wall-lantern-fire / escape). -->
                     <div class="dialogue" data-step="vine24-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Need something sharp.</p>
+                            <p class="dialogue__text">These are thick. I'm not tearing through that by hand.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine24-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine24-cut-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Same trick.</p>
+                            <p class="dialogue__text">The sickle should get through this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine24-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine24-cut-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">East's open.</p>
+                            <p class="dialogue__text">That's better. East is open.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine24-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Something in there. A sickle.</p>
+                            <p class="dialogue__text">There's something metal caught in the tangle.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine30-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-found">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">This'll cut.</p>
+                            <p class="dialogue__text">A sickle. Sharp enough to matter.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine30-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-cut-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Through.</p>
+                            <p class="dialogue__text">Alright. Let's cut a way through.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine30-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine30-cut-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Open.</p>
+                            <p class="dialogue__text">That's better. I can get through.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine30-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Vines. Something behind them.</p>
+                            <p class="dialogue__text">More vines. Something's sitting behind them.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine12-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-cut-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Let's see.</p>
+                            <p class="dialogue__text">Let's see what's back there.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine12-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="vine12-cut-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">A shell.</p>
+                            <p class="dialogue__text">Something in the dirt. Not just vines after all.</p>
                             <label class="dialogue__button" aria-label="Continue" for="vine12-done"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-step="waterfall-hint-blocked">
+                    <div class="dialogue" data-step="waterfall-hint-20-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Can't walk through that.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="waterfall-hint-done"></label>
+                            <p class="dialogue__text">That's a wall of water. I'm not walking through it.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="waterfall-hint-20-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="waterfall-hint-21-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">That's a wall of water. I'm not walking through it.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="waterfall-hint-21-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="waterfall-hint-29-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">That's a wall of water. I'm not walking through it.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="waterfall-hint-29-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="waterfall-hint-30-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">That's a wall of water. I'm not walking through it.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="waterfall-hint-30-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lever7-look">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">A lever. What's this do?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lever7-confirm"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="lever7-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">That should kill the water.</p>
+                            <p class="dialogue__text">Okay?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lever7-wonder"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lever7-wonder">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Did something change somewhere?</p>
                             <label class="dialogue__button" aria-label="Continue" for="lever7-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="pickaxe-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">A pickaxe.</p>
+                            <p class="dialogue__text">An old pick. Been here a while.</p>
                             <label class="dialogue__button" aria-label="Continue" for="pickaxe-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="pickaxe-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Rocks, not walls.</p>
+                            <p class="dialogue__text">Still solid. I'll take it.</p>
                             <label class="dialogue__button" aria-label="Continue" for="pickaxe-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Not with my hands.</p>
+                            <p class="dialogue__text">Too big to shove. Not with my hands.</p>
                             <label class="dialogue__button" aria-label="Continue" for="rock-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-cut-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">This I can break.</p>
+                            <p class="dialogue__text">This I can actually break.</p>
                             <label class="dialogue__button" aria-label="Continue" for="rock-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="rock-cut-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Through.</p>
+                            <p class="dialogue__text">There. Path's open.</p>
                             <label class="dialogue__button" aria-label="Continue" for="rock-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="shovel-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">A shovel.</p>
+                            <p class="dialogue__text">A shovel. What's that doing down here?</p>
                             <label class="dialogue__button" aria-label="Continue" for="shovel-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="shovel-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Powder underneath. Handy.</p>
+                            <p class="dialogue__text">Could be useful. Coming with me.</p>
                             <label class="dialogue__button" aria-label="Continue" for="shovel-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Need to dig.</p>
+                            <p class="dialogue__text">The waterfall dumped a lot of dirt here.</p>
                             <label class="dialogue__button" aria-label="Continue" for="mud-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-blocked-2">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Still mud.</p>
+                            <p class="dialogue__text">Still just mud. I'm not crawling through that.</p>
                             <label class="dialogue__button" aria-label="Continue" for="mud-idle"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-cut-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Dig.</p>
+                            <p class="dialogue__text">This I can actually move.</p>
                             <label class="dialogue__button" aria-label="Continue" for="mud-cutting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="mud-cut-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Clear.</p>
+                            <p class="dialogue__text">That's better. I can get through.</p>
                             <label class="dialogue__button" aria-label="Continue" for="mud-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-shell-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Empty shell.</p>
+                            <p class="dialogue__text">Some kind of empty shell. Heavy for how hollow it is.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-shell-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-shell-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">For a bomb, maybe.</p>
+                            <p class="dialogue__text">Might need this. I'll hang on to it.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-shell-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-powder-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Powder.</p>
+                            <p class="dialogue__text">Some kind of black dust? Looks like it was hidden.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-powder-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-powder-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Don't spill it.</p>
+                            <p class="dialogue__text">Don't spill it. Who knows what this does.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-powder-armed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-fuse-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Fuse.</p>
+                            <p class="dialogue__text">A cord? Looks like it burns.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-fuse-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="bomb-fuse-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Short enough.</p>
+                            <p class="dialogue__text">Short. Better keep it dry.</p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-fuse-armed"></label>
                         </div>
                     </div>
                     <!-- One-shot until all three parts are in; WEITER is spark-done. -->
                     <div class="dialogue" data-step="workbench-incomplete">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Still missing parts.</p>
+                            <p class="dialogue__text">I don't have everything for this yet.</p>
                             <label class="dialogue__button" aria-label="Continue" for="workbench-spark-done"></label>
                         </div>
                     </div>
@@ -1760,75 +1857,81 @@
                     </div>
                     <div class="dialogue" data-step="workbench-craft-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Shell. Powder. Fuse.</p>
+                            <p class="dialogue__text">Alright. Let's put this together.</p>
                             <label class="dialogue__button" aria-label="Continue" for="workbench-crafting"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">That'll do.</p>
+                            <p class="dialogue__text">That'll do. Ugly, but it'll work.</p>
                             <label class="dialogue__button" aria-label="Continue" for="workbench-crafted"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-take">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Heavy. Good.</p>
+                            <p class="dialogue__text">Heavier than I expected. Careful with this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="workbench-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Not climbing that.</p>
+                            <p class="dialogue__text">That's a wall, not a climb. Solid the whole way up.</p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-pickaxe-fail">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Too hard. Too big.</p>
+                            <p class="dialogue__text">Too hard. Too big. The pick's not touching this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-pickaxe-failed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-shovel-fail">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">That's not dirt.</p>
+                            <p class="dialogue__text">That's rock, not dirt. The shovel's useless here.</p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-tools-failed"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blast-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Bomb goes here.</p>
+                            <p class="dialogue__text">This is the spot. If anything opens that wall, it's this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-placed"></label>
                         </div>
                     </div>
                     <!-- The one WEITER in the game that moves the player instead of advancing
                          its own group — see scss/world/_stone-wall.scss for why. -->
+                    <div class="dialogue" data-step="wall-fuse-prompt">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Light it. Then I run. No lingering.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="wall-lantern-fire"></label>
+                        </div>
+                    </div>
                     <div class="dialogue" data-step="wall-lantern-fire">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Light it. Then run.</p>
+                            <p class="dialogue__text">Now.</p>
                             <label class="dialogue__button" aria-label="Continue" for="position-30--from-31--right"></label>
                         </div>
                     </div>
                     <!-- After the run left; one-way, then look right, blast, then confirm. -->
                     <div class="dialogue" data-step="wall-blast-run">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Cover.</p>
+                            <p class="dialogue__text">Cover. Now.</p>
                         </div>
                     </div>
                     <div class="dialogue" data-step="wall-blast-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Open.</p>
+                            <p class="dialogue__text">It's open. I can't believe that worked.</p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">A lever.</p>
+                            <p class="dialogue__text">A lever. Torn right out of the wall.</p>
                             <label class="dialogue__button" aria-label="Continue" for="last-lever-pickup"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">This belongs in a socket.</p>
+                            <p class="dialogue__text">Ripped from that socket. Still in one piece.</p>
                             <label class="dialogue__button" aria-label="Continue" for="last-lever-notice"></label>
                         </div>
                     </div>
@@ -1844,10 +1947,22 @@
                             <label class="dialogue__button" aria-label="Continue" for="last-lever-armed"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-step="collapse-hint-blocked">
+                    <div class="dialogue" data-step="collapse-hint-21-blocked">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Way's gone.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="collapse-hint-done"></label>
+                            <p class="dialogue__text">The water's back. I'm not walking through that.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="collapse-hint-21-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="collapse-hint-30-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Water. Again. Not that way.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="collapse-hint-30-done"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="collapse-hint-23-blocked">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">The shaft's full of water. Dead end.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="collapse-hint-23-done"></label>
                         </div>
                     </div>
                     <!-- Appears after the workbench rock finishes falling (one-way). -->
@@ -1857,16 +1972,22 @@
                             <label class="dialogue__button" aria-label="Continue" for="collapse-bench-seen"></label>
                         </div>
                     </div>
+                    <div class="dialogue" data-step="collapse-bench-look">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">That almost took my head off.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="collapse-bench-look-idle"></label>
+                        </div>
+                    </div>
                     <!-- One-shot socket hint; WEITER is spark-done. -->
                     <div class="dialogue" data-step="last-lever-socket-hint">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Empty socket.</p>
+                            <p class="dialogue__text">An empty mount. Something used to sit in here.</p>
                             <label class="dialogue__button" aria-label="Continue" for="socket-spark-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="last-lever-socket-prompt">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Fits.</p>
+                            <p class="dialogue__text">It fits. Like it was made for this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-6-14-unlocked"></label>
                         </div>
                     </div>
@@ -1874,59 +1995,95 @@
                          leftover pull line is unused; confirm is the dock/turn dismiss. -->
                     <div class="dialogue" data-step="last-lever-socket-pull">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Fits.</p>
+                            <p class="dialogue__text">It fits. Like it was made for this.</p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-6-14-unlocked"></label>
                         </div>
                     </div>
                     <!-- After the car docks and he turns left. WEITER unlocks the walk. -->
                     <div class="dialogue" data-step="last-lever-socket-confirm">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Lift's working. Up.</p>
+                            <p class="dialogue__text">The shaft just woke up. That's my way up.</p>
                             <label class="dialogue__button" aria-label="Continue" for="last-lever-way-seen"></label>
                         </div>
                     </div>
                     <!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes start
                          the car; *-call-done is the WEITER dismiss. 6<->14 uses the socket
                          confirm instead. -->
-                    <div class="dialogue" data-step="lift-17-26-call">
+                    <div class="dialogue" data-step="lift-17-26-look">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Call the car.</p>
+                            <p class="dialogue__text">A lever. What's this do?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-17-26-unlocked"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-17-26-shaft">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">A shaft?</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-17-26-hope"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-17-26-hope">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Hope it still works.</p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-17-26-call-done"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-step="lift-11-27-call">
+                    <div class="dialogue" data-step="lift-11-27-look">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Call the car.</p>
+                            <p class="dialogue__text">Another lever. Same kind.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-11-27-unlocked"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-11-27-shaft">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Another shaft. Deeper.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-11-27-hope"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-11-27-hope">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">If the last one ran, maybe this does too.</p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-11-27-call-done"></label>
                         </div>
                     </div>
-                    <div class="dialogue" data-step="lift-10-36-call">
+                    <div class="dialogue" data-step="lift-10-36-look">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Call the car.</p>
+                            <p class="dialogue__text">One more of these. Let's see.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-10-36-unlocked"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-10-36-shaft">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">Long drop. There's a cage down there.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="lift-10-36-hope"></label>
+                        </div>
+                    </div>
+                    <div class="dialogue" data-step="lift-10-36-hope">
+                        <div class="dialogue__box">
+                            <p class="dialogue__text">One way to find out if it still moves.</p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-10-36-call-done"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="escape-run">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Out. Now.</p>
+                            <p class="dialogue__text">Out. Now. I'm not dying down here.</p>
                             <label class="dialogue__button" aria-label="Continue" for="position-4--from-6"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="escape-bridge">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Same boards. Not staying.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="position-3--from-4"></label>
+                            <p class="dialogue__text">That's not happening twice.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="position-2--from-4"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-idle">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Daylight.</p>
-                            <label class="dialogue__button" aria-label="Continue" for="outro-to-1"></label>
+                            <p class="dialogue__text">Phew.</p>
+                            <label class="dialogue__button" aria-label="Continue" for="outro-end"></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="outro-end">
                         <div class="dialogue__box">
-                            <p class="dialogue__text">Last one on the list. Done.</p>
+                            <p class="dialogue__text">Home first. I need a long bath.</p>
                             <label class="dialogue__button" aria-label="Continue" for="outro-fade"></label>
                         </div>
                     </div>
