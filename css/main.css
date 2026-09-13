@@ -7784,19 +7784,15 @@ input {
 }
 
 .end-screen__choices {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  z-index: 2;
+  position: relative;
+  z-index: 0;
   display: flex;
   justify-content: center;
   width: max-content;
-  margin-inline: auto;
-  margin-top: 52.8px;
-  pointer-events: none;
-  animation: title-choices-in 0.5s ease-out both;
-  animation-delay: calc(var(--end-fade) + 10.3s);
+  padding: 6px;
+  clip-path: inset(0 0 0 100%);
+  animation: end-button-wipe 1.15s linear both;
+  animation-delay: calc(var(--end-fade) + 4.7s);
 }
 
 .end-screen__button {
@@ -7829,9 +7825,11 @@ input {
   transform: translateY(3px);
 }
 .end-screen__button {
-  pointer-events: auto;
   text-transform: uppercase;
+  font-weight: 400;
   letter-spacing: 3px;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
 }
 
 .end-screen__run {
@@ -7848,15 +7846,15 @@ input {
   left: 0;
   width: 168px;
   height: 168px;
-  margin-top: calc(168px * -0.55);
+  margin-top: calc(14.4px);
   background-image: url("../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png");
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  animation: end-walker-travel 7.05s linear both, end-walker-run 0.45s steps(1, end) 4 both, end-walker-act 3.65s steps(1, end) forwards, end-walker-exit 0.45s steps(1, end) 4 forwards;
-  animation-delay: calc(var(--end-fade) + 3s), calc(var(--end-fade) + 3s), calc(var(--end-fade) + 4.8s), calc(var(--end-fade) + 8.45s);
+  animation: end-walker-travel 7s linear both, end-walker-run 0.45s steps(1, end) 6 both, end-walker-act 2.6s steps(1, end) forwards, end-walker-exit 0.45s steps(1, end) 3 forwards;
+  animation-delay: calc(var(--end-fade) + 3s), calc(var(--end-fade) + 3s), calc(var(--end-fade) + 5.85s), calc(var(--end-fade) + 8.45s);
 }
 
 .end-screen__line {
@@ -7889,8 +7887,8 @@ input {
   transform: translateX(-50%);
   opacity: 0;
   visibility: hidden;
-  animation: end-puh 2.05s ease-out both;
-  animation-delay: calc(var(--end-fade) + 6.85s);
+  animation: end-puh 1.7s ease-out both;
+  animation-delay: calc(var(--end-fade) + 7.1s);
 }
 
 .end-skip {
@@ -7912,12 +7910,23 @@ input {
   color: #ebcba0;
 }
 
+@keyframes end-button-wipe {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
 @keyframes end-walker-travel {
   0% {
     transform: translateX(100vw);
   }
-  25.5319148936%, 77.304964539% {
-    transform: translateX(calc(50vw - 84px));
+  24.2857142857% {
+    transform: translateX(calc(50vw + 124.8px));
+  }
+  40.7142857143%, 77.8571428571% {
+    transform: translateX(calc(50vw - 307.2px));
   }
   100% {
     transform: translateX(-168px);
@@ -7952,25 +7961,13 @@ input {
   }
 }
 @keyframes end-walker-act {
-  0% {
-    background-image: url("../assets/characters/with-backpack/stumble/frame_001.png");
-  }
-  4.1095890411% {
-    background-image: url("../assets/characters/with-backpack/stumble/frame_002.png");
-  }
-  8.2191780822% {
-    background-image: url("../assets/characters/with-backpack/stumble/frame_003.png");
-  }
-  12.3287671233%, 16.4383561644% {
-    background-image: url("../assets/characters/with-backpack/stumble/frame_004.png");
-  }
-  26.0273972603% {
+  0%, 9.6153846154% {
     background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
-  41.095890411% {
+  30.7692307692% {
     background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
-  56.1643835616%, 100% {
+  48.0769230769%, 100% {
     background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
@@ -8062,7 +8059,7 @@ input {
 }
 
 #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__toggle {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__toggle {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -8080,7 +8077,7 @@ input {
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -8110,7 +8107,7 @@ input {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__click-guard {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__click-guard {
   pointer-events: auto;
   animation: inventory-click-guard-off 0.01s 0.28s linear forwards;
 }
@@ -8131,7 +8128,7 @@ input {
 }
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
   pointer-events: auto;
   overflow: visible;
   transform: translate(-100%, -50%) scale(1);
@@ -8211,6 +8208,7 @@ input {
 #mud-choosing:checked ~ .game .inventory__back--mud,
 #wall-choosing:checked ~ .game .inventory__back--wall,
 #wall-fuse-choosing:checked ~ .game .inventory__back--wall-fuse,
+#last-lever-socket-choosing:checked ~ .game .inventory__back--socket,
 :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__back--workbench {
   opacity: 1;
   visibility: visible;
@@ -8393,6 +8391,7 @@ input {
 .inventory__use--rock,
 .inventory__use--mud,
 .inventory__use--wall,
+.inventory__use--socket,
 .inventory__use--lamp-fuse,
 .inventory__use[class*=inventory__use--wb-] {
   z-index: 5;
@@ -8610,8 +8609,8 @@ input {
 
 #inventory-open:checked ~ #intro-10:checked ~ .game .direction-controls__button--edge,
 #inventory-open:checked ~ #intro-10:checked ~ .game .direction-controls__button--intro-arrow,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--edge,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--intro-arrow {
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--edge,
+:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .direction-controls__button--intro-arrow {
   display: none;
 }
 
@@ -8759,11 +8758,11 @@ input {
   animation: dialogue-ephemeral-replay 2s ease-out forwards;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot .inventory__icon {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot .inventory__icon {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-quote .dialogue__box {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-quote .dialogue__box {
   animation: none;
   opacity: 0;
   visibility: hidden;
@@ -8780,7 +8779,9 @@ input {
 #shovel-armed:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #debug-pre-bomb:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall,
-#wall-fuse-choosing:checked ~ .game .inventory__use--lamp-fuse {
+#wall-fuse-choosing:checked ~ .game .inventory__use--lamp-fuse,
+#last-lever-armed:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket,
+#debug-pre-bomb:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket {
   pointer-events: auto;
 }
 
@@ -8830,28 +8831,28 @@ input {
 }
 
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing):checked ~ #pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
-#debug-pre-bomb:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ .game :is(.inventory__slot--pickaxe,
+#debug-pre-bomb:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game :is(.inventory__slot--pickaxe,
 .inventory__slot--shovel,
 .inventory__slot--bomb-shell,
 .inventory__slot--bomb-powder,
 .inventory__slot--bomb-fuse,
 .inventory__slot--sickle,
 .inventory__slot--bomb) .inventory__use--fail,
-#pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
+#pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing):checked ~ #shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__use--fail,
-#shovel-armed:checked ~ :is(#mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
-:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
+#shovel-armed:checked ~ :is(#mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
+:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #bomb-shell-armed:checked ~ .game .inventory__slot--bomb-shell .inventory__use--fail,
-#bomb-shell-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--bomb-shell .inventory__use--fail,
+#bomb-shell-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--bomb-shell .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #bomb-powder-armed:checked ~ .game .inventory__slot--bomb-powder .inventory__use--fail,
-#bomb-powder-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--bomb-powder .inventory__use--fail,
+#bomb-powder-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--bomb-powder .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #bomb-fuse-armed:checked ~ .game .inventory__slot--bomb-fuse .inventory__use--fail,
-#bomb-fuse-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--bomb-fuse .inventory__use--fail,
+#bomb-fuse-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--bomb-fuse .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #workbench-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
+#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
   pointer-events: auto;
 }
 
@@ -8861,9 +8862,10 @@ input {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ #wall-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ #wall-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #wall-fuse-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
-#debug-pre-bomb:checked ~ #wall-fuse-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail {
+#debug-pre-bomb:checked ~ #wall-fuse-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
+#wall-done:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail {
   pointer-events: none;
 }
 
@@ -8881,21 +8883,24 @@ input {
 #workbench-done):checked ~ .game .inventory__slot--bomb-fuse .inventory__use--fail,
 #workbench-done:checked ~ :is(#wall-choosing, #wall-fuse-choosing):checked ~ .game :is(.inventory__slot--bomb-shell,
 .inventory__slot--bomb-powder,
+.inventory__slot--bomb-fuse) .inventory__use--fail,
+#workbench-done:checked ~ #last-lever-socket-choosing:checked ~ .game :is(.inventory__slot--bomb-shell,
+.inventory__slot--bomb-powder,
 .inventory__slot--bomb-fuse) .inventory__use--fail {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ :is(#last-lever-socket-fitting,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ :is(#last-lever-socket-fitting,
 #last-lever-socket-fitted,
 #lift-6-14-unlocked):checked ~ .game .inventory__slot--last-lever .inventory__use--fail {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:not(:checked) ~ .game .inventory__slot .inventory__use--fail-b {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:not(:checked) ~ .game .inventory__slot .inventory__use--fail-b {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:checked ~ .game .inventory__slot .inventory__use--fail:not(.inventory__use--fail-b) {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #item-use-fail-a:checked ~ .game .inventory__slot .inventory__use--fail:not(.inventory__use--fail-b) {
   pointer-events: none;
 }
 
@@ -8903,7 +8908,7 @@ input {
   visibility: hidden;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-use-fail {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .dialogue--item-use-fail {
   visibility: visible;
 }
 
@@ -9305,8 +9310,8 @@ input {
 
 #inventory-open-play:checked ~ .game .settings,
 #inventory-open-play:checked ~ .game .settings__back,
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__back {
   opacity: 0;
