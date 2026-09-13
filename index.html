@@ -377,11 +377,13 @@
      <input type="radio" name="workbench-step" id="workbench-take" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-done" class="world-position-input" />
 
-     <!-- No -blasting step on purpose: lighting the fuse checks
-          #position-30--from-31--right instead, so the walk back to node 30
-          still comes from the position graph but the rest pose keeps
-          facing the wall. Pickaxe/shovel fails are resting steps so a
-          later bomb click still works. See scss/world/_stone-wall.scss. -->
+     <!-- After the place line, #wall-placed is a rest so the bomb can be
+          clicked again. That opens #wall-fuse-choosing (inventory, lamp).
+          No -blasting step: lighting then checks
+          #position-30--from-31--right, so the walk back to node 30 still
+          comes from the position graph but the rest pose keeps facing the
+          wall. Pickaxe/shovel fails are resting steps so a later bomb
+          click still works. See scss/world/_stone-wall.scss. -->
      <input type="radio" name="wall-step" id="wall-idle" class="world-position-input" checked />
      <input type="radio" name="wall-step" id="wall-blocked" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-choosing" class="world-position-input" />
@@ -390,6 +392,8 @@
      <input type="radio" name="wall-step" id="wall-shovel-swing" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-tools-failed" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-blast-prompt" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-placed" class="world-position-input" />
+     <input type="radio" name="wall-step" id="wall-fuse-choosing" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-lantern-fire" class="world-position-input" />
      <input type="radio" name="wall-step" id="wall-done" class="world-position-input" />
 
@@ -887,6 +891,9 @@
                               <label class="object object--stone-wall-pickaxe" for="wall-pickaxe-swing"></label>
                               <label class="object object--stone-wall-shovel" for="wall-shovel-swing"></label>
                               <label class="object object--stone-wall-cut" for="wall-choosing"></label>
+                              <!-- Placed bomb: art is the foreground twin;
+                             this hit opens inventory to light the fuse. -->
+                              <label class="object object--wall-bomb-hit" for="wall-fuse-choosing"></label>
 
                               <!-- The last lever where it lies (right of node
                              32) and the socket it goes into (right of node
@@ -1205,6 +1212,8 @@
                                         <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
                                         <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
                                              aria-label="Laterne anzünden"></label>
+                                        <label class="inventory__use inventory__use--lamp-fuse" for="wall-lantern-fire"
+                                             aria-label="Laterne benutzen"></label>
                                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
                                    </div>
@@ -1668,7 +1677,7 @@
                     <div class="dialogue" data-step="wall-blast-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">wall-blast-prompt</p>
-                            <label class="dialogue__button" aria-label="Weiter" for="wall-lantern-fire"></label>
+                                                <label class="dialogue__button" aria-label="Weiter" for="wall-placed"></label>
                         </div>
                     </div>
                     <!-- The one WEITER in the game that moves the player instead of advancing
@@ -1829,6 +1838,8 @@
                               for="mud-idle" aria-label="Zurück"></label>
                          <label class="inventory__back inventory__back--wall"
                               for="wall-idle" aria-label="Zurück"></label>
+                         <label class="inventory__back inventory__back--wall-fuse"
+                              for="wall-placed" aria-label="Zurück"></label>
                          <label class="inventory__back inventory__back--workbench"
                               for="workbench-idle" aria-label="Zurück"></label>
                          <label class="settings__toggle" for="settings-open"
