@@ -13560,7 +13560,7 @@ input {
   --world-offset: -1008px;
   --world-offset-y: -336px;
   --player-extra-offset-y: 672px;
-  transition-duration: 4.4s;
+  transition-duration: 0.6s;
   transition-timing-function: ease-in;
   animation: intro-fall-player-land 1ms step-end forwards;
   animation-delay: 4.4s;
@@ -15093,10 +15093,9 @@ input {
   animation-duration: 2.2s;
 }
 
-#lift-6-14-unlocked:checked ~ #position-2--from-4:checked ~ .game .player {
-  --player-extra-offset: -960px;
-  transition-duration: 2s;
-  transition-delay: calc(var(--walk-duration) * 1);
+#lift-6-14-unlocked:checked ~ #position-2--from-4:checked ~ .game .player__body--6-14 {
+  transform: translateX(-960px);
+  transition: transform 2s ease-in-out calc(var(--walk-duration) * 1);
 }
 
 @keyframes player-walk-outro-to-1 {
