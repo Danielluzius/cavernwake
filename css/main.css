@@ -15451,6 +15451,159 @@ input {
     --field-scale: 1.25;
   }
 }
+@media (min-width: 720px) and (max-width: 1439px) and (max-height: 700px) and (min-height: 521px) {
+  .game {
+    --inv-fit: min(
+      1,
+      calc((var(--field-size) - 16px) / 480px),
+      calc((100vw - 24px) / 480px)
+    );
+  }
+  .inventory__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+  }
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(#inventory-open-play,
+  #vine24-choosing,
+  #vine12-choosing,
+  #vine30-choosing,
+  #rock-choosing,
+  #mud-choosing,
+  #wall-choosing,
+  #wall-fuse-choosing,
+  #last-lever-socket-choosing,
+  #workbench-choosing,
+  #workbench-a-shell,
+  #workbench-a-powder,
+  #workbench-a-fuse,
+  #workbench-b-shell-powder,
+  #workbench-b-shell-fuse,
+  #workbench-b-powder-shell,
+  #workbench-b-powder-fuse,
+  #workbench-b-fuse-shell,
+  #workbench-b-fuse-powder,
+  #workbench-bad-sfp,
+  #workbench-bad-psf,
+  #workbench-bad-pfs,
+  #workbench-bad-fsp,
+  #workbench-bad-fps):checked ~ .game .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+  }
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+}
+@media (min-width: 720px) and (max-width: 1599px) and (min-height: 701px) {
+  .game {
+    --inv-fit: min(
+      1,
+      calc((var(--field-size) - 16px) / 480px),
+      calc((100vw - 24px) / 480px)
+    );
+  }
+  .inventory__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+  }
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(#inventory-open-play,
+  #vine24-choosing,
+  #vine12-choosing,
+  #vine30-choosing,
+  #rock-choosing,
+  #mud-choosing,
+  #wall-choosing,
+  #wall-fuse-choosing,
+  #last-lever-socket-choosing,
+  #workbench-choosing,
+  #workbench-a-shell,
+  #workbench-a-powder,
+  #workbench-a-fuse,
+  #workbench-b-shell-powder,
+  #workbench-b-shell-fuse,
+  #workbench-b-powder-shell,
+  #workbench-b-powder-fuse,
+  #workbench-b-fuse-shell,
+  #workbench-b-fuse-powder,
+  #workbench-bad-sfp,
+  #workbench-bad-psf,
+  #workbench-bad-pfs,
+  #workbench-bad-fsp,
+  #workbench-bad-fps):checked ~ .game .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+  }
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+}
+@media (min-width: 1600px) and (max-width: 1759px) and (min-height: 860px) {
+  .game {
+    --inv-fit: min(
+      1,
+      calc((var(--field-size) - 16px) / 480px),
+      calc((100vw - 24px) / 480px)
+    );
+  }
+  .inventory__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+  }
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(#inventory-open-play,
+  #vine24-choosing,
+  #vine12-choosing,
+  #vine30-choosing,
+  #rock-choosing,
+  #mud-choosing,
+  #wall-choosing,
+  #wall-fuse-choosing,
+  #last-lever-socket-choosing,
+  #workbench-choosing,
+  #workbench-a-shell,
+  #workbench-a-powder,
+  #workbench-a-fuse,
+  #workbench-b-shell-powder,
+  #workbench-b-shell-fuse,
+  #workbench-b-powder-shell,
+  #workbench-b-powder-fuse,
+  #workbench-b-fuse-shell,
+  #workbench-b-fuse-powder,
+  #workbench-bad-sfp,
+  #workbench-bad-psf,
+  #workbench-bad-pfs,
+  #workbench-bad-fsp,
+  #workbench-bad-fps):checked ~ .game .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+  }
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+}
 @media (hover: none), (pointer: coarse) {
   .game {
     --edge-opacity: 1;
