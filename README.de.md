@@ -36,7 +36,23 @@ Das ganze Spiel ist Markup und Stylesheets:
 - **Geschwister-Selektoren** (`:checked`, `~`, `:is()`) schalten Kamera, Sprite, HUD und Hindernisse.
 - **Keyframes** spielen Walk-, Kletter-, Idle- und Cutscene-Zyklen.
 
-`index.html`, `css/main.css` und `assets/` — das ist das Spiel.
+`index.html`, `css/main.css` und `assets/` — das ist das Spiel. Die Datei öffnen reicht zum Spielen; Quelle und npm braucht man dafür nicht.
+
+## Architektur
+
+Versteckte Radios und Checkboxen sitzen als Geschwister **vor** `.game`. Labels checken sie. CSS-Geschwister-Selektoren (`:checked ~`) schalten Kamera, Sprite, HUD und Hindernisse. Die Reihenfolge in `scss/main.scss` ist lasttragend: spätere Partials gewinnen bei gleicher Spezifität (Obstacles nach Player, Intro nach dem Positionsgraphen, Responsive zuletzt).
+
+`html/` und `scss/` sind die Quelle. `index.html` und `css/main.css` werden generiert — diese beiden nie per Hand editieren.
+
+## Entwickeln
+
+```bash
+npm install
+npm run watch:html
+npm run watch:css
+```
+
+Oder einmalig: `npm run build:html` und `npm run build:css`. Sass 1.103+ ist die einzige Build-Abhängigkeit zur Laufzeit. `scripts/extract_positions.py` ist ein einmaliges Karten-Tool (Pillow) und hängt nicht an der npm-Pipeline.
 
 ## Was drinsteckt
 
@@ -50,13 +66,16 @@ Das ganze Spiel ist Markup und Stylesheets:
 ## Aufbau
 
 ```
-index.html
-css/main.css
+index.html              generiert — diese Datei spielen
+css/main.css            generiert aus scss/
+html/                   Quell-Markup + Partials
+scss/                   Quell-Styles (Sass-Module)
+scripts/build_html.js   HTML-Assembler
 assets/
-  characters/    Charakter-Sprite-Frames
-  objects/       Inventar-Icons
-  world/         Hintergründe, Hindernisse, UI
-  fonts/         Fusion Pixel (SIL Open Font License)
+  characters/           Charakter-Sprite-Frames
+  objects/              Inventar-Icons
+  world/                Hintergründe, Hindernisse, UI
+  fonts/                Fusion Pixel (SIL Open Font License)
 docs/
   title-screen.png
 ```

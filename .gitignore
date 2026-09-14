@@ -1,17 +1,10 @@
 .DS_Store
 node_modules/
 .cursorrules
-
-# Build tooling / dev-only files (repo should only ship pure HTML + CSS)
-package.json
-package-lock.json
-scss/
-html/
 .vscode/
+scripts/__pycache__/
 
-# Dev-only tileset analysis tooling and its throwaway output (not part of
-# the shipped game, and shouldn't hint at the Python-assisted asset workflow)
-scripts/
+# Dev-only tileset analysis throwaway output
 task-list.txt
 tileset-reference.txt
 assets/world/cave-tileset-base.debug.png

@@ -1,0 +1,22 @@
+{
+  "name": "cavernwake",
+  "version": "1.0.0",
+  "description": "Pixel-art cave exploration game built entirely with HTML and CSS — no JavaScript.",
+  "author": "Daniel Luzius",
+  "license": "ISC",
+  "scripts": {
+    "build:css": "sass scss/main.scss css/main.css --no-source-map",
+    "watch:css": "sass --watch scss/main.scss:css/main.css --no-source-map",
+    "build:html": "node scripts/build_html.js",
+    "watch:html": "node scripts/build_html.js --watch"
+  },
+  "keywords": [
+    "css-game",
+    "html",
+    "scss",
+    "pixel-art"
+  ],
+  "devDependencies": {
+    "sass": "^1.103.1"
+  }
+}

@@ -36,7 +36,23 @@ The whole game is markup and stylesheets:
 - **Sibling selectors** (`:checked`, `~`, `:is()`) switch the camera, sprite, HUD and obstacles.
 - **Keyframes** play walk, climb, idle and cutscene cycles.
 
-Ship `index.html`, `css/main.css` and `assets/` — that is the game.
+Ship `index.html`, `css/main.css` and `assets/` — that is the game. Opening the file is enough to play; you do not need the source tree or npm.
+
+## Architecture
+
+Hidden radios and checkboxes sit as siblings **before** `.game`. Labels check them. CSS sibling combinators (`:checked ~`) switch camera, sprite, HUD and obstacles. Source order in `scss/main.scss` is load-bearing: later partials win same-specificity ties (obstacles after player, intro after the position graph, responsive last).
+
+`html/` and `scss/` are the source. `index.html` and `css/main.css` are generated — never edit those two by hand.
+
+## Develop
+
+```bash
+npm install
+npm run watch:html
+npm run watch:css
+```
+
+Or one-shot: `npm run build:html` and `npm run build:css`. Sass 1.103+ is the only runtime build dependency. `scripts/extract_positions.py` is a one-off map tool (Pillow); it is not on the npm pipeline.
 
 ## What's in it
 
@@ -50,13 +66,16 @@ Ship `index.html`, `css/main.css` and `assets/` — that is the game.
 ## Layout
 
 ```
-index.html
-css/main.css
+index.html              generated — play this
+css/main.css            generated from scss/
+html/                   source markup + partials
+scss/                   source styles (Sass modules)
+scripts/build_html.js   HTML assembler
 assets/
-  characters/    character sprite frames
-  objects/       inventory icons
-  world/         backgrounds, obstacles, UI
-  fonts/         Fusion Pixel (SIL Open Font License)
+  characters/           character sprite frames
+  objects/              inventory icons
+  world/                backgrounds, obstacles, UI
+  fonts/                Fusion Pixel (SIL Open Font License)
 docs/
   title-screen.png
 ```
