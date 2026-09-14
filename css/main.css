@@ -15138,8 +15138,18 @@ input {
     max-width: 100%;
     min-width: 0;
     justify-self: stretch;
-    transform: scale(0.5625);
+    transform: scale(0.6);
     transform-origin: 50% 50%;
+  }
+  .title-screen__button,
+  .title-screen__legal-link {
+    position: relative;
+  }
+  .title-screen__button::before,
+  .title-screen__legal-link::before {
+    content: "";
+    position: absolute;
+    inset: -12px -10px;
   }
   .title-screen__legal {
     padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
@@ -15166,7 +15176,15 @@ input {
     max-width: min(90vw, 864px);
   }
   .game {
+    --field-scale: 0.6;
+  }
+}
+@media (max-width: 383px) {
+  .game {
     --field-scale: 0.5625;
+  }
+  .title-screen__brand {
+    transform: scale(0.5625);
   }
 }
 @media (min-width: 500px) and (max-width: 719px) and (min-height: 700px) {
