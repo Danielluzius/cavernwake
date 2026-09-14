@@ -15,7 +15,9 @@ Du wachst nach einem Sturz in einem Höhlensystem auf, getrennt von deinem Rucks
 
 ## Spielen
 
-`index.html` im Browser öffnen. Keine Installation, kein Build, kein Server.
+Live spielen: [cavernwake.danielluzius.dev](https://cavernwake.danielluzius.dev)
+
+Oder `index.html` im Browser öffnen. Keine Installation, kein Build, kein Server.
 
 - **Bewegen** über die Richtungspads am Rand des Sichtfelds (Gehen, Klettern, Aufzüge).
 - **Dialoge** mit *Weiter* / *Next* fortschalten.

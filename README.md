@@ -15,7 +15,9 @@ You wake up in a cave system after a fall, separated from your backpack and its 
 
 ## Play
 
-Open `index.html` in a browser. No install, no build, no server.
+Play it live: [cavernwake.danielluzius.dev](https://cavernwake.danielluzius.dev)
+
+Or open `index.html` in a browser. No install, no build, no server.
 
 - **Move** with the direction pads at the edge of the vision field (walk, climb, ride lifts).
 - **Advance dialogue** with *Next* / *Weiter*.
