@@ -15019,7 +15019,21 @@ input {
   .scene--game {
     align-items: flex-start;
     justify-content: center;
+    width: 100%;
     padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  }
+  .layout-shell {
+    min-width: 0;
+    margin-inline: auto;
+  }
+  .playfield {
+    max-width: 100%;
+    margin-inline: auto;
+  }
+  .playfield-inner {
+    left: 50%;
+    transform: translateX(-50%) scale(var(--field-scale));
+    transform-origin: top center;
   }
   .direction-controls {
     top: calc(var(--field-size) + var(--chrome-h) / 2);
@@ -15120,6 +15134,10 @@ input {
     content: "Weiter";
   }
   .title-screen__brand {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    justify-self: stretch;
     transform: scale(0.5);
     transform-origin: 50% 50%;
   }
