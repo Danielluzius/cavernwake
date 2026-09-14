@@ -1,10 +1,6 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/English-ebcba0?style=for-the-badge&labelColor=2a1810&color=ebcba0" alt="English" />
-  <a href="README.de.md"><img src="https://img.shields.io/badge/Deutsch-2a1810?style=for-the-badge&labelColor=2a1810&color=ca946e" alt="Deutsch" /></a>
-</p>
-
-<p align="center">
-  <img src="docs/title-screen.png" alt="Cavernwake title screen" width="960" />
+  <img src="https://img.shields.io/badge/English-000000?style=for-the-badge&color=ffffff" alt="English" />
+  <a href="README.de.md"><img src="https://img.shields.io/badge/Deutsch-6e7781?style=for-the-badge&color=ffffff" alt="Deutsch" /></a>
 </p>
 
 # Cavernwake
@@ -12,6 +8,10 @@
 A pixel-art exploration game in side view, built entirely with **HTML and CSS** — not a single line of JavaScript.
 
 You wake up in a cave system after a fall, separated from your backpack and its light. Tunnels, ladders and elevators connect the rooms. Find your gear, work through the obstacles, and look for a way out.
+
+<p align="center">
+  <img src="docs/title-screen.png" alt="Cavernwake title screen" width="960" />
+</p>
 
 ## Play
 

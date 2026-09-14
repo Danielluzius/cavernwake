@@ -1,10 +1,6 @@
 <p align="center">
-  <a href="README.md"><img src="https://img.shields.io/badge/English-2a1810?style=for-the-badge&labelColor=2a1810&color=ca946e" alt="English" /></a>
-  <img src="https://img.shields.io/badge/Deutsch-ebcba0?style=for-the-badge&labelColor=2a1810&color=ebcba0" alt="Deutsch" />
-</p>
-
-<p align="center">
-  <img src="docs/title-screen.png" alt="Cavernwake Title Screen" width="960" />
+  <a href="README.md"><img src="https://img.shields.io/badge/English-6e7781?style=for-the-badge&color=ffffff" alt="English" /></a>
+  <img src="https://img.shields.io/badge/Deutsch-000000?style=for-the-badge&color=ffffff" alt="Deutsch" />
 </p>
 
 # Cavernwake
@@ -12,6 +8,10 @@
 Ein Pixel-Art-Erkundungsspiel in der Seitenansicht, gebaut nur mit **HTML und CSS** — ohne eine Zeile JavaScript.
 
 Du wachst nach einem Sturz in einem Höhlensystem auf, getrennt von deinem Rucksack und deiner Lichtquelle. Gänge, Leitern und Aufzüge verbinden die Räume. Finde deine Ausrüstung, arbeite dich durch die Hindernisse und suche einen Ausweg.
+
+<p align="center">
+  <img src="docs/title-screen.png" alt="Cavernwake Title Screen" width="960" />
+</p>
 
 ## Spielen
 
