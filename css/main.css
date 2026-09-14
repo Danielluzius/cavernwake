@@ -15144,23 +15144,33 @@ input {
   display: none;
 }
 
-#outro-fade:checked ~ .game .inventory__toggle--play,
-#outro-credits:checked ~ .game .inventory__toggle--play,
+@keyframes outro-hud-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+#outro-fade:checked ~ .game .inventory__toggle,
 #outro-fade:checked ~ .game .inventory,
-#outro-credits:checked ~ .game .inventory,
-#outro-fade:checked ~ .game .inventory__back--play,
-#outro-credits:checked ~ .game .inventory__back--play,
+#outro-fade:checked ~ .game .inventory__back,
+#outro-fade:checked ~ .game .settings__toggle,
 #outro-fade:checked ~ .game .settings,
+#outro-fade:checked ~ .game .settings__back {
+  pointer-events: none;
+  transition: none;
+  animation: outro-hud-fade 2s ease-in-out forwards;
+}
+
+#outro-credits:checked ~ .game .inventory__toggle,
+#outro-credits:checked ~ .game .inventory,
+#outro-credits:checked ~ .game .inventory__back,
+#outro-credits:checked ~ .game .settings__toggle,
 #outro-credits:checked ~ .game .settings,
-#outro-fade:checked ~ .game .settings__back,
-#outro-credits:checked ~ .game .settings__back,
-#title-dismissed:checked ~ #outro-fade:checked ~ .game .settings__toggle,
-#title-dismissed:checked ~ #outro-credits:checked ~ .game .settings__toggle,
-#intro-11:checked ~ #outro-fade:checked ~ .game .settings__toggle,
-#intro-11:checked ~ #outro-credits:checked ~ .game .settings__toggle {
+#outro-credits:checked ~ .game .settings__back {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  animation: none;
 }
 
 @keyframes outro-end-screen-show {
