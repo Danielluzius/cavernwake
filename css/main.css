@@ -24,6 +24,7 @@
 html,
 body {
   height: 100%;
+  height: 100svh;
   margin: 0;
   padding: 0;
 }
@@ -59,13 +60,15 @@ input {
 
 .game {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #000;
 }
+
 .scene {
   position: absolute;
   top: 0;
@@ -78,20 +81,12 @@ input {
   display: none;
 }
 
-#title-dismissed:checked ~ .game .scene--intro {
-  display: none;
-}
-
 :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--intro {
   pointer-events: none;
 }
 
-#title-dismissed:checked ~ .game .scene--game {
-  display: block;
-}
-
 :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--game {
-  display: block;
+  display: flex;
   opacity: 0;
   animation: title-scene-in 0.8s ease-out 2s both;
 }
@@ -129,26 +124,6 @@ input {
   animation: vision-field-pulse 4s ease-in-out infinite;
 }
 
-#debug-grid:checked ~ .game .vision-field {
-  width: 100%;
-  height: 100%;
-  margin-top: 0;
-  overflow: visible;
-  border-radius: 0;
-  clip-path: none;
-  animation: none;
-}
-
-#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .vision-field {
-  width: 640px;
-  height: 640px;
-  margin-top: 0px;
-  overflow: hidden;
-  border-radius: 50%;
-  clip-path: circle(50% at 50% 50%);
-  animation: vision-field-pulse 4s ease-in-out infinite;
-}
-
 @keyframes vision-field-pulse {
   0%, 100% {
     clip-path: circle(50% at 50% 50%);
@@ -157,6 +132,91 @@ input {
     clip-path: circle(calc(50% - 6px) at 50% 50%);
   }
 }
+.game {
+  --field-authored: 640px;
+  --field-scale: 1;
+  --field-size: calc(var(--field-authored) * var(--field-scale));
+  --chrome-h: 0px;
+  --chrome-center-from-mid: calc(var(--field-size) / 2);
+  --edge-opacity: 0.4;
+  --pad-ghost-opacity: 0;
+  --pad-ghost-visibility: hidden;
+  --pad-reach-x: calc(240px * var(--field-scale));
+  --pad-reach-y: calc(240px * var(--field-scale));
+  --dialogue-lift: calc(88.8px * var(--field-scale));
+  --dialogue-drop: 0px;
+  --hud-icon-pad: 18px;
+  --hud-icon-half: 36px;
+  --hud-inv-x: calc(
+    var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+  );
+  --hud-inv-y: calc(
+    var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+  );
+  --hud-set-x: calc(
+    var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+  );
+  --hud-set-y: var(--hud-inv-y);
+  --inv-anchor-x: calc(var(--field-size) * -0.5);
+  --set-anchor-x: calc(var(--field-size) * 0.5);
+  --inv-morph-x: calc(
+    var(--hud-inv-x) + var(--hud-icon-half) - var(--inv-anchor-x)
+  );
+  --inv-morph-y: var(--hud-inv-y);
+  --set-morph-x: calc(
+    var(--hud-set-x) - var(--hud-icon-half) - var(--set-anchor-x)
+  );
+  --set-morph-y: var(--hud-set-y);
+  --inv-fit: 1;
+}
+
+.scene--game {
+  align-items: center;
+  justify-content: center;
+}
+
+:is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--game {
+  display: flex;
+}
+
+.layout-shell {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--field-size);
+  height: calc(var(--field-size) + var(--chrome-h));
+  max-width: 100%;
+}
+
+.playfield {
+  position: relative;
+  width: var(--field-size);
+  height: var(--field-size);
+  overflow: hidden;
+}
+
+.playfield-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 640px;
+  transform: scale(var(--field-scale));
+  transform-origin: 0 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.hud-origin {
+  position: absolute;
+  top: calc(var(--field-size) / 2);
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
 .world {
   position: absolute;
   top: 50%;
@@ -1299,47 +1359,6 @@ input {
   image-rendering: pixelated;
 }
 
-.debug-colors-map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3744px;
-  height: 2688px;
-  pointer-events: none;
-  display: none;
-  opacity: 0.15;
-  background-image: url("../assets/world/logic-map-colors.png");
-  background-size: 3744px 2688px;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-}
-
-.debug-grid-map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3744px;
-  height: 2688px;
-  pointer-events: none;
-  display: none;
-  background-image: url("../assets/world/logic-map-grid.png");
-  background-size: 3744px 2688px;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-}
-
-#debug-colors:checked ~ .game .debug-colors-map {
-  display: block;
-}
-
-#debug-grid:checked ~ .game .debug-grid-map {
-  display: block;
-}
-
-#debug-grid:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .debug-grid-map {
-  display: none;
-}
-
 .object {
   position: relative;
   z-index: 1;
@@ -1400,16 +1419,17 @@ input {
 
 .dialogue {
   --dialogue-enter: dialogue-box-in;
+  --dialogue-drop: 0px;
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: auto;
-  bottom: calc(50% + 88.8px);
+  position: absolute;
+  inset: 0;
   display: flex;
   justify-content: center;
+  align-items: flex-end;
+  padding-bottom: calc(var(--chrome-h) + var(--field-size) / 2 + var(--dialogue-lift) - var(--dialogue-drop));
+  box-sizing: border-box;
   z-index: 100;
   pointer-events: none;
   overflow: visible;
@@ -1417,9 +1437,9 @@ input {
 
 .dialogue--center,
 .dialogue--caption {
-  top: 50%;
-  bottom: auto;
-  transform: translateY(-50%);
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: var(--chrome-h);
 }
 
 .dialogue__box {
@@ -2458,10 +2478,6 @@ input {
 
 #position-17--from-26--left:checked ~ .game .vision-field {
   animation: vision-field-pulse 4s ease-in-out infinite, lift-rattle 0.18s linear 11;
-}
-
-#debug-grid:checked ~ .game .vision-field {
-  animation: none;
 }
 
 .player {
@@ -4560,67 +4576,12 @@ input {
   pointer-events: none;
 }
 
-.dev-controls {
-  position: absolute;
-  bottom: 24px;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-}
-
-.dev-controls__button {
-  position: absolute;
-  bottom: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0s, visibility 0s;
-  padding: 8px 20px;
-  font-weight: bold;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 2px solid #fff;
-  cursor: pointer;
-  user-select: none;
-}
-
-.dev-controls__toggles {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  display: flex;
-  gap: 8px;
-  pointer-events: auto;
-}
-
-.dev-controls__button--debug-grid {
-  position: static;
-  bottom: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.dev-controls__button--debug-colors,
-.dev-controls__button--debug-pre-bomb {
-  position: static;
-  bottom: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-#debug-pre-bomb:checked ~ .game .dev-controls__button--debug-pre-bomb {
-  background-color: rgba(160, 80, 0, 0.85);
-}
-
 .direction-controls {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: calc(var(--field-size) / 2);
   left: 50%;
   width: 0;
   height: 0;
-  transform: translateY(0px);
   z-index: 2;
 }
 
@@ -4667,21 +4628,22 @@ input {
   opacity: 0;
   visibility: hidden;
   --press: 0px;
+  touch-action: manipulation;
 }
 .direction-controls__button--up {
-  transform: translateY(var(--press)) translateY(calc(-1 * 240px)) rotate(-90deg);
+  transform: translateY(var(--press)) translateY(calc(-1 * var(--pad-reach-y))) rotate(-90deg);
   margin-top: 9px;
 }
 .direction-controls__button--left {
-  transform: translateY(var(--press)) translateX(calc(-1 * 240px)) rotate(180deg);
+  transform: translateY(var(--press)) translateX(calc(-1 * var(--pad-reach-x))) rotate(180deg);
   margin-left: 9px;
 }
 .direction-controls__button--right {
-  transform: translateY(var(--press)) translateX(240px);
+  transform: translateY(var(--press)) translateX(var(--pad-reach-x));
   margin-left: calc(-1 * 9px);
 }
 .direction-controls__button--down {
-  transform: translateY(var(--press)) translateY(240px) rotate(90deg);
+  transform: translateY(var(--press)) translateY(var(--pad-reach-y)) rotate(90deg);
   margin-top: calc(-1 * 9px);
 }
 .direction-controls__button:active {
@@ -4697,7 +4659,7 @@ input {
 }
 
 #position-1:checked ~ .game .direction-controls__button--right[data-position="1"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4708,7 +4670,7 @@ input {
 }
 
 #position-2:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4719,7 +4681,7 @@ input {
 }
 
 #position-2:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4730,7 +4692,7 @@ input {
 }
 
 #position-3:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4741,7 +4703,7 @@ input {
 }
 
 #position-3:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4752,7 +4714,7 @@ input {
 }
 
 #position-4:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4763,7 +4725,7 @@ input {
 }
 
 #position-4:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4774,7 +4736,7 @@ input {
 }
 
 #position-5:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4785,7 +4747,7 @@ input {
 }
 
 #position-5:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4796,7 +4758,7 @@ input {
 }
 
 #position-6:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4807,7 +4769,7 @@ input {
 }
 
 #position-7:checked ~ .game .direction-controls__button--right[data-position="7"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4818,7 +4780,7 @@ input {
 }
 
 #position-8:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4829,7 +4791,7 @@ input {
 }
 
 #position-8:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4840,7 +4802,7 @@ input {
 }
 
 #position-9:checked ~ .game .direction-controls__button--right[data-position="9"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4851,7 +4813,7 @@ input {
 }
 
 #position-10:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4862,7 +4824,7 @@ input {
 }
 
 #position-10:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4873,7 +4835,7 @@ input {
 }
 
 #position-11:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4884,7 +4846,7 @@ input {
 }
 
 #position-11:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4895,7 +4857,7 @@ input {
 }
 
 #position-12:checked ~ .game .direction-controls__button--left[data-position="12"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4906,7 +4868,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-13:checked ~ .game .direction-controls__button--right[data-position="13"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4917,7 +4879,7 @@ input {
 }
 
 #position-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4928,7 +4890,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-14:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4939,7 +4901,7 @@ input {
 }
 
 #position-15:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4950,7 +4912,7 @@ input {
 }
 
 #position-15:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4961,7 +4923,7 @@ input {
 }
 
 #position-16:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4972,7 +4934,7 @@ input {
 }
 
 #position-16:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4983,7 +4945,7 @@ input {
 }
 
 #position-17:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -4994,7 +4956,7 @@ input {
 }
 
 #position-17:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5005,7 +4967,7 @@ input {
 }
 
 #position-18:checked ~ .game .direction-controls__button--left[data-position="18"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5016,7 +4978,7 @@ input {
 }
 
 #position-19:checked ~ .game .direction-controls__button--right[data-position="19"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5027,7 +4989,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5038,7 +5000,7 @@ input {
 }
 
 #position-20:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5049,7 +5011,7 @@ input {
 }
 
 #position-21:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5060,7 +5022,7 @@ input {
 }
 
 #position-21:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5071,7 +5033,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5082,7 +5044,7 @@ input {
 }
 
 #position-22:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5093,7 +5055,7 @@ input {
 }
 
 #position-22:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5104,7 +5066,7 @@ input {
 }
 
 #position-23:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5115,7 +5077,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5126,7 +5088,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5137,7 +5099,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-24:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5148,7 +5110,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-24:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5159,7 +5121,7 @@ input {
 }
 
 #lift-17-26-unlocked:checked ~ #lift-17-26-call-done:checked ~ #position-25:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5170,7 +5132,7 @@ input {
 }
 
 #position-25:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5181,7 +5143,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-25:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5192,7 +5154,7 @@ input {
 }
 
 #position-26:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5203,7 +5165,7 @@ input {
 }
 
 #position-27:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5214,7 +5176,7 @@ input {
 }
 
 #position-27:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5225,7 +5187,7 @@ input {
 }
 
 #mud-done:checked ~ #position-28:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5236,7 +5198,7 @@ input {
 }
 
 #lift-11-27-unlocked:checked ~ #lift-11-27-call-done:checked ~ #position-28:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5247,7 +5209,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5258,7 +5220,7 @@ input {
 }
 
 #mud-done:checked ~ #position-29:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5269,7 +5231,7 @@ input {
 }
 
 #position-30:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5280,7 +5242,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-30:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5291,7 +5253,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5302,7 +5264,7 @@ input {
 }
 
 #wall-done:checked ~ #position-31:checked ~ .game .direction-controls__button--right[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5313,7 +5275,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-31:checked ~ .game .direction-controls__button--left[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5324,7 +5286,7 @@ input {
 }
 
 #wall-done:checked ~ #position-32:checked ~ .game .direction-controls__button--left[data-position="32"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5335,7 +5297,7 @@ input {
 }
 
 #position-33:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5346,7 +5308,7 @@ input {
 }
 
 #position-33:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5357,7 +5319,7 @@ input {
 }
 
 #rock-done:checked ~ #position-34:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5368,7 +5330,7 @@ input {
 }
 
 #position-34:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5379,7 +5341,7 @@ input {
 }
 
 #lift-10-36-unlocked:checked ~ #lift-10-36-call-done:checked ~ #position-35:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5390,7 +5352,7 @@ input {
 }
 
 #rock-done:checked ~ #position-35:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5401,7 +5363,7 @@ input {
 }
 
 #position-36:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5412,7 +5374,7 @@ input {
 }
 
 #position-36:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5423,7 +5385,7 @@ input {
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5434,7 +5396,7 @@ input {
 }
 
 #position-2--from-1:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5445,7 +5407,7 @@ input {
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5456,7 +5418,7 @@ input {
 }
 
 #position-3--from-2:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5467,7 +5429,7 @@ input {
 }
 
 #position-1--from-2:checked ~ .game .direction-controls__button--right[data-position="1"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5478,7 +5440,7 @@ input {
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5489,7 +5451,7 @@ input {
 }
 
 #position-4--from-3:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5500,7 +5462,7 @@ input {
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--right[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5511,7 +5473,7 @@ input {
 }
 
 #position-2--from-3:checked ~ .game .direction-controls__button--left[data-position="2"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5522,7 +5484,7 @@ input {
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5533,7 +5495,7 @@ input {
 }
 
 #position-5--from-4:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5544,7 +5506,7 @@ input {
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--right[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5555,7 +5517,7 @@ input {
 }
 
 #position-3--from-4:checked ~ .game .direction-controls__button--left[data-position="3"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5566,7 +5528,7 @@ input {
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5577,7 +5539,7 @@ input {
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--right[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5588,7 +5550,7 @@ input {
 }
 
 #position-4--from-5:checked ~ .game .direction-controls__button--left[data-position="4"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5599,7 +5561,7 @@ input {
 }
 
 #position-14--from-6:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5610,7 +5572,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-14--from-6:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5621,7 +5583,7 @@ input {
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--right[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5632,7 +5594,7 @@ input {
 }
 
 #position-5--from-6:checked ~ .game .direction-controls__button--left[data-position="5"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5643,7 +5605,7 @@ input {
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5654,7 +5616,7 @@ input {
 }
 
 #position-8--from-7:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5665,7 +5627,7 @@ input {
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5676,7 +5638,7 @@ input {
 }
 
 #position-16--from-8:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5687,7 +5649,7 @@ input {
 }
 
 #position-7--from-8:checked ~ .game .direction-controls__button--right[data-position="7"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5698,7 +5660,7 @@ input {
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5709,7 +5671,7 @@ input {
 }
 
 #position-10--from-9:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5720,7 +5682,7 @@ input {
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5731,7 +5693,7 @@ input {
 }
 
 #position-36--from-10:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5742,7 +5704,7 @@ input {
 }
 
 #position-9--from-10:checked ~ .game .direction-controls__button--right[data-position="9"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5753,7 +5715,7 @@ input {
 }
 
 #position-12--from-11:checked ~ .game .direction-controls__button--left[data-position="12"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5764,7 +5726,7 @@ input {
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5775,7 +5737,7 @@ input {
 }
 
 #position-27--from-11:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5786,7 +5748,7 @@ input {
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5797,7 +5759,7 @@ input {
 }
 
 #position-11--from-12:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5808,7 +5770,7 @@ input {
 }
 
 #position-14--from-13:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5819,7 +5781,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-14--from-13:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5830,7 +5792,7 @@ input {
 }
 
 #position-6--from-14:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5841,7 +5803,7 @@ input {
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5852,7 +5814,7 @@ input {
 }
 
 #position-15--from-14:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5863,7 +5825,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-13--from-14:checked ~ .game .direction-controls__button--right[data-position="13"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5874,7 +5836,7 @@ input {
 }
 
 #position-23--from-15:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5885,7 +5847,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5896,7 +5858,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-15:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5907,7 +5869,7 @@ input {
 }
 
 #position-14--from-15:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5918,7 +5880,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-14--from-15:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5929,7 +5891,7 @@ input {
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--down[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5940,7 +5902,7 @@ input {
 }
 
 #position-8--from-16:checked ~ .game .direction-controls__button--left[data-position="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5951,7 +5913,7 @@ input {
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5962,7 +5924,7 @@ input {
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5973,7 +5935,7 @@ input {
 }
 
 #position-18--from-17:checked ~ .game .direction-controls__button--left[data-position="18"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5984,7 +5946,7 @@ input {
 }
 
 #position-26--from-17:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -5995,7 +5957,7 @@ input {
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--up[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6006,7 +5968,7 @@ input {
 }
 
 #position-16--from-17:checked ~ .game .direction-controls__button--right[data-position="16"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6017,7 +5979,7 @@ input {
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6028,7 +5990,7 @@ input {
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6039,7 +6001,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-19:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6050,7 +6012,7 @@ input {
 }
 
 #position-20--from-19:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6061,7 +6023,7 @@ input {
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6072,7 +6034,7 @@ input {
 }
 
 #position-21--from-20:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6083,7 +6045,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-20:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6094,7 +6056,7 @@ input {
 }
 
 #position-19--from-20:checked ~ .game .direction-controls__button--right[data-position="19"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6105,7 +6067,7 @@ input {
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6116,7 +6078,7 @@ input {
 }
 
 #position-22--from-21:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6127,7 +6089,7 @@ input {
 }
 
 #position-30--from-21:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6138,7 +6100,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-30--from-21:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6149,7 +6111,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-21:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6160,7 +6122,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-20--from-21:checked ~ .game .direction-controls__button--right[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6171,7 +6133,7 @@ input {
 }
 
 #position-20--from-21:checked ~ .game .direction-controls__button--left[data-position="20"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6182,7 +6144,7 @@ input {
 }
 
 #position-23--from-22:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6193,7 +6155,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6204,7 +6166,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-22:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6215,7 +6177,7 @@ input {
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6226,7 +6188,7 @@ input {
 }
 
 #position-21--from-22:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6237,7 +6199,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-22:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6248,7 +6210,7 @@ input {
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--down[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6259,7 +6221,7 @@ input {
 }
 
 #position-15--from-23:checked ~ .game .direction-controls__button--left[data-position="15"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6270,7 +6232,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-24--from-23:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6281,7 +6243,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-24--from-23:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6292,7 +6254,7 @@ input {
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--right[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6303,7 +6265,7 @@ input {
 }
 
 #position-22--from-23:checked ~ .game .direction-controls__button--left[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6314,7 +6276,7 @@ input {
 }
 
 #lift-17-26-unlocked:checked ~ #lift-17-26-call-done:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6325,7 +6287,7 @@ input {
 }
 
 #position-25--from-24:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6336,7 +6298,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-25--from-24:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6347,7 +6309,7 @@ input {
 }
 
 #position-23--from-24:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6358,7 +6320,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6369,7 +6331,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-23--from-24:checked ~ .game .direction-controls__button--left[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6380,7 +6342,7 @@ input {
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6391,7 +6353,7 @@ input {
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6402,7 +6364,7 @@ input {
 }
 
 #position-33--from-25:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6413,7 +6375,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-24--from-25:checked ~ .game .direction-controls__button--right[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6424,7 +6386,7 @@ input {
 }
 
 #last-lever-armed:not(:checked) ~ #position-24--from-25:checked ~ .game .direction-controls__button--left[data-position="24"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6435,7 +6397,7 @@ input {
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6446,7 +6408,7 @@ input {
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6457,7 +6419,7 @@ input {
 }
 
 #lift-17-26-unlocked:checked ~ #lift-17-26-call-done:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6468,7 +6430,7 @@ input {
 }
 
 #position-25--from-26:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6479,7 +6441,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-25--from-26:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6490,7 +6452,7 @@ input {
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--right[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6501,7 +6463,7 @@ input {
 }
 
 #position-11--from-27:checked ~ .game .direction-controls__button--down[data-position="11"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6512,7 +6474,7 @@ input {
 }
 
 #mud-done:checked ~ #position-28--from-27:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6523,7 +6485,7 @@ input {
 }
 
 #lift-11-27-unlocked:checked ~ #lift-11-27-call-done:checked ~ #position-28--from-27:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6534,7 +6496,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-28:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6545,7 +6507,7 @@ input {
 }
 
 #mud-done:checked ~ #position-29--from-28:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6556,7 +6518,7 @@ input {
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--up[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6567,7 +6529,7 @@ input {
 }
 
 #position-27--from-28:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6578,7 +6540,7 @@ input {
 }
 
 #position-30--from-29:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6589,7 +6551,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-30--from-29:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6600,7 +6562,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-29:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6611,7 +6573,7 @@ input {
 }
 
 #mud-done:checked ~ #position-28--from-29:checked ~ .game .direction-controls__button--right[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6622,7 +6584,7 @@ input {
 }
 
 #lift-11-27-unlocked:checked ~ #lift-11-27-call-done:checked ~ #position-28--from-29:checked ~ .game .direction-controls__button--left[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6633,7 +6595,7 @@ input {
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--right[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6644,7 +6606,7 @@ input {
 }
 
 #position-21--from-30:checked ~ .game .direction-controls__button--down[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6655,7 +6617,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-30:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6666,7 +6628,7 @@ input {
 }
 
 #wall-done:checked ~ #position-31--from-30:checked ~ .game .direction-controls__button--right[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6677,7 +6639,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-31--from-30:checked ~ .game .direction-controls__button--left[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6688,7 +6650,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-29--from-30:checked ~ .game .direction-controls__button--right[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6699,7 +6661,7 @@ input {
 }
 
 #mud-done:checked ~ #position-29--from-30:checked ~ .game .direction-controls__button--left[data-position="29"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6710,7 +6672,7 @@ input {
 }
 
 #wall-done:checked ~ #position-32--from-31:checked ~ .game .direction-controls__button--left[data-position="32"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6721,7 +6683,7 @@ input {
 }
 
 #position-30--from-31:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6732,7 +6694,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-30--from-31:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6743,7 +6705,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-31:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6754,7 +6716,7 @@ input {
 }
 
 #wall-done:checked ~ #position-31--from-32:checked ~ .game .direction-controls__button--right[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6765,7 +6727,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-31--from-32:checked ~ .game .direction-controls__button--left[data-position="31"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6776,7 +6738,7 @@ input {
 }
 
 #lift-17-26-unlocked:checked ~ #lift-17-26-call-done:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--right[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6787,7 +6749,7 @@ input {
 }
 
 #position-25--from-33:checked ~ .game .direction-controls__button--down[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6798,7 +6760,7 @@ input {
 }
 
 #vine24-done:checked ~ #position-25--from-33:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6809,7 +6771,7 @@ input {
 }
 
 #rock-done:checked ~ #position-34--from-33:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6820,7 +6782,7 @@ input {
 }
 
 #position-34--from-33:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6831,7 +6793,7 @@ input {
 }
 
 #lift-10-36-unlocked:checked ~ #lift-10-36-call-done:checked ~ #position-35--from-34:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6842,7 +6804,7 @@ input {
 }
 
 #rock-done:checked ~ #position-35--from-34:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6853,7 +6815,7 @@ input {
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--up[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6864,7 +6826,7 @@ input {
 }
 
 #position-33--from-34:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6875,7 +6837,7 @@ input {
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--up[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6886,7 +6848,7 @@ input {
 }
 
 #position-36--from-35:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6897,7 +6859,7 @@ input {
 }
 
 #rock-done:checked ~ #position-34--from-35:checked ~ .game .direction-controls__button--right[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6908,7 +6870,7 @@ input {
 }
 
 #position-34--from-35:checked ~ .game .direction-controls__button--left[data-position="34"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6919,7 +6881,7 @@ input {
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--down[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6930,7 +6892,7 @@ input {
 }
 
 #position-10--from-36:checked ~ .game .direction-controls__button--left[data-position="10"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6941,7 +6903,7 @@ input {
 }
 
 #lift-10-36-unlocked:checked ~ #lift-10-36-call-done:checked ~ #position-35--from-36:checked ~ .game .direction-controls__button--right[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6952,7 +6914,7 @@ input {
 }
 
 #rock-done:checked ~ #position-35--from-36:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6963,7 +6925,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-13:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6974,7 +6936,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-15:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6985,7 +6947,7 @@ input {
 }
 
 #position-17--from-16:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -6996,7 +6958,7 @@ input {
 }
 
 #position-17--from-18:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7007,7 +6969,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7018,7 +6980,7 @@ input {
 }
 
 #position-17--from-26:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7029,7 +6991,7 @@ input {
 }
 
 #position-6--from-14--right:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7040,7 +7002,7 @@ input {
 }
 
 #position-6--from-14--left:checked ~ .game .direction-controls__button--left[data-position="6"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7051,7 +7013,7 @@ input {
 }
 
 #position-26--from-17--right:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7062,7 +7024,7 @@ input {
 }
 
 #position-26--from-17--left:checked ~ .game .direction-controls__button--left[data-position="26"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7073,7 +7035,7 @@ input {
 }
 
 #position-6--from-14--right:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7084,7 +7046,7 @@ input {
 }
 
 #position-6--from-5:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7095,7 +7057,7 @@ input {
 }
 
 #position-6--from-14--left:checked ~ .game .direction-controls__button--edge[data-position="6"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7106,7 +7068,7 @@ input {
 }
 
 #position-26--from-17--right:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7117,7 +7079,7 @@ input {
 }
 
 #position-26--from-25:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7128,7 +7090,7 @@ input {
 }
 
 #position-26--from-17--left:checked ~ .game .direction-controls__button--edge[data-position="26"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7139,7 +7101,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6--right:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7150,7 +7112,7 @@ input {
 }
 
 #position-14--from-6--right:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7161,7 +7123,7 @@ input {
 }
 
 #position-14--from-6--right:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7172,7 +7134,7 @@ input {
 }
 
 #lift-6-14-unlocked:checked ~ #position-14--from-6--left:checked ~ .game .direction-controls__button--edge[data-position="14"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7183,7 +7145,7 @@ input {
 }
 
 #position-14--from-6--left:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7194,7 +7156,7 @@ input {
 }
 
 #position-14--from-6--left:checked ~ .game .direction-controls__button--left[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7205,7 +7167,7 @@ input {
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7216,7 +7178,7 @@ input {
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=right] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7227,7 +7189,7 @@ input {
 }
 
 #position-17--from-26--right:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7238,7 +7200,7 @@ input {
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--right[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7249,7 +7211,7 @@ input {
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--edge[data-position="17"][data-facing=left] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7260,7 +7222,7 @@ input {
 }
 
 #position-17--from-26--left:checked ~ .game .direction-controls__button--left[data-position="17"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7271,7 +7233,7 @@ input {
 }
 
 #lift-17-26-unlocked:checked ~ #lift-17-26-call-done:checked ~ :is(#position-25, #position-25--from-24):checked ~ .game .direction-controls__button--right[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7282,7 +7244,7 @@ input {
 }
 
 #lift-11-27-unlocked:checked ~ #lift-11-27-call-done:checked ~ :is(#position-28, #position-28--from-29):checked ~ .game .direction-controls__button--left[data-position="28"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7293,7 +7255,7 @@ input {
 }
 
 #lift-10-36-unlocked:checked ~ #lift-10-36-call-done:checked ~ :is(#position-35, #position-35--from-34):checked ~ .game .direction-controls__button--right[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -7304,7 +7266,7 @@ input {
 }
 
 .title-screen {
-  display: none;
+  display: grid;
   position: fixed;
   top: 0;
   left: 0;
@@ -7318,10 +7280,6 @@ input {
   font-family: inherit;
   -webkit-font-smoothing: none;
   font-smooth: never;
-}
-
-#title-dismissed:not(:checked) ~ .game .title-screen {
-  display: grid;
 }
 
 :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .title-screen {
@@ -7344,29 +7302,6 @@ input {
   flex-direction: column;
   align-items: center;
   gap: 33.6px;
-}
-
-.title-screen__skips {
-  grid-row: 1;
-  justify-self: end;
-  align-self: start;
-  display: flex;
-  gap: 18px;
-  margin: 12px;
-}
-
-.title-screen__skip {
-  color: #ca946e;
-  font-size: 24px;
-  letter-spacing: 3px;
-  cursor: pointer;
-  user-select: none;
-  opacity: 0.45;
-}
-
-.title-screen__skip:hover {
-  opacity: 1;
-  color: #ebcba0;
 }
 
 .title-screen__title {
@@ -7891,25 +7826,6 @@ input {
   animation-delay: calc(var(--end-fade) + 7.1s);
 }
 
-.end-skip {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 1;
-  color: #ca946e;
-  font-size: 24px;
-  letter-spacing: 3px;
-  cursor: pointer;
-  user-select: none;
-  opacity: 0.45;
-  pointer-events: auto;
-}
-
-.end-skip:hover {
-  opacity: 1;
-  color: #ebcba0;
-}
-
 @keyframes end-button-wipe {
   from {
     clip-path: inset(0 0 0 100%);
@@ -7987,8 +7903,8 @@ input {
 }
 .inventory__toggle {
   position: absolute;
-  left: -266px;
-  top: -266px;
+  left: var(--hud-inv-x);
+  top: var(--hud-inv-y);
   width: 72px;
   height: 72px;
   margin-left: calc(72px / -2);
@@ -8014,7 +7930,6 @@ input {
   pointer-events: auto;
 }
 
-#title-dismissed:checked ~ .game .inventory__toggle--play,
 :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__toggle--play {
   opacity: 1;
   visibility: visible;
@@ -8114,8 +8029,8 @@ input {
 
 .inventory__panel {
   position: absolute;
-  top: calc(50% + 0px);
-  left: calc(50% + -320px);
+  top: calc(var(--field-size) / 2);
+  left: calc(50% + var(--inv-anchor-x));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8123,7 +8038,7 @@ input {
   overflow: hidden;
   pointer-events: none;
   transform-origin: 100% 50%;
-  transform: translate(-100%, -50%) translate(90px, -266px) scale(0.15);
+  transform: translate(-100%, -50%) translate(var(--inv-morph-x), var(--inv-morph-y)) scale(0.15);
   transition: transform 0.45s ease-out;
 }
 
@@ -8184,8 +8099,8 @@ input {
 }
 .inventory__back {
   position: absolute;
-  left: -266px;
-  top: -266px;
+  left: var(--hud-inv-x);
+  top: var(--hud-inv-y);
   width: 38.4px;
   height: 38.4px;
   margin-left: calc(38.4px / -2);
@@ -8435,8 +8350,7 @@ input {
   background-image: url("../assets/objects/inventory/sickle.png");
 }
 
-:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ .game .inventory__slot--sickle .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--sickle .inventory__icon {
+:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ .game .inventory__slot--sickle .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8445,8 +8359,7 @@ input {
   background-image: url("../assets/objects/inventory/pikeaxe.png");
 }
 
-#pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--pickaxe .inventory__icon {
+#pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8455,8 +8368,7 @@ input {
   background-image: url("../assets/objects/inventory/shovel.png");
 }
 
-#shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--shovel .inventory__icon {
+#shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8507,11 +8419,6 @@ input {
   pointer-events: auto;
 }
 
-#title-dismissed:checked ~ .game .inventory__slot--lamp .inventory__icon {
-  opacity: 1;
-  pointer-events: auto;
-}
-
 #position-1:checked ~ #intro-dark:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-fade:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #position-1:checked ~ #intro-1:checked ~ .game .inventory__slot--lamp .inventory__icon,
@@ -8539,8 +8446,7 @@ input {
   background-image: url("../assets/objects/inventory/bomb-shell.png");
 }
 
-#bomb-shell-armed:checked ~ .game .inventory__slot--bomb-shell .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--bomb-shell .inventory__icon {
+#bomb-shell-armed:checked ~ .game .inventory__slot--bomb-shell .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8557,8 +8463,7 @@ input {
   background-image: url("../assets/objects/inventory/bomb-gunpowder.png");
 }
 
-#bomb-powder-armed:checked ~ .game .inventory__slot--bomb-powder .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--bomb-powder .inventory__icon {
+#bomb-powder-armed:checked ~ .game .inventory__slot--bomb-powder .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8575,8 +8480,7 @@ input {
   background-image: url("../assets/objects/inventory/bomb-fuse.png");
 }
 
-#bomb-fuse-armed:checked ~ .game .inventory__slot--bomb-fuse .inventory__icon,
-#debug-pre-bomb:checked ~ .game .inventory__slot--bomb-fuse .inventory__icon {
+#bomb-fuse-armed:checked ~ .game .inventory__slot--bomb-fuse .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8771,79 +8675,45 @@ input {
 }
 
 #vine24-choosing:checked ~ :is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ .game .inventory__use--vine24,
-#debug-pre-bomb:checked ~ #vine24-choosing:checked ~ .game .inventory__use--vine24,
 :is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ #vine12-choosing:checked ~ .game .inventory__use--vine12,
-#debug-pre-bomb:checked ~ #vine12-choosing:checked ~ .game .inventory__use--vine12,
 #vine30-choosing:checked ~ .game .inventory__use--vine30,
-#debug-pre-bomb:checked ~ #vine30-choosing:checked ~ .game .inventory__use--vine30,
 #pickaxe-armed:checked ~ #rock-choosing:checked ~ .game .inventory__use--rock,
-#debug-pre-bomb:checked ~ #rock-choosing:checked ~ .game .inventory__use--rock,
 #shovel-armed:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
-#debug-pre-bomb:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall,
 #pickaxe-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-pickaxe,
-#debug-pre-bomb:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-pickaxe,
 #shovel-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-shovel,
-#debug-pre-bomb:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-shovel,
 #wall-fuse-choosing:checked ~ .game .inventory__use--lamp-fuse,
-#last-lever-armed:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket,
-#debug-pre-bomb:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket {
+#last-lever-armed:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket {
   pointer-events: auto;
 }
 
 #bomb-shell-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-shell,
-#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-shell,
 #bomb-powder-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-powder,
-#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-powder,
 #bomb-fuse-armed:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-fuse,
-#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__use--wb-a-fuse,
 #bomb-powder-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sp,
-#debug-pre-bomb:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sp,
 #bomb-fuse-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sf,
-#debug-pre-bomb:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sf,
 #bomb-shell-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-ps,
-#debug-pre-bomb:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-ps,
 #bomb-fuse-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-pf,
-#debug-pre-bomb:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-pf,
 #bomb-shell-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fs,
-#debug-pre-bomb:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fs,
 #bomb-powder-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fp,
-#debug-pre-bomb:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fp,
 #bomb-fuse-armed:checked ~ #workbench-b-shell-powder:checked ~ .game .inventory__use--wb-ok,
-#debug-pre-bomb:checked ~ #workbench-b-shell-powder:checked ~ .game .inventory__use--wb-ok,
 #bomb-powder-armed:checked ~ #workbench-b-shell-fuse:checked ~ .game .inventory__use--wb-bad-sfp,
-#debug-pre-bomb:checked ~ #workbench-b-shell-fuse:checked ~ .game .inventory__use--wb-bad-sfp,
 #bomb-fuse-armed:checked ~ #workbench-b-powder-shell:checked ~ .game .inventory__use--wb-bad-psf,
-#debug-pre-bomb:checked ~ #workbench-b-powder-shell:checked ~ .game .inventory__use--wb-bad-psf,
 #bomb-shell-armed:checked ~ #workbench-b-powder-fuse:checked ~ .game .inventory__use--wb-bad-pfs,
-#debug-pre-bomb:checked ~ #workbench-b-powder-fuse:checked ~ .game .inventory__use--wb-bad-pfs,
 #bomb-powder-armed:checked ~ #workbench-b-fuse-shell:checked ~ .game .inventory__use--wb-bad-fsp,
-#debug-pre-bomb:checked ~ #workbench-b-fuse-shell:checked ~ .game .inventory__use--wb-bad-fsp,
-#bomb-shell-armed:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps,
-#debug-pre-bomb:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps {
+#bomb-shell-armed:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps {
   pointer-events: auto;
 }
 
 :is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
 #pickaxe-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 #shovel-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
-#debug-pre-bomb:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game :is(.inventory__slot--sickle,
-.inventory__slot--pickaxe,
-.inventory__slot--shovel) .inventory__use--fail,
-#title-dismissed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
-:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail,
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
 :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail {
   pointer-events: auto;
 }
 
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing):checked ~ #pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
-#debug-pre-bomb:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game :is(.inventory__slot--pickaxe,
-.inventory__slot--shovel,
-.inventory__slot--bomb-shell,
-.inventory__slot--bomb-powder,
-.inventory__slot--bomb-fuse,
-.inventory__slot--sickle,
-.inventory__slot--bomb) .inventory__use--fail,
 #pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing):checked ~ #shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__use--fail,
 #shovel-armed:checked ~ :is(#mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
@@ -8857,20 +8727,16 @@ input {
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #workbench-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail,
-#title-dismissed:checked ~ :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__slot--lamp .inventory__use--fail {
   pointer-events: auto;
 }
 
-#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp .inventory__use--fail,
-#title-dismissed:checked ~ #wall-fuse-choosing:checked ~ .game .inventory__slot--lamp .inventory__use--fail,
-#wall-fuse-choosing:checked ~ #intro-11:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
+#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
   pointer-events: none;
 }
 
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ #wall-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #wall-fuse-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
-#debug-pre-bomb:checked ~ #wall-fuse-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #wall-done:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail {
   pointer-events: none;
 }
@@ -8928,8 +8794,8 @@ input {
 
 .settings__toggle {
   position: absolute;
-  left: 266px;
-  top: -266px;
+  left: var(--hud-set-x);
+  top: var(--hud-set-y);
   width: 72px;
   height: 72px;
   margin-left: calc(72px / -2);
@@ -8945,15 +8811,12 @@ input {
   transition: opacity 0.15s 0.45s, visibility 0s 0.45s;
 }
 
-#title-dismissed:checked ~ .game .settings__toggle,
 :is(#intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .settings__toggle {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-#title-dismissed:checked ~ #settings-open:checked ~ .game .settings__toggle,
-#title-dismissed:checked ~ #inventory-open-play:checked ~ .game .settings__toggle,
 #settings-open:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
 #inventory-open-play:checked ~ .game .settings__toggle,
@@ -8990,11 +8853,11 @@ input {
 
 .settings__panel {
   position: absolute;
-  top: calc(50% + 0px);
-  left: calc(50% + 320px);
+  top: calc(var(--field-size) / 2);
+  left: calc(50% + var(--set-anchor-x));
   pointer-events: none;
   transform-origin: 0% 50%;
-  transform: translate(0, -50%) translate(-90px, -266px) scale(0.15);
+  transform: translate(0, -50%) translate(var(--set-morph-x), var(--set-morph-y)) scale(0.15);
   transition: transform 0.45s ease-out;
 }
 
@@ -9081,8 +8944,8 @@ input {
 }
 .settings__back {
   position: absolute;
-  left: 266px;
-  top: -266px;
+  left: var(--hud-set-x);
+  top: var(--hud-set-y);
   width: 38.4px;
   height: 38.4px;
   margin-left: calc(38.4px / -2);
@@ -9303,8 +9166,7 @@ input {
   --hint-vis: 0;
 }
 
-#title-dismissed:checked ~ #settings-open:checked ~ .game .inventory__toggle,
-#settings-open:checked ~ #intro-11:checked ~ .game .inventory__toggle,
+#settings-open:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__toggle,
 #settings-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ .game .inventory__back,
 #settings-open:checked ~ .game .inventory {
@@ -9697,8 +9559,7 @@ input {
 #vine30-choosing,
 #vine30-cut-prompt,
 #vine30-cutting,
-#vine30-done):checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut,
-#debug-pre-bomb:checked ~ #vine24-idle:checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut {
+#vine30-done):checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -9713,8 +9574,7 @@ input {
 #vine30-choosing,
 #vine30-cut-prompt,
 #vine30-cutting,
-#vine30-done):checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut,
-#debug-pre-bomb:checked ~ #vine24-idle:checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut {
+#vine30-done):checked ~ :is(#position-24, [id^=position-24--]):checked ~ .game .object--vines-24-cut {
   --click-hint-top: 195.06px;
   --click-hint-left: 40.5px;
   --click-hint: 1;
@@ -9762,8 +9622,7 @@ input {
 }
 
 #vine30-idle:checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--vines-30,
-#vine30-armed:checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--vines-30-cut,
-#debug-pre-bomb:checked ~ :is(#vine30-idle, #vine30-armed):checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--vines-30-cut {
+#vine30-armed:checked ~ :is(#position-30, [id^=position-30--]):checked ~ .game .object--vines-30-cut {
   pointer-events: auto;
   cursor: pointer;
   --click-hint-top: 195.06px;
@@ -9780,8 +9639,7 @@ input {
 #vine30-choosing,
 #vine30-cut-prompt,
 #vine30-cutting,
-#vine30-done):checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut,
-#debug-pre-bomb:checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut {
+#vine30-done):checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -9796,8 +9654,7 @@ input {
 #vine30-choosing,
 #vine30-cut-prompt,
 #vine30-cutting,
-#vine30-done):checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut,
-#debug-pre-bomb:checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut {
+#vine30-done):checked ~ #vine12-idle:checked ~ :is(#position-12, [id^=position-12--]):checked ~ .game .object--vines-12-cut {
   --click-hint-top: 195.06px;
   --click-hint-left: 40.5px;
   --click-hint: 1;
@@ -9826,7 +9683,7 @@ input {
 #position-30--from-21--post:checked ~ .game .direction-controls__button--up[data-position="30"],
 #vine30-done:checked ~ #position-30--from-21--post:checked ~ .game .direction-controls__button--right[data-position="30"],
 #lever7-done:checked ~ #position-30--from-21--post:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -10892,8 +10749,7 @@ input {
 }
 
 #rock-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock,
-#pickaxe-armed:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut,
-#debug-pre-bomb:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut {
+#pickaxe-armed:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -10904,8 +10760,7 @@ input {
   --click-hint: 1;
 }
 
-#pickaxe-armed:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut,
-#debug-pre-bomb:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut {
+#pickaxe-armed:checked ~ #rock-idle:checked ~ :is(#position-34, [id^=position-34--]):checked ~ .game .object--rock-cut {
   --click-hint-top: 99.06px;
   --click-hint-left: 136.5px;
   --click-hint: 1;
@@ -11037,8 +10892,7 @@ input {
 }
 
 #mud-spark:checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud,
-#shovel-armed:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut,
-#debug-pre-bomb:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut {
+#shovel-armed:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -11049,8 +10903,7 @@ input {
   --click-hint: 1;
 }
 
-#shovel-armed:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut,
-#debug-pre-bomb:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut {
+#shovel-armed:checked ~ #mud-idle:checked ~ :is(#position-29, [id^=position-29--]):checked ~ .game .object--mud-cut {
   --click-hint-top: 147.06px;
   --click-hint-left: 232.5px;
   --click-hint: 1;
@@ -11315,7 +11168,7 @@ input {
 
 :is(#position-22--from-21--post, #position-22--from-23--post):checked ~ .game .direction-controls__button--right[data-position="22"],
 :is(#position-22--from-21--post, #position-22--from-23--post):checked ~ .game .direction-controls__button--left[data-position="22"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -11553,8 +11406,7 @@ input {
 
 #wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
 #pickaxe-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
-#workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
-#debug-pre-bomb:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut {
+#workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -11566,8 +11418,7 @@ input {
 }
 
 #pickaxe-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
-#workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
-#debug-pre-bomb:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
+#workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
   --click-hint-top: 244.8px;
   --click-hint-left: 115.2px;
   --click-hint: 1;
@@ -11717,7 +11568,7 @@ input {
 }
 
 #position-30--from-31--right:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -11728,7 +11579,7 @@ input {
 }
 
 #vine30-done:checked ~ #position-30--from-31--right:checked ~ .game .direction-controls__button--right[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -11739,7 +11590,7 @@ input {
 }
 
 #lever7-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-31--right:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -11968,21 +11819,6 @@ input {
   animation-duration: 2.2s;
 }
 
-#debug-pre-bomb:checked ~ .game :is(.object--pickaxe,
-.object--shovel,
-.object--bomb-shell,
-.object--bomb-powder,
-.object--bomb-fuse) {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-#debug-pre-bomb:checked ~ .game .object--vines-30 {
-  background-image: url("../assets/world/obstacles/obstacle-vines.png");
-  pointer-events: none;
-}
-
 @keyframes player-walk-from-23-to-25 {
   0% {
     background-image: url("../assets/characters/with-backpack/walk/walk-right/frame_001.png");
@@ -12055,7 +11891,7 @@ input {
 #position-23--from-25:checked ~ .game .direction-controls__button--up[data-position="23"],
 #position-23--from-25:checked ~ .game .direction-controls__button--left[data-position="23"],
 #last-lever-armed:not(:checked) ~ #position-23--from-25:checked ~ .game .direction-controls__button--right[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12072,7 +11908,7 @@ input {
 #position-25--from-23:checked ~ .game .direction-controls__button--down[data-position="25"],
 #lift-17-26-unlocked:checked ~ #position-25--from-23:checked ~ .game .direction-controls__button--right[data-position="25"],
 #vine24-done:checked ~ #last-lever-armed:not(:checked) ~ #position-25--from-23:checked ~ .game .direction-controls__button--left[data-position="25"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12161,7 +11997,7 @@ input {
 #position-21--from-19:checked ~ .game .direction-controls__button--right[data-position="21"],
 #position-21--from-19:checked ~ .game .direction-controls__button--down[data-position="21"],
 #lever7-done:checked ~ #pickaxe-armed:checked ~ #last-lever-armed:not(:checked) ~ #position-21--from-19:checked ~ .game .direction-controls__button--left[data-position="21"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12176,7 +12012,7 @@ input {
 }
 
 #lever7-done:checked ~ #pickaxe-armed:checked ~ #last-lever-armed:not(:checked) ~ #position-19--from-21:checked ~ .game .direction-controls__button--right[data-position="19"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12257,7 +12093,7 @@ input {
 
 #position-27--from-30:checked ~ .game .direction-controls__button--up[data-position="27"],
 #mud-done:checked ~ #position-27--from-30:checked ~ .game .direction-controls__button--right[data-position="27"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12272,7 +12108,7 @@ input {
 #position-30--from-27:checked ~ .game .direction-controls__button--up[data-position="30"],
 #vine30-done:checked ~ #position-30--from-27:checked ~ .game .direction-controls__button--right[data-position="30"],
 #lift-11-27-unlocked:checked ~ #mud-done:checked ~ #last-lever-armed:not(:checked) ~ #position-30--from-27:checked ~ .game .direction-controls__button--left[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12417,7 +12253,7 @@ input {
 
 #position-33--from-35:checked ~ .game .direction-controls__button--up[data-position="33"],
 #rock-done:checked ~ #position-33--from-35:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12431,7 +12267,7 @@ input {
 
 #position-33--from-36:checked ~ .game .direction-controls__button--up[data-position="33"],
 #lift-10-36-unlocked:checked ~ #position-33--from-36:checked ~ .game .direction-controls__button--right[data-position="33"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12445,7 +12281,7 @@ input {
 
 #lift-10-36-unlocked:checked ~ #position-35--from-33:checked ~ .game .direction-controls__button--right[data-position="35"],
 #rock-done:checked ~ #position-35--from-33:checked ~ .game .direction-controls__button--left[data-position="35"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12459,7 +12295,7 @@ input {
 
 #position-36--from-33:checked ~ .game .direction-controls__button--up[data-position="36"],
 #lift-10-36-unlocked:checked ~ #position-36--from-33:checked ~ .game .direction-controls__button--left[data-position="36"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12509,7 +12345,7 @@ input {
 }
 
 #position-30--from-32:checked ~ .game .direction-controls__button--up[data-position="30"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12557,7 +12393,7 @@ input {
 }
 
 #last-lever-armed:checked ~ #collapse-bench-seen:checked ~ #position-23--from-21:checked ~ .game .direction-controls__button--up[data-position="23"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -12826,10 +12662,6 @@ input {
 #last-lever-turn:checked ~ .game .viewport,
 #last-lever-armed:checked ~ .game .viewport {
   animation: intro-screen-shake 0.4s ease-in-out infinite;
-}
-
-#debug-grid:checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .viewport {
-  animation: none;
 }
 
 #last-lever-notice:checked ~ .game .player__sprite {
@@ -13248,27 +13080,6 @@ input {
   animation-delay: calc(0s + 0.75s);
 }
 #collapse-bench-look:checked ~ .game .dialogue[data-step=collapse-bench-look] .dialogue__box .dialogue__button--teach::before {
-  animation-name: dialogue-spark-teach;
-  animation-duration: 2.2s;
-}
-
-.dev-controls__button--intro-start {
-  position: static;
-  bottom: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-.dev-controls__button--intro-start.dialogue__box {
-  transition: none;
-  animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
-}
-.dev-controls__button--intro-start .dialogue__button::before {
-  animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
-}
-.dev-controls__button--intro-start .dialogue__button--teach::before {
   animation-name: dialogue-spark-teach;
   animation-duration: 2.2s;
 }
@@ -14489,7 +14300,7 @@ input {
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step="5"] {
-  bottom: calc(50% + 88.8px - 48px);
+  --dialogue-drop: calc(48px * var(--field-scale));
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box {
@@ -14513,7 +14324,7 @@ input {
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] {
-  bottom: calc(50% + 88.8px - 48px);
+  --dialogue-drop: calc(48px * var(--field-scale));
 }
 
 #position-1:checked ~ #intro-5:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box {
@@ -14537,7 +14348,7 @@ input {
 }
 
 #position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] {
-  bottom: calc(50% + 88.8px - 48px);
+  --dialogue-drop: calc(48px * var(--field-scale));
 }
 
 #position-1:checked ~ #intro-breathe:checked ~ .game .dialogue[data-intro-step=breathe] .dialogue__box {
@@ -14581,7 +14392,7 @@ input {
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] {
-  bottom: calc(50% + 88.8px - 48px);
+  --dialogue-drop: calc(48px * var(--field-scale));
 }
 
 #position-1:checked ~ #intro-6:checked ~ .game .dialogue[data-intro-step="6"] .dialogue__box {
@@ -14815,7 +14626,7 @@ input {
 }
 
 #position-1:checked ~ #intro-anyway:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step=anyway] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -14826,7 +14637,7 @@ input {
 }
 
 #position-1:checked ~ #intro-8:checked ~ .game .direction-controls__button--intro-arrow[data-intro-step="8"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -14848,7 +14659,7 @@ input {
 
 #position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--left[data-position="14"],
 #position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
-  opacity: 0.4;
+  opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
@@ -15139,8 +14950,7 @@ input {
   animation: outro-end-screen-show 0s 2s forwards;
 }
 
-#outro-fade:checked ~ .game .title-screen,
-#outro-fade:checked ~ .game .end-skip {
+#outro-fade:checked ~ .game .title-screen {
   display: none;
 }
 
@@ -15177,4 +14987,189 @@ input {
   to {
     opacity: 1;
   }
+}
+@media (max-width: 719px), (max-height: 520px) {
+  .game {
+    --chrome-h: 156px;
+    --chrome-center-from-mid: calc(var(--field-size) / 2);
+    --pad-ghost-opacity: 0.22;
+    --pad-ghost-visibility: visible;
+    --pad-reach-x: 60px;
+    --pad-reach-y: 42px;
+    --hud-inv-y: calc(
+      var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+    );
+    --hud-set-y: var(--hud-inv-y);
+    --inv-fit: min(
+      1,
+      calc(
+        (var(--field-size) - 24px) /
+          480px
+      )
+    );
+  }
+  .direction-controls {
+    top: calc(var(--field-size) + var(--chrome-h) / 2);
+  }
+  .direction-controls > div.direction-controls__button {
+    opacity: var(--pad-ghost-opacity);
+    visibility: var(--pad-ghost-visibility);
+  }
+  .inventory {
+    z-index: 5;
+  }
+  .settings {
+    z-index: 5;
+  }
+  .inventory__hit,
+  .settings__hit {
+    position: fixed;
+    inset: 0;
+  }
+  .inventory__panel {
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+  }
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(#inventory-open-play,
+  #vine24-choosing,
+  #vine12-choosing,
+  #vine30-choosing,
+  #rock-choosing,
+  #mud-choosing,
+  #wall-choosing,
+  #wall-fuse-choosing,
+  #last-lever-socket-choosing,
+  #workbench-choosing,
+  #workbench-a-shell,
+  #workbench-a-powder,
+  #workbench-a-fuse,
+  #workbench-b-shell-powder,
+  #workbench-b-shell-fuse,
+  #workbench-b-powder-shell,
+  #workbench-b-powder-fuse,
+  #workbench-b-fuse-shell,
+  #workbench-b-fuse-powder,
+  #workbench-bad-sfp,
+  #workbench-bad-psf,
+  #workbench-bad-pfs,
+  #workbench-bad-fsp,
+  #workbench-bad-fps):checked ~ .game .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+  .settings__panel {
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+  }
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+    background: #2f6b32;
+    font-size: 0;
+    color: transparent;
+    user-select: none;
+    box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button::after {
+    content: "";
+    display: block;
+    width: 28%;
+    height: 28%;
+    margin-right: 12%;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg);
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button:hover {
+    background: #3a8240;
+    box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button {
+    position: fixed;
+    left: 50%;
+    top: calc(50% + var(--chrome-center-from-mid));
+    right: auto;
+    bottom: auto;
+    z-index: 8;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    touch-action: manipulation;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button::before {
+    content: none;
+  }
+  .title-screen__brand {
+    transform: scale(0.5);
+    transform-origin: 50% 50%;
+  }
+  .dialogue--caption .dialogue__text {
+    white-space: normal;
+    max-width: min(90vw, 864px);
+  }
+  .game {
+    --field-scale: 0.5;
+  }
+}
+@media (min-width: 500px) and (max-width: 719px) and (min-height: 700px) {
+  .game {
+    --field-scale: 0.75;
+  }
+  .title-screen__brand {
+    transform: scale(0.75);
+  }
+}
+@media (max-height: 520px) {
+  .game {
+    --chrome-h: 0px;
+    --chrome-center-from-mid: calc(
+      var(--field-size) / 2 - 42px -
+        30px - 10px
+    );
+  }
+  .direction-controls {
+    top: calc(var(--field-size) - 42px - 30px - 10px);
+  }
+}
+@media (min-width: 720px) and (max-height: 700px) and (min-height: 521px) {
+  .game {
+    --field-scale: 0.75;
+    --chrome-h: 0px;
+    --pad-ghost-opacity: 0;
+    --pad-ghost-visibility: hidden;
+    --pad-reach-x: calc(240px * var(--field-scale));
+    --pad-reach-y: calc(240px * var(--field-scale));
+    --hud-inv-y: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-y: var(--hud-inv-y);
+  }
+}
+@media (min-width: 720px) and (min-height: 701px) {
+  .game {
+    --field-scale: 1;
+  }
+}
+@media (min-width: 1200px) and (min-height: 860px) {
+  .game {
+    --field-scale: 1.25;
+  }
+}
+.title-screen,
+.end-screen {
+  width: 100%;
+  height: 100%;
+  height: 100svh;
 }

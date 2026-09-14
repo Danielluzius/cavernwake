@@ -5,7 +5,7 @@
 <head>
      <meta charset="UTF-8" />
      <meta name="google" content="notranslate" />
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
      <title>Cavernwake</title>
      <!-- css/main.css is compiled from scss/ via `npm run watch:css` (or
          `npm run build:css` once) — never edit it directly. -->
@@ -198,20 +198,9 @@
 
 <body>
 
-     <!-- Title screen dismiss toggle: unchecked shows the title screen
-         (.scene--intro), checked reveals the real game (.scene--game) —
-         see components/_title-screen.scss and game/_game.scss. -->
-     <input type="checkbox" id="title-dismissed" class="world-position-input" />
      <!-- Imprint overlay on the title screen (independent of in-game
          settings). Same checkbox opens and closes it. -->
      <input type="checkbox" id="title-imprint-open" class="world-position-input" />
-
-     <!-- Dev-only, independent of everything else: toggles the visual
-         debug grid/colors overlays (see scss/world/_room.scss) and the
-         pre-bomb inventory cheat (scss/world/_debug-pre-bomb.scss). -->
-     <input type="checkbox" id="debug-grid" class="world-position-input" checked />
-     <input type="checkbox" id="debug-colors" class="world-position-input" />
-     <input type="checkbox" id="debug-pre-bomb" class="world-position-input" />
 
      <!-- One-way spark flags (scss/world/_click-hint.scss). Unseen stays
          checked until the matching hotspot is clicked; -seen holds the
@@ -701,10 +690,9 @@
 
      <!-- Opening cutscene, own linear radio chain (name="intro"), entirely
           decoupled from the position graph above (see scss/intro/_intro.scss
-          for the full explanation) — driven for now by the dev-only START
-          button below; will later become the real title-screen dismiss
-          button. Re-uses position-graph nodes 1-4/13/14 for its camera
-          targets, but never touches the "position" radios themselves. -->
+          for the full explanation). Title-screen Start checks #intro-dark.
+          Re-uses position-graph nodes 1-4/13/14 for its camera targets, but
+          never touches the "position" radios themselves. -->
      <input type="radio" name="intro" id="intro-dark" class="world-position-input" />
      <input type="radio" name="intro" id="intro-fade" class="world-position-input" />
      <input type="radio" name="intro" id="intro-1" class="world-position-input" />
@@ -743,14 +731,10 @@
 
           <!-- Title screen: after the bar fills, Deutsch?/English? +
              Impressum fade in between credit and bar. Picking a language
-             crossfades those pads to Start in the same slot. Corner
-             WEITER is a debug skip (#title-dismissed) — remove later. -->
+             crossfades those pads to Start in the same slot. Start checks
+             #intro-dark and hands into the opening cutscene. -->
           <section class="scene scene--intro">
                <div class="title-screen">
-                    <div class="title-screen__skips">
-                         <label class="title-screen__skip" for="outro-fade">ENDE</label>
-                         <label class="title-screen__skip" for="title-dismissed">WEITER</label>
-                    </div>
                     <div class="title-screen__brand">
                          <div class="title-screen__masthead">
                               <h1 class="title-screen__title">CAVERNWAKE</h1>
@@ -829,8 +813,8 @@
           </section>
 
           <!-- Ending overlay sits on .game (not inside .scene--game) so
-               the title-screen ENDE skip can show it without revealing
-               the cave. Runner wipes the title pad in behind him.
+               the cave can stay hidden while credits run. Runner wipes
+               the title pad in behind him.
                See scss/components/_end-screen.scss. -->
           <div class="end-screen">
                <div class="end-screen__brand">
@@ -858,6 +842,15 @@
              separate pre-drawn image layers, this is structure only. -->
           <section class="scene scene--game">
 
+               <!-- Field square + HUD share this shell so 50% is the
+                    vision-field center (plus an optional chrome band
+                    under it on compact). Blackout / blast-flash stay
+                    outside: they are position:fixed and must not pick
+                    up a transformed ancestor (intro shake lives on
+                    .viewport). See scss/game/_layout.scss. -->
+               <div class="layout-shell">
+               <div class="playfield">
+               <div class="playfield-inner">
                <!-- One shake wrapper per gated shaft, nested like
                     .player__body--* (scss/world/_lift.scss). Call rumble
                     used to live on .scene--game; that shared element kept
@@ -897,9 +890,6 @@
                               <div class="object--waterfall-collapse-far"></div>
 
                               <div class="environment-map"></div>
-                              <div class="debug-colors-map"></div>
-                              <div class="debug-grid-map"></div>
-                              <div class="room" style="--room-cols: 3; --room-rows: 7;"></div>
                          </div>
 
                          <div class="world-layer world-layer--objects">
@@ -1165,41 +1155,14 @@
                </div>
                </div>
                </div>
-
-               <!-- Sibling of .viewport on purpose: .blackout is position:fixed
-                 and must stay pinned to the real browser viewport even
-                 while .viewport itself is transformed (e.g. the intro's
-                 screen shake) — a transformed ancestor would otherwise
-                 become its containing block and shake it too. -->
-               <div class="blackout"></div>
-
-               <!-- Detonation flash, sibling of .viewport for the exact same
-                 reason as .blackout above — it fires while .viewport is
-                 being shaken by a transform. See scss/world/_stone-wall.scss. -->
-               <div class="blast-flash"></div>
+               </div>
+               </div>
 
                <div class="ui">
-                    <label class="end-skip" for="outro-fade">ENDE</label>
-                    <div class="dev-controls">
-                         <div class="dev-controls__toggles">
-                              <label class="dev-controls__button dev-controls__button--debug-grid"
-                                   for="debug-grid">GRID</label>
-                              <label class="dev-controls__button dev-controls__button--debug-colors"
-                                   for="debug-colors">COLORS</label>
-                              <label class="dev-controls__button dev-controls__button--debug-pre-bomb"
-                                   for="debug-pre-bomb">PRE-BOMB</label>
-                         </div>
-                         <!-- Dev-only for now: kicks off the intro chain (see
-                         scss/intro/_intro.scss). Becomes the real game's
-                         start button later, once the title screen leads
-                         straight into it instead of the free-roam stub. -->
-                         <label class="dev-controls__button dev-controls__button--intro-start"
-                              for="intro-dark">START</label>
-                    </div>
-
                     <!-- Inventory overlays the vision field (sibling of
-                         .viewport, inside .ui). Toggle + back stay in
-                         .direction-controls so they sit above the bag. -->
+                         .viewport, inside .ui). Toggle + back sit in
+                         .hud-origin so the open panel can stack above
+                         the D-pad while the close X stays clickable. -->
                     <!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
                          of the vision-field square; the open bag grows left beside it. Close
                          via the X on the icon slot. World click (hit)
@@ -2413,14 +2376,7 @@
                             <label class="dialogue__button" aria-label="Continue" for="outro-fade"></label>
                         </div>
                     </div>
-                    <!-- Dimmed placeholders (always present, one slot per
-                     direction on the vision-field grid lines) plus one
-                     clickable overlay label per (position, direction) edge
-                     in vars.$positions — only the edge(s) matching the
-                     CURRENT position are revealed, see
-                     components/_components.scss. Auto-generated from
-                     logic-map.png via scripts/extract_positions.py. -->
-                    <div class="direction-controls">
+                    <div class="hud-origin">
                          <label class="inventory__toggle inventory__toggle--tutorial"
                               for="inventory-open" aria-label="Inventar"></label>
                          <label class="inventory__toggle inventory__toggle--play"
@@ -2451,6 +2407,15 @@
                               aria-label="Einstellungen"></label>
                          <label class="settings__back" for="settings-open"
                               aria-label="Schließen"></label>
+                    </div>
+                    <!-- Dimmed placeholders (always present, one slot per
+                     direction on the vision-field grid lines) plus one
+                     clickable overlay label per (position, direction) edge
+                     in vars.$positions — only the edge(s) matching the
+                     CURRENT position are revealed, see
+                     components/_components.scss. Auto-generated from
+                     logic-map.png via scripts/extract_positions.py. -->
+                    <div class="direction-controls">
                          <div class="direction-controls__button direction-controls__button--up">▲</div>
                          <div class="direction-controls__button direction-controls__button--left">◀</div>
                          <div class="direction-controls__button direction-controls__button--right">▶</div>
@@ -2649,6 +2614,19 @@
                               for="intro-9" data-intro-step="8">▶</label>
                     </div>
                </div>
+               </div>
+
+               <!-- Sibling of .viewport on purpose: .blackout is position:fixed
+                 and must stay pinned to the real browser viewport even
+                 while .viewport itself is transformed (e.g. the intro's
+                 screen shake) — a transformed ancestor would otherwise
+                 become its containing block and shake it too. -->
+               <div class="blackout"></div>
+
+               <!-- Detonation flash, sibling of .viewport for the exact same
+                 reason as .blackout above — it fires while .viewport is
+                 being shaken by a transform. See scss/world/_stone-wall.scss. -->
+               <div class="blast-flash"></div>
 
           </section>
 
