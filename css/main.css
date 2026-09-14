@@ -185,6 +185,7 @@ input {
   width: var(--field-size);
   height: calc(var(--field-size) + var(--chrome-h));
   max-width: 100%;
+  container-type: inline-size;
 }
 
 .playfield {
@@ -210,10 +211,10 @@ input {
 .hud-origin {
   position: absolute;
   top: calc(var(--field-size) / 2);
-  left: 50%;
+  left: round(nearest, 50cqi, 1px);
   width: 0;
   height: 0;
-  z-index: 6;
+  z-index: 8;
   pointer-events: none;
 }
 
@@ -1430,7 +1431,7 @@ input {
   align-items: flex-end;
   padding-bottom: calc(var(--chrome-h) + var(--field-size) / 2 + var(--dialogue-lift) - var(--dialogue-drop));
   box-sizing: border-box;
-  z-index: 100;
+  z-index: 3;
   pointer-events: none;
   overflow: visible;
 }
@@ -1604,7 +1605,7 @@ input {
   }
   100% {
     opacity: 1;
-    transform: scale(0.65);
+    transform: scale(var(--spark-end, 0.65));
   }
 }
 @keyframes dialogue-spark-teach {
@@ -1626,7 +1627,17 @@ input {
   }
   100% {
     opacity: 1;
-    transform: scale(0.65);
+    transform: scale(var(--spark-end, 0.65));
+  }
+}
+@keyframes ok-pad-in {
+  from {
+    opacity: 0;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(var(--spark-end, 0.82));
   }
 }
 @keyframes dialogue-box-in {
@@ -4579,7 +4590,7 @@ input {
 .direction-controls {
   position: absolute;
   top: calc(var(--field-size) / 2);
-  left: 50%;
+  left: round(nearest, 50cqi, 1px);
   width: 0;
   height: 0;
   z-index: 2;
@@ -7402,6 +7413,7 @@ input {
   width: max-content;
   margin-inline: auto;
   margin-top: 52.8px;
+  transform: none;
   animation: title-choices-in 0.5s ease-out both;
   animation-delay: 8.9s;
 }
@@ -7415,8 +7427,12 @@ input {
 
 .title-screen__lang {
   position: relative;
+  box-sizing: border-box;
+  width: auto;
+  min-width: 0;
   padding: 6px 10.5px;
   font-size: 18px;
+  text-align: center;
 }
 
 .title-screen__lang[for=lang-en] {
@@ -7465,6 +7481,25 @@ input {
 
 .title-screen__legal-link:hover {
   color: #ebcba0;
+}
+
+.title-screen__mobile-note {
+  display: none;
+  box-sizing: border-box;
+  margin: 0;
+  margin-top: 6px;
+  width: min(432px, 78vw);
+  padding-inline: 6px;
+  color: #ca946e;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  line-height: 1.35;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  animation: title-choices-in 0.5s ease-out both;
+  animation-delay: 8.9s;
 }
 
 .title-screen__legal {
@@ -7992,7 +8027,7 @@ input {
 .inventory {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 5;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -8828,6 +8863,7 @@ input {
 #settings-open:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
 #inventory-open-play:checked ~ .game .settings__toggle,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__toggle,
 #settings-open:checked ~ #intro-dark:checked ~ .game .settings__toggle {
   opacity: 0;
   visibility: hidden;
@@ -8839,7 +8875,7 @@ input {
 .settings {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 5;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -9186,10 +9222,13 @@ input {
 
 #inventory-open-play:checked ~ .game .settings,
 #inventory-open-play:checked ~ .game .settings__back,
+#inventory-open-play:checked ~ .game .settings__toggle,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__back,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings,
-#inventory-open:checked ~ #intro-10:checked ~ .game .settings__back {
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__back,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -14998,45 +15037,142 @@ input {
 }
 @media (max-width: 719px), (max-height: 520px) {
   .game {
-    --chrome-h: 216px;
-    --chrome-center-from-mid: calc(var(--field-size) / 2);
-    --pad-ghost-opacity: 0.22;
-    --pad-ghost-visibility: visible;
-    --pad-reach-x: 90px;
-    --pad-reach-y: 66px;
-    --hud-inv-y: calc(
-      var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+    --chrome-h: 0px;
+    --band-top: env(safe-area-inset-top, 0px);
+    --safe-y: calc(
+      env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px)
     );
-    --hud-set-y: var(--hud-inv-y);
+    --band-sum: calc(100svh - var(--safe-y));
+    --band-hud: max(92px, calc(var(--band-sum) * 0.11));
+    --pad-btn: 52px;
+    --ok-btn: 52px;
+    --pad-reach-x: 68px;
+    --pad-reach-y: 68px;
+    --pad-cluster: calc(var(--pad-reach-y) * 2 + var(--pad-btn));
+    --gap-circle-pad: 18px;
+    --pad-floor: 24px;
+    --field-size: round(
+      nearest,
+      min(
+        calc(640px * 0.78),
+        calc(100vw - 28px),
+        calc(
+          var(--band-sum) - var(--band-hud) - var(--gap-circle-pad) -
+            var(--pad-cluster) - var(--pad-floor)
+        )
+      ),
+      2px
+    );
+    --field-scale: calc(var(--field-size) / 640px);
+    --play-top-min: calc(var(--band-top) + var(--band-hud));
+    --play-top-max: calc(
+      var(--band-top) + var(--band-sum) - var(--field-size) -
+        var(--gap-circle-pad) - var(--pad-cluster) - var(--pad-floor)
+    );
+    --play-top-raw: clamp(
+      var(--play-top-min),
+      calc(
+        var(--band-top) + (var(--band-sum) - var(--field-size)) / 2 - 16px
+      ),
+      var(--play-top-max)
+    );
+    --play-top: round(nearest, var(--play-top-raw), 2px);
+    --pad-region-top: calc(var(--play-top) + var(--field-size));
+    --pad-region-bottom: calc(var(--band-top) + var(--band-sum));
+    --dpad-origin: round(
+      nearest,
+      clamp(
+        calc(
+          var(--pad-region-top) + var(--gap-circle-pad) + var(--pad-reach-y) +
+            var(--pad-btn) / 2
+        ),
+        calc(
+          var(--pad-region-top) +
+            (var(--pad-region-bottom) - var(--pad-region-top)) * 0.38
+        ),
+        calc(
+          var(--pad-region-bottom) - var(--pad-reach-y) - var(--pad-btn) / 2 -
+            var(--pad-floor)
+        )
+      ),
+      2px
+    );
+    --hud-y: round(
+      nearest,
+      clamp(
+        calc(var(--band-top) + var(--hud-icon-pad) + var(--hud-icon-half)),
+        calc(var(--band-top) + (var(--play-top) - var(--band-top)) * 2 / 3),
+        calc(var(--play-top) - var(--hud-icon-half) - 8px)
+      ),
+      2px
+    );
+    --panel-y: calc(var(--play-top) + var(--field-size) / 2);
+    --band-mid: var(--field-size);
+    --hud-inv-x: calc(-50vw + var(--hud-icon-pad) + var(--hud-icon-half));
+    --hud-set-x: calc(50vw - var(--hud-icon-pad) - var(--hud-icon-half));
+    --hud-inv-y: 0px;
+    --hud-set-y: 0px;
+    --chrome-center-from-mid: calc(var(--field-size) / 2);
+    --pad-ghost-opacity: 0;
+    --pad-ghost-visibility: hidden;
+    --edge-opacity: 1;
     --inv-fit: min(
       1,
-      calc(
-        (var(--field-size) - 24px) /
-          480px
-      )
+      calc((var(--field-size) - 16px) / 480px),
+      calc((100vw - 24px) / 480px)
     );
   }
   .scene--game {
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: center;
     width: 100%;
-    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    padding: 0;
+    box-sizing: border-box;
   }
   .layout-shell {
     min-width: 0;
+    width: 100%;
+    height: 100%;
     margin-inline: auto;
   }
   .playfield {
+    position: absolute;
+    top: var(--play-top);
+    left: round(nearest, 50cqi, 1px);
+    right: auto;
+    width: var(--field-size);
     max-width: 100%;
-    margin-inline: auto;
+    margin-left: calc(var(--field-size) / -2);
   }
   .playfield-inner {
-    left: 50%;
-    transform: translateX(-50%) scale(var(--field-scale));
-    transform-origin: top center;
+    left: 0;
+    transform: scale(var(--field-scale));
+    transform-origin: 0 0;
+  }
+  .hud-origin {
+    top: var(--hud-y);
   }
   .direction-controls {
-    top: calc(var(--field-size) + var(--chrome-h) / 2);
+    top: var(--dpad-origin);
+  }
+  .direction-controls__button {
+    width: var(--pad-btn);
+    height: var(--pad-btn);
+    left: calc(var(--pad-btn) / -2);
+    top: calc(var(--pad-btn) / -2);
+  }
+  .direction-controls__button--edge {
+    background: #3a8240;
+    box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+  }
+  .dialogue:not(.dialogue--caption):not(.dialogue--center) {
+    padding-bottom: calc(100svh - var(--play-top) - var(--field-size) / 2 + var(--dialogue-lift) - var(--dialogue-drop));
+  }
+  .dialogue--center,
+  .dialogue--caption {
+    align-items: center;
+    padding-top: var(--play-top);
+    padding-bottom: calc(100svh - var(--play-top) - var(--field-size));
   }
   .direction-controls > div.direction-controls__button {
     opacity: var(--pad-ghost-opacity);
@@ -15054,9 +15190,10 @@ input {
     inset: 0;
   }
   .inventory__panel {
+    top: var(--panel-y);
     left: 50%;
     transform-origin: 50% 50%;
-    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), calc(var(--hud-y) - var(--panel-y))) scale(0.15);
   }
   #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
   :is(#inventory-open-play,
@@ -15086,52 +15223,62 @@ input {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .settings__panel {
+    top: var(--panel-y);
     left: 50%;
     transform-origin: 50% 50%;
-    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), calc(var(--hud-y) - var(--panel-y))) scale(0.15);
   }
   #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .dialogue:not(.dialogue--caption) .dialogue__button {
-    box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+    --spark-end: calc(42 / 52);
+    box-shadow: none;
     position: fixed;
-    left: 50%;
-    top: calc(50% + var(--chrome-center-from-mid));
+    left: round(nearest, 50cqi, 1px);
+    top: var(--dpad-origin);
     right: auto;
     bottom: auto;
-    z-index: 8;
-    width: auto;
-    height: auto;
-    min-width: calc(60px + 24px);
-    padding: 3px 15px;
-    font-size: 24px;
+    z-index: 3;
+    width: var(--ok-btn);
+    height: var(--ok-btn);
+    min-width: 0;
+    margin-left: calc(var(--ok-btn) / -2);
+    margin-top: calc(var(--ok-btn) / -2);
+    padding: 0;
+    font-size: 0;
     line-height: 1;
-    letter-spacing: 1.5px;
-    color: #fff;
-    background: #2f6b32;
-    transform: translate(-50%, -50%);
+    letter-spacing: 0;
+    color: transparent;
+    background: transparent;
+    transform: none;
     touch-action: manipulation;
     white-space: nowrap;
   }
   .dialogue:not(.dialogue--caption) .dialogue__button::before {
-    content: none;
-  }
-  .dialogue:not(.dialogue--caption) .dialogue__button::after {
-    content: "Next";
-    display: block;
-    width: auto;
-    height: auto;
-    margin: 0;
-    border: 0;
-    transform: none;
-  }
-  .dialogue:not(.dialogue--caption) .dialogue__button:hover {
+    content: "";
+    inset: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
     background: #3a8240;
     box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    animation: ok-pad-in 0.7s ease-out both;
   }
-  #lang-de:checked ~ .game .dialogue:not(.dialogue--caption) .dialogue__button::after {
-    content: "Weiter";
+  .dialogue:not(.dialogue--caption) .dialogue__button::after {
+    content: none;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button:hover::before {
+    background: #3a8240;
+    box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
   }
   .title-screen__brand {
     width: 100%;
@@ -15175,22 +15322,18 @@ input {
     white-space: normal;
     max-width: min(90vw, 864px);
   }
-  .game {
-    --field-scale: 0.6;
-  }
 }
 @media (max-width: 383px) {
-  .game {
-    --field-scale: 0.5625;
-  }
   .title-screen__brand {
     transform: scale(0.5625);
   }
 }
-@media (min-width: 500px) and (max-width: 719px) and (min-height: 700px) {
-  .game {
-    --field-scale: 0.75;
+@media (max-width: 719px), (hover: none) {
+  .title-screen__mobile-note {
+    display: block;
   }
+}
+@media (min-width: 500px) and (max-width: 719px) and (min-height: 700px) {
   .title-screen__brand {
     transform: scale(0.75);
   }
@@ -15198,6 +15341,20 @@ input {
 @media (max-height: 520px) {
   .game {
     --chrome-h: 0px;
+    --play-top: 0px;
+    --band-top: 0px;
+    --band: var(--field-size);
+    --field-scale: min(0.6, calc((100svh - 24px) / 640px));
+    --hud-inv-x: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-x: calc(
+      var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+    );
+    --hud-inv-y: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-y: var(--hud-inv-y);
     --chrome-center-from-mid: calc(
       var(--field-size) / 2 - 66px -
         30px - 10px
@@ -15206,9 +15363,68 @@ input {
   .scene--game {
     align-items: center;
     padding-top: 0;
+    padding-bottom: 0;
+  }
+  .layout-shell {
+    width: min(var(--field-size), 100%);
+    height: calc(var(--field-size) + var(--chrome-h));
+  }
+  .playfield {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin-left: 0;
+  }
+  .hud-origin {
+    top: calc(var(--field-size) / 2);
   }
   .direction-controls {
     top: calc(var(--field-size) - 66px - 30px - 10px);
+  }
+  .inventory__panel,
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+  }
+  .inventory__panel {
+    transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
+  }
+  .settings__panel {
+    transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
+  }
+  .dialogue--center,
+  .dialogue--caption {
+    padding-top: 0;
+    padding-bottom: var(--chrome-h);
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button {
+    --spark-end: 0.65;
+    top: calc(50% + var(--chrome-center-from-mid));
+    width: auto;
+    height: auto;
+    min-width: calc(60px + 24px);
+    padding: 3px 15px;
+    font-size: 24px;
+    color: #fff;
+    background: #2f6b32;
+    box-shadow: 0 -3px #2f6b32, 0 -6px #010000, 3px 0 #2f6b32, 3px -3px #010000, 6px 0 #010000, 0 3px #2f6b32, 0 6px #010000, -3px 0 #2f6b32, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+    transform: translate(-50%, -50%);
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button::before {
+    inset: auto;
+    right: 3px;
+    bottom: 3px;
+    width: 15px;
+    height: 15px;
+    box-shadow: 0 6px 0 #010000, 0 -6px 0 #010000, 6px 0 0 #010000, -6px 0 0 #010000;
+    animation: none;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button::after {
+    content: none;
+  }
+  .dialogue:not(.dialogue--caption) .dialogue__button:hover {
+    background: #3a8240;
+    box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
   }
 }
 @media (min-width: 720px) and (max-height: 700px) and (min-height: 521px) {
@@ -15235,9 +15451,70 @@ input {
     --field-scale: 1.25;
   }
 }
+@media (hover: none), (pointer: coarse) {
+  .game {
+    --edge-opacity: 1;
+  }
+  .direction-controls__button--edge {
+    background: #3a8240;
+    box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+  }
+}
 .title-screen,
 .end-screen {
   width: 100%;
   height: 100%;
   height: 100svh;
+}
+
+.orientation-lock {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  background: #05040a;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.orientation-lock__title,
+.orientation-lock__copy {
+  margin: 0;
+  color: #ebcba0;
+  font-family: inherit;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.orientation-lock__title {
+  font-size: 24px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 3px 0 0 #010000, -3px 0 0 #010000, 0 3px 0 #010000, 0 -3px 0 #010000;
+}
+
+.orientation-lock__copy {
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  color: #ca946e;
+}
+
+.orientation-lock::before {
+  content: "";
+  width: 36px;
+  height: 60px;
+  box-sizing: border-box;
+  background: #ebcba0;
+  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+
+@media (orientation: landscape) and (hover: none), (orientation: landscape) and (pointer: coarse) and (max-height: 600px) {
+  .orientation-lock {
+    display: flex;
+  }
 }

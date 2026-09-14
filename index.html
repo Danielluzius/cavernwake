@@ -764,6 +764,10 @@
                                    <div class="title-screen__loading-bar-fill"></div>
                               </div>
                          </div>
+                         <p class="title-screen__mobile-note">
+                              <span class="i18n i18n--de">Für Desktop als Klickspiel gebaut. Am Handy geht's, am Rechner ist's besser.</span>
+                              <span class="i18n i18n--en">Built as a desktop click game. Playable on phones, better on a computer.</span>
+                         </p>
                     </div>
                     <div class="title-screen__legal">
                          <div class="title-screen__legal-panel">
@@ -2631,6 +2635,19 @@
                <div class="blast-flash"></div>
 
           </section>
+
+          <!-- Touch devices cannot lock Safari's rotation. This cover
+               hides the game in landscape so only portrait is playable. -->
+          <div class="orientation-lock" role="dialog" aria-live="polite">
+               <p class="orientation-lock__title">
+                    <span class="i18n i18n--de">Bitte drehen</span>
+                    <span class="i18n i18n--en">Please rotate</span>
+               </p>
+               <p class="orientation-lock__copy">
+                    <span class="i18n i18n--de">Cavernwake spielt hochkant.</span>
+                    <span class="i18n i18n--en">Cavernwake is played upright.</span>
+               </p>
+          </div>
 
      </main>
 
