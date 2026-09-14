@@ -8391,6 +8391,8 @@ input {
 .inventory__use--rock,
 .inventory__use--mud,
 .inventory__use--wall,
+.inventory__use--wall-pickaxe,
+.inventory__use--wall-shovel,
 .inventory__use--socket,
 .inventory__use--lamp-fuse,
 .inventory__use[class*=inventory__use--wb-] {
@@ -8779,6 +8781,10 @@ input {
 #shovel-armed:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #debug-pre-bomb:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall,
+#pickaxe-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-pickaxe,
+#debug-pre-bomb:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-pickaxe,
+#shovel-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-shovel,
+#debug-pre-bomb:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-shovel,
 #wall-fuse-choosing:checked ~ .game .inventory__use--lamp-fuse,
 #last-lever-armed:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket,
 #debug-pre-bomb:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket {
@@ -8838,9 +8844,9 @@ input {
 .inventory__slot--bomb-fuse,
 .inventory__slot--sickle,
 .inventory__slot--bomb) .inventory__use--fail,
-#pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
+#pickaxe-armed:checked ~ :is(#rock-choosing, #mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing):checked ~ #shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__use--fail,
-#shovel-armed:checked ~ :is(#mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
+#shovel-armed:checked ~ :is(#mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
 :is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #bomb-shell-armed:checked ~ .game .inventory__slot--bomb-shell .inventory__use--fail,
 #bomb-shell-armed:checked ~ :is(#wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ .game .inventory__slot--bomb-shell .inventory__use--fail,
@@ -11545,33 +11551,21 @@ input {
   --click-hint-left: 115.2px;
 }
 
-#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
+#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall,
 #pickaxe-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
-#shovel-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
-:is(#vine30-armed,
-#vine30-choosing,
-#vine30-cut-prompt,
-#vine30-cutting,
-#vine30-done):checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
 #workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut,
 #debug-pre-bomb:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-cut {
   pointer-events: auto;
   cursor: pointer;
 }
 
-#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#shovel-idle, #shovel-prompt, #shovel-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
+#wall-spark:checked ~ :is(#pickaxe-idle, #pickaxe-prompt, #pickaxe-pickup):checked ~ :is(#workbench-idle, #workbench-incomplete, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps, #workbench-craft-prompt, #workbench-crafting, #workbench-crafted, #workbench-take):checked ~ #wall-idle:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
   --click-hint-top: 244.8px;
   --click-hint-left: 115.2px;
   --click-hint: 1;
 }
 
 #pickaxe-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
-#shovel-armed:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
-:is(#vine30-armed,
-#vine30-choosing,
-#vine30-cut-prompt,
-#vine30-cutting,
-#vine30-done):checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
 #workbench-done:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front,
 #debug-pre-bomb:checked ~ :is(#wall-idle, #wall-pickaxe-failed, #wall-tools-failed):checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--stone-wall-front {
   --click-hint-top: 244.8px;
@@ -11774,7 +11768,7 @@ input {
 }
 
 #wall-pickaxe-swing:checked ~ .game .viewport {
-  animation: intro-screen-shake 0.4s ease-in-out 1;
+  animation: intro-screen-shake 0.4s ease-in-out 3;
   animation-delay: 0.3s;
 }
 
@@ -13328,7 +13322,7 @@ input {
   --world-offset: -1296px;
   --world-offset-y: -1008px;
   transition: none;
-  animation: intro-fall-camera 7.1s step-end both;
+  animation: intro-fall-camera 4.4s step-end both;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .world {
@@ -13566,10 +13560,10 @@ input {
   --world-offset: -1008px;
   --world-offset-y: -336px;
   --player-extra-offset-y: 672px;
-  transition-duration: 0.6s;
+  transition-duration: 4.4s;
   transition-timing-function: ease-in;
   animation: intro-fall-player-land 1ms step-end forwards;
-  animation-delay: 7.1s;
+  animation-delay: 4.4s;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
@@ -13590,7 +13584,7 @@ input {
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer {
   animation: lamp-glow-pulse 3s ease-in-out infinite, intro-fall-unlit-layer 1ms step-end forwards;
-  animation-delay: 0s, 7.1s;
+  animation-delay: 0s, 4.4s;
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .lamp-glow--backpack {
@@ -14089,7 +14083,7 @@ input {
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player__sprite {
   animation: intro-fall-passed-out 1ms step-end forwards;
-  animation-delay: 7.1s;
+  animation-delay: 4.4s;
 }
 
 @keyframes intro-screen-shake-light {
@@ -14141,7 +14135,7 @@ input {
 }
 
 #position-1:checked ~ #intro-fall:checked ~ .game .viewport {
-  animation: intro-screen-shake 0.4s linear 22;
+  animation: intro-screen-shake 0.4s ease-in-out 15;
 }
 
 .blackout {
@@ -14205,20 +14199,41 @@ input {
 }
 
 @keyframes intro-fall-blackout {
-  0%, 35.4838709677% {
+  0%, 21.875% {
     opacity: 0;
   }
-  45.8064516129%, 80.6451612903% {
+  34.375%, 76.5625% {
     opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
+@keyframes intro-fall-scream {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    margin-left: 0;
+  }
+  8% {
+    opacity: 1;
+    visibility: visible;
+  }
+  63.6363636364% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
 #position-1:checked ~ #intro-fall:checked ~ .game .blackout {
   opacity: 0;
   transition: none;
-  animation: intro-fall-blackout 15.5s ease-in-out forwards, intro-screen-shake 0.4s linear 22;
+  animation: intro-fall-blackout 12.8s ease-in-out forwards, intro-screen-shake 0.4s ease-in-out 15;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .blackout {
@@ -14451,10 +14466,14 @@ input {
   animation-delay: 0.75s;
 }
 
+#position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] {
+  animation: intro-dialogue-shake 0.4s ease-in-out 15;
+}
+
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box {
   pointer-events: none;
-  animation: dialogue-caption-auto 4s ease-in-out both;
-  animation-delay: 1.5s;
+  animation: intro-fall-scream 4.4s ease-in-out both;
+  animation-delay: 0s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=fall] .dialogue__box .dialogue__button {
   display: none;
@@ -14463,7 +14482,7 @@ input {
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box {
   pointer-events: none;
   animation: dialogue-caption-auto 4s ease-in-out both;
-  animation-delay: 8.5s;
+  animation-delay: 5.8s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step=dark-hold] .dialogue__box .dialogue__button {
   display: none;
@@ -14477,16 +14496,16 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 0s 16.9s, visibility 0s 16.9s;
+  transition: opacity 0s 14.2s, visibility 0s 14.2s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 16.9s;
+  animation-delay: 14.2s;
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(16.9s + 0.75s);
+  animation-delay: calc(14.2s + 0.75s);
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .dialogue[data-intro-step="5"] .dialogue__box .dialogue__button--teach::before {
   animation-name: dialogue-spark-teach;

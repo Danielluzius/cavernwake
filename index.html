@@ -1239,6 +1239,8 @@
                                              <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
                                              <label class="inventory__use inventory__use--rock" for="rock-cut-prompt"
                                                   aria-label="Spitzhacke benutzen"></label>
+                                             <label class="inventory__use inventory__use--wall-pickaxe" for="wall-pickaxe-swing"
+                                                  aria-label="Spitzhacke benutzen"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--shovel">
                                              <label class="inventory__icon" for="item-quote-shovel-a">
@@ -1248,6 +1250,8 @@
                                              <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
                                              <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
                                              <label class="inventory__use inventory__use--mud" for="mud-cut-prompt"
+                                                  aria-label="Schaufel benutzen"></label>
+                                             <label class="inventory__use inventory__use--wall-shovel" for="wall-shovel-swing"
                                                   aria-label="Schaufel benutzen"></label>
                                         </div>
                                         <div class="inventory__slot inventory__slot--bomb-shell">
@@ -1536,15 +1540,15 @@
                                          scss/intro/_intro.scss for which #intro-N reveals
                                          which box and for how long. Bilingual via .i18n
                                          spans like the rest of the UI.
-                                         .dialogue--caption = scene cards (opening + fall /
-                                         time skip auto-play). Player speech after Start
-                                         lives on #intro-dark; Argh lives on #intro-fall.
+                                         .dialogue--caption = scene cards (opening + time
+                                         skip auto-play). Player speech after Start lives on
+                                         #intro-dark; the fall scream + Argh live on #intro-fall.
                                          default .dialogue = player speech. -->
                     <div class="dialogue dialogue--caption" data-intro-step="dark">
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ein neues Abenteuer</span>
-                                <span class="i18n i18n--en">A new adventure begins</span>
+                                <span class="i18n i18n--en">A new adventure</span>
                             </p>
                         </div>
                     </div>
@@ -1560,7 +1564,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Letzte Erkundung für heute.</span>
-                                <span class="i18n i18n--en">Last cave exploration for today.</span>
+                                <span class="i18n i18n--en">Last one for today.</span>
                             </p>
                             <label class="dialogue__button dialogue__button--teach" aria-label="Continue" for="intro-2"></label>
                         </div>
@@ -1587,7 +1591,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Nur noch diese Höhle, dann gehts Heim.</span>
-                                <span class="i18n i18n--en">Just this one and then back home.</span>
+                                <span class="i18n i18n--en">Just this cave, then I'm heading home.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-3"></label>
                         </div>
@@ -1605,7 +1609,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ich hoffe, die hält.</span>
-                                <span class="i18n i18n--en">I hope it's actually sturdy.</span>
+                                <span class="i18n i18n--en">Hope it holds.</span>
                             </p>
                         </div>
                     </div>
@@ -1622,16 +1626,16 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ich falle!</span>
-                                <span class="i18n i18n--en">I'm slipping.</span>
+                                <span class="i18n i18n--en">I'm falling!</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-fall"></label>
                         </div>
                     </div>
-                    <div class="dialogue dialogue--caption" data-intro-step="fall">
+                    <div class="dialogue" data-intro-step="fall">
                         <div class="dialogue__box">
                             <p class="dialogue__text">
-                                <span class="i18n i18n--de">Ins Ungewisse...</span>
-                                <span class="i18n i18n--en">Into the unknown...</span>
+                                <span class="i18n i18n--de">AAAAAAAHHH!</span>
+                                <span class="i18n i18n--en">AAAAAAAHHH!</span>
                             </p>
                         </div>
                     </div>
@@ -1664,8 +1668,8 @@
                     <div class="dialogue" data-intro-step="7">
                         <div class="dialogue__box">
                             <p class="dialogue__text">
-                                <span class="i18n i18n--de">Ist mein Rucksack beim Sturz woanders hin gefallen?</span>
-                                <span class="i18n i18n--en">My pack must have come off on the way down.</span>
+                                <span class="i18n i18n--de">Ist mein Rucksack beim Sturz woanders gelandet?</span>
+                                <span class="i18n i18n--en">Did my pack land somewhere else on the way down?</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-8"></label>
                         </div>
@@ -1682,7 +1686,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ah da ist er ja!</span>
-                                <span class="i18n i18n--en">There.</span>
+                                <span class="i18n i18n--en">Ah, there it is.</span>
                             </p>
                         </div>
                     </div>
@@ -1697,8 +1701,8 @@
                     <div class="dialogue" data-intro-step="11">
                         <div class="dialogue__box">
                             <p class="dialogue__text">
-                                <span class="i18n i18n--de">Ah, so ist's besser.</span>
-                                <span class="i18n i18n--en">Ah. That's better.</span>
+                                <span class="i18n i18n--de">So ist's besser.</span>
+                                <span class="i18n i18n--en">That's better.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-12"></label>
                         </div>
@@ -1707,7 +1711,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Hm, kein Weg zum Hochklettern in Sicht.</span>
-                                <span class="i18n i18n--en">No climbing back that way.</span>
+                                <span class="i18n i18n--en">Hm. No way to climb back up from here.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-13"></label>
                         </div>
@@ -1725,7 +1729,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ich sollte versuchen so schnell es geht hier rauszukommen.</span>
-                                <span class="i18n i18n--en">I shouldn't be here longer than needed!</span>
+                                <span class="i18n i18n--en">I should get out of here as fast as I can.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="intro-14"></label>
                         </div>
@@ -1734,7 +1738,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Es muss irgendwie einen Weg raus geben!</span>
-                                <span class="i18n i18n--en">Let's find a way out here — fast!</span>
+                                <span class="i18n i18n--en">There's got to be a way out.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="position-14"></label>
                         </div>
@@ -1764,7 +1768,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ah, so ist's besser.</span>
-                                <span class="i18n i18n--en">That's better.</span>
+                                <span class="i18n i18n--en">Ah. That's better.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="vine24-done"></label>
                         </div>
@@ -1898,8 +1902,8 @@
                     <div class="dialogue" data-step="pickaxe-prompt">
                         <div class="dialogue__box">
                             <p class="dialogue__text">
-                                <span class="i18n i18n--de">Eine alte Hacke? Liegt hier wohl schon länger.</span>
-                                <span class="i18n i18n--en">An old pick? Been down here a while.</span>
+                                <span class="i18n i18n--de">Eine alte Spitzhacke? Liegt hier wohl schon länger.</span>
+                                <span class="i18n i18n--en">An old pickaxe? Been down here a while.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="pickaxe-pickup"></label>
                         </div>
@@ -1926,7 +1930,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Damit bekomme ich es kaputt.</span>
-                                <span class="i18n i18n--en">This I can break.</span>
+                                <span class="i18n i18n--en">With this I can break it.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="rock-cutting"></label>
                         </div>
@@ -1998,7 +2002,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Irgendeine leere Schale. Ziemlich schwer für so hohl.</span>
-                                <span class="i18n i18n--en">Some kind of empty shell. Heavy for how hollow it is.</span>
+                                <span class="i18n i18n--en">Some kind of empty casing. Heavy for how hollow it is.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-shell-pickup"></label>
                         </div>
@@ -2034,7 +2038,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Eine Schnur? Könnte vielleicht brennen.</span>
-                                <span class="i18n i18n--en">A cord? Might burn.</span>
+                                <span class="i18n i18n--en">A cord? Might be able to burn.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="bomb-fuse-pickup"></label>
                         </div>
@@ -2106,7 +2110,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Zu hart. Zu groß. Die Spitzhacke kommt da nicht durch.</span>
-                                <span class="i18n i18n--en">Too hard. Too big. The pick's not touching this.</span>
+                                <span class="i18n i18n--en">Too hard. Too big. The pickaxe's not touching this.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="wall-pickaxe-failed"></label>
                         </div>
@@ -2341,7 +2345,7 @@
                         <div class="dialogue__box">
                             <p class="dialogue__text">
                                 <span class="i18n i18n--de">Ausprobieren geht über studieren.</span>
-                                <span class="i18n i18n--en">Trying beats thinking.</span>
+                                <span class="i18n i18n--en">Only one way to find out.</span>
                             </p>
                             <label class="dialogue__button" aria-label="Continue" for="lift-11-27-call-done"></label>
                         </div>
