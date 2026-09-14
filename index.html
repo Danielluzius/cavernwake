@@ -365,6 +365,7 @@
 
      <input type="radio" name="workbench-step" id="workbench-idle" class="world-position-input" checked />
      <input type="radio" name="workbench-step" id="workbench-incomplete" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-look" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-choosing" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-a-shell" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-a-powder" class="world-position-input" />
@@ -964,10 +965,10 @@
                               <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
 
                               <!-- Workbench at node 22 (scss/world/_workbench.scss):
-                             always opens the craft tray + inventory.
-                             Take is the finished bomb on the table. -->
-                              <label class="object object--workbench" for="workbench-choosing"></label>
-                              <label class="object object--workbench-craft" for="workbench-choosing"></label>
+                             look line first, Continue opens the craft tray
+                             + inventory. Take is the finished bomb on the table. -->
+                              <label class="object object--workbench" for="workbench-look"></label>
+                              <label class="object object--workbench-craft" for="workbench-look"></label>
                               <label class="object object--workbench-take" for="workbench-take"></label>
 
                               <!-- Stone wall between node 31 and 32
@@ -1126,13 +1127,6 @@
                          </div>
                     </div>
 
-                    <!-- Craft tray (scss/world/_workbench.scss): three sockets
-                         in the vision field, filled in click order. -->
-                    <div class="craft-tray">
-                         <div class="craft-tray__slot craft-tray__slot--1"></div>
-                         <div class="craft-tray__slot craft-tray__slot--2"></div>
-                         <div class="craft-tray__slot craft-tray__slot--3"></div>
-                    </div>
                     </div>
                </div>
                </div>
@@ -1280,13 +1274,14 @@
                     </div>
 
                     <!-- Inspect quotes sit with the other speech bubbles (above the player).
-                         Auto-fade, no Continue. Replayable asides — no new spoilers. -->
+                         Continue returns to item-quote-idle so the bag can show again. -->
                     <div class="dialogue dialogue--item-quote" data-item="sickle">
                          <div class="dialogue__box">
                               <p class="dialogue__text">
                                 <span class="i18n i18n--de">Tut noch, was sie soll.</span>
                                 <span class="i18n i18n--en">Still sharp. That's all I need to know.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="pickaxe">
@@ -1295,6 +1290,7 @@
                                 <span class="i18n i18n--de">Schwer. Für Fels gemacht, nicht für Leute.</span>
                                 <span class="i18n i18n--en">Heavy. This was made for rock, not people.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="shovel">
@@ -1303,6 +1299,7 @@
                                 <span class="i18n i18n--de">Für Schlamm. Und was sonst im Weg liegt.</span>
                                 <span class="i18n i18n--en">Mud, gravel, whatever's in the way.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb">
@@ -1311,6 +1308,7 @@
                                 <span class="i18n i18n--de">Das will ich wirklich nicht fallen lassen.</span>
                                 <span class="i18n i18n--en">I really don't want to drop this.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="lamp">
@@ -1319,6 +1317,7 @@
                                 <span class="i18n i18n--de">Brennt noch. Bleib so.</span>
                                 <span class="i18n i18n--en">Still burning. Stay that way.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-shell">
@@ -1327,6 +1326,7 @@
                                 <span class="i18n i18n--de">Leer. Wartet drauf, gefüllt zu werden.</span>
                                 <span class="i18n i18n--en">It's empty. It needs filling.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-powder">
@@ -1335,6 +1335,7 @@
                                 <span class="i18n i18n--de">Schwarzer Staub. Beutel lieber zu.</span>
                                 <span class="i18n i18n--en">Black dust. Keep the bag closed.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="bomb-fuse">
@@ -1343,6 +1344,7 @@
                                 <span class="i18n i18n--de">Dünne Schnur. Riecht, als würd die schnell Feuer fangen.</span>
                                 <span class="i18n i18n--en">Thin cord. It smells as if it would catch easily.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-quote" data-item="last-lever">
@@ -1351,6 +1353,7 @@
                                 <span class="i18n i18n--de">Aus der Halterung gerissen. Noch ganz.</span>
                                 <span class="i18n i18n--en">Pulled out of its fitting. Still in one piece.</span>
                             </p>
+                              <label class="dialogue__button" for="item-quote-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
                     </div>
                     <div class="dialogue dialogue--item-use-fail">
@@ -1359,7 +1362,16 @@
                                 <span class="i18n i18n--de">Das bringt hier nichts.</span>
                                 <span class="i18n i18n--en">That's no use here.</span>
                             </p>
+                              <label class="dialogue__button" for="item-use-fail-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                          </div>
+                    </div>
+                    <!-- Craft tray (scss/world/_workbench.scss): three sockets
+                         filled in click order. Lives in .ui so compact /
+                         overlay layouts can park it on the pad strip. -->
+                    <div class="craft-tray">
+                         <div class="craft-tray__slot craft-tray__slot--1"></div>
+                         <div class="craft-tray__slot craft-tray__slot--2"></div>
+                         <div class="craft-tray__slot craft-tray__slot--3"></div>
                     </div>
                     <!-- Settings overlay in .ui. Toggle and back sit in the top-right corner
                          of the vision-field square; the panel opens right of the field. Close
@@ -2005,6 +2017,7 @@
                                 <span class="i18n i18n--de">Hm. Hier kann ich was zusammenbauen.</span>
                                 <span class="i18n i18n--en">Hm. I can put something together here.</span>
                             </p>
+                            <label class="dialogue__button" for="workbench-choosing"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
                         </div>
                     </div>
                     <div class="dialogue" data-step="workbench-craft-prompt">

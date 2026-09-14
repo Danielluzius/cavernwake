@@ -241,6 +241,14 @@
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
 
+  // Pad strip is free while the bag is open (D-pad hidden).
+  .craft-tray {
+    left: round(nearest, 50cqi, 1px);
+    top: var(--dpad-origin);
+    bottom: auto;
+    transform: translate(-50%, -50%);
+  }
+
   // Continue control sits in the D-pad hole: unlabeled green spark that
   // shrinks on appear (same motion as desktop ::before).
   .dialogue:not(.dialogue--caption) .dialogue__button {
@@ -413,6 +421,13 @@
   #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
+
+  .craft-tray {
+    left: 50%;
+    top: auto;
+    bottom: 12px;
+    transform: translateX(-50%);
+  }
 }
 
 @mixin layout-compact-overlay {
@@ -466,6 +481,15 @@
       var(--field-size) - #{vars.$chrome-reach-y} -
         #{vars.$direction-button-size * 0.5} - 10px
     );
+  }
+
+  .craft-tray {
+    top: calc(
+      var(--field-size) - #{vars.$chrome-reach-y} -
+        #{vars.$direction-button-size * 0.5} - 10px
+    );
+    bottom: auto;
+    transform: translate(-50%, -50%);
   }
 
   .inventory__panel,

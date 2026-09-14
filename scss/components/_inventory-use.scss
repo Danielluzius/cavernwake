@@ -261,8 +261,6 @@ $wb-start: '#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbe
   pointer-events: none;
 }
 
-// Do not gate these on bag-open: that selector starts matching when the
-// bag opens and would replay a leftover fail-a from an earlier miss.
 .dialogue--item-use-fail {
   visibility: hidden;
 }
@@ -271,11 +269,15 @@ $wb-start: '#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbe
   visibility: visible;
 }
 
-#item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
-  animation: dialogue-ephemeral vars.$inventory-quote-duration ease-out forwards;
-}
-
-#item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
-  animation: dialogue-ephemeral-replay vars.$inventory-quote-duration ease-out
-    forwards;
+:is(#{$inventory-bag-open}):checked
+  ~ #item-use-fail-a:checked
+  ~ .game
+  .dialogue--item-use-fail
+  .dialogue__box,
+:is(#{$inventory-bag-open}):checked
+  ~ #item-use-fail-b:checked
+  ~ .game
+  .dialogue--item-use-fail
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
 }

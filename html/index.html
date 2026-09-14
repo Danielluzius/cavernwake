@@ -186,6 +186,7 @@
 
      <input type="radio" name="workbench-step" id="workbench-idle" class="world-position-input" checked />
      <input type="radio" name="workbench-step" id="workbench-incomplete" class="world-position-input" />
+     <input type="radio" name="workbench-step" id="workbench-look" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-choosing" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-a-shell" class="world-position-input" />
      <input type="radio" name="workbench-step" id="workbench-a-powder" class="world-position-input" />
@@ -566,10 +567,10 @@
                               <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
 
                               <!-- Workbench at node 22 (scss/world/_workbench.scss):
-                             always opens the craft tray + inventory.
-                             Take is the finished bomb on the table. -->
-                              <label class="object object--workbench" for="workbench-choosing"></label>
-                              <label class="object object--workbench-craft" for="workbench-choosing"></label>
+                             look line first, Continue opens the craft tray
+                             + inventory. Take is the finished bomb on the table. -->
+                              <label class="object object--workbench" for="workbench-look"></label>
+                              <label class="object object--workbench-craft" for="workbench-look"></label>
                               <label class="object object--workbench-take" for="workbench-take"></label>
 
                               <!-- Stone wall between node 31 and 32
@@ -728,13 +729,6 @@
                          </div>
                     </div>
 
-                    <!-- Craft tray (scss/world/_workbench.scss): three sockets
-                         in the vision field, filled in click order. -->
-                    <div class="craft-tray">
-                         <div class="craft-tray__slot craft-tray__slot--1"></div>
-                         <div class="craft-tray__slot craft-tray__slot--2"></div>
-                         <div class="craft-tray__slot craft-tray__slot--3"></div>
-                    </div>
                     </div>
                </div>
                </div>
@@ -749,6 +743,14 @@
                          .hud-origin so the open panel can stack above
                          the D-pad while the close X stays clickable. -->
                     <!-- include:partials/inventory.html -->
+                    <!-- Craft tray (scss/world/_workbench.scss): three sockets
+                         filled in click order. Lives in .ui so compact /
+                         overlay layouts can park it on the pad strip. -->
+                    <div class="craft-tray">
+                         <div class="craft-tray__slot craft-tray__slot--1"></div>
+                         <div class="craft-tray__slot craft-tray__slot--2"></div>
+                         <div class="craft-tray__slot craft-tray__slot--3"></div>
+                    </div>
                     <!-- include:partials/settings.html -->
                     <!-- include:partials/dialogue-boxes.html -->
                     <div class="hud-origin">

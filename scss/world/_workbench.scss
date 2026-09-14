@@ -1,5 +1,6 @@
 @use '../base/variables' as vars;
 @use '../components/dialogue' as dlg;
+@use '../components/inventory-shared' as inv;
 @use 'tools';
 @use 'click-hint';
 
@@ -13,8 +14,8 @@
 //                   -> take -> done
 //                   any other three-part order -> bad-* (shake, eject)
 //
-// The world label always opens choosing. Parts are placed from inventory
-// in click order into the vision-field tray (see .craft-tray).
+// The world label opens look; Continue then opens choosing. Parts are
+// placed from inventory in click order into the craft tray.
 // ==========================================================================
 
 $col: 15;
@@ -160,6 +161,7 @@ $pre-steps: tools.step-list(
   (
     idle,
     incomplete,
+    look,
     choosing,
     a-shell,
     a-powder,
@@ -255,15 +257,16 @@ $pre-steps: tools.step-list(
 }
 
 // ---- Dialogue ----
-#workbench-spark-seen {
+#workbench-spark-seen,
+#workbench-look {
   @include dlg.lock-edges;
 }
 
-#workbench-choosing:checked
+#workbench-look:checked
   ~ .game
   .dialogue[data-step='workbench-look']
   .dialogue__box {
-  animation: dialogue-ephemeral vars.$dialogue-hint-duration ease-out forwards;
+  @include dlg.dialogue-box-open;
 }
 
 #workbench-craft-prompt:checked
@@ -301,7 +304,7 @@ $img-fuse: '../assets/objects/inventory/bomb-fuse.png';
   position: absolute;
   left: 50%;
   bottom: calc(14% + #{vars.$tile-size-display});
-  z-index: 8;
+  z-index: 6;
   display: flex;
   gap: 8px * vars.$vision-scale;
   padding: 8px * vars.$vision-scale;
@@ -314,6 +317,11 @@ $img-fuse: '../assets/objects/inventory/bomb-fuse.png';
 :is(#{$craft-open}):checked ~ .game .craft-tray {
   opacity: 1;
   visibility: visible;
+}
+
+@include inv.when-inventory-speech-pause('.craft-tray') {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .craft-tray__slot {

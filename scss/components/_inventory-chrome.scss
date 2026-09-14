@@ -154,6 +154,24 @@
   transform: translate(-100%, -50%) scale(1);
 }
 
+// Speech pause: bag radios stay on (one click cannot uncheck them) but
+// the overlay goes click-dead so the line + Continue sit above it.
+// Close X lives in .hud-origin (z 8), not inside .inventory.
+@include when-inventory-speech-pause('.inventory') {
+  pointer-events: none;
+}
+
+@include when-inventory-speech-pause('.inventory__panel') {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dialogue--item-quote,
+.dialogue--item-use-fail {
+  z-index: 6;
+}
+
 .inventory__back {
   @include dlg.close-pad;
   @include inventory-hud-slot(vars.$inventory-back-size);
@@ -657,13 +675,10 @@
   display: none;
 }
 
-$inventory-quote-items: sickle, pickaxe, shovel, bomb, lamp, bomb-shell,
-  bomb-powder, bomb-fuse, last-lever;
-
 @each $item in $inventory-quote-items {
   // Ping-pong: after -a plays, the overlay -b label is the only live
-  // click; after -b, -a is live again. Different animation names so the
-  // bubble actually restarts.
+  // click; after -b, -a is live again. Continue sets idle, so the next
+  // inspect uses -a again.
   #item-quote-#{$item}-a:not(:checked)
     ~ .game
     .inventory__slot--#{$item}
@@ -678,19 +693,33 @@ $inventory-quote-items: sickle, pickaxe, shovel, bomb, lamp, bomb-shell,
     pointer-events: none;
   }
 
-  #item-quote-#{$item}-a:checked
+  // Browse only — leftover quote radios must not speak after Close.
+  // Tutorial bag: #inventory-open sits before quotes, #intro-10 after.
+  #inventory-open-play:checked
+    ~ #item-quote-#{$item}-a:checked
+    ~ .game
+    .dialogue--item-quote[data-item='#{$item}']
+    .dialogue__box,
+  #inventory-open:checked
+    ~ #item-quote-#{$item}-a:checked
+    ~ #intro-10:checked
     ~ .game
     .dialogue--item-quote[data-item='#{$item}']
     .dialogue__box {
-    animation: dialogue-ephemeral vars.$inventory-quote-duration ease-out
-      forwards;
+    @include dlg.dialogue-box-open;
   }
 
-  #item-quote-#{$item}-b:checked
+  #inventory-open-play:checked
+    ~ #item-quote-#{$item}-b:checked
+    ~ .game
+    .dialogue--item-quote[data-item='#{$item}']
+    .dialogue__box,
+  #inventory-open:checked
+    ~ #item-quote-#{$item}-b:checked
+    ~ #intro-10:checked
     ~ .game
     .dialogue--item-quote[data-item='#{$item}']
     .dialogue__box {
-    animation: dialogue-ephemeral-replay vars.$inventory-quote-duration ease-out
-      forwards;
+    @include dlg.dialogue-box-open;
   }
 }

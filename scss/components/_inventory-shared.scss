@@ -25,3 +25,40 @@ $wall-item-choosing: '#wall-choosing, #wall-fuse-choosing';
 $inventory-craft-open: '#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps';
 $inventory-bag-open: '#{$inventory-use-choosing}, #{$inventory-craft-open}';
 $sickle-held: '#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done';
+
+// Inspect radios (a/b ping-pong). Speech pause hides the bag so the
+// line is not trapped under the panel; Continue returns to idle.
+$inventory-quote-items: sickle, pickaxe, shovel, bomb, lamp, bomb-shell,
+  bomb-powder, bomb-fuse, last-lever;
+
+$inventory-quote-open: '';
+@each $item in $inventory-quote-items {
+  @if $inventory-quote-open != '' {
+    $inventory-quote-open: $inventory-quote-open + ', ';
+  }
+  $inventory-quote-open: $inventory-quote-open +
+    '#item-quote-#{$item}-a, #item-quote-#{$item}-b';
+}
+
+$inventory-fail-open: '#item-use-fail-a, #item-use-fail-b';
+$inventory-speech-pause: '#{$inventory-quote-open}, #{$inventory-fail-open}';
+
+// Pause only while the matching line is actually on screen. A leftover
+// quote radio must not hide the bag during obstacle -choosing.
+@mixin when-inventory-speech-pause($target) {
+  #inventory-open-play:checked
+    ~ :is(#{$inventory-quote-open}):checked
+    ~ .game
+    #{$target},
+  #inventory-open:checked
+    ~ :is(#{$inventory-quote-open}):checked
+    ~ #intro-10:checked
+    ~ .game
+    #{$target},
+  :is(#{$inventory-bag-open}):checked
+    ~ :is(#{$inventory-fail-open}):checked
+    ~ .game
+    #{$target} {
+    @content;
+  }
+}
