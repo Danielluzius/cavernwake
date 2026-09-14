@@ -15138,15 +15138,35 @@ input {
     max-width: 100%;
     min-width: 0;
     justify-self: stretch;
-    transform: scale(0.5);
+    transform: scale(0.5625);
     transform-origin: 50% 50%;
+  }
+  .title-screen__legal {
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .title-screen__legal-panel {
+    width: min(480px, 100%);
+    max-width: 100%;
+    padding: 18px 18px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+  .title-screen__legal-title {
+    padding-inline: 36px;
+    font-size: 16px;
+  }
+  .title-screen__legal-close {
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
   }
   .dialogue--caption .dialogue__text {
     white-space: normal;
     max-width: min(90vw, 864px);
   }
   .game {
-    --field-scale: 0.5;
+    --field-scale: 0.5625;
   }
 }
 @media (min-width: 500px) and (max-width: 719px) and (min-height: 700px) {
