@@ -1,0 +1,68 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+
+// Green Continue pad (no chevron) on the live hotspot. Horizontal center
+// of the click box. Short boxes: vertical center. Tall boxes: player eye
+// height, clamped inside. If the player stands inside the box (workbench),
+// pin the pad to the top of the art.
+//
+// `place` sets --click-hint-top/left on the element and must live on the
+// object's BASE rule so a click that drops `live` does not reset top/left
+// (that was the pad jumping to the top of the box while fading out).
+// `live` only flips --click-hint. `show` is both, for live selectors.
+
+$at-player-dx: 0.65;
+$short-rows: 1.25;
+$top-inset: 0.25;
+
+@mixin place($col, $row, $cols, $rows, $node-id, $pad-left: null, $pad-top: null) {
+  $t: vars.$tile-size-display;
+  $pad: vars.$click-hint-size;
+  $node: map.get(vars.$positions, $node-id);
+  $pcol: map.get($node, col);
+  $prow: map.get($node, row);
+
+  $dx: $col + math.div($cols, 2) - ($pcol + 0.5);
+  $box-h: $rows * $t;
+  $local-left: math.div($cols * $t - $pad, 2);
+  $local-top: math.div($box-h - $pad, 2);
+
+  @if $rows > $short-rows {
+    @if math.abs($dx) < $at-player-dx {
+      $local-top: $top-inset * $t;
+    } @else {
+      $eye-world-y: ($prow + 0.5) * $t + vars.$player-vertical-offset -
+        vars.$character-size-display * 0.22;
+      $eye-local: $eye-world-y - $row * $t - math.div($pad, 2);
+      $max-top: $box-h - $pad;
+      @if $eye-local < 0 {
+        $local-top: 0;
+      } @else if $eye-local > $max-top {
+        $local-top: $max-top;
+      } @else {
+        $local-top: $eye-local;
+      }
+    }
+  }
+
+  @if $pad-left != null {
+    $local-left: $pad-left * $t;
+  }
+
+  @if $pad-top != null {
+    $local-top: $pad-top * $t;
+  }
+
+  --click-hint-top: #{$local-top};
+  --click-hint-left: #{$local-left};
+}
+
+@mixin live {
+  --click-hint: 1;
+}
+
+@mixin show($col, $row, $cols, $rows, $node-id, $pad-left: null, $pad-top: null) {
+  @include place($col, $row, $cols, $rows, $node-id, $pad-left, $pad-top);
+  @include live;
+}

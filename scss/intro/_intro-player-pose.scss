@@ -1,0 +1,214 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// PLAYER POSE overrides — walk-in rests on the unlit backpack pose
+// until #intro-lantern; default with-backpack/base-right covers the
+// lit beats through the fall (see player/_player.scss).
+// ==========================================================================
+
+#position-1:checked ~ #intro-dark:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-fade:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-1:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right-before.png');
+}
+
+// After the lantern bloom: one pass of the elevator idle-right sheet
+// (animations/_animations.scss), then hold until Continue walks him on.
+@keyframes player-intro-home-idle {
+  0% {
+    background-image: url('../assets/characters/with-backpack/idle/idle-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/idle/idle-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/idle/idle-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/idle/idle-right/frame_004.png');
+  }
+}
+
+#position-1:checked ~ #intro-home:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/idle/idle-right/frame_001.png');
+  animation: player-intro-home-idle vars.$idle-duration steps(1, end) forwards;
+}
+
+// Step 5 (reveal): fallen, passed out, eyes closed. Breathe holds the
+// same pose for the second lying line.
+#position-1:checked ~ #intro-5:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-breathe:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/without-backpack/passed-out/passed-out.png');
+}
+
+// Step 6: blinks awake — 2 cycles between closed/open eyes, then settles
+// back on closed (same image the animation ends on, so no fill-mode is
+// needed) and waits there for the next click.
+@keyframes player-wake-blink {
+  0%,
+  50%,
+  100% {
+    background-image: url('../assets/characters/without-backpack/passed-out/passed-out.png');
+  }
+  25%,
+  75% {
+    background-image: url('../assets/characters/without-backpack/passed-out/passed-out-eyes-open.png');
+  }
+}
+
+#position-1:checked ~ #intro-6:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/without-backpack/passed-out/passed-out.png');
+  animation: player-wake-blink $wake-blink-duration steps(1, end);
+}
+
+// Step 7: stands up (4-frame one-shot, reusing the existing dedicated
+// $stand-up-duration/-frame-count, previously unused). No fill-mode
+// needed — it plays straight into the already-standing base-right pose
+// declared below for steps 7-10.
+@keyframes player-stand-up {
+  0% {
+    background-image: url('../assets/characters/without-backpack/stand-up/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/without-backpack/stand-up/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/without-backpack/stand-up/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/without-backpack/stand-up/frame_004.png');
+  }
+}
+
+#position-1:checked ~ #intro-7:checked ~ .game .player__sprite {
+  animation: player-stand-up vars.$stand-up-duration steps(1, end);
+}
+
+// Steps 7-9: stood back up, backpack not yet recovered. Step 10 (the
+// pickup itself) is handled separately below since it plays its own
+// animation straight into the with-backpack pose.
+#position-1:checked ~ #intro-7:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-pack:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-8:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/without-backpack/base/base-right.png');
+}
+
+#position-1:checked ~ #intro-pack:checked ~ .game .player__sprite {
+  transform: scaleX(-1);
+}
+
+@keyframes player-intro-wake-turn {
+  0%,
+  45% {
+    transform: scaleX(-1);
+  }
+
+  50%,
+  100% {
+    transform: none;
+  }
+}
+
+#position-1:checked ~ #intro-8:checked ~ .game .player__sprite {
+  animation: player-intro-wake-turn $intro-wake-turn-duration steps(1, end);
+}
+
+// After "A bridge?": glance left, then back right, then the sturdy line.
+@keyframes player-intro-bridge-look {
+  0%,
+  45% {
+    transform: scaleX(-1);
+  }
+
+  50%,
+  100% {
+    transform: none;
+  }
+}
+
+#position-1:checked ~ #intro-anyway:checked ~ .game .player__sprite {
+  animation: player-intro-bridge-look $intro-look-duration steps(1, end);
+}
+
+// Step 10: clicking the backpack object itself (see index.html) checks
+// this radio directly (no separate Continue in between) — plays the
+// pickup interact animation right then, then rests on the unlit
+// with-backpack pose until the lamp is used at intro-11.
+@keyframes player-backpack-interact {
+  0% {
+    background-image: url('../assets/characters/without-backpack/interact-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/without-backpack/interact-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/without-backpack/interact-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/without-backpack/interact-right/frame_004.png');
+  }
+}
+
+#position-1:checked ~ #intro-10:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right-before.png');
+  animation: player-backpack-interact vars.$movement-duration steps(1, end);
+}
+
+// Step 11: free exploration unlocked — with-backpack/base-right already
+// applies via the default rule, nothing left to override here.
+
+// ==========================================================================
+// FALL POSE — Continue on step 4 plays the sit-down sheet on the still-
+// standing boards. Last frame holds through the drop (step fall) and
+// dark-hold. Step 4 must not start this sheet or he sits before the
+// stumble line.
+// ==========================================================================
+
+@keyframes player-intro-fall {
+  0% {
+    background-image: url('../assets/characters/with-backpack/fall/frame_001.png');
+  }
+  20% {
+    background-image: url('../assets/characters/with-backpack/fall/frame_002.png');
+  }
+  40% {
+    background-image: url('../assets/characters/with-backpack/fall/frame_003.png');
+  }
+  60% {
+    background-image: url('../assets/characters/with-backpack/fall/frame_004.png');
+  }
+  80%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/fall/frame_005.png');
+  }
+}
+
+#position-1:checked ~ #intro-sit:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/fall/frame_005.png');
+  animation: player-intro-fall $intro-fall-pose-duration steps(1, end) forwards;
+}
+
+@keyframes intro-fall-passed-out {
+  to {
+    background-image: url('../assets/characters/without-backpack/passed-out/passed-out.png');
+  }
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .player__sprite,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/fall/frame_005.png');
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .player__sprite {
+  animation: intro-fall-passed-out 1ms step-end forwards;
+  animation-delay: $fall-reposition-at;
+}

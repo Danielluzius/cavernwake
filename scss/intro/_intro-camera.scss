@@ -1,0 +1,138 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// CAMERA (--world-offset / --world-offset-y on .world)
+// ==========================================================================
+
+// Steps dark/fade/1: camera at node 2. Player waits at node 1 until
+// the walk-in on step 2.
+#position-1:checked ~ #intro-dark:checked ~ .game .world,
+#position-1:checked ~ #intro-fade:checked ~ .game .world,
+#position-1:checked ~ #intro-1:checked ~ .game .world,
+#position-1:checked ~ #intro-2:checked ~ .game .world,
+#position-1:checked ~ #intro-lantern:checked ~ .game .world,
+#position-1:checked ~ #intro-home:checked ~ .game .world {
+  --world-offset: #{offset-x($node2)};
+  --world-offset-y: #{offset-y($node2)};
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .world,
+#position-1:checked ~ #intro-fade:checked ~ .game .world,
+#position-1:checked ~ #intro-1:checked ~ .game .world {
+  transition: none;
+}
+
+// Step 3: pans to node 3. Anyway holds there for the fake right-arrow.
+#position-1:checked ~ #intro-3:checked ~ .game .world,
+#position-1:checked ~ #intro-anyway:checked ~ .game .world {
+  --world-offset: #{offset-x($node3)};
+  --world-offset-y: #{offset-y($node3)};
+}
+
+// Step 4: pans to node 4 (the first fake right-arrow click). Sit and
+// fall hold there — he slips off the bridge; the boards stay put.
+#position-1:checked ~ #intro-4:checked ~ .game .world,
+#position-1:checked ~ #intro-sit:checked ~ .game .world {
+  --world-offset: #{offset-x($node4)};
+  --world-offset-y: #{offset-y($node4)};
+}
+
+@keyframes intro-fall-camera {
+  from {
+    --world-offset: #{offset-x($node4)};
+    --world-offset-y: #{offset-y($node4)};
+  }
+
+  to {
+    --world-offset: #{offset-x($node13)};
+    --world-offset-y: #{offset-y($node13)};
+  }
+}
+
+@keyframes intro-fall-player-land {
+  to {
+    --world-offset: #{offset-x($node13)};
+    --world-offset-y: #{offset-y($node13)};
+    --player-extra-offset-y: 0px;
+  }
+}
+
+// .player lives inside .world and reads --world-offset for its
+// counter-translate. Animating that custom prop only on .world does
+// not reliably inherit — the sprite then uses the specified node-13
+// value while the cave is still at node 4, so he teleports off-screen
+// instead of falling. World specified 13 (Argh must not ease from the
+// bridge). Player specified 4 + extra-y drop (same as the old
+// #intro-fall radio). Both snap together once the blackout is opaque.
+#position-1:checked ~ #intro-fall:checked ~ .game .world {
+  --world-offset: #{offset-x($node13)};
+  --world-offset-y: #{offset-y($node13)};
+  transition: none;
+  animation: intro-fall-camera $fall-reposition-at step-end both;
+}
+
+// Step "dark-hold": screen is darkening/dark (see BLACKOUT below), camera
+// still holds at node 4 exactly like the fall — nothing to see anyway.
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .world {
+  --world-offset: #{offset-x($node4)};
+  --world-offset-y: #{offset-y($node4)};
+}
+
+// Step 5: screen fades back in (see BLACKOUT below) — camera "reattaches",
+// jumping straight to node 13 while still fully hidden behind the
+// blackout, alongside the character's own silent reposition/pose change
+// (see PLAYER POSE below).
+#position-1:checked ~ #intro-5:checked ~ .game .world {
+  --world-offset: #{offset-x($node13)};
+  --world-offset-y: #{offset-y($node13)};
+  transition: none;
+}
+
+// Steps 6-pack: holds at node 13 through passed-out / stand-up / waiting
+// for the second fake right-arrow click.
+#position-1:checked ~ #intro-breathe:checked ~ .game .world,
+#position-1:checked ~ #intro-6:checked ~ .game .world,
+#position-1:checked ~ #intro-7:checked ~ .game .world,
+#position-1:checked ~ #intro-pack:checked ~ .game .world,
+#position-1:checked ~ #intro-8:checked ~ .game .world {
+  --world-offset: #{offset-x($node13)};
+  --world-offset-y: #{offset-y($node13)};
+  transition: none;
+}
+
+// Steps 9-10: pans to node 14 (the second fake right-arrow click) and
+// holds there through the backpack pickup.
+#position-1:checked ~ #intro-9:checked ~ .game .world,
+#position-1:checked ~ #intro-10:checked ~ .game .world {
+  --world-offset: #{offset-x($node14)};
+  --world-offset-y: #{offset-y($node14)};
+}
+
+// Step 11: lamp on, still at node 14.
+#position-1:checked ~ #intro-11:checked ~ .game .world {
+  --world-offset: #{offset-x($node14)};
+  --world-offset-y: #{offset-y($node14)};
+}
+
+// Step 12: pans node 14 -> 13 (look back left). Step 13 holds at 13
+// for the earthquake line; step 14 walks back right to 14.
+#position-1:checked ~ #intro-12:checked ~ .game .world {
+  --world-offset: #{offset-x($node13)};
+  --world-offset-y: #{offset-y($node13)};
+}
+
+#position-1:checked ~ #intro-13:checked ~ .game .world,
+#position-1:checked ~ #intro-hurry:checked ~ .game .world {
+  --world-offset: #{offset-x($node13)};
+  --world-offset-y: #{offset-y($node13)};
+}
+
+#position-1:checked ~ #intro-14:checked ~ .game .world {
+  --world-offset: #{offset-x($node14)};
+  --world-offset-y: #{offset-y($node14)};
+}

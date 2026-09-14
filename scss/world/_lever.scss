@@ -1,0 +1,198 @@
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+
+
+// ==========================================================================
+
+// LEVER (node 7) — the sole click trigger that removes the waterfall (see
+
+// world/_waterfall.scss) and unlocks the 20<->21 / 29<->30 walk edges (see
+
+// vars.$obstacles). One radio group, same idle/confirm/done pattern as the
+
+// vine barriers (world/_obstacles.scss) — one-time use, no way back to
+
+// -idle once -done is checked.
+
+//
+
+// Visual: mirrored copy of the last-lever socket art (see
+
+// world/_last-lever.scss) at col 20-21 / row 3-4, directly left of node 7.
+
+// ==========================================================================
+
+
+
+$lever-cols: 2;
+$lever-rows: 2;
+
+.object--lever {
+  position: absolute;
+  left: 20.875 * vars.$tile-size-display;
+  top: 2.5 * vars.$tile-size-display;
+  width: $lever-cols * vars.$tile-size-display;
+  height: $lever-rows * vars.$tile-size-display;
+  background-image: url('../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  pointer-events: none;
+  @include click-hint.place(20.875, 2.5, $lever-cols, $lever-rows, 7);
+}
+
+
+
+#lever7-idle:checked ~ #{vars.at-node(7)} ~ .game .object--lever {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show(20.875, 2.5, $lever-cols, $lever-rows, 7);
+}
+
+
+
+// No walking away while the dialogue is open (R6).
+
+#lever7-look:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#lever7-confirm:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#lever7-wonder:checked
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#lever7-look:checked
+  ~ .game
+  .dialogue[data-step='lever7-look']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+
+
+// Held pose while the dialogue is open — reuses the standing sprite rather
+
+// than a new interaction animation. Never touch .player__sprite's own
+
+// `animation` here (R3/R4), only .player__action's background-image.
+
+#lever7-confirm:checked ~ .game .player__sprite {
+
+  opacity: 0;
+
+}
+
+
+
+#lever7-confirm:checked ~ .game .player__action {
+
+  opacity: 1;
+
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+
+  animation: player-item-pickup-left vars.$movement-duration steps(1, end);
+
+}
+
+
+
+#lever7-confirm:checked ~ .game .object--lever {
+
+  animation: last-lever-socket-pull vars.$movement-duration steps(1, end);
+
+}
+
+
+
+// Off-screen hatch rumble after the pull: lighter than the intro/collapse
+// shake (~2px vs 6px) and a fixed 2s beat, not looped until Continue.
+$hatch-shake-duration: 2s;
+
+@keyframes lever7-hatch-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  6% {
+    transform: translate(-2px, 1px);
+  }
+
+  12% {
+    transform: translate(2px, -1px);
+  }
+
+  18% {
+    transform: translate(-2px, 1.5px);
+  }
+
+  24% {
+    transform: translate(1.5px, -1px);
+  }
+
+  32% {
+    transform: translate(-1.5px, 1px);
+  }
+
+  40% {
+    transform: translate(1px, -0.5px);
+  }
+
+  50% {
+    transform: translate(-1px, 0.5px);
+  }
+
+  62% {
+    transform: translate(0.75px, -0.5px);
+  }
+
+  74% {
+    transform: translate(-0.5px, 0.5px);
+  }
+
+  86% {
+    transform: translate(0.5px, 0);
+  }
+}
+
+#lever7-confirm:checked ~ .game .viewport {
+  animation: lever7-hatch-shake $hatch-shake-duration ease-out 1;
+  animation-delay: vars.$movement-duration;
+}
+
+
+
+// Pull, then the hatch rumble, then "Okay?" — not during the yank.
+$okay-delay: vars.$movement-duration + $hatch-shake-duration;
+
+#lever7-confirm:checked
+  ~ .game
+  .dialogue[data-step='lever7-confirm']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($okay-delay);
+}
+
+#lever7-wonder:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#lever7-wonder:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+
+#lever7-wonder:checked
+  ~ .game
+  .dialogue[data-step='lever7-wonder']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(0.45s);
+}
+
+

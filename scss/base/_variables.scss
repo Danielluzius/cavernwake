@@ -1,0 +1,9 @@
+// ==========================================================================
+// CENTRAL GAME CONFIGURATION
+// Public module for @use '.../base/variables' as vars.
+// Implementation is split: tokens, graph ($positions), content maps.
+// ==========================================================================
+
+@forward 'tokens';
+@forward 'graph';
+@forward 'content';

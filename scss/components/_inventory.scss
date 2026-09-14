@@ -1,0 +1,5 @@
+// Inventory barrel — same slot as before in scss/main.scss.
+// Shared lists are forwarded so settings can @use 'inventory' as inv.
+@forward 'inventory-shared';
+@use 'inventory-chrome';
+@use 'inventory-use';

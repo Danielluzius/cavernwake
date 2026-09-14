@@ -1,0 +1,10 @@
+// Intro barrel — same slot as before in scss/main.scss.
+// Part order matches the previous single-file cascade.
+@use 'intro-config';
+@use 'intro-camera';
+@use 'intro-player-motion';
+@use 'intro-lamp';
+@use 'intro-player-pose';
+@use 'intro-fx';
+@use 'intro-dialogue';
+@use 'intro-hud';

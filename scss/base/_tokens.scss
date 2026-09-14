@@ -1,0 +1,358 @@
+// ==========================================================================
+// DESIGN TOKENS
+// Scale, timing, HUD, layout, z-index. No position graph or puzzle maps.
+// ==========================================================================
+
+@use 'sass:math';
+
+// --- Display scaling ---
+// Pixel art is authored at 1x (source asset resolution) and rendered at
+// this integer scale — never blurred/interpolated (see image-rendering:
+// pixelated on .tile / .player__sprite). Every *-display value below is
+// the actual on-screen CSS size; the plain (non-display) values stay as
+// the source-asset reference size, used for tileset math.
+$display-scale: 3;
+// Vision-field / lamp-glow numbers below were authored at 2x. Keep oval
+// and glow in proportion when $display-scale changes.
+$vision-scale: math.div($display-scale, 2);
+
+// --- Tile / world ---
+// Map art is pre-drawn image layers (see assets/world/logic-map.png
+// for the room/connection reference), placed by world/_room.scss.
+$tile-size: 32px; // source-asset size (one grid cell)
+$tile-size-display: $tile-size * $display-scale; // actual rendered tile box
+
+// --- Character ---
+// Source canvas is 84x84px, not a "clean" 64px square — verified via
+// alpha-channel bounding-box analysis of the actual sprite PNGs. The
+// transparent padding is intentional (keeps a consistent ~13px bottom
+// margin across frames so the feet don't jitter between poses) and must
+// never be cropped, so the full 84px canvas is what gets scaled.
+$character-size: 84px; // source-asset canvas size (one sprite frame)
+$character-size-display: $character-size * $display-scale; // actual rendered box
+$walk-frame-count: 4;
+$idle-frame-count: 4;
+
+// How long the one-shot stand-up animation takes before handing off to idle.
+$stand-up-duration: 0.8s;
+
+// --- Movement ---
+// Camera and walk timing for the 2D stand graph in $positions
+// (assets/world/logic-map.png). world/_world.scss drives --world-offset
+// from that map; $movement-tiles-per-step is one room segment on the map.
+$movement-tiles-per-step: 3; // room width in tiles, matches the logic-map's room segments
+$movement-step-display: $tile-size-display * $movement-tiles-per-step;
+
+// How long one room-to-room shift takes; the walk animation duration
+// stays synchronized to this.
+$movement-duration: 0.6s;
+$idle-duration: 1s;
+
+// Ladders are slower and loop their climb cycle a few times rather than
+// playing once — $climb-duration (world/player transition + total
+// animation time) is simply $climb-cycles repeats of one climb-cycle
+// pass, so the camera/player always finish arriving exactly when the
+// looped animation ends (see player/_player.scss, world/_world.scss).
+$climb-cycles: 3;
+$climb-duration: $movement-duration * $climb-cycles;
+
+// Plain walk edges loop their walk-cycle a couple of times too (same idea
+// as the ladder above) so the whole shift takes a bit longer/feels less
+// rushed than a single pass of the cycle would — $walk-duration is what
+// .world/.player's transition-duration gets overridden to on a walk edge
+// (see world/_world.scss, player/_player.scss).
+$walk-cycles: 2;
+$walk-duration: $movement-duration * $walk-cycles;
+
+// Escape run after the last lever (world/_shortcuts.scss haste skips)
+// and the outro off-screen dash (scss/outro/_outro.scss). Exploration
+// skips scale duration and walk-cycles by hops, then divide by
+// $skip-walk-speed so extra rooms take extra steps without the full
+// sequential-walk wait (1 = room-by-room, 2 = haste camera).
+$skip-speed: 2;
+$skip-walk-speed: 1.5;
+
+// Elevator rides loop a resting idle-cycle instead of a static pose (see
+// player/_player.scss), timed per shaft's actual physical length (row
+// distance in assets/world/logic-map.png) rather than one fixed duration
+// for every elevator — three tiers, one idle-cycle loop-count each.
+$elevator-cycles-short: 2; // shafts 6<->14 and 17<->26 (7 tiles)
+$elevator-cycles-medium: 3; // shaft 11<->27 (14 tiles)
+$elevator-cycles-long: 4; // shaft 10<->36 (21 tiles)
+$elevator-duration-short: $idle-duration * $elevator-cycles-short;
+$elevator-duration-medium: $idle-duration * $elevator-cycles-medium;
+$elevator-duration-long: $idle-duration * $elevator-cycles-long;
+
+// Hand-maintained (unlike $positions below, NOT re-derived from
+// logic-map.png by extract_positions.py) — keyed by elevator node id,
+// both ends of the same shaft share the same duration. Update by hand if
+// the map ever gains/loses an elevator connector.
+$elevator-durations: (
+  6: $elevator-duration-short,
+  14: $elevator-duration-short,
+  17: $elevator-duration-short,
+  26: $elevator-duration-short,
+  11: $elevator-duration-medium,
+  27: $elevator-duration-medium,
+  10: $elevator-duration-long,
+  36: $elevator-duration-long,
+);
+
+// Fixed idle-facing direction for the elevator ends only reachable from
+// one walk direction (verified by hand against $positions' own exits) —
+// 14 and 17 are each reachable from two directions, handled separately
+// below via $elevator-dual-ends instead.
+$elevator-facing: (
+  6: right,
+  10: right,
+  11: left,
+  26: right,
+  27: left,
+  36: right,
+);
+
+// The 2 dual-access elevator ends (14 riding up to 6, 17 riding down to
+// 26) can be arrived at from 2 different walk directions, each giving a
+// different facing before boarding — a single #position-<to>--from-<id>
+// radio can't disambiguate that, so these get their own dedicated
+// #position-<to>--from-<id>--<facing> radio pair instead (hand-maintained,
+// like $elevator-durations above; see world/_world.scss,
+// player/_player.scss, animations/_animations.scss and
+// html/partials/edge-radios.html + direction-edge-buttons.html).
+$elevator-dual-ends: (
+  14: (
+    to: 6,
+    arrivals: (
+      13: right,
+      15: left,
+    ),
+  ),
+  17: (
+    to: 26,
+    arrivals: (
+      16: right,
+      18: left,
+    ),
+  ),
+);
+
+// The simple partner of each dual-access end (6 riding back down to 14,
+// 26 riding back up to 17) isn't really single-facing after all: arriving
+// there via the dual end's elevator can carry over EITHER facing, so its
+// own ride back also needs both variants instead of always using its
+// $elevator-facing entry — otherwise riding back immediately after
+// arriving with the "other" facing visibly flips the sprite mid-ride.
+// walk-from is that node's own (single) walk arrival source, which always
+// carries its native $elevator-facing direction.
+$elevator-reverse-duals: (
+  6: (
+    to: 14,
+    walk-from: 5,
+  ),
+  26: (
+    to: 17,
+    walk-from: 25,
+  ),
+);
+
+// --- Title screen (see components/_title-screen.scss) ---
+// Beat timings: title emerges from the dark, then credit, then the
+// preload bar (walker stays in lockstep with the fill). Start checks
+// #intro-dark; the overlay fades out over $title-fade-out-duration.
+$title-emerge-duration: 3s;
+$title-credit-delay: 2.7s;
+$title-credit-duration: 1.1s;
+$title-load-delay: 4.1s;
+$title-load-duration: 4.8s;
+$title-fade-out-duration: 2s;
+// Deutsch?/English? + Impressum appear between credit and bar once the
+// walker has lain down.
+$title-choices-delay: $title-load-delay + $title-load-duration;
+
+// --- Room segment geometry (see world/_room.scss) ---
+// Every room segment is 3 tiles wide x 7 tiles tall (matches
+// $movement-tiles-per-step horizontally), mirroring assets/world/logic-map.png.
+$room-segment-rows: 7;
+
+// --- Vision field (see game/_viewport.scss) ---
+// Circle sized to one room segment ($room-segment-rows tiles), then 1 tile
+// taken off the bottom. Nudge shifts the whole circle without changing
+// size. $vision-field-size-scale is the 100/90 boost from browser-zoom
+// tests: clip grows, glow stays short of the edge.
+// The mask is a pixel-sized .vision-field box (not clip-path on the
+// full-window .viewport) so Chrome zoom scales it with the tiles.
+$vision-field-cut-bottom: $tile-size-display;
+$vision-field-nudge-down: $tile-size-display * 0.5;
+$vision-field-size-scale: math.div(10, 9);
+$vision-field-radius: math.div(
+    $room-segment-rows * $tile-size-display - $vision-field-cut-bottom,
+    2
+  ) *
+  $vision-field-size-scale;
+$vision-field-size: $vision-field-radius * 2;
+$vision-field-offset-y: $vision-field-nudge-down - $vision-field-cut-bottom *
+  0.5;
+
+// Unitless SVG radii for the lamp-glow holes (player/_player.scss).
+// Hole center is the middle of the 6000px glow box. The player glow
+// layer is then shifted up by $player-vertical-offset so that matches
+// the vision-field circle (the sprite box sits below the circle).
+// Outer glow is 90% of the clip so falloff sits inside the hard edge.
+$vision-field-radius-unitless: math.div($vision-field-radius, 1px);
+$lamp-glow-reach: 0.9;
+$lamp-glow-center-offset-y: 0;
+$lamp-glow-holes: (
+  (
+    $vision-field-radius-unitless * $lamp-glow-reach * 0.76,
+    $vision-field-radius-unitless * $lamp-glow-reach * 0.76
+  ),
+  (
+    $vision-field-radius-unitless * $lamp-glow-reach * 0.92,
+    $vision-field-radius-unitless * $lamp-glow-reach * 0.92
+  ),
+  (
+    $vision-field-radius-unitless * $lamp-glow-reach,
+    $vision-field-radius-unitless * $lamp-glow-reach
+  ),
+);
+
+// Source-resolution size of assets/world/logic-map.png (room layout
+// reference: rooms/connections/elevators/ladders — see world/_room.scss),
+// scaled the same way as every other tile-based asset ($display-scale).
+$logic-map-width: 1248px;
+$logic-map-height: 896px;
+
+// Fine-tuning offset for the player sprite only, applied on top of the
+// viewport-center anchor (see .player in player/_player.scss). Every
+// position's tile-center now lands exactly at viewport-center (see
+// world/_world.scss). This value nudges the sprite down by (1 tile −
+// character-size/2 + sprite's own bottom padding) to land the feet on
+// the standing line, not an arbitrary guess.
+$player-vertical-offset: 6px * $display-scale;
+
+// --- Layering (z-index) ---
+$z-index-background: 0;
+$z-index-environment: 10;
+$z-index-objects: 20;
+$z-index-player: 30;
+$z-index-foreground: 40;
+// The character's lamp glow sits above the foreground art too, so it can
+// darken hanging vines/waterfalls/lift doors instead of being covered.
+$z-index-lamp-glow: 45;
+$z-index-blackout: 90;
+$z-index-ui: 100;
+
+// --- Dialogue UI (see components/_dialogue.scss) ---
+// CSS recreation of dialog-background.png: 1 art pixel = $display-scale.
+// Speech bubble: ~2.5 tiles wide, height follows copy (grows upward).
+$dialogue-pixel: 1px * $display-scale;
+$dialogue-box-width: $tile-size-display * 2.5;
+$dialogue-font-size: 8px * $display-scale;
+$dialogue-padding-x: 5px * $display-scale;
+$dialogue-padding-top: 3px * $display-scale;
+$dialogue-bevel-height: 4 * $dialogue-pixel;
+$dialogue-continue-size: 10px * $display-scale;
+$dialogue-arrow-slide: 3 * $dialogue-pixel;
+$dialogue-arrow-in-duration: 0.4s;
+$dialogue-arrow-in-delay: 0.75s;
+// Speech spark: fade at full size, then settle to the world-hint scale.
+$dialogue-spark-in-duration: 0.9s;
+// First spoken line only: blink, then shrink (teach the click).
+$dialogue-spark-teach-duration: 2.2s;
+$dialogue-box-in-duration: $dialogue-arrow-in-duration;
+// Auto-fade lines without Continue (blocked hints, lift call, workbench
+// incomplete, inventory inspect). Inventory inspect can replay.
+$dialogue-hint-duration: 2s;
+$click-hint-size: math.div($dialogue-continue-size, 2);
+$click-hint-idle-opacity: 0.4;
+$click-hint-hover-scale: 0.65;
+$click-hint-fade-duration: 0.7s;
+$dialogue-arrow-bg: #2f6b32;
+$dialogue-arrow-bg-hover: #3a8240;
+// Like the above-head placement, but a bit lower: box bottom overlaps
+// the sprite top by 0.2 tile so it sits near the head, not over the body.
+$dialogue-above-player: math.div($character-size-display, 2) -
+  $player-vertical-offset - $tile-size-display * 0.2;
+// Intro 5–6: passed-out sprite lies in the canvas, head sits lower than
+// the standing pose the default bubble is aimed at.
+$dialogue-passed-out-drop: $tile-size-display * 0.5;
+$dialogue-fill: #ebcba0;
+$dialogue-bevel: #ca946e;
+$dialogue-outline: #010000;
+$dialogue-text-color: #2a1810;
+// Scene captions (time skips, blackout cards): no bubble, cream type,
+// set larger than spoken lines (narrator voice, see _dialogue.scss).
+$dialogue-caption-color: $dialogue-fill;
+$dialogue-caption-font-size: 12px * $display-scale;
+$dialogue-caption-max-width: $tile-size-display * 9;
+// Walk D-pad: same pad as Continue, half a rendered tile on each side.
+// Reach is the last axis-aligned tile LINE still inside the vision
+// circle: standing-tile center is viewport/circle center, lines fall at
+// ±0.5, ±1.5, ±2.5, … tiles. Radius is ~3.33 tiles, so ±2.5 (e.g. node 5
+// col 13 → line between col 10/11; row 3 → line between row 0/1).
+// Whole pixels, multiple of 6 (even + $dialogue-pixel). 0.6 tile is
+// 57.6px — with translate(-50%) that sat on a half pixel and drew a
+// grey hairline through the bubble chrome.
+$direction-button-size: math.round(math.div($tile-size-display * 0.6, 6px)) *
+  6px;
+$direction-button-idle-opacity: 0.4;
+$direction-button-reach: $tile-size-display * 2.5;
+
+// --- Inventory UI (see components/_inventory.scss) ---
+$inventory-toggle-size: 48px * $vision-scale;
+$inventory-back-size: math.div($tile-size-display, 2.5);
+$inventory-art-size: 320px * $vision-scale;
+$inventory-lamp-expand-duration: 0.8s;
+$inventory-morph-duration: 0.45s;
+$inventory-morph-scale: math.div($inventory-toggle-size, $inventory-art-size);
+// Open bag: right edge on the vision field's left, vertically centered.
+// Treat the round clip as its bounding square: icon sits in that
+// top-left corner with the same inset from the top edge as from the left.
+$inventory-anchor-x: $vision-field-radius * -1;
+$inventory-hud-edge-pad: math.div($inventory-toggle-size, 4);
+$inventory-hud-x: $inventory-anchor-x + $inventory-hud-edge-pad +
+  $inventory-toggle-size * 0.5;
+$inventory-hud-y: $inventory-anchor-x + $inventory-hud-edge-pad +
+  $inventory-toggle-size * 0.5;
+$inventory-quote-duration: $dialogue-hint-duration;
+// Settings gear: same slot size as the backpack, mirrored to the
+// top-right corner of the vision-field square. Open panel: left edge on
+// the vision field's right. Closed morph parks the shrunk panel on the icon.
+$settings-anchor-x: $vision-field-radius;
+$settings-hud-x: $settings-anchor-x - $inventory-hud-edge-pad -
+  $inventory-toggle-size * 0.5;
+
+// --- Layout / responsive (see game/_layout.scss, game/_responsive.scss) ---
+// World art is authored at $display-scale (3x). Fitting a screen never
+// rewrites tile offsets — it scales the 640px vision field as a unit in
+// discrete steps so pixel-art edges stay even (0.75 / 1 / 1.25).
+$field-scale-phablet: 0.75;
+$field-scale-desktop: 1;
+$field-scale-wide: 1.25;
+// Compact chrome (D-pad below the circle). Reach is pad-center to origin.
+// Wider than the 60px pad so left/right don't kiss the Continue/Next pill
+// and up/down keep a visible gap.
+$chrome-reach-y: 66px;
+$layout-compact-max: 719px;
+$layout-short-max: 520px;
+$layout-phablet-min: 500px;
+$layout-desktop-min: 720px;
+$layout-wide-min: 1200px;
+$layout-wide-min-height: 860px;
+// Side docks: bag left of the centered field, gear right. HUD art stays
+// $inventory-art-size (does not follow --field-scale), so the window
+// must fit field + both panels or the open one is clipped.
+$layout-side-docks-span: $inventory-art-size * 2;
+$layout-side-docks-min-phablet: $vision-field-size * $field-scale-phablet +
+  $layout-side-docks-span;
+$layout-side-docks-min-desktop: $vision-field-size * $field-scale-desktop +
+  $layout-side-docks-span;
+$layout-side-docks-min-wide: $vision-field-size * $field-scale-wide +
+  $layout-side-docks-span;
+
+// Runtime walk timing. Layout geometry lives on .game (see game/_layout.scss)
+// so media queries can retarget one node instead of every HUD selector.
+:root {
+  --walk-cycle-duration: #{$movement-duration};
+  --walk-duration: #{$walk-duration};
+}

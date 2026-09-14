@@ -1,0 +1,176 @@
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// WATERFALL — pure visual barrier over col 9-11 / row 15-27, blocking the
+// 20<->21 and 29<->30 walk edges (see vars.$obstacles). Renders in
+// .world-layer--foreground so it sits in front of the player like an actual
+// wall of water, not behind it; not clickable itself — the node-7 lever
+// (world/_lever.scss) is the only trigger that removes it.
+//
+// Separate from that: an invisible hint hitbox in the waterfall gap to the
+// LEFT of nodes 21 and 30 (col 11-12). Those nodes stay walkable; the hint
+// only explains why the path left is blocked until lever 7 is used.
+// ==========================================================================
+
+$hint-cols: 2;
+
+.object--waterfall,
+.object--waterfall-back {
+  position: absolute;
+  left: 9 * vars.$tile-size-display;
+  top: 15 * vars.$tile-size-display;
+  width: 3 * vars.$tile-size-display;
+  height: 13 * vars.$tile-size-display;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+// Twin in .world-layer--environment, painted between the far backdrop and
+// the main background (see html/index.html) so the cave walls clip it and
+// only the open shaft keeps showing water. Runs from the start — the front
+// waterfall covers it anyway until the lever removes that one.
+.object--waterfall-back {
+  opacity: 0.4;
+}
+
+// Decorative far waterfalls in .world-layer--environment (see html/index.html),
+// painted between the far backdrop and the main background so cave walls clip
+// them. Purely visual — no gameplay, hints, or lever state.
+.object--waterfall-far {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0.4;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+.object--waterfall-far--1 {
+  left: 9 * vars.$tile-size-display;
+  top: 0;
+  width: 3 * vars.$tile-size-display;
+  height: 13 * vars.$tile-size-display;
+}
+
+.object--waterfall-far--2 {
+  left: 0;
+  top: 14 * vars.$tile-size-display;
+  width: 3 * vars.$tile-size-display;
+  height: 14 * vars.$tile-size-display;
+}
+
+.object--waterfall-far--3 {
+  left: 36 * vars.$tile-size-display;
+  top: 14 * vars.$tile-size-display;
+  width: 3 * vars.$tile-size-display;
+  height: 14 * vars.$tile-size-display;
+}
+
+.object--waterfall-far--4 {
+  left: 29 * vars.$tile-size-display;
+  top: 6 * vars.$tile-size-display;
+  width: 3 * vars.$tile-size-display;
+  height: 14 * vars.$tile-size-display;
+}
+
+.object--waterfall-hint-20,
+.object--waterfall-hint-21,
+.object--waterfall-hint-29,
+.object--waterfall-hint-30 {
+  position: absolute;
+  left: 11 * vars.$tile-size-display;
+  width: $hint-cols * vars.$tile-size-display;
+  height: vars.$tile-size-display;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--waterfall-hint-20,
+.object--waterfall-hint-21 {
+  top: 17 * vars.$tile-size-display;
+}
+
+.object--waterfall-hint-20 {
+  @include click-hint.place(11, 17, $hint-cols, 1, 20);
+}
+
+.object--waterfall-hint-21 {
+  @include click-hint.place(11, 17, $hint-cols, 1, 21);
+}
+
+.object--waterfall-hint-29,
+.object--waterfall-hint-30 {
+  top: 24 * vars.$tile-size-display;
+}
+
+.object--waterfall-hint-29 {
+  @include click-hint.place(11, 24, $hint-cols, 1, 29);
+}
+
+.object--waterfall-hint-30 {
+  @include click-hint.place(11, 24, $hint-cols, 1, 30);
+}
+
+// Seamless 4-frame loop — 100% repeats the 0% frame (not the last one, as
+// one-shot movement animations do) so the cycle wraps around cleanly.
+@keyframes waterfall-loop {
+  0%,
+  100% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_003.png');
+  }
+  75% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_004.png');
+  }
+}
+
+// Hard, permanent removal once the lever is used — no crossfade.
+#lever7-done:checked ~ .game .object--waterfall {
+  opacity: 0;
+}
+
+// Re-sealed when the cave collapse starts (world/_collapse.scss).
+#lever7-done:checked ~ #last-lever-armed:checked ~ .game .object--waterfall {
+  opacity: 1;
+}
+
+// ---- Waterfall hints (one-shot per stand: 20 / 21 upper, 29 / 30 lower) ----
+@mixin waterfall-hint-live($node, $row) {
+  #lever7-done:not(:checked)
+    ~ #waterfall-hint-#{$node}-idle:checked
+    ~ #{vars.at-node($node)}
+    ~ .game
+    .object--waterfall-hint-#{$node} {
+    pointer-events: auto;
+    cursor: pointer;
+    @include click-hint.show(11, $row, $hint-cols, 1, $node);
+  }
+
+  #waterfall-hint-#{$node}-blocked {
+    @include dlg.lock-edges;
+  }
+
+  #waterfall-hint-#{$node}-blocked:checked
+    ~ .game
+    .dialogue[data-step='waterfall-hint-#{$node}-blocked']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+}
+
+@include waterfall-hint-live(20, 17);
+@include waterfall-hint-live(21, 17);
+@include waterfall-hint-live(29, 24);
+@include waterfall-hint-live(30, 24);
+

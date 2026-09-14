@@ -1,0 +1,163 @@
+@use 'sass:map';
+@use '../base/variables' as vars;
+
+// The world is the full scrollable/movable surface. It gets translated
+// (via CSS transforms) so the player appears stationary while the world
+// moves in the opposite direction of travel. --world-offset is set per
+// discrete position state (see below) and transitions smoothly.
+.world {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  --world-offset: 0px;
+  --world-offset-y: 0px;
+  transform: translate(-50%, -50%)
+    translate(var(--world-offset), var(--world-offset-y));
+  transition: transform vars.$movement-duration ease-in-out;
+  will-change: transform;
+}
+
+// --world-offset/--world-offset-y are driven per-position below, one rule
+// per node in vars.$positions (see base/_variables.scss and
+// assets/world/logic-map.png). col/row are absolute tile coordinates of
+// the node's own tile; +0.5 centers that tile (not its corner) at the
+// viewport center, since .world's own origin already sits there (see
+// .world above).
+@each $id, $data in vars.$positions {
+  #position-#{$id}:checked ~ .game .world {
+    --world-offset: #{(map.get($data, col) + 0.5) *
+      vars.$tile-size-display *
+      -1};
+    --world-offset-y: #{(map.get($data, row) + 0.5) *
+      vars.$tile-size-display *
+      -1};
+  }
+}
+
+// Every edge also has its own "arrived via this specific button" radio
+// variant (#position-<to>--from-<id>, see index.html / player/_player.scss)
+// so the sprite can face the direction that was actually clicked. Camera
+// centering for a variant is identical to its plain target node above.
+@each $id, $data in vars.$positions {
+  @each $direction, $exit in map.get($data, exits) {
+    $to: map.get($exit, to);
+    $target: map.get(vars.$positions, $to);
+
+    #position-#{$to}--from-#{$id}:checked ~ .game .world {
+      --world-offset: #{(map.get($target, col) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+      --world-offset-y: #{(map.get($target, row) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+
+      // Ladder shifts take longer ($climb-duration, see
+      // base/_variables.scss and player/_player.scss's matching .player
+      // override) — only overriding the duration keeps the camera's
+      // ease-in-out identical to every other position change.
+      @if map.get($exit, kind) == ladder {
+        transition-duration: vars.$climb-duration;
+      } @else if map.get($exit, kind) == walk {
+        // Plain walk shifts also loop the walk-cycle now ($walk-duration,
+        // see base/_variables.scss and player/_player.scss's matching
+        // override) — keeps the camera's ease-in-out in sync with the
+        // longer, twice-looped walk animation.
+        transition-duration: var(--walk-duration);
+      } @else if
+        map.get($exit, kind) ==
+        elevator and
+        map.has-key(vars.$elevator-durations, $id)
+      {
+        // Per-shaft duration tier (base/_variables.scss) — keeps the
+        // camera pan in sync with the elevator's own looped idle-cycle
+        // (see player/_player.scss's matching override).
+        transition-duration: map.get(vars.$elevator-durations, $id);
+      }
+    }
+  }
+}
+
+// Dual-access elevator ends (14, 17, see base/_variables.scss
+// vars.$elevator-dual-ends) — camera target/duration is identical
+// regardless of which facing variant is checked (only the sprite facing
+// itself differs, see player/_player.scss), so both variants of a shaft
+// just repeat the same offset/duration here.
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+  $target: map.get(vars.$positions, $to);
+  $duration: map.get(vars.$elevator-durations, $id);
+
+  @each $from, $facing in map.get($data, arrivals) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .world {
+      --world-offset: #{(map.get($target, col) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+      --world-offset-y: #{(map.get($target, row) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+      transition-duration: $duration;
+    }
+  }
+}
+
+// Ride BACK from a dual-access end's simple partner (6, 26, see
+// base/_variables.scss vars.$elevator-reverse-duals) — camera
+// target/duration is identical regardless of facing, same as above.
+@each $id, $data in vars.$elevator-reverse-duals {
+  $to: map.get($data, to);
+  $target: map.get(vars.$positions, $to);
+  $duration: map.get(vars.$elevator-durations, $id);
+
+  @each $facing in (right, left) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .world {
+      --world-offset: #{(map.get($target, col) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+      --world-offset-y: #{(map.get($target, row) + 0.5) *
+        vars.$tile-size-display *
+        -1};
+      transition-duration: $duration;
+    }
+  }
+}
+
+// Stacked world layers, back to front. Each layer spans the full world
+// area; future map content (tiles, decorations, objects) will be placed
+// inside the matching layer.
+.world-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &--background {
+    z-index: vars.$z-index-background;
+
+    // Flat backdrop, spans the full viewport regardless of world scroll
+    // position.
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+  }
+
+  &--environment {
+    z-index: vars.$z-index-environment;
+
+    // No local anchor math needed here anymore: every position's own
+    // col/row (absolute map tile coordinates, see --world-offset above)
+    // already centers the correct tile at the viewport, so this layer's
+    // origin (0,0) stays the map's own top-left, matching every .room's
+    // local grid (see world/_room.scss).
+  }
+
+  &--objects {
+    z-index: vars.$z-index-objects;
+  }
+
+  &--foreground {
+    z-index: vars.$z-index-foreground;
+    pointer-events: none;
+  }
+}

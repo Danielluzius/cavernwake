@@ -1,0 +1,563 @@
+// ==========================================================================
+// POSITION GRAPH
+// $positions (paste from extract_positions.py) plus helpers that read it.
+// ==========================================================================
+
+@use 'sass:map';
+@use 'tokens' as *;
+
+// How long the edge just travelled actually takes to finish, keyed by
+// $exit's own "kind" (see extract_positions.py / $positions above) and,
+// for elevators, the node id whose ride was taken — used to delay button
+// reveal (components/_direction-controls.scss) so it always matches the actual
+// world/player transition-duration override (world/_world.scss,
+// player/_player.scss) instead of the flat $movement-duration, which is
+// only correct for a plain single-tile step.
+@function movement-duration-for($kind, $id: null) {
+  @if $kind == ladder {
+    @return $climb-duration;
+  } @else if $kind == walk {
+    @return $walk-duration;
+  } @else if $kind == elevator and map.has-key($elevator-durations, $id) {
+    @return map.get($elevator-durations, $id);
+  }
+  @return $movement-duration;
+}
+
+// --- Room / position graph (see assets/world/logic-map.png) ---
+// One entry per green "standing point" node, keyed by the id used in its
+// #position-<id> radio (see index.html / world/_world.scss). col/row are
+// absolute tile coordinates from the map's top-left origin (0,0) — used
+// to derive --world-offset / --world-offset-y per position, centering
+// that exact tile at the viewport (see world/_world.scss). exits lists
+// which direction buttons are enabled while that position is current,
+// which position each leads to, and the connector kind (walk/elevator/
+// ladder, see components/_direction-controls.scss) drawn from the logic-map.
+//
+// Auto-generated from assets/world/logic-map.png via
+// scripts/extract_positions.py — re-run that script and paste its SCSS
+// output into scss/base/_graph.scss whenever the map image changes.
+$positions: (
+  1: (
+    col: 1,
+    row: 3,
+    exits: (
+      right: (
+        to: 2,
+        kind: walk,
+      ),
+    ),
+  ),
+  2: (
+    col: 4,
+    row: 3,
+    exits: (
+      right: (
+        to: 3,
+        kind: walk,
+      ),
+      left: (
+        to: 1,
+        kind: walk,
+      ),
+    ),
+  ),
+  3: (
+    col: 7,
+    row: 3,
+    exits: (
+      right: (
+        to: 4,
+        kind: walk,
+      ),
+      left: (
+        to: 2,
+        kind: walk,
+      ),
+    ),
+  ),
+  4: (
+    col: 10,
+    row: 3,
+    exits: (
+      right: (
+        to: 5,
+        kind: walk,
+      ),
+      left: (
+        to: 3,
+        kind: walk,
+      ),
+    ),
+  ),
+  5: (
+    col: 13,
+    row: 3,
+    exits: (
+      right: (
+        to: 6,
+        kind: walk,
+      ),
+      left: (
+        to: 4,
+        kind: walk,
+      ),
+    ),
+  ),
+  6: (
+    col: 16,
+    row: 3,
+    exits: (
+      down: (
+        to: 14,
+        kind: elevator,
+      ),
+      left: (
+        to: 5,
+        kind: walk,
+      ),
+    ),
+  ),
+  7: (
+    col: 22,
+    row: 3,
+    exits: (
+      right: (
+        to: 8,
+        kind: walk,
+      ),
+    ),
+  ),
+  8: (
+    col: 25,
+    row: 3,
+    exits: (
+      down: (
+        to: 16,
+        kind: ladder,
+      ),
+      left: (
+        to: 7,
+        kind: walk,
+      ),
+    ),
+  ),
+  9: (
+    col: 31,
+    row: 3,
+    exits: (
+      right: (
+        to: 10,
+        kind: walk,
+      ),
+    ),
+  ),
+  10: (
+    col: 34,
+    row: 3,
+    exits: (
+      down: (
+        to: 36,
+        kind: elevator,
+      ),
+      left: (
+        to: 9,
+        kind: walk,
+      ),
+    ),
+  ),
+  11: (
+    col: 4,
+    row: 10,
+    exits: (
+      right: (
+        to: 12,
+        kind: walk,
+      ),
+      down: (
+        to: 27,
+        kind: elevator,
+      ),
+    ),
+  ),
+  12: (
+    col: 7,
+    row: 10,
+    exits: (
+      left: (
+        to: 11,
+        kind: walk,
+      ),
+    ),
+  ),
+  13: (
+    col: 13,
+    row: 10,
+    exits: (
+      right: (
+        to: 14,
+        kind: walk,
+      ),
+    ),
+  ),
+  14: (
+    col: 16,
+    row: 10,
+    exits: (
+      up: (
+        to: 6,
+        kind: elevator,
+      ),
+      right: (
+        to: 15,
+        kind: walk,
+      ),
+      left: (
+        to: 13,
+        kind: walk,
+      ),
+    ),
+  ),
+  15: (
+    col: 19,
+    row: 10,
+    exits: (
+      down: (
+        to: 23,
+        kind: ladder,
+      ),
+      left: (
+        to: 14,
+        kind: walk,
+      ),
+    ),
+  ),
+  16: (
+    col: 25,
+    row: 10,
+    exits: (
+      up: (
+        to: 8,
+        kind: ladder,
+      ),
+      right: (
+        to: 17,
+        kind: walk,
+      ),
+    ),
+  ),
+  17: (
+    col: 28,
+    row: 10,
+    exits: (
+      right: (
+        to: 18,
+        kind: walk,
+      ),
+      down: (
+        to: 26,
+        kind: elevator,
+      ),
+      left: (
+        to: 16,
+        kind: walk,
+      ),
+    ),
+  ),
+  18: (
+    col: 31,
+    row: 10,
+    exits: (
+      left: (
+        to: 17,
+        kind: walk,
+      ),
+    ),
+  ),
+  19: (
+    col: 7,
+    row: 17,
+    exits: (
+      right: (
+        to: 20,
+        kind: walk,
+      ),
+    ),
+  ),
+  20: (
+    col: 10,
+    row: 17,
+    exits: (
+      right: (
+        to: 21,
+        kind: walk,
+      ),
+      left: (
+        to: 19,
+        kind: walk,
+      ),
+    ),
+  ),
+  21: (
+    col: 13,
+    row: 17,
+    exits: (
+      right: (
+        to: 22,
+        kind: walk,
+      ),
+      down: (
+        to: 30,
+        kind: ladder,
+      ),
+      left: (
+        to: 20,
+        kind: walk,
+      ),
+    ),
+  ),
+  22: (
+    col: 16,
+    row: 17,
+    exits: (
+      right: (
+        to: 23,
+        kind: walk,
+      ),
+      left: (
+        to: 21,
+        kind: walk,
+      ),
+    ),
+  ),
+  23: (
+    col: 19,
+    row: 17,
+    exits: (
+      up: (
+        to: 15,
+        kind: ladder,
+      ),
+      right: (
+        to: 24,
+        kind: walk,
+      ),
+      left: (
+        to: 22,
+        kind: walk,
+      ),
+    ),
+  ),
+  24: (
+    col: 22,
+    row: 17,
+    exits: (
+      right: (
+        to: 25,
+        kind: walk,
+      ),
+      left: (
+        to: 23,
+        kind: walk,
+      ),
+    ),
+  ),
+  25: (
+    col: 25,
+    row: 17,
+    exits: (
+      right: (
+        to: 26,
+        kind: walk,
+      ),
+      down: (
+        to: 33,
+        kind: ladder,
+      ),
+      left: (
+        to: 24,
+        kind: walk,
+      ),
+    ),
+  ),
+  26: (
+    col: 28,
+    row: 17,
+    exits: (
+      up: (
+        to: 17,
+        kind: elevator,
+      ),
+      left: (
+        to: 25,
+        kind: walk,
+      ),
+    ),
+  ),
+  27: (
+    col: 4,
+    row: 24,
+    exits: (
+      up: (
+        to: 11,
+        kind: elevator,
+      ),
+      right: (
+        to: 28,
+        kind: walk,
+      ),
+    ),
+  ),
+  28: (
+    col: 7,
+    row: 24,
+    exits: (
+      right: (
+        to: 29,
+        kind: walk,
+      ),
+      left: (
+        to: 27,
+        kind: walk,
+      ),
+    ),
+  ),
+  29: (
+    col: 10,
+    row: 24,
+    exits: (
+      right: (
+        to: 30,
+        kind: walk,
+      ),
+      left: (
+        to: 28,
+        kind: walk,
+      ),
+    ),
+  ),
+  30: (
+    col: 13,
+    row: 24,
+    exits: (
+      up: (
+        to: 21,
+        kind: ladder,
+      ),
+      right: (
+        to: 31,
+        kind: walk,
+      ),
+      left: (
+        to: 29,
+        kind: walk,
+      ),
+    ),
+  ),
+  31: (
+    col: 16,
+    row: 24,
+    exits: (
+      right: (
+        to: 32,
+        kind: walk,
+      ),
+      left: (
+        to: 30,
+        kind: walk,
+      ),
+    ),
+  ),
+  32: (
+    col: 19,
+    row: 24,
+    exits: (
+      left: (
+        to: 31,
+        kind: walk,
+      ),
+    ),
+  ),
+  33: (
+    col: 25,
+    row: 24,
+    exits: (
+      up: (
+        to: 25,
+        kind: ladder,
+      ),
+      right: (
+        to: 34,
+        kind: walk,
+      ),
+    ),
+  ),
+  34: (
+    col: 28,
+    row: 24,
+    exits: (
+      right: (
+        to: 35,
+        kind: walk,
+      ),
+      left: (
+        to: 33,
+        kind: walk,
+      ),
+    ),
+  ),
+  35: (
+    col: 31,
+    row: 24,
+    exits: (
+      right: (
+        to: 36,
+        kind: walk,
+      ),
+      left: (
+        to: 34,
+        kind: walk,
+      ),
+    ),
+  ),
+  36: (
+    col: 34,
+    row: 24,
+    exits: (
+      up: (
+        to: 10,
+        kind: elevator,
+      ),
+      left: (
+        to: 35,
+        kind: walk,
+      ),
+    ),
+  ),
+);
+
+// The walk edge leading INTO a shaft's bottom station: which node the
+// player approaches from, which direction button they press to get there,
+// and which side of the shaft column that approach lies on. Used to place
+// the call button (facing the player's side) and to know which button has
+// to stay hidden until the shaft is activated (components/_components.scss).
+// Whether the player is standing on node $id (plain arrival or any --from
+// variant). Trailing `--` on the attribute prefix is required, otherwise
+// [id^='position-3'] would also match 30–39.
+@function at-node($id) {
+  @return ":is(#position-#{$id}, [id^='position-#{$id}--']):checked";
+}
+
+@function lift-approach($bottom-node) {
+  @each $direction, $exit in map.get(map.get($positions, $bottom-node), exits) {
+    @if map.get($exit, kind) == walk {
+      @return (
+        node: map.get($exit, to),
+        direction: if($direction == left, right, left),
+        side: $direction
+      );
+    }
+  }
+
+  @return null;
+}

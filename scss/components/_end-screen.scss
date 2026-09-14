@@ -1,0 +1,304 @@
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+
+// ==========================================================================
+// END SCREEN
+// Shown once #outro-fade is checked (scss/outro/_outro.scss). Child
+// beats wait out $end-fade so they start after the blackout, not under
+// it. Reload via ./index.html resets every radio/checkbox.
+//
+// Sequence (CSS animation-delay, no JS):
+//   1. Title eases in like the title screen
+//   2. Credit fades in
+//   3. Character runs in from the right
+//   4. Only while he crosses the pad: it wipes in behind him
+//   5. He stops left of the pad, looks right, looks left
+//   6. Then "Puh..", then run off to the left
+// ==========================================================================
+
+// Same wait as $outro-fade-duration in scss/outro/_outro.scss.
+$end-fade: 2s;
+$end-walker-scale: 2;
+$end-walker-size: vars.$character-size * $end-walker-scale;
+$end-run-cycle: 0.45s;
+
+// Real outro waits out the blackout; the title ENDE skip sets
+// --end-fade to 0s so the sequence starts immediately.
+$end-title-after: 0s;
+$end-credit-after: vars.$title-credit-delay;
+$end-run-after: vars.$title-emerge-duration;
+
+// Pad is centered; EN copy is the wider one. Used to park him left of
+// it and to start the wipe only once he actually crosses the pad.
+$end-button-width: vars.$tile-size-display * 2.6;
+$end-button-half: $end-button-width * 0.5;
+$end-stand-gap: vars.$tile-size-display * 0.15;
+$end-at-button-right: calc(50vw + #{$end-button-half});
+$end-at-stand: calc(
+  50vw - #{$end-button-half + $end-walker-size + $end-stand-gap}
+);
+
+$end-approach-in: 1.7s;
+$end-cross: 1.15s;
+$end-approach: $end-approach-in + $end-cross;
+$end-wipe: $end-cross;
+$end-hold-left: 0.25s;
+$end-puh-hold: 1.35s;
+$end-look-right: 0.55s;
+$end-look-left: 0.45s;
+$end-exit: 1.55s;
+$end-center-hold: $end-hold-left + $end-look-right + $end-look-left +
+  $end-puh-hold;
+$end-travel: $end-approach + $end-center-hold + $end-exit;
+$end-approach-loops: math.round(math.div($end-approach, $end-run-cycle));
+$end-exit-loops: math.round(math.div($end-exit, $end-run-cycle));
+
+$end-wipe-after: $end-run-after + $end-approach-in;
+$end-act-after: $end-run-after + $end-approach;
+$end-exit-after: $end-act-after + $end-center-hold;
+$end-puh-after: $end-act-after + $end-hold-left + $end-look-right +
+  $end-look-left;
+$end-puh-duration: $end-puh-hold + 0.35s;
+
+@function end-hold-pct($t) {
+  @return math.percentage(math.div($t, $end-center-hold));
+}
+
+.end-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  height: 100svh;
+  overflow-x: hidden;
+  z-index: vars.$z-index-ui + 1;
+  grid-template-rows: 1fr auto 1fr;
+  justify-items: center;
+  background:
+    radial-gradient(
+      ellipse 42% 36% at 50% 44%,
+      #1c140c 0%,
+      #0a0806 48%,
+      #05040a 100%
+    );
+  font-family: inherit;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  opacity: 0;
+  --end-fade: #{$end-fade};
+}
+
+.end-screen__brand {
+  position: relative;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.end-screen__masthead {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: vars.$tile-size-display * 0.35;
+}
+
+.end-screen__title {
+  margin: 0;
+  color: vars.$dialogue-fill;
+  font-size: vars.$dialogue-font-size * 3;
+  font-weight: 400;
+  letter-spacing: vars.$dialogue-pixel * 2;
+  line-height: 1;
+  text-shadow:
+    #{vars.$dialogue-pixel} #{vars.$dialogue-pixel} 0 #{vars.$dialogue-outline},
+    0 #{vars.$dialogue-pixel * 2} 0 #{vars.$dialogue-bevel};
+  animation: title-emerge vars.$title-emerge-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-title-after});
+}
+
+.end-screen__credit {
+  margin: 0;
+  color: vars.$dialogue-bevel;
+  font-size: vars.$dialogue-font-size;
+  letter-spacing: vars.$dialogue-pixel;
+  animation: title-fade-in vars.$title-credit-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-credit-after});
+}
+
+// Behind the runner (z-index 0). clip-path wipes right → left so the
+// pad appears in his wake; the clipped side is not clickable.
+// Padding keeps the 8-bit bubble chrome inside the clip box.
+.end-screen__choices {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  padding: vars.$dialogue-pixel * 2;
+  clip-path: inset(0 0 0 100%);
+  animation: end-button-wipe $end-wipe linear both;
+  animation-delay: calc(var(--end-fade) + #{$end-wipe-after});
+}
+
+.end-screen__button {
+  @include dlg.pixel-button;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: vars.$dialogue-pixel;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.end-screen__run {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.end-screen__walker {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: $end-walker-size;
+  height: $end-walker-size;
+  margin-top: calc(#{vars.$tile-size-display * 0.15});
+  background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  animation:
+    end-walker-travel $end-travel linear both,
+    end-walker-run $end-run-cycle steps(1, end) $end-approach-loops both,
+    end-walker-act $end-center-hold steps(1, end) forwards,
+    end-walker-exit $end-run-cycle steps(1, end) $end-exit-loops forwards;
+  animation-delay:
+    calc(var(--end-fade) + #{$end-run-after}),
+    calc(var(--end-fade) + #{$end-run-after}),
+    calc(var(--end-fade) + #{$end-act-after}),
+    calc(var(--end-fade) + #{$end-exit-after});
+}
+
+.end-screen__line {
+  @include dlg.pixel-bubble-border;
+  @include dlg.speech-tail-bottom;
+  position: absolute;
+  left: 50%;
+  bottom: 108%;
+  margin: 0;
+  padding: vars.$dialogue-padding-top vars.$dialogue-padding-x;
+  background: vars.$dialogue-fill;
+  color: vars.$dialogue-text-color;
+  font-size: vars.$dialogue-font-size;
+  letter-spacing: vars.$dialogue-pixel;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  animation: end-puh $end-puh-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-puh-after});
+}
+
+@keyframes end-button-wipe {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes end-walker-travel {
+  0% {
+    transform: translateX(100vw);
+  }
+
+  #{math.percentage(math.div($end-approach-in, $end-travel))} {
+    transform: translateX($end-at-button-right);
+  }
+
+  #{math.percentage(math.div($end-approach, $end-travel))},
+  #{math.percentage(math.div($end-approach + $end-center-hold, $end-travel))} {
+    transform: translateX($end-at-stand);
+  }
+
+  100% {
+    transform: translateX(-#{$end-walker-size});
+  }
+}
+
+@keyframes end-walker-run {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png');
+  }
+}
+
+@keyframes end-walker-exit {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png');
+  }
+}
+
+@keyframes end-walker-act {
+  0%,
+  #{end-hold-pct($end-hold-left)} {
+    background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  }
+  #{end-hold-pct($end-hold-left + $end-look-right)} {
+    background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  }
+  #{end-hold-pct($end-hold-left + $end-look-right + $end-look-left)},
+  100% {
+    background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  }
+}
+
+@keyframes end-puh {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  14%,
+  72% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

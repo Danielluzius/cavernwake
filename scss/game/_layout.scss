@@ -1,0 +1,102 @@
+@use '../base/variables' as vars;
+
+// ==========================================================================
+// LAYOUT SHELL
+// The authored vision field stays 640px internally. Screens pick a
+// discrete --field-scale (0.5 / 0.75 / 1 / 1.25) so pixel-art edges stay
+// even. HUD sits in .ui on top of the same shell and does NOT scale with
+// the world — touch targets stay at authored px. Compact chrome height
+// is --chrome-h (0 on desktop). See game/_responsive.scss for the
+// compact D-pad / overlay rules.
+// ==========================================================================
+
+$hud-icon-half: vars.$inventory-toggle-size * 0.5;
+
+.game {
+  --field-authored: #{vars.$vision-field-size};
+  --field-scale: #{vars.$field-scale-desktop};
+  --field-size: calc(var(--field-authored) * var(--field-scale));
+  --chrome-h: 0px;
+  --chrome-center-from-mid: calc(var(--field-size) / 2);
+  --edge-opacity: #{vars.$direction-button-idle-opacity};
+  --pad-ghost-opacity: 0;
+  --pad-ghost-visibility: hidden;
+  --pad-reach-x: calc(#{vars.$direction-button-reach} * var(--field-scale));
+  --pad-reach-y: calc(#{vars.$direction-button-reach} * var(--field-scale));
+  --dialogue-lift: calc(#{vars.$dialogue-above-player} * var(--field-scale));
+  --dialogue-drop: 0px;
+  --hud-icon-pad: #{vars.$inventory-hud-edge-pad};
+  --hud-icon-half: #{$hud-icon-half};
+  --hud-inv-x: calc(
+    var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+  );
+  --hud-inv-y: calc(
+    var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+  );
+  --hud-set-x: calc(
+    var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+  );
+  --hud-set-y: var(--hud-inv-y);
+  --inv-anchor-x: calc(var(--field-size) * -0.5);
+  --set-anchor-x: calc(var(--field-size) * 0.5);
+  --inv-morph-x: calc(
+    var(--hud-inv-x) + var(--hud-icon-half) - var(--inv-anchor-x)
+  );
+  --inv-morph-y: var(--hud-inv-y);
+  --set-morph-x: calc(
+    var(--hud-set-x) - var(--hud-icon-half) - var(--set-anchor-x)
+  );
+  --set-morph-y: var(--hud-set-y);
+  --inv-fit: 1;
+}
+
+.scene--game {
+  align-items: center;
+  justify-content: center;
+}
+
+#{vars.$intro-running} ~ .game .scene--game {
+  display: flex;
+}
+
+.layout-shell {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--field-size);
+  height: calc(var(--field-size) + var(--chrome-h));
+  max-width: 100%;
+  container-type: inline-size;
+}
+
+.playfield {
+  position: relative;
+  width: var(--field-size);
+  height: var(--field-size);
+  overflow: hidden;
+}
+
+// Authored 640px world. Scale from the top-left so the visual size
+// matches --field-size; overflow on .playfield clips the unscaled
+// layout box. HUD in .ui is a sibling and does not scale.
+.playfield-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: vars.$vision-field-size;
+  height: vars.$vision-field-size;
+  transform: scale(var(--field-scale));
+  transform-origin: 0 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.hud-origin {
+  position: absolute;
+  top: calc(var(--field-size) / 2);
+  left: round(nearest, 50cqi, 1px);
+  width: 0;
+  height: 0;
+  z-index: 8;
+  pointer-events: none;
+}

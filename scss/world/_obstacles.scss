@@ -1,0 +1,460 @@
+@use 'sass:map';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// VINE BARRIERS
+// Two barriers, one radio group each (see index.html) and nothing else —
+// every Continue only ever advances its own group, so radio exclusivity
+// closes the previous dialogue for free and no step can stay checked after
+// the flow has moved on. Resting states are ordinary steps in that same
+// group, not separate checkboxes; that split is what used to strand a step
+// checked forever and leave the player pinned mid-animation.
+//
+//   vine24-step: idle -> cut-prompt -> cutting -> done
+//                no-sickle hint is vine24-spark (one-shot, Continue to -done)
+//   vine30-step: idle -> blocked -> pickup -> armed
+//                armed -> cut-prompt -> cutting -> done
+//   vine12-step: idle -> cut-prompt -> cutting -> done
+//                no-sickle hint is vine12-spark (one-shot, Continue to -done)
+//
+// "Sickle in possession" is therefore not a flag but simply "node 30 has
+// reached -armed or later" — needed in exactly one place (node 24's click
+// routing, further below).
+//
+// Each barrier is TWO stacked labels: `.object--vines-N` starts the
+// no-sickle branch, `.object--vines-N-cut` the cut branch. Both are dead by
+// default and exactly one resting step re-enables exactly one of them, so
+// there are no "don't reopen this" override rules anywhere.
+// ==========================================================================
+
+$img-vines: '../assets/world/obstacles/obstacle-vines.png';
+$img-vines-sickle: '../assets/world/obstacles/obstacle-vines-with-sickle.png';
+$img-vines-gone: '../assets/world/obstacles/obstacle-vines-gone.png';
+$img-base-right: '../assets/characters/with-backpack/base/base-right.png';
+
+// col/top-row of each barrier's 1x4 tile strip, bottom flush with that
+// room's floor line.
+// `busy`: steps during which a dialogue is open or an animation is running
+//         — player pinned, movement locked.
+// `rest`: standing-at-node steps that keep facing right, but only on the
+//         arrivals listed in `pin`. Walk arrivals already leave him facing
+//         a sensible way and must keep it, otherwise he'd face right after
+//         walking back in from the left; only a ladder/lift arrival
+//         (base-up) needs fixing. Includes the inventory (-choosing) and
+//         first-look dialogue so those don't snap back to looking up.
+$barriers: (
+  24: (
+    col: 23,
+    row: 15,
+    busy: (
+      cut-prompt,
+      cutting,
+    ),
+    rest: (
+      done,
+    ),
+    pin: (),
+  ),
+  30: (
+    col: 14,
+    row: 22,
+    busy: (
+      pickup,
+      cut-prompt,
+      cutting,
+    ),
+    rest: (
+      blocked,
+      armed,
+      choosing,
+      done,
+    ),
+    pin: (
+      '#position-30--from-21',
+    ),
+  ),
+  12: (
+    col: 8,
+    row: 8,
+    busy: (
+      cut-prompt,
+      cutting,
+    ),
+    rest: (
+      done,
+    ),
+    pin: (),
+  ),
+);
+
+// Comma-joined `#vineNN-step` selector list, for use inside :is().
+// NOT named steps() — that would shadow the CSS steps() timing function
+// for the whole file and silently compile `steps(1, end)` into garbage.
+@function barrier-steps($id, $names) {
+  $out: '';
+  @each $name in $names {
+    @if $out != '' {
+      $out: $out + ', ';
+    }
+    $out: $out + '#vine' + $id + '-' + $name;
+  }
+  @return $out;
+}
+
+// Delayed dialogue-box reveal lives in components/_dialogue.scss
+// (`dlg.dialogue-box-open-after`).
+
+@each $id, $cfg in $barriers {
+  $busy: barrier-steps($id, map.get($cfg, busy));
+  $rest: barrier-steps($id, map.get($cfg, rest));
+
+  .object--vines-#{$id},
+  .object--vines-#{$id}-cut,
+  .object--vines-#{$id}-gone {
+    position: absolute;
+    left: map.get($cfg, col) * vars.$tile-size-display;
+    top: map.get($cfg, row) * vars.$tile-size-display;
+    width: vars.$tile-size-display;
+    height: 4 * vars.$tile-size-display;
+    background-size: contain;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    // Dead by default — the two click routing rules below are the only
+    // thing that ever makes one layer live, which is what makes every
+    // "can't be clicked again" case fall out for free.
+    pointer-events: none;
+    cursor: default;
+    @include click-hint.place(
+      map.get($cfg, col),
+      map.get($cfg, row),
+      1,
+      4,
+      $id
+    );
+  }
+
+  // Foreground twin (see .world-layer--foreground in html/index.html):
+  // renders the cut stubs above the player, so walking through the gap
+  // looks like passing behind them rather than in front.
+  .object--vines-#{$id}-gone {
+    background-image: url($img-vines-gone);
+    opacity: 0;
+  }
+
+  #vine#{$id}-done:checked ~ .game .object--vines-#{$id}-gone {
+    opacity: 1;
+  }
+
+  @keyframes vine#{$id}-cut-swap {
+    to {
+      background-image: url($img-vines-gone);
+    }
+  }
+
+  // Swing-timed swap: the vines only fall once the animation has played.
+  #vine#{$id}-cutting:checked ~ .game .object--vines-#{$id} {
+    animation: vine#{$id}-cut-swap 0s vars.$movement-duration forwards;
+  }
+
+  // The animation above stops applying the instant -cutting unchecks
+  // itself, so the vines would snap back to intact on Continue without this;
+  // the foreground twin takes over the rendering from here.
+  #vine#{$id}-done:checked ~ .game .object--vines-#{$id} {
+    background-image: url($img-vines-gone);
+    opacity: 0;
+  }
+
+  // A barrier node can be reached from several directions, but the
+  // interact/swing frames only look right facing right. The whole
+  // interaction plays on .player__action, never on .player__sprite (see
+  // player/_player.scss for why).
+  :is(#{$busy}):checked ~ .game .player__sprite {
+    opacity: 0;
+  }
+
+  :is(#{$busy}):checked ~ .game .player__action {
+    opacity: 1;
+    background-image: url($img-base-right);
+  }
+
+  #vine#{$id}-cutting:checked ~ .game .player__action {
+    animation: player-sickle-swing vars.$movement-duration steps(1, end);
+  }
+
+  // Keeps facing right after the interaction instead of snapping back to a
+  // pose that only made sense on arrival (at node 30 that's "climbing",
+  // since you get there by ladder). Scoped to still standing at this node:
+  // the position radios share one group, so the very first movement click
+  // unchecks this and hands facing straight back to player/_player.scss.
+  // background-image ONLY — an `animation` here would replace the arrival
+  // walk/climb animation and kill it whenever you re-enter this node.
+  @each $arrival in map.get($cfg, pin) {
+    :is(#{$rest}):checked ~ #{$arrival}:checked ~ .game .player__sprite {
+      background-image: url($img-base-right);
+    }
+  }
+
+  // No walking away while a dialogue is open or an animation is running.
+  :is(#{$busy}):checked
+    ~ .game
+    .direction-controls__button--edge[data-position] {
+    display: none;
+  }
+
+  // ---- Dialogue ----
+  // Hint-only vines stay on -idle; the spark group holds the line so a
+  // Continue cannot strand vine-step. Node 30 still uses a radio — pickup
+  // follows.
+  @if $id == 30 {
+    #vine30-blocked:checked
+      ~ .game
+      .dialogue[data-step='vine30-blocked']
+      .dialogue__box {
+      @include dlg.dialogue-box-open;
+    }
+  } @else {
+    #vine#{$id}-spark-seen {
+      @include dlg.lock-edges;
+    }
+
+    #vine#{$id}-spark-seen:checked
+      ~ .game
+      .dialogue[data-step='vine#{$id}-blocked']
+      .dialogue__box {
+      @include dlg.dialogue-box-open;
+    }
+  }
+
+  #vine#{$id}-cut-prompt:checked
+    ~ .game
+    .dialogue[data-step='vine#{$id}-cut-prompt']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+
+  #vine#{$id}-cutting:checked
+    ~ .game
+    .dialogue[data-step='vine#{$id}-cut-confirm']
+    .dialogue__box {
+    @include dlg.dialogue-box-open-after(vars.$movement-duration);
+  }
+}
+
+// ==========================================================================
+// NODE 24 — plain barrier, col 23 / rows 15-18, blocks the edge 24<->25.
+// ==========================================================================
+
+.object--vines-24 {
+  background-image: url($img-vines);
+}
+
+// The only cross-barrier dependency in the whole system: which of the two
+// stacked labels is live depends purely on how far node 30 has got.
+#vine24-spark:checked
+  ~ #vine24-idle:checked
+  ~ :is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked
+  ~ #{vars.at-node(24)}
+  ~ .game
+  .object--vines-24,
+#vine24-idle:checked
+  ~ :is(
+    #vine30-armed,
+    #vine30-choosing,
+    #vine30-cut-prompt,
+    #vine30-cutting,
+    #vine30-done
+  ):checked
+  ~ #{vars.at-node(24)}
+  ~ .game
+  .object--vines-24-cut {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#vine24-spark:checked
+  ~ #vine24-idle:checked
+  ~ :is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked
+  ~ #{vars.at-node(24)}
+  ~ .game
+  .object--vines-24 {
+  @include click-hint.show(23, 15, 1, 4, 24);
+}
+
+#vine24-idle:checked
+  ~ :is(
+    #vine30-armed,
+    #vine30-choosing,
+    #vine30-cut-prompt,
+    #vine30-cutting,
+    #vine30-done
+  ):checked
+  ~ #{vars.at-node(24)}
+  ~ .game
+  .object--vines-24-cut {
+  @include click-hint.show(23, 15, 1, 4, 24);
+}
+
+// ==========================================================================
+// NODE 30 — col 14 / rows 22-25, blocks the edge 30<->31 and doubles as the
+// sickle pickup: the first interaction lifts the sickle out of the vines,
+// leaving an ordinary barrier behind that behaves exactly like node 24.
+// ==========================================================================
+
+.object--vines-30 {
+  background-image: url($img-vines-sickle);
+}
+
+@keyframes vine30-pickup-swap {
+  to {
+    background-image: url($img-vines);
+  }
+}
+
+// The sickle stays visible in the vines until the pickup animation ends.
+#vine30-pickup:checked ~ .game .object--vines-30 {
+  animation: vine30-pickup-swap 0s vars.$movement-duration forwards;
+}
+
+// ...and stays out for good from -armed on (the animation above stops
+// applying the moment that step unchecks itself).
+:is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting):checked
+  ~ .game
+  .object--vines-30 {
+  background-image: url($img-vines);
+}
+
+#vine30-pickup:checked ~ .game .player__action {
+  animation: player-sickle-pickup vars.$movement-duration steps(1, end);
+}
+
+#vine30-pickup:checked
+  ~ .game
+  .dialogue[data-step='vine30-found']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$movement-duration);
+}
+
+#vine30-idle:checked ~ #{vars.at-node(30)} ~ .game .object--vines-30,
+#vine30-armed:checked ~ #{vars.at-node(30)} ~ .game .object--vines-30-cut {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show(14, 22, 1, 4, 30);
+}
+
+// ==========================================================================
+// NODE 12 — col 8 / rows 7-10, covers the bomb shell at node 12. No walk
+// edge blocked — node 12 is a dead end; the vines only hide the shell until
+// cut. Same sickle gate as node 24.
+// ==========================================================================
+
+.object--vines-12 {
+  background-image: url($img-vines);
+}
+
+#vine12-spark:checked
+  ~ :is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked
+  ~ #vine12-idle:checked
+  ~ #{vars.at-node(12)}
+  ~ .game
+  .object--vines-12,
+:is(
+    #vine30-armed,
+    #vine30-choosing,
+    #vine30-cut-prompt,
+    #vine30-cutting,
+    #vine30-done
+  ):checked
+  ~ #vine12-idle:checked
+  ~ #{vars.at-node(12)}
+  ~ .game
+  .object--vines-12-cut {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#vine12-spark:checked
+  ~ :is(#vine30-idle, #vine30-blocked, #vine30-pickup):checked
+  ~ #vine12-idle:checked
+  ~ #{vars.at-node(12)}
+  ~ .game
+  .object--vines-12 {
+  @include click-hint.show(8, 8, 1, 4, 12);
+}
+
+:is(
+    #vine30-armed,
+    #vine30-choosing,
+    #vine30-cut-prompt,
+    #vine30-cutting,
+    #vine30-done
+  ):checked
+  ~ #vine12-idle:checked
+  ~ #{vars.at-node(12)}
+  ~ .game
+  .object--vines-12-cut {
+  @include click-hint.show(8, 8, 1, 4, 12);
+}
+
+// ==========================================================================
+// NODE 30 — second ladder arrival (`--post`).
+// The `pin` above must only hold the right-facing pose for the interaction
+// the player just did while standing here, not for every later return down
+// the same ladder — but radio state alone can't tell those apart: both are
+// "vine30 is armed/done AND #position-30--from-21 is checked".
+// Solved by splitting the ladder arrival in two mutually exclusive radios
+// and swapping WHICH ▼ button at node 21 is live (same selector-prefix idea
+// as obstacle-gate()): the pickup happens on the plain arrival (pinned),
+// every return afterwards lands on `--post`, which has no pin and so keeps
+// the ordinary climb pose.
+// ==========================================================================
+
+$post-steps: '#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done';
+$pre-steps: '#vine30-idle, #vine30-blocked, #vine30-pickup';
+
+:is(#{$pre-steps}):checked
+  ~ .game
+  .direction-controls__button--down[data-position='21'][data-arrival='post'],
+:is(#{$post-steps}):checked
+  ~ .game
+  .direction-controls__button--down[data-position='21']:not([data-arrival]) {
+  display: none;
+}
+
+// Camera/player/animation for the new arrival id, mirroring what the
+// generated loops emit for #position-30--from-21 (world/_world.scss,
+// player/_player.scss) — same node, same ladder edge, only the id differs.
+#position-30--from-21--post:checked ~ .game .world {
+  --world-offset: #{(13 + 0.5) * vars.$tile-size-display * -1};
+  --world-offset-y: #{(24 + 0.5) * vars.$tile-size-display * -1};
+  transition-duration: vars.$climb-duration;
+}
+
+#position-30--from-21--post:checked ~ .game .player {
+  transition-duration: vars.$climb-duration;
+}
+
+#position-30--from-21--post:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-up.png');
+  animation: player-climb-from-21-to-30
+    vars.$movement-duration
+    steps(1, end)
+    vars.$climb-cycles;
+}
+
+// Button reveal at node 30 for the new arrival, including the same gates
+// obstacle-gate() puts on its two walk exits.
+#position-30--from-21--post:checked
+  ~ .game
+  .direction-controls__button--up[data-position='30'],
+#vine30-done:checked
+  ~ #position-30--from-21--post:checked
+  ~ .game
+  .direction-controls__button--right[data-position='30'],
+#lever7-done:checked
+  ~ #position-30--from-21--post:checked
+  ~ .game
+  .direction-controls__button--left[data-position='30'] {
+  @include dlg.direction-button-reveal(vars.$climb-duration);
+}

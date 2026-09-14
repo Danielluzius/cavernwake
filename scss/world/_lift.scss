@@ -1,0 +1,550 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// LIFTS — every shaft is three stacked pre-drawn parts (assets/objects/
+// lift/): rope (grows/shrinks between the fixed winch anchor already
+// painted into cavernwake-lift-ladder-bridge.png at the shaft's top row,
+// and the basket's current dock), basket (the tub, behind the player in
+// world-layer--objects, 2 tiles tall) and basket-door (just the tub's
+// front rim, rendered ABOVE the player in world-layer--foreground so it
+// looks like the character is standing inside the basket).
+//
+// The tub spans 2 tiles: its bottom tile sits exactly behind the door/
+// player (dock row + 1, hidden behind them by z-index), its top tile is
+// one row above that (the bare dock row) — see $door-row-offset.
+//
+// Rope math: its top is pinned at the fixed winch anchor, so animating its
+// height alone is enough — the bottom edge rises as height shrinks, falls
+// as it grows. Because the basket's own top and the world-offset centering
+// (world/_world.scss) both shift by the exact same row distance over the
+// exact same duration/easing, the basket stays glued to the viewport
+// centre throughout the ride for free (no counter-transform needed, unlike
+// .player).
+//
+// GEOMETRY — all three parts read ONE inherited custom property per shaft,
+// `--lift-<id>-row` (the row the car is docked at), set on .world. So a
+// state change is a single declaration instead of three parallel selector
+// lists, and col/rows/duration all come straight out of vars.$positions
+// via the shaft's two node ids — nothing to keep in sync by hand.
+//
+// STATE — the car's position is DERIVED from where the player is, never
+// stored: in pure CSS one click can only ever flip one state channel (a
+// <label> triggers exactly one input), so a truly independent "where is
+// the car" flag would need either a second click or a position x lift-
+// state product of ids.
+//
+// That derivation is EXACT as long as the shaft is the only route between
+// its two ends — then the graph splits cleanly in two and "player is down
+// there" literally means "the car went down". shaft-zone() below computes
+// those two halves by walking vars.$positions with the shaft's own edge
+// removed, so the zones can never be incomplete. Hand-written node lists
+// were exactly the bug this replaced: the upper zone of shaft 17<->26 is
+// {7, 8, 16, 17, 18}, not just {16, 17, 18}, so climbing the ladder from
+// 16 up to 8 used to drop out of the zone and send the car back down.
+// ==========================================================================
+
+$door-row-offset: 1; // door/player row sits 1 tile below the tub's own top
+
+// Every node reachable from $start without using the $start <-> $other-end
+// shaft edge — i.e. the half of the position graph that this end of the
+// shaft belongs to. Plain breadth-first search over vars.$positions.
+@function shaft-zone($start, $other-end) {
+  $visited: ($start);
+  $frontier: ($start);
+
+  @while list.length($frontier) > 0 {
+    $next: ();
+
+    @each $node in $frontier {
+      @each $direction, $exit in map.get(map.get(vars.$positions, $node), exits)
+      {
+        $to: map.get($exit, to);
+        $crosses-shaft: ($node == $start and $to == $other-end) or
+          ($node == $other-end and $to == $start);
+
+        @if not $crosses-shaft and not list.index($visited, $to) {
+          $visited: list.append($visited, $to);
+          $next: list.append($next, $to);
+        }
+      }
+    }
+
+    $frontier: $next;
+  }
+
+  @return $visited;
+}
+
+// `:is(#position-N, [id^='position-N--'], ...):checked` — one pair of terms
+// per node covers the node itself plus all its --from-<x>[--<facing>]
+// arrival variants. The trailing `--` in the prefix is required: without
+// it `[id^='position-1']` would also match 14/15/16.
+@function zone-selector($nodes) {
+  $selector: '';
+
+  @each $node in $nodes {
+    @if $selector != '' {
+      $selector: $selector + ', ';
+    }
+
+    $selector: $selector +
+      '#position-' +
+      $node +
+      ", [id^='position-" +
+      $node +
+      "--']";
+  }
+
+  @return ':is(' + $selector + '):checked';
+}
+
+// Tiny rumble (~1px, intro-screen-shake is 6px). Call and ride use
+// different elements so a still-checked unlock cannot restart the rattle
+// when a ride selector later unmatches (same trick as lift-call-wait:
+// finite iterations, fill-mode none).
+$lift-rattle-period: 0.18s;
+$lift-rattle-px: 1px;
+
+@mixin lift-rattle-keys {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(-#{$lift-rattle-px}, 0.5px);
+  }
+
+  50% {
+    transform: translate(#{$lift-rattle-px}, -0.5px);
+  }
+
+  75% {
+    transform: translate(-0.5px, #{$lift-rattle-px});
+  }
+}
+
+@function lift-rattle-count($duration) {
+  $n: math.round(math.div($duration, $lift-rattle-period));
+
+  @return if($n < 1, 1, $n);
+}
+
+@keyframes lift-rattle {
+  @include lift-rattle-keys;
+}
+
+// Fills .scene--game so a 1px rattle on these (not on .scene--game itself)
+// still moves the viewport. Nested per shaft — see html/index.html.
+.lift-call-shake {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin lift-ride-rattle($duration) {
+  animation:
+    vision-field-pulse 4s ease-in-out infinite,
+    lift-rattle $lift-rattle-period linear lift-rattle-count($duration);
+}
+
+@each $id, $cfg in vars.$lifts {
+  $suffix: map.get($cfg, suffix);
+  $unlock: map.get($cfg, unlock);
+  $top-node: map.get($cfg, top-node);
+  $bottom-node: map.get($cfg, bottom-node);
+  $top-row: map.get(map.get(vars.$positions, $top-node), row);
+  $bottom-row: map.get(map.get(vars.$positions, $bottom-node), row);
+  $col: map.get(map.get(vars.$positions, $top-node), col);
+  $duration: vars.movement-duration-for(elevator, $top-node);
+  $tile: vars.$tile-size-display;
+  $row: var(--lift-#{$id}-row);
+
+  $top-zone: shaft-zone($top-node, $bottom-node);
+  $bottom-zone: shaft-zone($bottom-node, $top-node);
+
+  @if list.index($top-zone, $bottom-node) {
+    @warn 'Lift #{$id}: the shaft is not the only route between #{$top-node} ' +
+      'and #{$bottom-node}, so the derived dock side is ambiguous — the car ' +
+      'will snap when the player takes the detour.';
+  }
+
+  .lift-rope#{$suffix},
+  .lift-basket#{$suffix},
+  .lift-door#{$suffix} {
+    position: absolute;
+    left: $col * $tile;
+    width: $tile;
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: pixelated;
+  }
+
+  .lift-rope#{$suffix} {
+    top: $top-row * $tile;
+    height: calc((#{$row} - #{$top-row}) * #{$tile});
+    background-image: url('../assets/objects/lift/rope.png');
+    background-repeat: repeat-y;
+    background-size: $tile $tile;
+    transition: height $duration ease-in-out;
+  }
+
+  .lift-basket#{$suffix} {
+    top: calc(#{$row} * #{$tile});
+    height: 2 * $tile;
+    background-image: url('../assets/objects/lift/basket.png');
+    transition: top $duration ease-in-out;
+  }
+
+  .lift-door#{$suffix} {
+    top: calc((#{$row} + #{$door-row-offset}) * #{$tile});
+    height: $tile;
+    background-image: url('../assets/objects/lift/basket-door.png');
+    transition: top $duration ease-in-out;
+    pointer-events: none;
+  }
+
+  @if $unlock {
+    // Idles at the top while still locked (the top zone is unreachable
+    // until then anyway). Pressing the call button sends it down and
+    // makes bottom the new default, so the player can wander the whole
+    // lower half without it going back up — overridden only while
+    // genuinely up in the top zone.
+    .world {
+      --lift-#{$id}-row: #{$top-row};
+    }
+
+    // Still locked, but the player can ride down from the top — neither
+    // gate mode blocks the elevator button itself (`ride-up` hides the
+    // BOTTOM station's own up button, `approach` hides a lateral WALK
+    // edge near the bottom station), so the car has to come along
+    // regardless of gate mode. Matches the arrival ids
+    // position-<bottom>--from-<top>[--<facing>] via prefix. Walking away
+    // from the bottom station drops out of this rule and the car rises
+    // again on its own: the counterweight, and the reason it is always
+    // parked up there when approached from below.
+    [id^='position-#{$bottom-node}--from-#{$top-node}']:checked ~ .game .world {
+      --lift-#{$id}-row: #{$bottom-row};
+    }
+
+    ##{$unlock}:checked ~ .game .world {
+      --lift-#{$id}-row: #{$bottom-row};
+    }
+
+    ##{$unlock}:checked ~ #{zone-selector($top-zone)} ~ .game .world {
+      --lift-#{$id}-row: #{$top-row};
+    }
+  } @else {
+    // Ungated: the car is on whichever side the player is on. The two
+    // zones partition the graph, so the larger one becomes the plain
+    // default and only the smaller one needs a selector list.
+    @if list.length($top-zone) >= list.length($bottom-zone) {
+      .world {
+        --lift-#{$id}-row: #{$top-row};
+      }
+
+      #{zone-selector($bottom-zone)} ~ .game .world {
+        --lift-#{$id}-row: #{$bottom-row};
+      }
+    } @else {
+      .world {
+        --lift-#{$id}-row: #{$bottom-row};
+      }
+
+      #{zone-selector($top-zone)} ~ .game .world {
+        --lift-#{$id}-row: #{$top-row};
+      }
+    }
+  }
+
+  // Call button: the shaft's one-way activation. Placed either explicitly
+  // (vars.$lifts call-button) or, by default, right next to the node the
+  // player actually walks in from (vars.lift-approach) on that node's own
+  // row — within arm's reach of where they stop, and already inside the
+  // vision field on approach. The auto-placed ones show a real lever
+  // sprite (up by default, down once pulled). `call-button: custom` opts a
+  // shaft out entirely: 6<->14's activation is the last-lever socket, a
+  // full interactable of its own (see world/_last-lever.scss).
+  @if $unlock and map.get($cfg, call-button) != custom {
+    $placement: map.get($cfg, call-button);
+    $button-col: null;
+    $button-row: null;
+    $facing: null;
+
+    @if $placement {
+      $button-col: map.get($placement, col);
+      $button-row: map.get($placement, row);
+      $facing: map.get($placement, facing);
+    } @else {
+      $approach: vars.lift-approach($bottom-node);
+      $node: map.get(vars.$positions, map.get($approach, node));
+      // side == left means the approach node lies left of the shaft, so
+      // the button goes on that node's right and the player turns right.
+      $button-col: if(
+        map.get($approach, side) == left,
+        map.get($node, col) + 1,
+        map.get($node, col) - 1
+      );
+      $button-row: map.get($node, row);
+      $facing: map.get($approach, direction);
+    }
+
+    $approach-node: map.get(vars.lift-approach($bottom-node), node);
+    $from-left: map.get(vars.lift-approach($bottom-node), side) == left;
+    // Full 1×1 click box so the round handle is not cropped. Art is a
+    // little smaller than the tile; nudge 1 source pixel right so the
+    // post lines up with the wall.
+    $hit-cols: 1;
+    $hit-rows: 1;
+    $hit-col: $button-col + math.div(1px, vars.$tile-size);
+    $hit-row: $button-row;
+    $lever-art: 28px * vars.$display-scale;
+
+    .lift-call-button#{$suffix} {
+      position: absolute;
+      left: $hit-col * $tile;
+      top: $hit-row * $tile;
+      width: $hit-cols * $tile;
+      height: $hit-rows * $tile;
+      overflow: visible;
+      pointer-events: none;
+      cursor: default;
+      @include click-hint.place(
+        $hit-col,
+        $hit-row,
+        $hit-cols,
+        $hit-rows,
+        $approach-node
+      );
+
+      @if $placement {
+        background-color: #b33;
+      } @else {
+        background-image: url('../assets/characters/with-backpack/use-item/lever/lever-up.png');
+        background-repeat: no-repeat;
+        background-size: $lever-art $lever-art;
+        background-position: 50% 50%;
+        image-rendering: pixelated;
+      }
+    }
+
+    // The <label> toggles a checkbox, so a second click would switch the
+    // shaft back off. Activation is meant to be permanent, so the button
+    // stops accepting clicks the moment it has done its job.
+    ##{$unlock}:not(:checked)
+      ~ #lift-#{$id}-idle:checked
+      ~ #{vars.at-node($approach-node)}
+      ~ .game
+      .lift-call-button#{$suffix} {
+      pointer-events: auto;
+      cursor: pointer;
+      @include click-hint.show(
+        $hit-col,
+        $hit-row,
+        $hit-cols,
+        $hit-rows,
+        $approach-node
+      );
+    }
+
+    // 1) Lever look, car still parked. 2) Continue unlocks — car descends.
+    // 3) After the dock, shaft + hope. 4) hope Continue is call-done, then
+    // lift-gate() reveals the walk-in pad.
+    ##{$unlock}:not(:checked)
+      ~ #lift-#{$id}-look:checked
+      ~ .game
+      .dialogue[data-step='lift-#{$id}-look']
+      .dialogue__box {
+      @include dlg.dialogue-box-open;
+    }
+
+    ##{$unlock}:checked
+      ~ #lift-#{$id}-call-done:not(:checked)
+      ~ #lift-#{$id}-look:checked
+      ~ .game
+      .dialogue[data-step='lift-#{$id}-shaft']
+      .dialogue__box {
+      @include dlg.dialogue-box-open-after($duration);
+    }
+
+    ##{$unlock}:checked
+      ~ #lift-#{$id}-call-done:not(:checked)
+      ~ #lift-#{$id}-hope:checked
+      ~ .game
+      .dialogue[data-step='lift-#{$id}-hope']
+      .dialogue__box {
+      @include dlg.dialogue-box-open;
+    }
+
+    // Car is already down when call-done lands, so the walk-in pad can
+    // hide with display:none like every other lock and pop back with
+    // the rest (0-delay reveal in components/_components.scss).
+    ##{$unlock}:not(:checked)
+      ~ #lift-#{$id}-look:checked
+      ~ .game
+      .direction-controls__button--edge[data-position],
+    ##{$unlock}:checked
+      ~ #lift-#{$id}-call-done:not(:checked)
+      ~ .game
+      .direction-controls__button--edge[data-position] {
+      display: none;
+    }
+
+    // One-shot on THIS shaft's wrapper, not .scene--game: three unlocks
+    // writing `animation` onto one element leave the computed value
+    // decided by source order, so a later call (11<->27 after 17<->26)
+    // never starts. Unique names were not enough on a shared node.
+    // Wrapper is an ancestor of .viewport only, so this never fights
+    // collapse/blast on .viewport or the vision-field pulse / ride rattle.
+    @keyframes lift-rattle-call-#{$id} {
+      @include lift-rattle-keys;
+    }
+
+    ##{$unlock}:checked ~ .game .lift-call-shake#{$suffix} {
+      animation: lift-rattle-call-#{$id} $lift-rattle-period linear
+        lift-rattle-count($duration);
+    }
+
+    ##{$unlock}:checked ~ .game .lift-call-button#{$suffix} {
+      pointer-events: none;
+      cursor: default;
+
+      @if $placement {
+        background-color: #3b3;
+      } @else {
+        background-image: url('../assets/characters/with-backpack/use-item/lever/lever-down.png');
+      }
+    }
+
+    // One-shot "pull the lever" pose. The unlock is a PERMANENT checkbox,
+    // so every piece of this has to be replay-proof:
+    //   - the sprite is hidden by animating a wrapper, never .player__sprite
+    //     itself, which permanently carries the arrival walk/climb animation;
+    //   - the pose plays on .player__call, an overlay no other interaction
+    //     touches — sharing .player__action would make this replay every
+    //     time a tool pickup set and released that element's animation;
+    //   - both the wrapper and the overlay are PER SHAFT (the nested
+    //     .player__body--* chain in index.html). Four shafts writing to one
+    //     shared element would leave the computed animation value decided by
+    //     source order, so unlocking them out of that order wouldn't change
+    //     it and the animation would never start;
+    //   - the keyframes are named per shaft for the same restart reason.
+    // No `forwards`, so both elements fall back to their base opacity.
+    @keyframes lift-call-hide-#{$id} {
+      from,
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes lift-call-show-#{$id} {
+      from,
+      to {
+        opacity: 1;
+      }
+    }
+
+    ##{$unlock}:checked ~ .game .player__body--#{$id} {
+      animation: lift-call-hide-#{$id} vars.$movement-duration steps(1, end);
+    }
+
+    ##{$unlock}:checked ~ .game .player__call--#{$id} {
+      animation:
+        lift-call-show-#{$id} vars.$movement-duration steps(1, end),
+        player-item-pickup-#{$facing} vars.$movement-duration steps(1, end);
+    }
+  }
+
+  // Wooden shaft barrier: purely visual, rendered in world-layer--foreground
+  // (see html/index.html) above player and basket. Position and facing are
+  // derived from the bottom station and lift-approach(), same geometry as
+  // the call button. Only shafts with gate: approach get one — 6<->14's
+  // outro shaft is ride-up and stays without a barrier.
+  @if $unlock and map.get($cfg, gate) == approach {
+    $bottom-col: map.get(map.get(vars.$positions, $bottom-node), col);
+    $bottom-row: map.get(map.get(vars.$positions, $bottom-node), row);
+    $barrier-approach: vars.lift-approach($bottom-node);
+    $from-left: map.get($barrier-approach, side) == left;
+    $barrier-col: if($from-left, $bottom-col - 1, $bottom-col);
+    $barrier-facing: if($from-left, right, left);
+
+    .lift-barrier#{$suffix} {
+      position: absolute;
+      left: $barrier-col * $tile;
+      top: $bottom-row * $tile;
+      width: 2 * $tile;
+      height: 2 * $tile;
+      background-image: url('../assets/world/obstacles/lift-barrier/lift-block-#{$barrier-facing}.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      image-rendering: pixelated;
+      pointer-events: none;
+    }
+
+    // Unlock is permanent, so this animation runs once on the lever click
+    // (same trick as lift-call-wait). It holds the closed sprite until
+    // shortly before the car docks, then the rule's open image takes over.
+    $barrier-lead: 1s;
+    $barrier-hold: $duration - $barrier-lead;
+    @if $barrier-hold < 0s {
+      $barrier-hold: 0s;
+    }
+
+    @keyframes lift-barrier-hold-#{$id} {
+      0% {
+        background-image: url('../assets/world/obstacles/lift-barrier/lift-block-#{$barrier-facing}.png');
+      }
+      100% {
+        background-image: url('../assets/world/obstacles/lift-barrier/lift-open-#{$barrier-facing}.png');
+      }
+    }
+
+    ##{$unlock}:checked ~ .game .lift-barrier#{$suffix} {
+      background-image: url('../assets/world/obstacles/lift-barrier/lift-open-#{$barrier-facing}.png');
+      animation: lift-barrier-hold-#{$id} $barrier-hold steps(1, end);
+    }
+  }
+}
+
+// Ride rumble: assigned when an elevator arrival radio checks, gone when
+// you walk off that node. Combined with the vision pulse so this transform
+// does not replace it.
+@each $source, $source-data in vars.$positions {
+  @each $direction, $exit in map.get($source-data, exits) {
+    @if map.get($exit, kind) == elevator {
+      $to: map.get($exit, to);
+      $ride: vars.movement-duration-for(elevator, $source);
+
+      #position-#{$to}--from-#{$source}:checked ~ .game .vision-field {
+        @include lift-ride-rattle($ride);
+      }
+    }
+  }
+}
+
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+  $ride: vars.movement-duration-for(elevator, $id);
+
+  @each $facing in (right, left) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .vision-field {
+      @include lift-ride-rattle($ride);
+    }
+  }
+}
+
+@each $id, $data in vars.$elevator-reverse-duals {
+  $to: map.get($data, to);
+  $ride: vars.movement-duration-for(elevator, $id);
+
+  @each $facing in (right, left) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .vision-field {
+      @include lift-ride-rattle($ride);
+    }
+  }
+}

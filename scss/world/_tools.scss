@@ -1,0 +1,295 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// TOOL PICKUPS
+// Standalone collectibles that block nothing themselves — "the player has
+// tool X" is not a flag but simply "X's own radio group has reached
+// -armed", which is what gates the matching barrier in world/_barriers.scss.
+//
+//   <id>-step: idle -> prompt -> pickup -> armed (permanent)
+//
+// Same one-radio-group rule as every other interactable (see
+// world/_obstacles.scss for the full reasoning): resting states are
+// ordinary steps in that same group, never separate checkboxes.
+// ==========================================================================
+
+// `pose`: the standing sprite the one-shot frames fall back to when the
+// animation ends — must match the direction the frames are drawn facing,
+// otherwise the player visibly snaps around the moment it finishes.
+$tool-pickups: (
+  pickaxe: (
+    col: 5,
+    row: 17,
+    cols: 2,
+    rows: 2,
+    at: 19,
+    before: '../assets/world/obstacles/big-rock/pickaxe-before.png',
+    after: '../assets/world/obstacles/big-rock/pickaxe-after.png',
+    anim: player-pickaxe-pickup,
+    pose: '../assets/characters/with-backpack/base/base-left.png',
+  ),
+  shovel: (
+    col: 30,
+    row: 2.75,
+    cols: 1,
+    rows: 2,
+    at: 9,
+    before: '../assets/world/obstacles/mud/shovel-before.png',
+    after: '../assets/world/obstacles/mud/shovel-after.png',
+    anim: player-shovel-pickup,
+    pose: '../assets/characters/with-backpack/base/base-left.png',
+  ),
+  // The three bomb parts (see world/_workbench.scss). They lie on the floor
+  // rather than leaning against a wall, hence one tile tall and `after: null`
+  // — there is nothing left behind once they are picked up.
+  // Floor items share the 32px inventory sprites. Drawn to fill the
+  // canvas, so they sit at 2/3 tile (2x) instead of a full cell.
+  bomb-shell: (
+      col: 8.165,
+      row: 10.04,
+      cols: 0.67,
+      rows: 0.67,
+      at: 12,
+      reveal: '#vine12-done',
+      before: '../assets/objects/inventory/bomb-shell.png',
+      after: null,
+      anim: player-item-pickup-right,
+      pose: '../assets/characters/with-backpack/base/base-right.png',
+    ),
+  // Under the shovel at node 9 — hidden until the shovel is gone so it
+  // looks like it was sitting underneath.
+  bomb-powder: (
+      col: 30.29,
+      row: 4.04,
+      cols: 0.67,
+      rows: 0.67,
+      at: 9,
+      before: '../assets/objects/inventory/bomb-gunpowder.png',
+      after: null,
+      reveal: '#shovel-armed',
+      anim: player-item-pickup-left,
+      pose: '../assets/characters/with-backpack/base/base-left.png',
+    ),
+  bomb-fuse: (
+    col: 32.165,
+    row: 10.165,
+    cols: 0.67,
+    rows: 0.67,
+    at: 18,
+    before: '../assets/objects/inventory/bomb-fuse.png',
+    after: null,
+    anim: player-item-pickup-right,
+    pose: '../assets/characters/with-backpack/base/base-right.png',
+  ),
+  // Last item of the run, in the dead end right of node 32 — repairs the
+  // 6<->14 lift (see world/_last-lever.scss) and starts the cave collapse.
+  last-lever: (
+      col: 19.95,
+      row: 23.95,
+      cols: 1.1,
+      rows: 1.1,
+      at: 32,
+      before: '../assets/objects/inventory/last-lever-item.png',
+      after: null,
+      anim: player-item-pickup-right,
+      pose: '../assets/characters/with-backpack/base/base-right.png',
+      extra-busy: (
+        notice,
+        turn,
+      ),
+    ),
+);
+
+// The steps during which a pickup counts as "in progress": dialogue open or
+// animation running, so the player is pinned and movement is locked.
+$tool-busy-steps: (prompt, pickup);
+
+// Comma-joined `#<id>-<step>` selector list, for use inside :is().
+// NOT named steps() — that would shadow the CSS steps() timing function for
+// the whole file and silently compile `steps(1, end)` into garbage.
+@function step-list($id, $names) {
+  $out: '';
+  @each $name in $names {
+    @if $out != '' {
+      $out: $out + ', ';
+    }
+    $out: $out + '#' + $id + '-' + $name;
+  }
+  @return $out;
+}
+
+// `after: null` means the pickup leaves nothing behind at all.
+@function sprite($path) {
+  @return if($path == null, none, url($path));
+}
+
+@each $id, $cfg in $tool-pickups {
+  $busy: step-list($id, $tool-busy-steps);
+  $lock: $busy;
+  @if map.has-key($cfg, extra-busy) {
+    $lock: step-list(
+      $id,
+      list.join($tool-busy-steps, map.get($cfg, extra-busy))
+    );
+  }
+  // Selector prefix for a pickup that stays unclickable until something else
+  // has happened; '' for the ones that lie in the open from the start.
+  // Does NOT hide the object — only gates pointer-events (see bomb-shell:
+  // stays visible behind vines). Bomb-powder is hidden until shovel-armed.
+  $reveal: map.get($cfg, reveal);
+  $at: map.get($cfg, at);
+  $gate: if($reveal == null, '', $reveal + ':checked ~ ');
+  $at-gate: if($at == null, '', vars.at-node($at) + ' ~ ');
+
+  $art-col: map.get($cfg, col);
+  $art-row: map.get($cfg, row);
+  $art-cols: map.get($cfg, cols);
+  $art-rows: map.get($cfg, rows);
+  $hit-col: $art-col;
+  $hit-row: $art-row;
+  $hit-cols: $art-cols;
+  $hit-rows: $art-rows;
+  @if map.has-key($cfg, hit-col) {
+    $hit-col: map.get($cfg, hit-col);
+    $hit-row: map.get($cfg, hit-row);
+    $hit-cols: map.get($cfg, hit-cols);
+    $hit-rows: map.get($cfg, hit-rows);
+  }
+
+  .object--#{$id} {
+    position: absolute;
+    left: $hit-col * vars.$tile-size-display;
+    top: $hit-row * vars.$tile-size-display;
+    width: $hit-cols * vars.$tile-size-display;
+    height: $hit-rows * vars.$tile-size-display;
+    background-image: url(map.get($cfg, before));
+    background-size: $art-cols * vars.$tile-size-display
+      $art-rows * vars.$tile-size-display;
+    background-position: ($art-col - $hit-col) * vars.$tile-size-display
+      ($art-row - $hit-row) * vars.$tile-size-display;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    // Dead by default — the -idle rule below is the only thing that ever
+    // makes it clickable, which is what makes "can't pick it up twice"
+    // fall out for free.
+    pointer-events: none;
+    cursor: default;
+    @include click-hint.place($hit-col, $hit-row, $hit-cols, $hit-rows, $at);
+  }
+
+  #{$gate}##{$id}-idle:checked ~ #{$at-gate}.game .object--#{$id} {
+    pointer-events: auto;
+    cursor: pointer;
+    @include click-hint.show($hit-col, $hit-row, $hit-cols, $hit-rows, $at);
+  }
+
+  @keyframes #{$id}-take-swap {
+    to {
+      background-image: sprite(map.get($cfg, after));
+    }
+  }
+
+  // The tool only leaves its resting place once the animation has played.
+  ##{$id}-pickup:checked ~ .game .object--#{$id} {
+    animation: #{$id}-take-swap 0s vars.$movement-duration forwards;
+  }
+
+  // ...and stays gone for good (the animation above stops applying the
+  // instant -pickup unchecks itself).
+  ##{$id}-armed:checked ~ .game .object--#{$id} {
+    background-image: sprite(map.get($cfg, after));
+  }
+
+  // The whole interaction plays on .player__action, never on
+  // .player__sprite (see player/_player.scss for why).
+  :is(#{$busy}):checked ~ .game .player__sprite {
+    opacity: 0;
+  }
+
+  :is(#{$busy}):checked ~ .game .player__action {
+    opacity: 1;
+    background-image: url(map.get($cfg, pose));
+  }
+
+  ##{$id}-pickup:checked ~ .game .player__action {
+    animation: #{map.get($cfg, anim)} vars.$movement-duration steps(1, end);
+  }
+
+  // No walking away until the second Continue.
+  :is(#{$lock}):checked
+    ~ .game
+    .direction-controls__button--edge[data-position] {
+    display: none;
+  }
+
+  // ---- Dialogue ----
+  ##{$id}-prompt:checked
+    ~ .game
+    .dialogue[data-step='#{$id}-prompt']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+
+  // Appears exactly when the pickup animation ends, no extra click needed.
+  ##{$id}-pickup:checked
+    ~ .game
+    .dialogue[data-step='#{$id}-confirm']
+    .dialogue__box {
+    @include dlg.dialogue-box-open-after(vars.$movement-duration);
+  }
+}
+
+.object--bomb-powder {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#shovel-armed:checked ~ .game .object--bomb-powder {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Last lever: confirm Continue starts the cave shake and the surprised
+// look-up (see world/_last-lever.scss). Two more Continue beats — look
+// left, then the collapse line — before #last-lever-armed lets them walk.
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .object--last-lever {
+  background-image: none;
+}
+
+// Full 48px stick in the box (no crop), tilted clockwise a little.
+.object--last-lever {
+  background-size: contain;
+  background-position: center;
+  transform: rotate(22deg);
+  transform-origin: center center;
+}
+
+#last-lever-notice:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+
+#last-lever-turn:checked ~ .game .player__sprite,
+#last-lever-armed:checked ~ #position-32--from-31:checked ~ .game .player__sprite,
+#last-lever-armed:checked ~ #position-32:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+}
+
+#last-lever-notice:checked
+  ~ .game
+  .dialogue[data-step='last-lever-notice']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$movement-duration);
+}
+
+#last-lever-turn:checked
+  ~ .game
+  .dialogue[data-step='last-lever-turn']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}

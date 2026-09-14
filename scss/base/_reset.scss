@@ -1,0 +1,60 @@
+// Minimal, opinion-light reset — only what a fullscreen pixel-art game needs.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  height: 100svh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  background-color: #000;
+  font-family: 'Fusion Pixel', 'Courier New', monospace;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+// The world-position radios drive CSS-only game state and must never be
+// visible or affect layout, while staying label-triggerable.
+.world-position-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Accessible name inside icon-only labels. Inactive .i18n language is
+// display:none via the language radios, so screen readers get one name.
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

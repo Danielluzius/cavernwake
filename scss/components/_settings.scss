@@ -1,0 +1,354 @@
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+@use 'inventory' as inv;
+
+// ==========================================================================
+// SETTINGS — overlay in .ui, mirrored to the inventory HUD.
+// Gear + close sit in the top-right corner of the vision-field square.
+// The gear art (same PNG as the HUD icon) morphs from the icon slot to
+// the right of the field; the cream window fades in after that grow.
+// Sibling ~ chains must start from an input that sits BEFORE .game and
+// only list later siblings.
+// ==========================================================================
+
+@mixin settings-hud-slot($box-size) {
+  position: absolute;
+  left: var(--hud-set-x);
+  top: var(--hud-set-y);
+  width: $box-size;
+  height: $box-size;
+  margin-left: calc(#{$box-size} / -2);
+  margin-top: calc(#{$box-size} / -2);
+}
+
+.settings__toggle {
+  @include settings-hud-slot(vars.$inventory-toggle-size);
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: url('../assets/world/settings-button.png') center / contain
+    no-repeat;
+  image-rendering: pixelated;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    opacity 0.15s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+// Visible once the cave is actually on screen — any intro beat after the
+// opening black card. #intro-dark fades the gear in with the world (see
+// scss/intro/_intro.scss). Not gated on the lamp / inventory tutorial so
+// imprint stays reachable before the backpack.
+#{vars.$intro-after-opening} ~ .game .settings__toggle {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+// #inventory-open stays checked after the lamp (intro-11 closes the
+// tutorial bag by dropping #intro-10, not by unchecking the box). Hide
+// the gear only while that bag is actually open.
+#settings-open:checked ~ #{vars.$intro-running} ~ .game .settings__toggle,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
+#inventory-open-play:checked ~ .game .settings__toggle,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__toggle,
+#settings-open:checked ~ #intro-dark:checked ~ .game .settings__toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none;
+  transition:
+    opacity 0.12s,
+    visibility 0s;
+}
+
+.settings {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+#settings-open:checked ~ .game .settings {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}
+
+.settings__hit {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.settings__panel {
+  position: absolute;
+  top: calc(var(--field-size) / 2);
+  left: calc(50% + var(--set-anchor-x));
+  pointer-events: none;
+  transform-origin: 0% 50%;
+  transform: translate(0, -50%)
+    translate(var(--set-morph-x), var(--set-morph-y))
+    scale(#{vars.$inventory-morph-scale});
+  transition: transform vars.$inventory-morph-duration ease-out;
+}
+
+#settings-open:checked ~ .game .settings__panel {
+  pointer-events: auto;
+  transform: translate(0, -50%) scale(1);
+}
+
+// Same PNG as the HUD gear, so the closed scale lands on the icon and
+// the grow is the button itself — inventory uses inventory-background.png
+// the same way.
+.settings__art {
+  position: relative;
+  width: vars.$inventory-art-size;
+  height: vars.$inventory-art-size;
+  image-rendering: pixelated;
+  background: url('../assets/world/settings-button.png') center / contain
+    no-repeat;
+}
+
+// Same cream bubble chrome as a speech box (flat fill + ink ring with
+// notched corners), not the old bevelled panel.
+$settings-inset: vars.$dialogue-padding-x * 2;
+// Wide enough for Aus / Off / Nein so every choice pad matches DE / EN.
+$settings-choice-size: vars.$dialogue-pixel * 28;
+
+.settings__body {
+  @include dlg.pixel-bubble-border;
+  box-sizing: border-box;
+  background: vars.$dialogue-fill;
+  width: 100%;
+  height: 100%;
+  // Same inset on every side so the bottom pads sit as far from the
+  // chrome as they do from the left and right.
+  padding: $settings-inset;
+  color: vars.$dialogue-text-color;
+  font-size: vars.$dialogue-font-size;
+  line-height: 1.25;
+  -webkit-font-smoothing: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+#settings-open:checked ~ .game .settings__body {
+  opacity: 1;
+  transition: opacity 0.2s vars.$inventory-morph-duration;
+}
+
+.settings__back {
+  @include dlg.close-pad;
+  @include settings-hud-slot(vars.$inventory-back-size);
+  z-index: 3;
+  display: flex;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s,
+    visibility 0s;
+}
+
+#settings-open:checked ~ .game .settings__back {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.2s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+.settings__page {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  // Bubble chrome sticks out 2 art pixels per side, so pads need more
+  // than that between them or their ink rings would fuse.
+  gap: vars.$dialogue-pixel * 6;
+  height: 100%;
+  min-height: 0;
+}
+
+#settings-page-menu:checked ~ .game .settings__page--menu,
+#settings-page-imprint:checked ~ .game .settings__page--imprint,
+#settings-page-restart:checked ~ .game .settings__page--restart {
+  display: flex;
+}
+
+.settings__title {
+  margin: 0;
+  padding-bottom: vars.$dialogue-pixel * 6;
+  font-size: vars.$dialogue-font-size;
+  font-weight: 400;
+  text-align: center;
+  color: vars.$dialogue-text-color;
+}
+
+.settings__copy {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.settings__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: vars.$dialogue-pixel * 6;
+}
+
+.settings__page--imprint {
+  gap: vars.$dialogue-pixel * 6;
+}
+
+.settings__page--imprint .settings__row--link {
+  margin-top: auto;
+}
+
+.settings__copy--imprint {
+  flex: none;
+  overflow: visible;
+  text-align: left;
+  padding-bottom: vars.$dialogue-pixel * 8;
+}
+
+#settings-page-imprint:checked ~ .game .settings__art,
+#settings-page-imprint:checked ~ .game .settings__body {
+  height: auto;
+  min-height: vars.$inventory-art-size;
+}
+
+.imprint {
+  line-height: 1.2;
+}
+
+.imprint p {
+  margin: 0 0 vars.$dialogue-pixel * 2;
+}
+
+.imprint p:last-child {
+  margin-bottom: 0;
+}
+
+.imprint__meta {
+  color: vars.$dialogue-bevel;
+}
+
+.imprint a {
+  color: inherit;
+  overflow-wrap: anywhere;
+}
+
+// Label + choices sit bare on the cream panel — framing them too would
+// stack a second bubble ring inside the first.
+.settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: vars.$dialogue-pixel * 4;
+  margin: 0;
+  padding: 0 vars.$dialogue-pixel * 2;
+  cursor: default;
+}
+
+.settings__row--link {
+  @include dlg.pixel-button;
+}
+
+.settings__row-label {
+  flex: 1;
+}
+
+.settings__choices {
+  display: flex;
+  gap: vars.$dialogue-pixel * 5;
+}
+
+.settings__choices--confirm {
+  justify-content: center;
+}
+
+.settings__choice {
+  @include dlg.pixel-button;
+  box-sizing: border-box;
+  width: $settings-choice-size;
+  min-width: $settings-choice-size;
+  padding-left: vars.$dialogue-pixel * 2;
+  padding-right: vars.$dialogue-pixel * 2;
+}
+
+// Picked option stays green — the id selector outranks the hover below,
+// so hovering the active choice does not shift its tint.
+#hints-on:checked ~ .game .settings__choice[for='hints-on'],
+#hints-off:checked ~ .game .settings__choice[for='hints-off'],
+#lang-de:checked ~ .game .settings__choice[for='lang-de'],
+#lang-en:checked ~ .game .settings__choice[for='lang-en'] {
+  @include dlg.pixel-button-fill(vars.$dialogue-arrow-bg);
+}
+
+.settings__choice:hover {
+  @include dlg.pixel-button-fill(vars.$dialogue-arrow-bg-hover);
+}
+
+.settings__row--link:hover {
+  @include dlg.pixel-button-fill(vars.$dialogue-arrow-bg-hover);
+}
+
+#lang-de:checked ~ .game .i18n--en,
+#lang-en:checked ~ .game .i18n--de {
+  display: none;
+}
+
+#hints-off:checked ~ .game {
+  --hint-vis: 0;
+}
+
+#settings-open:checked ~ #{vars.$intro-running} ~ .game .inventory__toggle,
+#settings-open:checked ~ #position-1:checked ~ #intro-10:checked
+  ~ .game
+  .inventory__toggle,
+#settings-open:checked ~ .game .inventory__back,
+#settings-open:checked ~ .game .inventory {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.12s,
+    visibility 0s;
+}
+
+#inventory-open-play:checked ~ .game .settings,
+#inventory-open-play:checked ~ .game .settings__back,
+#inventory-open-play:checked ~ .game .settings__toggle,
+:is(#{inv.$inventory-bag-open}):checked ~ .game .settings,
+:is(#{inv.$inventory-bag-open}):checked ~ .game .settings__back,
+:is(#{inv.$inventory-bag-open}):checked ~ .game .settings__toggle,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__back,
+#inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}
+
+#settings-open:checked ~ .game .direction-controls__button--edge,
+#settings-open:checked ~ .game .direction-controls__button--intro-arrow {
+  display: none;
+}

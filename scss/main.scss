@@ -1,0 +1,85 @@
+// Central entry point — imports every partial in the correct cascade order.
+// Compile this file to css/main.css (e.g. `sass scss/main.scss css/main.css`).
+
+// Base
+@use 'base/variables';
+@use 'base/fonts';
+@use 'base/reset';
+
+// Game shell
+@use 'game/game';
+@use 'game/viewport';
+@use 'game/layout';
+
+// World
+@use 'world/world';
+@use 'world/room';
+@use 'world/objects';
+@use 'world/lift';
+
+// Player
+@use 'player/player';
+
+// Keyframes (walk/idle/climb/tool poses). Applied from player, intro, outro.
+@use 'animations/animations';
+
+// HUD chrome: D-pad, title, ending, dialogue, inventory, settings
+@use 'components/direction-controls';
+@use 'components/title-screen';
+@use 'components/end-screen';
+@use 'components/dialogue';
+@use 'components/inventory';
+@use 'components/settings';
+
+// World obstacles (interactive barriers) — imported AFTER player/player AND
+// components/direction-controls on purpose: several rules here override
+// .player__sprite's animation and .direction-controls__button--edge's
+// display with single/double-id selectors (see world/_obstacles.scss), and
+// same-specificity ties against player.scss's walk/idle rules and
+// direction-controls.scss's button-reveal rules are resolved by source order —
+// this guarantees obstacles always win without needing compound-id
+// selector hacks.
+@use 'world/obstacles';
+
+// Waterfall (pure visual, no order requirement) + node-7 lever (same
+// override reasoning as world/obstacles above — imported after
+// components/direction-controls on purpose).
+@use 'world/waterfall';
+@use 'world/lever';
+
+// Tool pickups + the barriers they open — same override reasoning as
+// world/obstacles above (movement lock, player pose), so likewise after
+// player/player and components/direction-controls.
+@use 'world/tools';
+@use 'world/barriers';
+
+// Workbench + the wall its bomb opens — after world/tools on purpose, both
+// read tools.step-list() and override the same movement-lock rules.
+@use 'world/workbench';
+@use 'world/stone-wall';
+
+// Empty-corridor skips after vines/mud/rock/wall — after those files so
+// the stacked D-pad swaps win the same display:none ties as `--post`.
+@use 'world/shortcuts';
+
+// Last-lever socket at node 15 — same override reasoning again (movement
+// lock, player pose), plus it overrides .viewport's shake for the cave
+// collapse, so it has to come after game/viewport too.
+@use 'world/last-lever';
+
+// Cave collapse (re-seals paths, shaft flood, bench rock, debris) — after
+// last-lever and waterfall so opacity overrides and shake stack correctly.
+@use 'world/collapse';
+
+// Intro / opening cutscene — last on purpose, so its overrides win any
+// specificity ties against the plain position-graph rules above.
+@use 'intro/intro';
+
+// Outro / ending sequence — after intro/intro so its overrides win the
+// same specificity ties against the plain position-graph rules.
+@use 'outro/outro';
+
+// Compact / scale breakpoints last: geometry only (D-pad origin, overlay
+// panels, field-scale). Must follow intro/outro so compact HUD placement
+// is not overwritten by a leftover position:fixed bottom calc.
+@use 'game/responsive';

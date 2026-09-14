@@ -1,0 +1,202 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// LAMP GLOW — the stacked glow layers ARE the cave darkening (each is
+// "the plane minus an ellipse"). Walk-in is fully unlit (closed holes)
+// until #intro-lantern blooms them with the same intro-lamp-open as
+// lighting the lamp at #intro-11. After the fall the lantern is gone:
+// unlit must KEEP the layers visible and CLOSE the holes (clip-path:
+// none = solid planes, no punched circle). Hiding the glow would fully
+// brighten the cave. Same unlit state from wake-up (step 5) through
+// the backpack pickup (step 10). The vision-field mask on
+// .vision-field stays untouched — lamp and sight cone are separate.
+//
+// dark-hold does NOT hide the player glow: the blackout only reaches
+// full opacity at the END of its fade, and the fall dialogue can be
+// clicked the instant it appears.
+// ==========================================================================
+
+$unlit-intro-steps: intro-dark, intro-fade, intro-1, intro-2, intro-5,
+  intro-breathe, intro-6, intro-7, intro-pack, intro-8, intro-9, intro-10;
+
+@keyframes intro-fall-unlit-layer {
+  to {
+    clip-path: none;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .player.lamp-glow-anchor
+  .lamp-glow__layer {
+  animation:
+    lamp-glow-pulse 3s ease-in-out infinite,
+    intro-fall-unlit-layer 1ms step-end forwards;
+  animation-delay: 0s, $fall-reposition-at;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .lamp-glow--backpack {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@each $step in $unlit-intro-steps {
+  #position-1:checked ~ ##{$step}:checked ~ .game .player.lamp-glow-anchor .lamp-glow {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #position-1:checked
+    ~ ##{$step}:checked
+    ~ .game
+    .player.lamp-glow-anchor
+    .lamp-glow__layer {
+    animation: none;
+    clip-path: none;
+    transform: translate(-50%, -50%);
+  }
+
+  #position-1:checked ~ ##{$step}:checked ~ .game .lamp-glow--backpack {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+#position-1:checked ~ #intro-10:checked ~ .game .lamp-glow--backpack,
+#position-1:checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .lamp-glow--backpack {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// Grow the punched holes from ~nothing to the normal lamp radii, then
+// hand off to the usual pulse. Path commands match player/_player.scss.
+$intro-lamp-box: 6000;
+
+@function intro-lamp-hole-path($rx, $ry) {
+  $c: math.div($intro-lamp-box, 2);
+  $cy: $c + vars.$lamp-glow-center-offset-y;
+  @return 'M0,0 H#{$intro-lamp-box} V#{$intro-lamp-box} H0 Z ' +
+    'M#{$c - $rx},#{$cy} ' + 'A#{$rx},#{$ry} 0 1,0 #{$c + $rx},#{$cy} ' +
+    'A#{$rx},#{$ry} 0 1,0 #{$c - $rx},#{$cy} Z';
+}
+
+@for $i from 1 through list.length(vars.$lamp-glow-holes) {
+  $hole: list.nth(vars.$lamp-glow-holes, $i);
+
+  @keyframes intro-lamp-open-#{$i} {
+    from {
+      clip-path: path(
+        evenodd,
+        '#{intro-lamp-hole-path(1, 1)}'
+      );
+    }
+
+    to {
+      clip-path: path(
+        evenodd,
+        '#{intro-lamp-hole-path(list.nth($hole, 1), list.nth($hole, 2))}'
+      );
+    }
+  }
+}
+
+$lit-before-fall-steps: intro-home, intro-3, intro-anyway, intro-4, intro-sit;
+
+// Same bloom as #intro-11 — closed holes to authored radii, then pulse.
+#position-1:checked
+  ~ #intro-lantern:checked
+  ~ .game
+  .player.lamp-glow-anchor
+  .lamp-glow__layer {
+  transform: translate(-50%, -50%);
+
+  @for $i from 1 through list.length(vars.$lamp-glow-holes) {
+    &:nth-child(#{$i}) {
+      animation:
+        intro-lamp-open-#{$i} vars.$inventory-lamp-expand-duration ease-out,
+        lamp-glow-pulse 3s ease-in-out vars.$inventory-lamp-expand-duration
+          infinite;
+    }
+  }
+}
+
+@each $step in $lit-before-fall-steps {
+  #position-1:checked
+    ~ ##{$step}:checked
+    ~ .game
+    .player.lamp-glow-anchor
+    .lamp-glow__layer {
+    transform: translate(-50%, -50%);
+    animation: lamp-glow-pulse 3s ease-in-out infinite;
+
+    @for $i from 1 through list.length(vars.$lamp-glow-holes) {
+      $hole: list.nth(vars.$lamp-glow-holes, $i);
+
+      &:nth-child(#{$i}) {
+        clip-path: path(
+          evenodd,
+          '#{intro-lamp-hole-path(list.nth($hole, 1), list.nth($hole, 2))}'
+        );
+      }
+    }
+  }
+}
+
+#position-1:checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .player.lamp-glow-anchor
+  .lamp-glow {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Open animation only on the lamp-use beat. Later closing steps keep the
+// holes at full size — restarting intro-lamp-open here re-bloomed the
+// cave on every Continue.
+#position-1:checked
+  ~ #intro-11:checked
+  ~ .game
+  .player.lamp-glow-anchor
+  .lamp-glow__layer {
+  transform: translate(-50%, -50%);
+
+  @for $i from 1 through list.length(vars.$lamp-glow-holes) {
+    &:nth-child(#{$i}) {
+      animation:
+        intro-lamp-open-#{$i} vars.$inventory-lamp-expand-duration ease-out,
+        lamp-glow-pulse 3s ease-in-out vars.$inventory-lamp-expand-duration
+          infinite;
+    }
+  }
+}
+
+#position-1:checked
+  ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .player.lamp-glow-anchor
+  .lamp-glow__layer {
+  transform: translate(-50%, -50%);
+  animation: lamp-glow-pulse 3s ease-in-out infinite;
+
+  @for $i from 1 through list.length(vars.$lamp-glow-holes) {
+    $hole: list.nth(vars.$lamp-glow-holes, $i);
+
+    &:nth-child(#{$i}) {
+      clip-path: path(
+        evenodd,
+        '#{intro-lamp-hole-path(list.nth($hole, 1), list.nth($hole, 2))}'
+      );
+    }
+  }
+}

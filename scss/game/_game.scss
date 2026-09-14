@@ -1,0 +1,48 @@
+@use '../base/variables' as vars;
+
+// Root game container — fills the browser window on all devices.
+.game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+// .game centers its children via flex without stretching them, so each
+// scene needs its own explicit size — otherwise .viewport's height: 100%
+// resolves against an auto (0) height and everything inside it collapses.
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scene--game {
+  display: none;
+}
+
+#{vars.$intro-running} ~ .game .scene--intro {
+  pointer-events: none;
+}
+
+#{vars.$intro-running} ~ .game .scene--game {
+  display: flex;
+  opacity: 0;
+  animation: title-scene-in 0.8s ease-out #{vars.$title-fade-out-duration} both;
+}
+
+@keyframes title-scene-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

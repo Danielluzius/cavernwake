@@ -1,0 +1,504 @@
+@use 'sass:map';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'tools';
+@use 'click-hint';
+
+// ==========================================================================
+// STONE WALL (walk edge 31 <-> 32) — the last barrier, blown open with the
+// bomb crafted at the node-22 workbench (world/_workbench.scss).
+//
+//   wall-step: idle + wall-spark (no pickaxe, one-shot look — sickle
+//              does not open the bag)
+//              idle -> pickaxe-swing -> pickaxe-failed
+//              idle | pickaxe-failed -> shovel-swing -> tools-failed
+//              idle | pickaxe-failed | tools-failed
+//                -> blast-prompt -> placed -> fuse-choosing
+//                -> lantern-fire -> done                       (bomb)
+//
+// Wrong-tool attempts never clear the wall. The bomb branch still wins as
+// soon as #workbench-done is checked, including after a failed swing.
+// After the place line, #wall-placed is rest: click the bomb to open
+// inventory (#wall-fuse-choosing) and use the lamp to light the fuse.
+//
+// The blast is the one interaction that also MOVES the player: a label can
+// only ever flip a single input, so "run for cover" does not advance
+// wall-step at all — it checks #position-30--from-31--right instead of the
+// ordinary left-facing 31→30 radio. That facing variant keeps looking at
+// the wall after Continue locks #wall-done; walking away and coming back
+// through 31 uses the normal #position-30--from-31 radio again.
+// ==========================================================================
+
+$col: 15;
+$row: 21;
+$size: 6;
+$bomb-col: 17.165;
+$bomb-row: 24.665;
+$bomb-size: 0.67;
+
+$pulse-duration: vars.$movement-duration;
+
+// Six frames, one and a half times the usual beat.
+$lantern-duration: vars.$movement-duration * 1.5;
+
+// After lighting: run left, one-way line, look right, then detonate.
+$shake-cycles: 3;
+$face-right-at: vars.$dialogue-hint-duration;
+$explode-at: $face-right-at + 0.25s;
+$confirm-at: $explode-at + vars.$screen-shake-duration * $shake-cycles;
+
+$busy: tools.step-list(
+  wall,
+  (
+    pickaxe-swing,
+    shovel-swing,
+    blast-prompt,
+    fuse-choosing,
+    fuse-prompt,
+    lantern-fire,
+  )
+);
+$no-bomb: tools.step-list(
+  workbench,
+  (
+    idle,
+    incomplete,
+    choosing,
+    a-shell,
+    a-powder,
+    a-fuse,
+    b-shell-powder,
+    b-shell-fuse,
+    b-powder-shell,
+    b-powder-fuse,
+    b-fuse-shell,
+    b-fuse-powder,
+    bad-sfp,
+    bad-psf,
+    bad-pfs,
+    bad-fsp,
+    bad-fps,
+    craft-prompt,
+    crafting,
+    crafted,
+    take,
+  )
+);
+$pickaxe-locked: tools.step-list(pickaxe, (idle, prompt, pickup));
+$wall-rest: '#wall-idle, #wall-pickaxe-failed, #wall-tools-failed';
+$bounce-duration: vars.$movement-duration * 2;
+$pickaxe-shake-cycles: 3;
+
+// Cover run from node 31: same camera as 31→30, rest pose looks right.
+$blast-cover: '#position-30--from-31--right';
+$node-30: map.get(vars.$positions, 30);
+
+// Fired the moment the player is back at node 30 with a live fuse behind them.
+$armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
+
+// The wall renders in front of the player, but .world-layer--foreground is
+// pointer-events: none — so the two click branches stay behind in
+// .world-layer--objects as purely invisible hit areas and all of the art
+// lives on the foreground twin (R7). .player is pointer-events: none itself,
+// so the overlap costs nothing.
+.object--stone-wall,
+.object--stone-wall-pickaxe,
+.object--stone-wall-shovel,
+.object--stone-wall-cut,
+.object--stone-wall-front {
+  position: absolute;
+  left: $col * vars.$tile-size-display;
+  top: $row * vars.$tile-size-display;
+  width: $size * vars.$tile-size-display;
+  height: $size * vars.$tile-size-display;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+  @include click-hint.place($col, $row, $size, $size, 31, 1.2, 2.55);
+}
+
+// Look line until the pickaxe is owned. Sickle must not steal this click
+// into inventory. Bomb still uses the -cut hit below.
+#wall-spark:checked
+  ~ :is(#{$pickaxe-locked}):checked
+  ~ :is(#{$no-bomb}):checked
+  ~ #wall-idle:checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall,
+#pickaxe-armed:checked
+  ~ :is(#{$wall-rest}):checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall-cut,
+#workbench-done:checked
+  ~ :is(#{$wall-rest}):checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall-cut {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#wall-spark:checked
+  ~ :is(#{$pickaxe-locked}):checked
+  ~ :is(#{$no-bomb}):checked
+  ~ #wall-idle:checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall-front {
+  @include click-hint.show($col, $row, $size, $size, 31, 1.2, 2.55);
+}
+
+#pickaxe-armed:checked
+  ~ :is(#{$wall-rest}):checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall-front,
+#workbench-done:checked
+  ~ :is(#{$wall-rest}):checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--stone-wall-front {
+  @include click-hint.show($col, $row, $size, $size, 31, 1.2, 2.55);
+}
+
+.object--stone-wall-front {
+  background-image: url('../assets/world/obstacles/stone-wall/stone-wall-before.png');
+}
+
+@keyframes stone-wall-blast-swap {
+  to {
+    background-image: url('../assets/world/obstacles/stone-wall/stone-wall-after.png');
+  }
+}
+
+#wall-done:checked ~ .game .object--stone-wall-front {
+  animation: stone-wall-blast-swap 0s forwards;
+  background-image: url('../assets/world/obstacles/stone-wall/stone-wall-after.png');
+}
+
+// ---- The bomb sitting against the wall ----
+// Sprite lives on ::after so the fuse-flip never fights a later pulse
+// transform (that swap was a one-frame jump on place/light).
+.object--wall-bomb,
+.object--wall-bomb-hit {
+  position: absolute;
+  left: $bomb-col * vars.$tile-size-display;
+  top: $bomb-row * vars.$tile-size-display;
+  width: $bomb-size * vars.$tile-size-display;
+  height: $bomb-size * vars.$tile-size-display;
+  background: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--wall-bomb {
+  opacity: 0;
+}
+
+.object--wall-bomb-hit {
+  @include click-hint.place($bomb-col, $bomb-row, $bomb-size, $bomb-size, 31);
+}
+
+#wall-placed:checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--wall-bomb-hit {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($bomb-col, $bomb-row, $bomb-size, $bomb-size, 31);
+}
+
+.object--wall-bomb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/objects/inventory/bomb.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  transform-origin: center center;
+}
+
+:is(
+    #wall-blast-prompt,
+    #wall-placed,
+    #wall-fuse-choosing,
+    #wall-fuse-prompt,
+    #wall-lantern-fire
+  ):checked
+  ~ .game
+  .object--wall-bomb {
+  opacity: 1;
+}
+
+// Unlit until mid lantern-fire (frame 4); pulse starts when the pose ends.
+@keyframes wall-bomb-light {
+  to {
+    background-image: url('../assets/objects/inventory/bomb-fire.png');
+  }
+}
+
+#wall-lantern-fire:checked ~ .game .object--wall-bomb::after {
+  animation:
+    wall-bomb-light 0s #{$lantern-duration * 0.5} forwards,
+    wall-bomb-pulse $pulse-duration ease-in-out $lantern-duration infinite;
+}
+
+#{$armed} ~ .game .object--wall-bomb {
+  opacity: 1;
+}
+
+#{$armed} ~ .game .object--wall-bomb::after {
+  background-image: url('../assets/objects/inventory/bomb-fire.png');
+  animation:
+    wall-bomb-pulse $pulse-duration ease-in-out infinite,
+    wall-bomb-vanish 0s $explode-at forwards;
+}
+
+#wall-done:checked ~ .game .object--wall-bomb {
+  animation: wall-bomb-vanish 0s forwards;
+}
+
+#wall-done:checked ~ .game .object--wall-bomb::after {
+  animation: none;
+}
+
+@keyframes wall-bomb-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scaleX(-1) scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scaleX(-1) scale(1.25);
+  }
+}
+
+@keyframes wall-bomb-vanish {
+  to {
+    opacity: 0;
+  }
+}
+
+// ---- Lighting the fuse ----
+// Plays on .player__action, never .player__sprite (see player/_player.scss).
+// #wall-lantern-fire stays checked through the walk-back, so the sprite hide
+// must not use $busy — restore it explicitly once $armed takes over.
+#wall-lantern-fire:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#{$armed} ~ .game .player__sprite {
+  opacity: 1;
+}
+
+#wall-lantern-fire:checked ~ .game .player__action {
+  opacity: 1;
+  // Rest pose is the facing at node 31 — same idea as ladders/base-up after
+  // a climb, not the last use-item frame (frame_006 still has the lantern out).
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-lantern-fire $lantern-duration steps(1, end);
+}
+
+#{$armed} ~ .game .player__action {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes wall-blast-face-right {
+  to {
+    background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  }
+}
+
+// Tied to the cover-run radio, not #wall-lantern-fire: clicking #wall-done
+// must not rewrite .player__sprite's animation (that would replay the
+// left-facing 31→30 walk on the spot). Leaving node 30 unchecks this id.
+#{$blast-cover}:checked ~ .game .world {
+  --world-offset: #{(map.get($node-30, col) + 0.5) *
+    vars.$tile-size-display *
+    -1};
+  --world-offset-y: #{(map.get($node-30, row) + 0.5) *
+    vars.$tile-size-display *
+    -1};
+  transition-duration: var(--walk-duration);
+}
+
+#{$blast-cover}:checked ~ .game .player {
+  transition-duration: var(--walk-duration);
+}
+
+#{$blast-cover}:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation:
+    player-walk-from-31-to-30 var(--walk-cycle-duration) steps(1, end)
+      vars.$walk-cycles,
+    wall-blast-face-right 0s $face-right-at forwards;
+}
+
+#{$blast-cover}:checked
+  ~ .game
+  .direction-controls__button--up[data-position='30'] {
+  @include dlg.direction-button-reveal(var(--walk-duration));
+}
+
+#vine30-done:checked
+  ~ #{$blast-cover}:checked
+  ~ .game
+  .direction-controls__button--right[data-position='30'] {
+  @include dlg.direction-button-reveal(var(--walk-duration));
+}
+
+#lever7-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #{$blast-cover}:checked
+  ~ .game
+  .direction-controls__button--left[data-position='30'] {
+  @include dlg.direction-button-reveal(var(--walk-duration));
+}
+
+// ---- Wrong-tool swings (never open the wall) ----
+#wall-pickaxe-swing:checked ~ .game .player__sprite,
+#wall-shovel-swing:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#wall-pickaxe-swing:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-pickaxe-bounce $bounce-duration steps(1, end);
+}
+
+#wall-shovel-swing:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation: player-shovel-swing vars.$movement-duration steps(1, end);
+  // Shovel frames face left; flip so the swing goes into the wall.
+  transform: scaleX(-1);
+}
+
+#wall-pickaxe-swing:checked ~ .game .viewport {
+  animation: intro-screen-shake vars.$screen-shake-duration ease-in-out
+    $pickaxe-shake-cycles;
+  animation-delay: vars.$movement-duration * 0.5;
+}
+
+#wall-pickaxe-swing:checked
+  ~ .game
+  .dialogue[data-step='wall-pickaxe-fail']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($bounce-duration);
+}
+
+#wall-shovel-swing:checked
+  ~ .game
+  .dialogue[data-step='wall-shovel-fail']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$movement-duration);
+}
+
+// ---- Detonation (while still on #wall-lantern-fire; Continue only locks #wall-done) ----
+#{$armed} ~ .game .viewport {
+  animation: intro-screen-shake vars.$screen-shake-duration ease-in-out
+    $shake-cycles;
+  animation-delay: $explode-at;
+}
+
+#{$armed} ~ .game .object--stone-wall-front {
+  animation: stone-wall-blast-swap 0s $explode-at forwards;
+}
+
+// Sibling of .viewport for the same reason as .blackout (see index.html):
+// position: fixed must stay pinned to the browser viewport while .viewport
+// itself is being shaken by a transform.
+.blast-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: vars.$z-index-blackout;
+  background-color: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#{$armed} ~ .game .blast-flash {
+  animation: blast-flash vars.$screen-shake-duration ease-out $explode-at both;
+}
+
+@keyframes blast-flash {
+  0% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// No walking away while a dialogue is open or the fuse is burning (R6).
+:is(#{$busy}):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+// ---- Dialogue ----
+#wall-spark-seen {
+  @include dlg.lock-edges;
+}
+
+#wall-spark-seen:checked
+  ~ .game
+  .dialogue[data-step='wall-blocked']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+#wall-blast-prompt:checked
+  ~ .game
+  .dialogue[data-step='wall-blast-prompt']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+#wall-fuse-prompt:checked
+  ~ .game
+  .dialogue[data-step='wall-fuse-prompt']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+// After the lighting pose — then the run Continue.
+#wall-lantern-fire:checked
+  ~ .game
+  .dialogue[data-step='wall-lantern-fire']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($lantern-duration);
+}
+
+// Its own Continue only moves the player, it does not advance wall-step — so
+// unlike every other box this one needs an explicit close, done here by
+// outranking the rule above with a second id rather than a :not() guard.
+#{$armed} ~ .game .dialogue[data-step='wall-lantern-fire'] .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none;
+}
+
+#{$armed} ~ .game .dialogue[data-step='wall-blast-run'] .dialogue__box {
+  @include dlg.dialogue-box-hint;
+}
+
+#{$armed} ~ .game .dialogue[data-step='wall-blast-confirm'] .dialogue__box {
+  @include dlg.dialogue-box-open-after($confirm-at);
+}

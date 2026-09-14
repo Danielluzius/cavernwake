@@ -1,0 +1,407 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+
+// D-pad / edge-button generation and lift/obstacle gate helpers.
+// Inventory, dialogue, title and settings live in sibling partials.
+.ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: vars.$z-index-ui;
+  pointer-events: none;
+}
+
+// ==========================================================================
+// DIRECTION CONTROLS (up/right/down/left)
+// Anchored on the vision-field / standing-tile center (viewport 50/50),
+// not the sprite. Each pad's center sits on the last grid line still
+// inside the circle (vars.$direction-button-reach).
+// ==========================================================================
+.direction-controls {
+  position: absolute;
+  top: calc(var(--field-size) / 2);
+  left: round(nearest, 50cqi, 1px);
+  width: 0;
+  height: 0;
+  z-index: 2;
+}
+
+.direction-controls__button {
+  @include dlg.arrow-pad;
+  position: absolute;
+  // Pixel-snapped box instead of translate(-50%, -50%) — that subpixel
+  // origin drew a grey hairline through the 8-bit box-shadow chrome.
+  left: math.div(vars.$direction-button-size, -2);
+  top: math.div(vars.$direction-button-size, -2);
+  width: vars.$direction-button-size;
+  height: vars.$direction-button-size;
+  font-size: 0;
+  color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+  // Invisible until an --edge variant reveals itself below. Fade-in
+  // goes to idle opacity (see direction-button-reveal); hover brightens.
+  // Compact layout lights the dummy pads via --pad-ghost-opacity.
+  opacity: 0;
+  visibility: hidden;
+  --press: 0px;
+  touch-action: manipulation;
+
+  &--up {
+    transform: translateY(var(--press))
+      translateY(calc(-1 * var(--pad-reach-y))) rotate(-90deg);
+    margin-top: vars.$dialogue-arrow-slide;
+  }
+
+  &--left {
+    transform: translateY(var(--press))
+      translateX(calc(-1 * var(--pad-reach-x))) rotate(180deg);
+    margin-left: vars.$dialogue-arrow-slide;
+  }
+
+  &--right {
+    transform: translateY(var(--press)) translateX(var(--pad-reach-x));
+    margin-left: calc(-1 * #{vars.$dialogue-arrow-slide});
+  }
+
+  &--down {
+    transform: translateY(var(--press))
+      translateY(var(--pad-reach-y)) rotate(90deg);
+    margin-top: calc(-1 * #{vars.$dialogue-arrow-slide});
+  }
+
+  &:active {
+    --press: #{vars.$dialogue-pixel};
+  }
+}
+
+// Clickable overlay buttons: one per (position, direction) edge in
+// vars.$positions (base/_variables.scss), stacked on the same slot
+// as their direction's dimmed placeholder above. Hidden by default; only
+// the edge(s) belonging to the CURRENT position are revealed below, so
+// exactly one bright/clickable button ever covers a given dimmed slot at
+// a time. Uses opacity/visibility (not display) so appearing can be
+// delayed until the move finishes (see transition-delay below) — without
+// this delay the target room's own edge buttons appear the instant the
+// radio is clicked, i.e. mid-transition, letting spam-clicking queue up
+// moves faster than the walk animation plays.
+.direction-controls__button--edge {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  cursor: pointer;
+  // No delay hiding: leaving the current position always hides instantly,
+  // including snapping the slide-margin back so the next arrival can
+  // play the outward motion again.
+  transition:
+    opacity 0s,
+    visibility 0s,
+    margin 0s;
+}
+
+// A gated lift hides one specific button until its activation checkbox is
+// checked — which button depends on the shaft's `gate` mode (see
+// base/_variables.scss vars.$lifts): `approach` hides the walk-in button
+// leading to its bottom station, `ride-up` hides the bottom station's own
+// up button. Returns the selector prefix to put in front of the normal
+// reveal rule, so the gated button keeps exactly the same arrival delays
+// as every other one instead of needing a rule of its own.
+@function lift-gate($node, $direction) {
+  @each $id, $cfg in vars.$lifts {
+    $unlock: map.get($cfg, unlock);
+
+    @if $unlock {
+      $bottom-node: map.get($cfg, bottom-node);
+      $gated: false;
+
+      @if map.get($cfg, gate) == ride-up {
+        $gated: ($node == $bottom-node and $direction == up);
+      } @else {
+        $approach: vars.lift-approach($bottom-node);
+        $gated: (
+          map.get($approach, node) ==
+            $node and
+            map.get($approach, direction) ==
+            $direction
+        );
+      }
+
+      @if $gated {
+        // Call-button shafts keep the walk-in pad down until the
+        // post-arrival line is dismissed. 6<->14 has no call-done.
+        @if map.get($cfg, call-button) == custom {
+          @return '#' + $unlock + ':checked ~ ';
+        }
+
+        @return '#' +
+          $unlock +
+          ':checked ~ #lift-' +
+          $id +
+          '-call-done:checked ~ ';
+      }
+    }
+  }
+
+  @return '';
+}
+
+// A barrier (see vars.$obstacles / world/_obstacles.scss) hides one or
+// more walk buttons until its own permanent "done" step is checked — same
+// selector-prefix idea as lift-gate() above, baked into the very same
+// reveal rule instead of a separate override elsewhere, so there's no risk
+// of two same-specificity rules fighting over source order.
+@function obstacle-gate($node, $direction) {
+  @each $id, $cfg in vars.$obstacles {
+    @each $block in map.get($cfg, blocks) {
+      @if map.get($block, node) ==
+        $node and
+        map.get($block, direction) ==
+        $direction
+      {
+        $prefix: '';
+        $unlock: map.get($cfg, unlock);
+        $lock: map.get($cfg, lock);
+
+        @if $unlock {
+          $prefix: $prefix + '#' + $unlock + ':checked ~ ';
+        }
+
+        @if $lock {
+          $prefix: $prefix + '#' + $lock + ':not(:checked) ~ ';
+        }
+
+        @return $prefix;
+      }
+    }
+  }
+
+  @return '';
+}
+
+@each $id, $data in vars.$positions {
+  $exits: map.get($data, exits);
+
+  @each $direction, $exit in $exits {
+    // Dual-access elevator ends (14, 17) and the simple partner's own
+    // ride back (6, 26, see vars.$elevator-reverse-duals) get their own
+    // facing-specific reveal rules below instead.
+    @if not(
+      ($id == 14 and $direction == up) or
+        ($id == 17 and $direction == down) or
+        ($id == 6 and $direction == down) or
+        ($id == 26 and $direction == up)
+    )
+    {
+      #{lift-gate($id, $direction)}#{obstacle-gate($id, $direction)}#position-#{$id}:checked
+        ~ .game
+        .direction-controls__button--#{$direction}[data-position='#{$id}'] {
+        @include dlg.direction-button-reveal(vars.$movement-duration);
+      }
+    }
+  }
+}
+
+// Arriving via a facing variant (#position-<to>--from-<source>, see
+// player/_player.scss) means standing at <to>, so it must reveal exactly
+// the same buttons as the plain #position-<to> rule above.
+@each $source, $source-data in vars.$positions {
+  @each $direction, $exit in map.get($source-data, exits) {
+    $to: map.get($exit, to);
+    $target-data: map.get(vars.$positions, $to);
+
+    // The button reveal delay must match how long the edge just taken
+    // actually plays (vars.movement-duration-for, base/_variables.scss)
+    // — walk/ladder loop their cycle longer, elevators vary per shaft.
+    $delay: vars.movement-duration-for(map.get($exit, kind), $source);
+    @if map.get($exit, kind) == walk {
+      $delay: var(--walk-duration);
+    }
+
+    @each $target-direction, $target-exit in map.get($target-data, exits) {
+      // Same exclusion as above — the dual-access ends' up/down button
+      // and the simple partners' own back-ride button need to know the
+      // specific facing, not just that the target was reached at all
+      // (see the dedicated rules further below).
+      @if not(
+        ($to == 14 and $target-direction == up) or
+          ($to == 17 and $target-direction == down) or
+          ($to == 6 and $target-direction == down) or
+          ($to == 26 and $target-direction == up)
+      )
+      {
+        #{lift-gate($to, $target-direction)}#{obstacle-gate($to, $target-direction)}#position-#{$to}--from-#{$source}:checked
+          ~ .game
+          .direction-controls__button--#{$target-direction}[data-position='#{$to}'] {
+          @include dlg.direction-button-reveal($delay);
+        }
+      }
+    }
+  }
+}
+
+// Dual-access elevator ends (14, 17, see base/_variables.scss
+// vars.$elevator-dual-ends) — their up/down button's visibility depends
+// on the SPECIFIC arrival source (each source gives a different facing),
+// not just "standing at 14/17" like every other button above, so two
+// overlapping edge labels share the same grid slot and only one of them
+// (matched via its own data-facing attribute) is revealed at a time.
+@each $id, $data in vars.$elevator-dual-ends {
+  // Both arrival sources are plain walk edges into 14/17.
+  $delay: var(--walk-duration);
+
+  @each $from, $facing in map.get($data, arrivals) {
+    #{lift-gate($id, up)}#position-#{$id}--from-#{$from}:checked
+      ~ .game
+      .direction-controls__button--edge[data-position='#{$id}'][data-facing='#{$facing}'] {
+      @include dlg.direction-button-reveal($delay);
+    }
+  }
+}
+
+// Riding the elevator back down/up from the dual-access end (14, 17)
+// arrives back at its plain single-facing partner (6, 26) — that arrival
+// also carries the partner's own fixed facing (vars.$elevator-facing),
+// so its up/down button reuses the matching --facing variant here too.
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+  $facing: map.get(vars.$elevator-facing, $to);
+
+  #{lift-gate($id, up)}#position-#{$id}--from-#{$to}:checked
+    ~ .game
+    .direction-controls__button--edge[data-position='#{$id}'][data-facing='#{$facing}'] {
+    @include dlg.direction-button-reveal(vars.$movement-duration);
+  }
+}
+
+// Riding the elevator FROM the dual-access end (14, 17, checked as
+// #position-<partner>--from-<id>--<facing>, see player/_player.scss)
+// arrives at the plain partner node — reveal ALL of its own buttons
+// exactly like every other arrival variant above, since neither of the
+// 2 facing variants changes which buttons the partner itself offers.
+// Its own back-ride button (6 down, 26 up) is excluded here too — same
+// reasoning as above, handled by the dedicated rule below instead.
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+  $target-data: map.get(vars.$positions, $to);
+  // Riding the elevator down/up from 14/17 to its partner (6/26).
+  $delay: vars.movement-duration-for(elevator, $id);
+
+  @each $facing in (right, left) {
+    @each $target-direction, $target-exit in map.get($target-data, exits) {
+      @if not(
+        ($to == 6 and $target-direction == down) or
+          ($to == 26 and $target-direction == up)
+      )
+      {
+        #position-#{$to}--from-#{$id}--#{$facing}:checked
+          ~ .game
+          .direction-controls__button--#{$target-direction}[data-position='#{$to}'] {
+          @include dlg.direction-button-reveal($delay);
+        }
+      }
+    }
+  }
+}
+
+// The simple partner's own ride back (6 down to 14, 26 up to 17, see
+// base/_variables.scss vars.$elevator-reverse-duals) needs its button
+// visibility keyed by whichever facing the player is CURRENTLY showing —
+// either the plain walk-arrival (always the node's native facing) or one
+// of the dual end's own 2 facing variants — not a single fixed direction.
+@each $id, $data in vars.$elevator-reverse-duals {
+  $walk-from: map.get($data, walk-from);
+  $dual-source: map.get($data, to);
+  $native-facing: map.get(vars.$elevator-facing, $id);
+  // The 2 possible arrivals here are a plain walk-in vs. an elevator ride
+  // down from the dual end — each needs its own matching delay.
+  $walk-delay: var(--walk-duration);
+  $elevator-delay: vars.movement-duration-for(elevator, $dual-source);
+
+  @each $facing in (right, left) {
+    $sources: (#{$id}--from-#{$dual-source}--#{$facing}: $elevator-delay);
+    @if $facing == $native-facing {
+      $sources: map.merge($sources, (#{$id}--from-#{$walk-from}: $walk-delay));
+    }
+
+    @each $source, $delay in $sources {
+      #position-#{$source}:checked
+        ~ .game
+        .direction-controls__button--edge[data-position='#{$id}'][data-facing='#{$facing}'] {
+        @include dlg.direction-button-reveal($delay);
+      }
+    }
+  }
+}
+
+// Arriving back at the dual-access end itself (#position-<to>--from-<id>
+// --<facing>, see base/_variables.scss vars.$elevator-reverse-duals) —
+// reveal all of ITS buttons too, same as any other arrival: its own
+// elevator button needs the matching --facing variant (carried straight
+// over from the ride), the rest are plain.
+@each $id, $data in vars.$elevator-reverse-duals {
+  $to: map.get($data, to);
+  $target-data: map.get(vars.$positions, $to);
+  // Riding the elevator up/down from 6/26 back to 14/17.
+  $delay: vars.movement-duration-for(elevator, $id);
+
+  @each $facing in (right, left) {
+    @each $target-direction, $target-exit in map.get($target-data, exits) {
+      @if map.get($target-exit, kind) == elevator {
+        #{lift-gate($to, up)}#position-#{$to}--from-#{$id}--#{$facing}:checked
+          ~ .game
+          .direction-controls__button--edge[data-position='#{$to}'][data-facing='#{$facing}'] {
+          @include dlg.direction-button-reveal($delay);
+        }
+      } @else {
+        #position-#{$to}--from-#{$id}--#{$facing}:checked
+          ~ .game
+          .direction-controls__button--#{$target-direction}[data-position='#{$to}'] {
+          @include dlg.direction-button-reveal($delay);
+        }
+      }
+    }
+  }
+}
+
+// Call-button shafts: the car is already docked when call-done checks, so
+// the walk-in pad must not wait the arrival delay that lift-gate() would
+// otherwise inherit from the loops above.
+@each $id, $cfg in vars.$lifts {
+  @if map.get($cfg, unlock) and map.get($cfg, call-button) != custom {
+    $bottom-node: map.get($cfg, bottom-node);
+    $approach: vars.lift-approach($bottom-node);
+    $approach-node: map.get($approach, node);
+    $approach-direction: map.get($approach, direction);
+
+    // First call only: already standing at the approach after the
+    // walk-in to the lever. Ladder/skip/out-of-car arrivals
+    // (#position-25--from-33, --from-26, …) keep the normal delay.
+    $call-from: ();
+
+    @each $dir, $exit in map.get(map.get(vars.$positions, $approach-node), exits)
+    {
+      $neighbor: map.get($exit, to);
+
+      @if $neighbor != $bottom-node and map.get($exit, kind) == walk {
+        $call-from: list.append($call-from, $neighbor);
+      }
+    }
+
+    $call-at: '#position-#{$approach-node}';
+
+    @each $from in $call-from {
+      $call-at: $call-at + ', #position-#{$approach-node}--from-#{$from}';
+    }
+
+    #{lift-gate($approach-node, $approach-direction)}:is(#{$call-at}):checked
+      ~ .game
+      .direction-controls__button--#{$approach-direction}[data-position='#{$approach-node}'] {
+      @include dlg.direction-button-reveal(0s);
+    }
+  }
+}

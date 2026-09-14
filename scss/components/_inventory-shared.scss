@@ -1,0 +1,27 @@
+// Shared inventory mixin + choosing/craft selector lists. No CSS output.
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+
+// ==========================================================================
+// INVENTORY — browse overlay in .ui.
+// Icon + close sit in the top-left corner of the vision-field square.
+// Opening grows the bag left of the field (vertically centered); the close
+// X stays on the icon slot.
+// ==========================================================================
+
+@mixin inventory-hud-slot($box-size) {
+  position: absolute;
+  left: var(--hud-inv-x);
+  top: var(--hud-inv-y);
+  width: $box-size;
+  height: $box-size;
+  margin-left: calc(#{$box-size} / -2);
+  margin-top: calc(#{$box-size} / -2);
+}
+
+// Obstacle use-mode: any of these opens the bag like #inventory-open-play.
+$inventory-use-choosing: '#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing';
+$wall-item-choosing: '#wall-choosing, #wall-fuse-choosing';
+$inventory-craft-open: '#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps';
+$inventory-bag-open: '#{$inventory-use-choosing}, #{$inventory-craft-open}';
+$sickle-held: '#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done';

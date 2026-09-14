@@ -1,0 +1,445 @@
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'tools';
+@use 'click-hint';
+
+// ==========================================================================
+// WORKBENCH (node 22) — turns the three bomb parts collected via
+// world/_tools.scss into the bomb that opens the stone wall
+// (world/_stone-wall.scss).
+//
+//   workbench-step: idle -> choosing -> a-* / b-* sequence
+//                   shell then powder then fuse -> crafting -> crafted
+//                   -> take -> done
+//                   any other three-part order -> bad-* (shake, eject)
+//
+// The world label always opens choosing. Parts are placed from inventory
+// in click order into the vision-field tray (see .craft-tray).
+// ==========================================================================
+
+$col: 15;
+$row: 16;
+$cols: 3;
+$rows: 3;
+// Finished bomb sits on the left of the tabletop (same 32px sprite as
+// the floor pickups, 2/3 tile).
+$bomb-col: 15.5;
+$bomb-row: 17.05;
+$bomb-size: 0.67;
+
+// Eight frames instead of the usual four, so twice the usual beat.
+$craft-duration: vars.$movement-duration * 2;
+
+// Out of reach from anywhere but node 22 itself. Trailing `--` is required,
+// otherwise [id^='position-2'] would also match 20-29.
+$at-bench: ":is(#position-22, [id^='position-22--']):checked";
+
+// Plain walk arrivals only — the --post variants below are for returns after
+// -done and must not pick up the bench-facing pin.
+$at-bench-plain: '#position-22--from-21, #position-22--from-23';
+
+$craft-open: '#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps';
+$craft-bad: '#workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps';
+
+$busy: tools.step-list(workbench, (crafting, take));
+
+.object--workbench,
+.object--workbench-craft {
+  position: absolute;
+  left: $col * vars.$tile-size-display;
+  top: $row * vars.$tile-size-display;
+  width: $cols * vars.$tile-size-display;
+  height: $rows * vars.$tile-size-display;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  cursor: default;
+  @include click-hint.place($col, $row, $cols, $rows, 22);
+}
+
+.object--workbench {
+  background-image: url('../assets/world/workbench.png');
+}
+
+#workbench-idle:checked
+  ~ #{$at-bench}
+  ~ .game
+  .object--workbench {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($col, $row, $cols, $rows, 22);
+}
+
+#workbench-crafted:checked ~ #{$at-bench} ~ .game .object--workbench-take {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($bomb-col, $bomb-row, $bomb-size, $bomb-size, 22);
+}
+
+// Bomb sprite on the bench — appears when the craft animation ends, stays
+// until the player picks it up. Click target is the bomb, not the table.
+.object--workbench-take {
+  position: absolute;
+  left: $bomb-col * vars.$tile-size-display;
+  top: $bomb-row * vars.$tile-size-display;
+  width: $bomb-size * vars.$tile-size-display;
+  height: $bomb-size * vars.$tile-size-display;
+  z-index: 1;
+  background-image: url('../assets/objects/inventory/bomb.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  @include click-hint.place($bomb-col, $bomb-row, $bomb-size, $bomb-size, 22);
+}
+
+@keyframes workbench-bomb-show {
+  to {
+    opacity: 1;
+  }
+}
+
+#workbench-crafting:checked ~ .game .object--workbench-take {
+  animation: workbench-bomb-show 0s $craft-duration forwards;
+}
+
+:is(#workbench-crafted, #workbench-take):checked ~ .game .object--workbench-take {
+  opacity: 1;
+}
+
+// Plays on .player__action during the one-shot animations only (see
+// player/_player.scss). Resting poses pin .player__sprite's background-image
+// instead — same pattern as world/_obstacles.scss.
+:is(#workbench-crafting, #workbench-take):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#workbench-crafting:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-up.png');
+  animation: player-workbench-craft $craft-duration steps(1, end);
+}
+
+// Taking the finished bomb off the bench reuses the bomb parts' own pickup
+// frames — left-facing, since the bench stands left of the player.
+#workbench-take:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation: player-item-pickup-left vars.$movement-duration steps(1, end);
+}
+
+// Keeps facing the bench after the interaction instead of the arrival pose.
+// background-image ONLY — an animation here would kill the arrival walk
+// cycle on re-entry. Scoped to the plain arrivals: returns after -done land
+// on the --post ids below and keep the ordinary walk facing.
+:is(#workbench-crafted, #workbench-done):checked
+  ~ :is(#{$at-bench-plain}):checked
+  ~ .game
+  .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-up.png');
+}
+
+// ==========================================================================
+// NODE 22 — second walk arrivals (`--post`), one per incoming direction.
+// The pin above must only hold the bench-facing pose for the interaction
+// the player just did while standing here, not for every later return —
+// but radio state alone can't tell those apart on the plain ids. Solved by
+// splitting each walk edge in two mutually exclusive radios and swapping
+// WHICH direction button at the source node is live (same selector-prefix
+// idea as world/_obstacles.scss vine30): the craft/take chain happens on
+// the plain arrival (pinned), every return afterwards lands on `--post`,
+// which has no pin and keeps the ordinary walk facing.
+// ==========================================================================
+
+$post-steps: '#workbench-done';
+$pre-steps: tools.step-list(
+  workbench,
+  (
+    idle,
+    incomplete,
+    choosing,
+    a-shell,
+    a-powder,
+    a-fuse,
+    b-shell-powder,
+    b-shell-fuse,
+    b-powder-shell,
+    b-powder-fuse,
+    b-fuse-shell,
+    b-fuse-powder,
+    bad-sfp,
+    bad-psf,
+    bad-pfs,
+    bad-fsp,
+    bad-fps,
+    craft-prompt,
+    crafting,
+    crafted,
+    take,
+  )
+);
+
+:is(#{$pre-steps}):checked
+  ~ .game
+  .direction-controls__button--right[data-position='21'][data-arrival='post'],
+:is(#{$pre-steps}):checked
+  ~ .game
+  .direction-controls__button--left[data-position='23'][data-arrival='post'] {
+  display: none;
+}
+
+:is(#{$post-steps}):checked
+  ~ .game
+  .direction-controls__button--right[data-position='21']:not([data-arrival]),
+:is(#{$post-steps}):checked
+  ~ .game
+  .direction-controls__button--left[data-position='23']:not([data-arrival]) {
+  display: none;
+}
+
+// Camera/player/animation for the post arrivals — same node, same walk edge,
+// only the id differs from the generated position-graph rules.
+#position-22--from-21--post:checked ~ .game .world {
+  --world-offset: #{(16 + 0.5) * vars.$tile-size-display * -1};
+  --world-offset-y: #{(17 + 0.5) * vars.$tile-size-display * -1};
+  transition-duration: var(--walk-duration);
+}
+
+#position-22--from-21--post:checked ~ .game .player {
+  transition-duration: var(--walk-duration);
+}
+
+#position-22--from-21--post:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-walk-from-21-to-22
+    var(--walk-cycle-duration)
+    steps(1, end)
+    vars.$walk-cycles;
+}
+
+#position-22--from-23--post:checked ~ .game .world {
+  --world-offset: #{(16 + 0.5) * vars.$tile-size-display * -1};
+  --world-offset-y: #{(17 + 0.5) * vars.$tile-size-display * -1};
+  transition-duration: var(--walk-duration);
+}
+
+#position-22--from-23--post:checked ~ .game .player {
+  transition-duration: var(--walk-duration);
+}
+
+#position-22--from-23--post:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation: player-walk-from-23-to-22
+    var(--walk-cycle-duration)
+    steps(1, end)
+    vars.$walk-cycles;
+}
+
+// Button reveal at node 22 for the post arrivals — not covered by the
+// generated loops because those only emit rules for the plain ids.
+:is(#position-22--from-21--post, #position-22--from-23--post):checked
+  ~ .game
+  .direction-controls__button--right[data-position='22'],
+:is(#position-22--from-21--post, #position-22--from-23--post):checked
+  ~ .game
+  .direction-controls__button--left[data-position='22'] {
+  @include dlg.direction-button-reveal(var(--walk-duration));
+}
+
+// No walking away while a dialogue is open or the animation is running (R6).
+:is(#{$busy}):checked ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+// ---- Dialogue ----
+#workbench-spark-seen {
+  @include dlg.lock-edges;
+}
+
+#workbench-choosing:checked
+  ~ .game
+  .dialogue[data-step='workbench-look']
+  .dialogue__box {
+  animation: dialogue-ephemeral vars.$dialogue-hint-duration ease-out forwards;
+}
+
+#workbench-craft-prompt:checked
+  ~ .game
+  .dialogue[data-step='workbench-craft-prompt']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+// Appears exactly when the craft animation ends, no extra click needed.
+#workbench-crafting:checked
+  ~ .game
+  .dialogue[data-step='workbench-craft-confirm']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($craft-duration);
+}
+
+#workbench-take:checked
+  ~ .game
+  .dialogue[data-step='workbench-take']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$movement-duration);
+}
+
+// ==========================================================================
+// Craft tray — three sockets in the vision field, filled in click order.
+// ==========================================================================
+
+$img-shell: '../assets/objects/inventory/bomb-shell.png';
+$img-powder: '../assets/objects/inventory/bomb-gunpowder.png';
+$img-fuse: '../assets/objects/inventory/bomb-fuse.png';
+
+.craft-tray {
+  @include dlg.dialogue-panel-fill;
+  position: absolute;
+  left: 50%;
+  bottom: calc(14% + #{vars.$tile-size-display});
+  z-index: 8;
+  display: flex;
+  gap: 8px * vars.$vision-scale;
+  padding: 8px * vars.$vision-scale;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+}
+
+:is(#{$craft-open}):checked ~ .game .craft-tray {
+  opacity: 1;
+  visibility: visible;
+}
+
+.craft-tray__slot {
+  box-sizing: border-box;
+  width: vars.$tile-size-display;
+  height: vars.$tile-size-display;
+  background-color: rgba(0, 0, 0, 0.28);
+  background-size: 70% 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+:is(#workbench-a-shell, #workbench-b-shell-powder, #workbench-b-shell-fuse):checked
+  ~ .game
+  .craft-tray__slot--1 {
+  background-image: url($img-shell);
+}
+
+:is(#workbench-a-powder, #workbench-b-powder-shell, #workbench-b-powder-fuse):checked
+  ~ .game
+  .craft-tray__slot--1 {
+  background-image: url($img-powder);
+}
+
+:is(#workbench-a-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder):checked
+  ~ .game
+  .craft-tray__slot--1 {
+  background-image: url($img-fuse);
+}
+
+:is(#workbench-b-powder-shell, #workbench-b-fuse-shell):checked
+  ~ .game
+  .craft-tray__slot--2 {
+  background-image: url($img-shell);
+}
+
+:is(#workbench-b-shell-powder, #workbench-b-fuse-powder):checked
+  ~ .game
+  .craft-tray__slot--2 {
+  background-image: url($img-powder);
+}
+
+:is(#workbench-b-shell-fuse, #workbench-b-powder-fuse):checked
+  ~ .game
+  .craft-tray__slot--2 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--1 {
+  background-image: url($img-shell);
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--2 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-sfp:checked ~ .game .craft-tray__slot--3 {
+  background-image: url($img-powder);
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--1 {
+  background-image: url($img-powder);
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--2 {
+  background-image: url($img-shell);
+}
+
+#workbench-bad-psf:checked ~ .game .craft-tray__slot--3 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--1 {
+  background-image: url($img-powder);
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--2 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-pfs:checked ~ .game .craft-tray__slot--3 {
+  background-image: url($img-shell);
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--1 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--2 {
+  background-image: url($img-shell);
+}
+
+#workbench-bad-fsp:checked ~ .game .craft-tray__slot--3 {
+  background-image: url($img-powder);
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--1 {
+  background-image: url($img-fuse);
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--2 {
+  background-image: url($img-powder);
+}
+
+#workbench-bad-fps:checked ~ .game .craft-tray__slot--3 {
+  background-image: url($img-shell);
+}
+
+@keyframes craft-tray-eject {
+  0%,
+  35% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+:is(#{$craft-bad}):checked ~ .game .craft-tray__slot {
+  animation: craft-tray-eject 0.45s ease-in forwards;
+}
+
+:is(#{$craft-bad}):checked ~ .game .viewport {
+  animation: intro-screen-shake vars.$screen-shake-duration ease-in-out 1;
+}

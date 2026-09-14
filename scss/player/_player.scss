@@ -1,0 +1,362 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+
+// The player container stays exactly centered in the viewport at all times.
+// The world moves instead of the player (see world/_world.scss).
+// The player counter-translates by the exact opposite of --world-offset
+// (inherited from .world) so it visually stays fixed at the viewport
+// center while its DOM position remains between the environment and
+// foreground layers for correct z-index stacking.
+.player {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: vars.$character-size-display;
+  height: vars.$character-size-display;
+  // Extra, normally-zero nudge on top of the counter-translate below, used
+  // by the intro's walk-in effect (see scss/intro/_intro.scss) to move the
+  // player independently of the camera without a separate CSS animation
+  // (keeps it transitioning the same way as every other state change).
+  --player-extra-offset: 0px;
+  // Same idea, but vertical — used by the intro's bridge-collapse fall to
+  // drop the player straight down out of frame while the camera itself
+  // stays put (see scss/intro/_intro.scss).
+  --player-extra-offset-y: 0px;
+  // translateY nudges the sprite down to the real floor line without
+  // moving the viewport-center anchor itself (world/environment untouched).
+  transform: translate(-50%, -50%)
+    translateX(calc(var(--world-offset) * -1 + var(--player-extra-offset)))
+    translateY(calc(var(--world-offset-y) * -1 + var(--player-extra-offset-y)))
+    translateY(vars.$player-vertical-offset);
+  transition: transform vars.$movement-duration ease-in-out;
+  // Keeps the sprite on its own GPU compositing layer permanently instead
+  // of only while a transition runs — without this, the browser demotes
+  // it back into the parent layer once at rest and repaints it at its
+  // (sub-pixel) resting transform, blurring the pixel-art edges even with
+  // image-rendering: pixelated.
+  will-change: transform;
+  z-index: vars.$z-index-player;
+  // Never itself interactive, and its box is much bigger than one tile
+  // (character-size-display spans ~2.6 tiles for taller sprite frames) —
+  // without this it silently blocks clicks on any object/label whose
+  // tile it happens to overlap (e.g. the intro backpack pickup one tile
+  // to the side), even over its own fully-transparent sprite padding.
+  pointer-events: none;
+}
+
+// Hiding the sprite for an interaction triggered by a PERMANENT checkbox
+// (the lift call buttons, world/_lift.scss) has to happen on a wrapper: a
+// permanent rule on .player__sprite would either hide it forever or touch
+// its `animation`, which is off limits for the reason below. The wrappers
+// are nested one per shaft so no two shafts ever write to the same element.
+.player__body {
+  position: absolute;
+  inset: 0;
+}
+
+// Sprite foundation.
+.player__sprite {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+
+  // Resting state: with-backpack character, standing (first-scene
+  // character — no passed-out/wake-up sequence for this variant).
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+
+// One-shot interaction poses (sickle pickup/swing, see world/_obstacles.scss)
+// play on this overlay instead of on .player__sprite, which is hidden for
+// their duration. Reason: .player__sprite's `animation` carries the arrival
+// walk/climb animation, and a CSS animation restarts whenever its computed
+// value changes — so setting and then releasing an interaction animation on
+// the sprite itself made the walk animation replay on the spot the moment
+// the dialogue closed, without the player having moved.
+//
+// .player__call is a second, identical overlay reserved for the lift call
+// buttons. It needs its own element for the same restart reason one level
+// up: its rule matches permanently, so sharing .player__action would replay
+// the lever pose every time a tool pickup released that element's animation.
+.player__action,
+.player__call {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  opacity: 0;
+}
+
+// Facing: whichever direction button was actually clicked decides which
+// way the sprite faces, and it stays that way until the next click — not
+// derived from the current position alone (a node can be reached from
+// several directions), but from the specific edge just taken via its own
+// #position-<to>--from-<source> radio variant (see index.html /
+// world/_world.scss / components/_components.scss). Elevator/ladder
+// exits always show the same pose regardless of travel direction (riding
+// an elevator down still shows base-down when going up, and vice versa
+// for the ladder) — only a plain walk exit's image follows the actual
+// direction clicked. ID selector always outranks the class rule above
+// regardless of source order, so no !important is needed.
+@each $id, $data in vars.$positions {
+  @each $direction, $exit in map.get($data, exits) {
+    $to: map.get($exit, to);
+    $kind: map.get($exit, kind);
+
+    $pose: $direction;
+    @if $kind == elevator {
+      // Fixed per elevator end for the 6 that only have one incoming walk
+      // direction (see base/_variables.scss); the 2 dual-access ends (14,
+      // 17) fall back to the old static base-down pose until they get
+      // their own from-variant radios.
+      $pose: down;
+      @if map.has-key(vars.$elevator-facing, $id) {
+        $pose: map.get(vars.$elevator-facing, $id);
+      }
+    } @else if $kind == ladder {
+      $pose: up;
+    }
+
+    #position-#{$to}--from-#{$id}:checked ~ .game .player__sprite {
+      background-image: url('../assets/characters/with-backpack/base/base-#{$pose}.png');
+
+      // Only plain walk/ladder edges have a frame-swap sprite sheet
+      // (elevator poses stay on their static base-#{$pose} image above) —
+      // the animation plays once for exactly $movement-duration, then
+      // falls back to the static background-image declared above (no
+      // fill-mode). Named per-edge (see animations/_animations.scss) so
+      // the computed animation-name always changes on every click, even
+      // when repeating the same direction or bouncing back and forth
+      // between two rooms.
+      @if $kind == walk {
+        // Loops the walk-cycle vars.$walk-cycles times (same pattern as
+        // the ladder climb below) instead of playing once, so a walk
+        // step visually takes longer / feels less rushed — the matching
+        // .world/.player transition-duration override just below and in
+        // world/_world.scss keeps the camera pan in sync.
+        animation: player-walk-from-#{$id}-to-#{$to}
+          var(--walk-cycle-duration)
+          steps(1, end)
+          vars.$walk-cycles;
+      } @else if $kind == ladder {
+        // Keyframes are always authored "climbing down" (see
+        // animations/_animations.scss) — the $direction key on a ladder
+        // exit is itself up/down, so climbing up just plays that very
+        // same animation backwards instead of needing a mirrored copy.
+        $play-direction: normal;
+        @if $direction == up {
+          $play-direction: reverse;
+        }
+
+        // Per-iteration duration stays $movement-duration (same climb
+        // pace as a walk step); vars.$climb-cycles repeats of it is what
+        // makes the whole ladder shift ($climb-duration, see .world/
+        // .player transition-duration overrides above/below) take longer
+        // to arrive than a plain walk.
+        animation: player-climb-from-#{$id}-to-#{$to}
+          vars.$movement-duration
+          steps(1, end)
+          $play-direction
+          vars.$climb-cycles;
+      } @else if $kind == elevator and map.has-key(vars.$elevator-facing, $id) {
+        // Loops the resting idle-cycle (see animations/_animations.scss)
+        // for the shaft's own duration tier (base/_variables.scss) —
+        // iteration count derived from that duration so the loop always
+        // ends exactly when the ride/transition does. Named per-edge
+        // (not per-direction) so riding straight back on a shaft whose
+        // two ends face the same way still restarts the animation.
+        animation: player-idle-from-#{$id}-to-#{$to}
+          vars.$idle-duration
+          steps(1, end)
+          math.div(map.get(vars.$elevator-durations, $id), vars.$idle-duration);
+      }
+    }
+
+    // Ladder shifts take longer than a plain walk/elevator step
+    // ($climb-duration, see base/_variables.scss) — overrides just the
+    // duration here, not the whole .player transition shorthand, so the
+    // ease-in-out timing function stays identical for every position
+    // change. Per spec, a transition started by a style change always
+    // uses the transition-duration found in the AFTER-change style, so
+    // scoping this to the specific arrival radio is enough. .world gets
+    // the matching override too (see world/_world.scss) so the camera
+    // pan stays in sync with this.
+    @if $kind == ladder {
+      #position-#{$to}--from-#{$id}:checked ~ .game .player {
+        transition-duration: vars.$climb-duration;
+      }
+    } @else if $kind == walk {
+      #position-#{$to}--from-#{$id}:checked ~ .game .player {
+        transition-duration: var(--walk-duration);
+      }
+    } @else if $kind == elevator and map.has-key(vars.$elevator-durations, $id)
+    {
+      #position-#{$to}--from-#{$id}:checked ~ .game .player {
+        transition-duration: map.get(vars.$elevator-durations, $id);
+      }
+    }
+  }
+}
+
+// Dual-access elevator ends (14, 17, see base/_variables.scss
+// vars.$elevator-dual-ends) — same idle-loop idea as the plain elevator
+// branch above, but keyed by the specific arrival direction too, since a
+// single #position-<to>--from-<id> can't disambiguate the 2 possible
+// facings here.
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+  $duration: map.get(vars.$elevator-durations, $id);
+
+  @each $from, $facing in map.get($data, arrivals) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .player__sprite {
+      background-image: url('../assets/characters/with-backpack/base/base-#{$facing}.png');
+      animation: player-idle-from-#{$id}-to-#{$to}--via-#{$from}
+        vars.$idle-duration
+        steps(1, end)
+        math.div($duration, vars.$idle-duration);
+    }
+
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .player {
+      transition-duration: $duration;
+    }
+  }
+}
+
+// Ride BACK from a dual-access end's simple partner (6, 26, see
+// base/_variables.scss vars.$elevator-reverse-duals) — same idea as the
+// dual-access branch above but reversed: this end's own fixed
+// $elevator-facing entry no longer decides the ride, since the player
+// could currently be facing either way depending on how they got here.
+@each $id, $data in vars.$elevator-reverse-duals {
+  $to: map.get($data, to);
+  $duration: map.get(vars.$elevator-durations, $id);
+
+  @each $facing in (right, left) {
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .player__sprite {
+      background-image: url('../assets/characters/with-backpack/base/base-#{$facing}.png');
+      animation: player-idle-from-#{$id}-to-#{$to}--facing-#{$facing}
+        vars.$idle-duration
+        steps(1, end)
+        math.div($duration, vars.$idle-duration);
+    }
+
+    #position-#{$to}--from-#{$id}--#{$facing}:checked ~ .game .player {
+      transition-duration: $duration;
+    }
+  }
+}
+
+// ==========================================================================
+// LAMP GLOW — the character's own light source. Unlike the vision field
+// (permanently camera-fixed), this is attached to whoever currently
+// "carries" the light — by default the player, here — so it moves with
+// --player-extra-offset/-y (the intro's walk-in/fall nudges) for free,
+// zero extra positioning logic needed. See intro/_intro.scss for the
+// handoff to the dropped backpack once it's lost.
+//
+// Technique: plain border-radius rings can only ever be thin BANDS (see
+// game/_viewport.scss) — translucent FULL DISKS stacked on top of each
+// other add up into a darker center instead of a lighter one. To get a
+// real full-screen darkening with a clear hole in the middle, each layer
+// here is shaped as "the entire plane MINUS an ellipse" via
+// clip-path: path(evenodd, ...) (a rectangle contour + an ellipse
+// contour in one SVG path — evenodd punches the ellipse out as a true
+// hole, which plain clip-path: ellipse()/circle() cannot express at all).
+// Stacking 3 of these (same color, holes small -> large) at a given pixel
+// then naturally darkens with however many holes it has already passed
+// (0 layers active near the character, all 3 active far away) — no need
+// to hand-pick a separate color per step, alpha compositing does it.
+//
+// Path coordinates are UNITLESS SVG user units (1 unit = 1px here, no
+// viewBox override) — do NOT suffix them with "px" when building the
+// path string, unlike every other length in this file.
+$lamp-glow-box-size: 6000; // big enough to always cover the viewport, however far off-camera --player-extra-offset ever pushes it
+// Circular holes centered in this box. The player copy is shifted up
+// (see .player.lamp-glow-anchor .lamp-glow__layer) so the hole matches
+// the vision-field circle, not the sprite's floor-nudge.
+
+@function lamp-glow-hole-path($rx, $ry) {
+  $c: math.div($lamp-glow-box-size, 2);
+  $cy: $c + vars.$lamp-glow-center-offset-y;
+  @return 'M0,0 H#{$lamp-glow-box-size} V#{$lamp-glow-box-size} H0 Z ' +
+    'M#{$c - $rx},#{$cy} ' + 'A#{$rx},#{$ry} 0 1,0 #{$c + $rx},#{$cy} ' +
+    'A#{$rx},#{$ry} 0 1,0 #{$c - $rx},#{$cy} Z';
+}
+
+// .lamp-glow itself is a plain (non-positioned) wrapper purely so its
+// visibility can be toggled with a single display rule — .lamp-glow__layer
+// still centers on its .player anchor directly (its nearest POSITIONED
+// ancestor; a static wrapper in between doesn't count), no extra centering
+// math needed here or in the backpack's copy (world/_objects.scss).
+//
+// The anchor carries the `player` class purely to inherit every existing
+// .player positioning rule (arrival transforms, --player-extra-offset,
+// per-edge durations) without duplicating a single one — it is a sibling
+// of the real .player, not its child, because .player's own transform
+// makes it a stacking context its descendants could never escape.
+.player.lamp-glow-anchor {
+  z-index: vars.$z-index-lamp-glow;
+}
+
+// .player (and this anchor) sit $player-vertical-offset below the
+// vision-field center so the feet land on the floor line. The hole must
+// stay on the circle, so the layers move back up by the same amount —
+// not baked into the SVG path, or the backpack copy would shift too.
+.player.lamp-glow-anchor .lamp-glow__layer {
+  top: calc(50% - #{vars.$player-vertical-offset});
+}
+
+.lamp-glow__layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: #{$lamp-glow-box-size}px;
+  height: #{$lamp-glow-box-size}px;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  // Explicit, not just relying on "positioned always paints above static"
+  // — makes the intent (character sits behind the glow) obvious here too.
+  z-index: 1;
+  // Slight breathing effect — scaling after clip-path scales the already-
+  // punched hole right along with it, growing/shrinking the whole glow
+  // in one step instead of needing separate keyframes per hole size.
+  animation: lamp-glow-pulse 3s ease-in-out infinite;
+
+  @for $i from 1 through length(vars.$lamp-glow-holes) {
+    $hole: nth(vars.$lamp-glow-holes, $i);
+
+    &:nth-child(#{$i}) {
+      clip-path: path(
+        evenodd,
+        '#{lamp-glow-hole-path(nth($hole, 1), nth($hole, 2))}'
+      );
+    }
+  }
+
+  // Loch 3's own layer gets a stronger tint on top of the shared 0.05 —
+  // only affects the zone beyond Loch 3 (every layer below it is already
+  // transparent there), so the two inner bands stay untouched.
+  &:last-child {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes lamp-glow-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.015);
+  }
+}

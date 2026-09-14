@@ -1,0 +1,94 @@
+<!-- Settings overlay in .ui. Toggle and back sit in the top-right corner
+     of the vision-field square; the panel opens right of the field. Close
+     via the X on the icon slot. -->
+<div class="settings">
+     <div class="settings__hit"></div>
+
+     <div class="settings__panel">
+          <div class="settings__art">
+          <div class="settings__body">
+          <div class="settings__page settings__page--menu">
+               <h2 class="settings__title">
+                    <span class="i18n i18n--de">Einstellungen</span>
+                    <span class="i18n i18n--en">Settings</span>
+               </h2>
+
+               <div class="settings__row">
+                    <span class="settings__row-label">
+                         <span class="i18n i18n--de">Hinweise</span>
+                         <span class="i18n i18n--en">Hints</span>
+                    </span>
+                    <div class="settings__choices">
+                         <label class="settings__choice" for="hints-on">
+                              <span class="i18n i18n--de">An</span>
+                              <span class="i18n i18n--en">On</span>
+                         </label>
+                         <label class="settings__choice" for="hints-off">
+                              <span class="i18n i18n--de">Aus</span>
+                              <span class="i18n i18n--en">Off</span>
+                         </label>
+                    </div>
+               </div>
+
+               <div class="settings__row">
+                    <span class="settings__row-label">
+                         <span class="i18n i18n--de">Sprache</span>
+                         <span class="i18n i18n--en">Language</span>
+                    </span>
+                    <div class="settings__choices">
+                         <label class="settings__choice" for="lang-de">DE</label>
+                         <label class="settings__choice" for="lang-en">EN</label>
+                    </div>
+               </div>
+
+               <div class="settings__footer">
+                    <label class="settings__row settings__row--link" for="settings-page-imprint">
+                         <span class="i18n i18n--de">Impressum</span>
+                         <span class="i18n i18n--en">Imprint</span>
+                    </label>
+
+                    <label class="settings__row settings__row--link" for="settings-page-restart">
+                         <span class="i18n i18n--de">Neustart</span>
+                         <span class="i18n i18n--en">Restart</span>
+                    </label>
+               </div>
+          </div>
+
+          <div class="settings__page settings__page--imprint">
+               <h2 class="settings__title">
+                    <span class="i18n i18n--de">Impressum</span>
+                    <span class="i18n i18n--en">Imprint</span>
+               </h2>
+               <div class="settings__copy settings__copy--imprint">
+                    <!-- include:partials/imprint-copy.html -->
+               </div>
+               <label class="settings__row settings__row--link" for="settings-page-menu">
+                    <span class="i18n i18n--de">Zurück</span>
+                    <span class="i18n i18n--en">Back</span>
+               </label>
+          </div>
+
+          <div class="settings__page settings__page--restart">
+               <h2 class="settings__title">
+                    <span class="i18n i18n--de">Neustart</span>
+                    <span class="i18n i18n--en">Restart</span>
+               </h2>
+               <p class="settings__copy">
+                    <span class="i18n i18n--de">Spiel neu starten? Der aktuelle Fortschritt geht verloren.</span>
+                    <span class="i18n i18n--en">Restart the game? Current progress will be lost.</span>
+               </p>
+               <div class="settings__choices settings__choices--confirm">
+                    <a class="settings__choice settings__choice--link" href="./index.html">
+                         <span class="i18n i18n--de">Ja</span>
+                         <span class="i18n i18n--en">Yes</span>
+                    </a>
+                    <label class="settings__choice" for="settings-page-menu">
+                         <span class="i18n i18n--de">Nein</span>
+                         <span class="i18n i18n--en">No</span>
+                    </label>
+               </div>
+          </div>
+          </div>
+          </div>
+     </div>
+</div>

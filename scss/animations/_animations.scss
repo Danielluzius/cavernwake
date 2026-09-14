@@ -1,0 +1,432 @@
+@use 'sass:map';
+@use '../base/variables' as vars;
+
+// Walk-cycle frame swap — one uniquely-named @keyframes copy per walk edge
+// (not just per direction). A CSS animation only restarts when its
+// computed value actually changes; since #position-<to>--from-<id> radios
+// swap atomically (mutually exclusive), reusing one keyframes name across
+// several edges of the same direction never changes that computed value
+// on repeated same-direction clicks, so it wouldn't restart. Per-edge
+// names (see player/_player.scss) guarantee every click always changes
+// the animation-name string. steps(1, end) per segment holds each frame
+// for its full quarter of $movement-duration then jumps (discrete
+// background-image can't interpolate); 75%/100% repeat the last frame as
+// a cushion against landing exactly on 100%.
+@each $id, $data in vars.$positions {
+  @each $direction, $exit in map.get($data, exits) {
+    @if map.get($exit, kind) == walk {
+      $to: map.get($exit, to);
+
+      @keyframes player-walk-from-#{$id}-to-#{$to} {
+        0% {
+          background-image: url('../assets/characters/with-backpack/walk/walk-#{$direction}/frame_001.png');
+        }
+        25% {
+          background-image: url('../assets/characters/with-backpack/walk/walk-#{$direction}/frame_002.png');
+        }
+        50% {
+          background-image: url('../assets/characters/with-backpack/walk/walk-#{$direction}/frame_003.png');
+        }
+        75%,
+        100% {
+          background-image: url('../assets/characters/with-backpack/walk/walk-#{$direction}/frame_004.png');
+        }
+      }
+    }
+  }
+}
+
+// Idle frame swap for elevator rides (see player/_player.scss) — one
+// uniquely-named @keyframes copy per elevator edge, same reasoning as the
+// walk-cycle above: two ends of the same shaft can share the same fixed
+// facing direction (e.g. both 10 and 36 face right), so a name shared
+// per-direction wouldn't change its computed animation value when
+// immediately riding back, and the animation would fail to restart.
+@each $id, $data in vars.$positions {
+  @each $direction, $exit in map.get($data, exits) {
+    @if map.get($exit, kind) ==
+      elevator and
+      map.has-key(vars.$elevator-facing, $id)
+    {
+      $to: map.get($exit, to);
+      $facing: map.get(vars.$elevator-facing, $id);
+
+      @keyframes player-idle-from-#{$id}-to-#{$to} {
+        0% {
+          background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_001.png');
+        }
+        25% {
+          background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_002.png');
+        }
+        50% {
+          background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_003.png');
+        }
+        75%,
+        100% {
+          background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_004.png');
+        }
+      }
+    }
+  }
+}
+
+// Idle frame swap for the 2 dual-access elevator ends (14, 17, see
+// base/_variables.scss vars.$elevator-dual-ends) — one copy per
+// (id, arrival-source) pair, since the facing depends on which of the 2
+// possible directions the player arrived from, not just which shaft end
+// they're at.
+@each $id, $data in vars.$elevator-dual-ends {
+  $to: map.get($data, to);
+
+  @each $from, $facing in map.get($data, arrivals) {
+    @keyframes player-idle-from-#{$id}-to-#{$to}--via-#{$from} {
+      0% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_001.png');
+      }
+      25% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_002.png');
+      }
+      50% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_003.png');
+      }
+      75%,
+      100% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_004.png');
+      }
+    }
+  }
+}
+
+// Idle frame swap for the ride BACK from a dual-access end's simple
+// partner (6, 26, see base/_variables.scss vars.$elevator-reverse-duals)
+// — one copy per facing, since which way the player is currently facing
+// when boarding here isn't fixed like a normal simple end (see
+// player/_player.scss).
+@each $id, $data in vars.$elevator-reverse-duals {
+  $to: map.get($data, to);
+
+  @each $facing in (right, left) {
+    @keyframes player-idle-from-#{$id}-to-#{$to}--facing-#{$facing} {
+      0% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_001.png');
+      }
+      25% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_002.png');
+      }
+      50% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_003.png');
+      }
+      75%,
+      100% {
+        background-image: url('../assets/characters/with-backpack/idle/idle-#{$facing}/frame_004.png');
+      }
+    }
+  }
+}
+
+// Ladder climb frame swap — one @keyframes copy per ladder edge, always
+// authored in the "climbing down" frame order (frame_001 -> frame_005).
+// The "climbing up" direction reuses the very same keyframes but gets
+// played with animation-direction: reverse instead of a second, mirrored
+// copy (see player/_player.scss) — steps through frame_005 -> frame_001.
+// 80%/100% repeat the last frame as a landing cushion, same reasoning as
+// the walk-cycle above.
+@each $id, $data in vars.$positions {
+  @each $direction, $exit in map.get($data, exits) {
+    @if map.get($exit, kind) == ladder {
+      $to: map.get($exit, to);
+
+      @keyframes player-climb-from-#{$id}-to-#{$to} {
+        0% {
+          background-image: url('../assets/characters/with-backpack/climb/frame_001.png');
+        }
+        20% {
+          background-image: url('../assets/characters/with-backpack/climb/frame_002.png');
+        }
+        40% {
+          background-image: url('../assets/characters/with-backpack/climb/frame_003.png');
+        }
+        60% {
+          background-image: url('../assets/characters/with-backpack/climb/frame_004.png');
+        }
+        80%,
+        100% {
+          background-image: url('../assets/characters/with-backpack/climb/frame_005.png');
+        }
+      }
+    }
+  }
+}
+
+// Sickle swing — plays once while a barrier is being cut (see
+// world/_obstacles.scss), using the dedicated tool-use frames.
+@keyframes player-sickle-swing {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/sickle/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/use-item/sickle/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/sickle/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/sickle/frame_004.png');
+  }
+}
+
+// Pickaxe swing — plays once while the rock is broken open (see
+// world/_barriers.scss), using the dedicated tool-use frames.
+@keyframes player-pickaxe-swing {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_004.png');
+  }
+}
+
+// Failed pickaxe at the stone wall (see world/_stone-wall.scss): one swing
+// into the rock, then the same frames in reverse as a bounce-off. Twice
+// $movement-duration so each half stays in sync with the real swing.
+@keyframes player-pickaxe-bounce {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_001.png');
+  }
+  12.5% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_002.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_003.png');
+  }
+  37.5%,
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_004.png');
+  }
+  62.5% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_003.png');
+  }
+  75% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_002.png');
+  }
+  87.5%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/pickaxe/frame_001.png');
+  }
+}
+
+// Pickup interact — plays once while the pickaxe is taken off the wall left
+// of node 19 (see world/_tools.scss); mirrored frames because the object
+// sits to the player's left.
+@keyframes player-pickaxe-pickup {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_004.png');
+  }
+}
+
+// Shovel swing — plays once while the mud is cleared (see world/_barriers.scss),
+// using the dedicated tool-use frames.
+@keyframes player-shovel-swing {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/shovel/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/use-item/shovel/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/shovel/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/shovel/frame_004.png');
+  }
+}
+
+// Pickup interact — plays once while the shovel is taken off the wall left
+// of node 9 (see world/_tools.scss); mirrored frames because the object
+// sits to the player's left.
+@keyframes player-shovel-pickup {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_004.png');
+  }
+}
+
+// Pickup interact — plays once while the sickle is lifted out of the vines
+// at node 30, reusing the generic interact-right frames (picking something
+// up, not a tool-swing).
+@keyframes player-sickle-pickup {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_004.png');
+  }
+}
+
+// Generic "bend down and take it" interact, one copy per side — used by the
+// three bomb parts (see world/_tools.scss), which lie on the floor to either
+// side of the player depending on the node.
+@keyframes player-item-pickup-right {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_004.png');
+  }
+}
+
+@keyframes player-item-pickup-left {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-left/frame_004.png');
+  }
+}
+
+// Pulling the last lever at the node-15 lift socket (see
+// world/_last-lever.scss). Three beats on the 2×2 socket art: frame_001 ->
+// frame_002 -> frame_001, ending on the resting sticks pose.
+// Cave-shake reaction after the last-lever confirm Continue
+// (see world/_last-lever.scss). Two frames: glance, then look up and hold
+// (forwards fill) until the notice line. Folder is `surprised`.
+@keyframes player-surprised {
+  0% {
+    background-image: url('../assets/characters/with-backpack/surprised/frame_001.png');
+  }
+  50%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/surprised/frame_002.png');
+  }
+}
+
+// Trip on the intro bridge during the outro run (see outro/_outro.scss).
+@keyframes player-stumble {
+  0% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_004.png');
+  }
+}
+
+@keyframes last-lever-socket-pull {
+  0%,
+  66.67% {
+    background-image: url('../assets/characters/with-backpack/use-item/last-lever/frame_001.png');
+  }
+  33.33% {
+    background-image: url('../assets/characters/with-backpack/use-item/last-lever/frame_002.png');
+  }
+}
+
+// Lighting the bomb fuse at the stone wall (see world/_stone-wall.scss).
+// Six frames, right-facing — the player stands at node 31 facing the wall.
+@keyframes player-lantern-fire {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_001.png');
+  }
+  16.67% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_002.png');
+  }
+  33.33% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_003.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_004.png');
+  }
+  66.67% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_005.png');
+  }
+  83.33%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/lantern-fire/frame_006.png');
+  }
+}
+
+// Crafting the bomb at the node-22 workbench (see world/_workbench.scss).
+// Eight frames instead of the four every other use-item set has, drawn from
+// behind so the bench stays visible past the character's shoulder.
+@keyframes player-workbench-craft {
+  0% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_001.png');
+  }
+  12.5% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_002.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_003.png');
+  }
+  37.5% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_004.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_005.png');
+  }
+  62.5% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_006.png');
+  }
+  75% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_007.png');
+  }
+  87.5%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/use-item/workbench/frame_008.png');
+  }
+}

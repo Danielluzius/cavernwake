@@ -1,0 +1,34 @@
+@use '../base/variables' as vars;
+
+// ==========================================================================
+// MAP ART LAYERS
+// Full-map images aligned with assets/world/logic-map.png at the same
+// native resolution, scaled by $display-scale. Layer order is DOM order
+// in html/index.html (last-background, then environment, then foreground).
+// ==========================================================================
+
+@mixin full-map-layer($url) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: #{vars.$logic-map-width * vars.$display-scale};
+  height: #{vars.$logic-map-height * vars.$display-scale};
+  pointer-events: none;
+  background-image: url($url);
+  background-size: #{vars.$logic-map-width * vars.$display-scale}
+    #{vars.$logic-map-height * vars.$display-scale};
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.environment-map {
+  @include full-map-layer('../assets/world/cavernwake-main-background.png');
+}
+
+.last-background-map {
+  @include full-map-layer('../assets/world/cavernwake-last-background.png');
+}
+
+.foreground-map {
+  @include full-map-layer('../assets/world/cavernwake-foreground.png');
+}

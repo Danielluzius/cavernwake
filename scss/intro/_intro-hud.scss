@@ -1,0 +1,253 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// DIRECTION CONTROLS — suppress every real edge button while the intro
+// is running (#position-1 unchecks the instant real navigation begins,
+// see banner comment above), reveal the two fake intro-only arrows at
+// exactly the right step, and reveal node 14's walk pads once the
+// intro finishes (step 14).
+//
+// Visibility/opacity, not display:none: display-none → flex skips CSS
+// transitions, so node 14's first pads and the first walk after intro
+// never played the slide-in (the hide rule was still lifting in the
+// same frame as the reveal).
+// ==========================================================================
+
+#position-1:checked
+  ~ #intro-dark:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-fade:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-1:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-2:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-lantern:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-home:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-3:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-anyway:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-4:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-sit:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-dark-hold:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-5:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-breathe:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-6:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-7:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-pack:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-8:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-9:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-11:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-12:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-13:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-hurry:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-14:checked
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.direction-controls__button--intro-arrow {
+  cursor: pointer;
+  transition:
+    opacity 0s,
+    visibility 0s,
+    margin 0s;
+}
+
+#position-1:checked
+  ~ #intro-anyway:checked
+  ~ .game
+  .direction-controls__button--intro-arrow[data-intro-step='anyway'] {
+  @include dlg.direction-button-reveal($intro-look-duration + $beat-short);
+}
+
+#position-1:checked
+  ~ #intro-8:checked
+  ~ .game
+  .direction-controls__button--intro-arrow[data-intro-step='8'] {
+  @include dlg.direction-button-reveal($intro-wake-turn-duration + $beat);
+}
+
+// Last Continue checks plain #position-14 (not --from-13). Same camera
+// as the intro-14 walk landing, no walk replay. --from-13 would replay
+// the 13→14 walk-right sheet.
+
+#position-14:checked ~ #intro-14:checked ~ .game .world,
+#position-14:checked ~ #intro-14:checked ~ .game .player {
+  transition: none;
+}
+
+#position-14:checked ~ #intro-14:checked ~ .game .player__sprite {
+  animation: none;
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+
+// Graph reveal waits as if he just walked in. He is already standing
+// here — bring the walk pads in with the click. Lift-up stays gated.
+#position-14:checked
+  ~ #intro-14:checked
+  ~ .game
+  .direction-controls__button--left[data-position='14'],
+#position-14:checked
+  ~ #intro-14:checked
+  ~ .game
+  .direction-controls__button--right[data-position='14'] {
+  @include dlg.direction-button-reveal(0s);
+}
+
+// ==========================================================================
+// BACKPACK OBJECT — clickable pickup at col 17 / row 10.625 (one tile
+// right of node 14, 1/8 tile below the cell center), see index.html.
+// ==========================================================================
+
+.story-object {
+  position: absolute;
+  display: none;
+  cursor: pointer;
+}
+
+// Hidden by default via opacity/visibility (not display) so its
+// disappearance at step 10 (see below) can be delayed until the pickup
+// interact animation actually finishes, instead of vanishing instantly
+// the moment it's clicked.
+.story-object--backpack {
+  display: block;
+  left: 17 * vars.$tile-size-display;
+  top: 10.625 * vars.$tile-size-display;
+  width: vars.$tile-size-display;
+  height: vars.$tile-size-display;
+  background-image: url('../assets/objects/inventory/backpack-before.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transform-origin: center bottom;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}
+
+#position-1:checked ~ #intro-sit:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-fall:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-5:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-breathe:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-6:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-7:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-pack:checked ~ .game .story-object--backpack,
+#position-1:checked ~ #intro-8:checked ~ .game .story-object--backpack {
+  @include dlg.dialogue-box-open;
+  // Visible in the drop, but the walk to node 14 must happen first —
+  // dialogue-box-open would otherwise let a click skip intro-9.
+  pointer-events: none;
+}
+
+// Milder than the HUD icon pulse (inventory-toggle-pulse scales to 1.18).
+@keyframes intro-backpack-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+#position-1:checked ~ #intro-9:checked ~ .game .story-object--backpack {
+  @include dlg.dialogue-box-open;
+  // Delayed until the walk from node 13 lands, then stops the instant
+  // pickup checks #intro-10.
+  animation: intro-backpack-pulse 1s ease-in-out vars.$walk-duration infinite;
+}
+
+// Step 10: clicking the object checks this radio directly (see index.html)
+// — stays visible through the pickup interact animation it triggers, then
+// disappears (and stops being clickable again) the instant it finishes.
+#position-1:checked ~ #intro-10:checked ~ .game .story-object--backpack {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s vars.$movement-duration,
+    visibility 0s vars.$movement-duration;
+}

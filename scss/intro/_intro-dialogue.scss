@@ -1,0 +1,344 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// DIALOGUE BOXES — one per beat (see index.html, [data-intro-step]), each
+// shown only while its own step is current, delayed to line up with
+// whatever visual effect that step plays first. Starts hidden via the
+// shared default in components/_dialogue.scss.
+// ==========================================================================
+
+#position-1:checked
+  ~ #intro-dark:checked
+  ~ .game
+  .dialogue[data-intro-step='dark']
+  .dialogue__box {
+  @include dlg.dialogue-box-caption-auto(
+    $opening-caption-1-at,
+    $opening-caption-duration
+  );
+}
+
+#position-1:checked
+  ~ #intro-dark:checked
+  ~ .game
+  .dialogue[data-intro-step='fade']
+  .dialogue__box {
+  @include dlg.dialogue-box-caption-auto(
+    $opening-caption-2-at,
+    $opening-caption-duration
+  );
+}
+
+#position-1:checked
+  ~ #intro-dark:checked
+  ~ .game
+  .dialogue[data-intro-step='1']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($opening-speech-at);
+}
+
+#position-1:checked
+  ~ #intro-1:checked
+  ~ .game
+  .dialogue[data-intro-step='1']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($beat-short);
+}
+
+#position-1:checked
+  ~ #intro-2:checked
+  ~ .game
+  .dialogue[data-intro-step='2']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($walk-in-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-lantern:checked
+  ~ .game
+  .dialogue[data-intro-step='lantern']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(
+    vars.$inventory-lamp-expand-duration + $beat-long
+  );
+}
+
+#position-1:checked
+  ~ #intro-home:checked
+  ~ .game
+  .dialogue[data-intro-step='home']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($beat);
+}
+
+#position-1:checked
+  ~ #intro-3:checked
+  ~ .game
+  .dialogue[data-intro-step='3']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$walk-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-anyway:checked
+  ~ .game
+  .dialogue[data-intro-step='anyway']
+  .dialogue__box {
+  // After the left/right glance, with the fake right arrow.
+  @include dlg.dialogue-box-open($intro-look-duration + $beat-short);
+}
+
+#position-1:checked
+  ~ #intro-4:checked
+  ~ .game
+  .dialogue[data-intro-step='4']
+  .dialogue__box {
+  // "What the…?" while the stumble rumble is still running.
+  @include dlg.dialogue-box-open(vars.$walk-duration + $beat-quick);
+}
+
+#position-1:checked
+  ~ #intro-sit:checked
+  ~ .game
+  .dialogue[data-intro-step='sit']
+  .dialogue__box {
+  // He is already sliding off the boards — the line has to sit on top of
+  // the sit-down sheet, not politely after it.
+  @include dlg.dialogue-box-open($intro-fall-pose-duration + $beat-quick);
+}
+
+@keyframes intro-dialogue-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  20% {
+    transform: translate(-6px, 4px);
+  }
+
+  40% {
+    transform: translate(5px, -5px);
+  }
+
+  60% {
+    transform: translate(-4px, 6px);
+  }
+
+  80% {
+    transform: translate(6px, -3px);
+  }
+}
+
+#position-1:checked
+  ~ #intro-sit:checked
+  ~ .game
+  .dialogue[data-intro-step='sit'] {
+  animation: intro-dialogue-shake vars.$screen-shake-duration ease-in-out
+    infinite;
+  // Same delay as the box above: the bubble must start shaking the frame
+  // it appears, not settle first.
+  animation-delay: $intro-fall-pose-duration + $beat-quick;
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .dialogue[data-intro-step='fall'] {
+  animation: intro-dialogue-shake vars.$screen-shake-duration ease-in-out
+    $fall-shake-loops;
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .dialogue[data-intro-step='fall']
+  .dialogue__box {
+  pointer-events: none;
+  animation: intro-fall-scream $fall-scream-duration ease-in-out both;
+  animation-delay: $fall-scream-at;
+
+  .dialogue__button {
+    display: none;
+  }
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .dialogue[data-intro-step='dark-hold']
+  .dialogue__box {
+  @include dlg.dialogue-box-caption-auto(
+    $fall-caption-2-at,
+    $opening-caption-duration
+  );
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .dialogue[data-intro-step='5'] {
+  --dialogue-drop: calc(#{vars.$dialogue-passed-out-drop} * var(--field-scale));
+}
+
+#position-1:checked
+  ~ #intro-fall:checked
+  ~ .game
+  .dialogue[data-intro-step='5']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($fall-argh-at);
+}
+
+#position-1:checked
+  ~ #intro-5:checked
+  ~ .game
+  .dialogue[data-intro-step='5'] {
+  --dialogue-drop: calc(#{vars.$dialogue-passed-out-drop} * var(--field-scale));
+}
+
+#position-1:checked
+  ~ #intro-5:checked
+  ~ .game
+  .dialogue[data-intro-step='5']
+  .dialogue__box {
+  // He is face-down and out cold — the room is allowed to be quiet before
+  // the first thought comes back.
+  @include dlg.dialogue-box-open($intro-fade-in-duration + $beat-long);
+}
+
+#position-1:checked
+  ~ #intro-breathe:checked
+  ~ .game
+  .dialogue[data-intro-step='breathe'] {
+  --dialogue-drop: calc(#{vars.$dialogue-passed-out-drop} * var(--field-scale));
+}
+
+#position-1:checked
+  ~ #intro-breathe:checked
+  ~ .game
+  .dialogue[data-intro-step='breathe']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($beat);
+}
+
+#position-1:checked
+  ~ #intro-dark-hold:checked
+  ~ .game
+  .dialogue[data-intro-step='dark-hold']
+  .dialogue__box {
+  // Longest silence in the intro: the time skip has to feel like time
+  // actually passed, so the screen stays black and empty for a while
+  // after the collapse fade finishes.
+  @include dlg.dialogue-box-open($intro-collapse-fade-duration + $beat-long);
+}
+
+#position-1:checked
+  ~ #intro-6:checked
+  ~ .game
+  .dialogue[data-intro-step='6'] {
+  --dialogue-drop: calc(#{vars.$dialogue-passed-out-drop} * var(--field-scale));
+}
+
+#position-1:checked
+  ~ #intro-6:checked
+  ~ .game
+  .dialogue[data-intro-step='6']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($wake-blink-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-7:checked
+  ~ .game
+  .dialogue[data-intro-step='7']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$stand-up-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-8:checked
+  ~ .game
+  .dialogue[data-intro-step='8']
+  .dialogue__box {
+  // Same delay as the fake right arrow below, so line and arrow arrive
+  // as one beat once he has finished looking around.
+  @include dlg.dialogue-box-open($intro-wake-turn-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-9:checked
+  ~ .game
+  .dialogue[data-intro-step='9']
+  .dialogue__box {
+  // Auto-fading hint ("There."): spotting the pack is immediate, and a
+  // long wait here just delays a line that then vanishes on its own.
+  @include dlg.dialogue-box-hint(vars.$walk-duration + $beat-short);
+}
+
+#position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .dialogue[data-intro-step='10']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$movement-duration + $beat);
+}
+
+#inventory-open:checked
+  ~ #position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .dialogue[data-intro-step='10']
+  .dialogue__box {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}
+
+#position-1:checked
+  ~ #intro-11:checked
+  ~ .game
+  .dialogue[data-intro-step='11']
+  .dialogue__box {
+  // Let the lamp finish blooming before the first closing line.
+  @include dlg.dialogue-box-open(vars.$inventory-lamp-expand-duration + $beat-long);
+}
+
+#position-1:checked
+  ~ #intro-12:checked
+  ~ .game
+  .dialogue[data-intro-step='12']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$walk-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-13:checked
+  ~ .game
+  .dialogue[data-intro-step='13']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$movement-duration + $beat);
+}
+
+#position-1:checked
+  ~ #intro-hurry:checked
+  ~ .game
+  .dialogue[data-intro-step='hurry']
+  .dialogue__box {
+  @include dlg.dialogue-box-open($beat);
+}
+
+#position-1:checked
+  ~ #intro-14:checked
+  ~ .game
+  .dialogue[data-intro-step='14']
+  .dialogue__box {
+  @include dlg.dialogue-box-open(vars.$walk-duration + $beat);
+}

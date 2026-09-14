@@ -1,0 +1,413 @@
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// CAVE COLLAPSE — triggered by picking up the last lever at node 32
+// (#last-lever-armed). Re-seals the west waterfall, floods the east shaft,
+// drops a rock on the node-22 workbench after the player walks past.
+// See also world/_last-lever.scss (shake), world/_waterfall.scss.
+// ==========================================================================
+
+$shaft-col: 21;
+$shaft-row: 7;
+$shaft-cols: 3;
+$shaft-rows: 21;
+
+$bench-col: 15;
+$bench-row: 16;
+$bench-size: 3;
+
+$upper-col: 13;
+$upper-row: 9;
+$upper-size: 3;
+
+$bench-drop-start: -8 * vars.$tile-size-display;
+$upper-drop-start: -6 * vars.$tile-size-display;
+$bench-drop-duration: vars.$movement-duration;
+// Fall while they are still walking in, not after they arrive.
+$bench-drop-delay: 0.4s;
+$bench-drop-end: calc(#{$bench-drop-delay} + #{$bench-drop-duration});
+$bench-stumble-overlap: 0.4s;
+$bench-stumble-delay: calc(var(--walk-duration) - #{$bench-stumble-overlap});
+$bench-turn-delay: calc(
+  #{$bench-stumble-delay} + #{vars.$movement-duration}
+);
+$bench-line-delay: calc(#{$bench-turn-delay} + 0.4s);
+// 21→23 is the haste skip (fast-walk, vars.$skip-speed).
+$bench-walk-skip: calc(
+  var(--walk-duration) * #{math.div(2, vars.$skip-speed)}
+);
+$bench-drop-delay-skip: 0.28s;
+$bench-stumble-delay-skip: calc(
+  #{$bench-walk-skip} - #{$bench-stumble-overlap}
+);
+$bench-turn-delay-skip: calc(
+  #{$bench-stumble-delay-skip} + #{vars.$movement-duration}
+);
+$bench-line-delay-skip: calc(#{$bench-turn-delay-skip} + 0.4s);
+
+// ---- Tall collapse waterfall (col 21-23 / row 7-27) ----
+.object--waterfall-collapse {
+  position: absolute;
+  left: $shaft-col * vars.$tile-size-display;
+  top: $shaft-row * vars.$tile-size-display;
+  width: $shaft-cols * vars.$tile-size-display;
+  height: $shaft-rows * vars.$tile-size-display;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+  animation: collapse-shaft-loop 0.8s steps(1, end) infinite;
+  // Above .foreground-map (same layer) so hanging vines don't cover it.
+  z-index: 1;
+}
+
+#last-lever-notice:checked ~ .game .object--waterfall-collapse,
+#last-lever-turn:checked ~ .game .object--waterfall-collapse,
+#last-lever-armed:checked ~ .game .object--waterfall-collapse {
+  opacity: 1;
+}
+
+@keyframes collapse-shaft-loop {
+  0%,
+  100% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_003.png');
+  }
+  75% {
+    background-image: url('../assets/world/obstacles/waterfall/frame_004.png');
+  }
+}
+
+// ---- Background flood (col 14-17 / row 1-11) ----
+// Painted in .world-layer--environment; reuses the west waterfall frames
+// stretched until a dedicated 4-column asset exists.
+.object--waterfall-collapse-far {
+  position: absolute;
+  left: 14 * vars.$tile-size-display;
+  top: 1 * vars.$tile-size-display;
+  width: 4 * vars.$tile-size-display;
+  height: 11 * vars.$tile-size-display;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+  animation: waterfall-loop 0.8s steps(1, end) infinite;
+}
+
+#last-lever-notice:checked ~ .game .object--waterfall-collapse-far,
+#last-lever-turn:checked ~ .game .object--waterfall-collapse-far,
+#last-lever-armed:checked ~ .game .object--waterfall-collapse-far {
+  opacity: 0.4;
+}
+
+// ---- Collapse hints (blocked paths during the escape run) ----
+$hint-cols: 2;
+
+.object--collapse-hint-21,
+.object--collapse-hint-30,
+.object--collapse-hint-23 {
+  position: absolute;
+  width: $hint-cols * vars.$tile-size-display;
+  height: vars.$tile-size-display;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--collapse-hint-21,
+.object--collapse-hint-30 {
+  left: 11 * vars.$tile-size-display;
+}
+
+.object--collapse-hint-21 {
+  top: 17 * vars.$tile-size-display;
+  @include click-hint.place(11, 17, $hint-cols, 1, 21);
+}
+
+.object--collapse-hint-30 {
+  top: 24 * vars.$tile-size-display;
+  @include click-hint.place(11, 24, $hint-cols, 1, 30);
+}
+
+.object--collapse-hint-23 {
+  left: 20 * vars.$tile-size-display;
+  top: 17 * vars.$tile-size-display;
+  @include click-hint.place(20, 17, $hint-cols, 1, 23);
+}
+
+@mixin collapse-hint-live($node, $col, $row) {
+  #last-lever-armed:checked
+    ~ #collapse-hint-#{$node}-idle:checked
+    ~ #{vars.at-node($node)}
+    ~ .game
+    .object--collapse-hint-#{$node} {
+    pointer-events: auto;
+    cursor: pointer;
+    @include click-hint.show($col, $row, $hint-cols, 1, $node);
+  }
+
+  #collapse-hint-#{$node}-blocked {
+    @include dlg.lock-edges;
+  }
+
+  #collapse-hint-#{$node}-blocked:checked
+    ~ .game
+    .dialogue[data-step='collapse-hint-#{$node}-blocked']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+}
+
+@include collapse-hint-live(21, 11, 17);
+@include collapse-hint-live(30, 11, 24);
+@include collapse-hint-live(23, 20, 17);
+
+// ---- Workbench rock drop (node 22 corridor) ----
+.object--collapse-bench-rock,
+.object--collapse-bench-rock-hit {
+  position: absolute;
+  left: $bench-col * vars.$tile-size-display;
+  top: $bench-row * vars.$tile-size-display;
+  width: $bench-size * vars.$tile-size-display;
+  height: $bench-size * vars.$tile-size-display;
+  pointer-events: none;
+  cursor: default;
+}
+
+.object--collapse-bench-rock {
+  background-image: url('../assets/world/obstacles/big-rock/rock-before.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0;
+}
+
+.object--collapse-bench-rock-hit {
+  @include click-hint.place($bench-col, $bench-row, $bench-size, $bench-size, 23);
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-22:checked
+  ~ .game
+  .object--collapse-bench-rock {
+  animation: collapse-bench-rock-drop $bench-drop-duration ease-in both;
+  animation-delay: $bench-drop-delay;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-21:checked
+  ~ .game
+  .object--collapse-bench-rock {
+  animation: collapse-bench-rock-drop $bench-drop-duration ease-in both;
+  animation-delay: $bench-drop-delay-skip;
+}
+
+#last-lever-armed:checked ~ #{vars.at-node(23)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(15)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(14)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(6)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(5)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(4)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(3)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(2)} ~ .game .object--collapse-bench-rock,
+#last-lever-armed:checked ~ #{vars.at-node(1)} ~ .game .object--collapse-bench-rock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes collapse-bench-rock-drop {
+  0% {
+    opacity: 0;
+    transform: translateY($bench-drop-start);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---- Upper rock drop (beside the 6<->14 shaft) ----
+.object--collapse-upper-rock {
+  position: absolute;
+  left: $upper-col * vars.$tile-size-display;
+  top: $upper-row * vars.$tile-size-display;
+  width: $upper-size * vars.$tile-size-display;
+  height: $upper-size * vars.$tile-size-display;
+  background-image: url('../assets/world/obstacles/big-rock/rock-before.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-22:checked
+  ~ .game
+  .object--collapse-upper-rock {
+  animation: collapse-upper-rock-drop $bench-drop-duration ease-in both;
+  animation-delay: $bench-drop-delay;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-21:checked
+  ~ .game
+  .object--collapse-upper-rock {
+  animation: collapse-upper-rock-drop $bench-drop-duration ease-in both;
+  animation-delay: $bench-drop-delay-skip;
+}
+
+#last-lever-pickup:checked ~ .game .object--collapse-upper-rock,
+#last-lever-notice:checked ~ .game .object--collapse-upper-rock,
+#last-lever-turn:checked ~ .game .object--collapse-upper-rock,
+#last-lever-armed:checked ~ .game .object--collapse-upper-rock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes collapse-upper-rock-drop {
+  0% {
+    opacity: 0;
+    transform: translateY($upper-drop-start);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Walk 22→23 still faces right. Stumble as they arrive, then look left
+// at the rock. Hide/show wrappers match the outro bridge trip.
+@keyframes collapse-bench-face-left {
+  to {
+    background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  }
+}
+
+@keyframes collapse-bench-sprite-hide {
+  from,
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes collapse-bench-action-show {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-22:checked
+  ~ .game
+  .player__sprite {
+  animation:
+    player-walk-from-22-to-23 var(--walk-cycle-duration) steps(1, end)
+      vars.$walk-cycles,
+    collapse-bench-sprite-hide vars.$movement-duration steps(1, end)
+      $bench-stumble-delay,
+    collapse-bench-face-left 0s $bench-turn-delay forwards;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-21:checked
+  ~ .game
+  .player__sprite {
+  animation:
+    player-walk-from-21-to-23 var(--walk-cycle-duration) steps(1, end)
+      #{math.div(vars.$walk-cycles * 2, vars.$skip-speed)},
+    collapse-bench-sprite-hide vars.$movement-duration steps(1, end)
+      $bench-stumble-delay-skip,
+    collapse-bench-face-left 0s $bench-turn-delay-skip forwards;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-22:checked
+  ~ .game
+  .player__action {
+  animation:
+    collapse-bench-action-show vars.$movement-duration steps(1, end)
+      $bench-stumble-delay,
+    player-stumble vars.$movement-duration steps(1, end) $bench-stumble-delay;
+}
+
+#last-lever-armed:checked
+  ~ #position-23--from-21:checked
+  ~ .game
+  .player__action {
+  animation:
+    collapse-bench-action-show vars.$movement-duration steps(1, end)
+      $bench-stumble-delay-skip,
+    player-stumble vars.$movement-duration steps(1, end)
+      $bench-stumble-delay-skip;
+}
+
+// Hide up until Continue on the landing line (23-left is obstacle-locked,
+// 23-right is the collapse shaft). Also covers the drop before the box
+// appears, so the player cannot walk off mid-sequence.
+#last-lever-armed:checked
+  ~ #collapse-bench-seen:not(:checked)
+  ~ :is(#position-23--from-22, #position-23--from-21):checked {
+  @include dlg.lock-edges;
+}
+
+#last-lever-armed:checked
+  ~ #collapse-bench-seen:not(:checked)
+  ~ #position-23--from-22:checked
+  ~ .game
+  .dialogue[data-step='collapse-bench']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($bench-line-delay);
+}
+
+#last-lever-armed:checked
+  ~ #collapse-bench-seen:not(:checked)
+  ~ #position-23--from-21:checked
+  ~ .game
+  .dialogue[data-step='collapse-bench']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($bench-line-delay-skip);
+}
+
+#last-lever-armed:checked
+  ~ #collapse-bench-seen:checked
+  ~ #collapse-bench-look-idle:checked
+  ~ #{vars.at-node(23)}
+  ~ .game
+  .object--collapse-bench-rock-hit {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($bench-col, $bench-row, $bench-size, $bench-size, 23);
+}
+
+#collapse-bench-look {
+  @include dlg.lock-edges;
+}
+
+#collapse-bench-look:checked
+  ~ .game
+  .dialogue[data-step='collapse-bench-look']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+

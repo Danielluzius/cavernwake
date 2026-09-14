@@ -1,0 +1,126 @@
+// Intro timing, node lookups, offset helpers. No CSS output.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+
+// ==========================================================================
+// INTRO / OPENING CUTSCENE
+// Title-screen Start checks #intro-dark. Its own linear radio chain
+// (name="intro", #intro-1..#intro-14, see index.html), deliberately
+// decoupled from the free-roam position graph (vars.$positions/#position-N,
+// see world/_world.scss etc.) even though several beats re-use the SAME
+// nodes (1-4, 13, 14) for their camera targets — this avoids ever needing
+// one click to check two radios at once (impossible without JS).
+//
+// EVERY rule below is gated on "#position-1:checked ~ #intro-N:checked",
+// never "#intro-N:checked" alone. #position-1 is the untouched default
+// position radio, and it can only ever become unchecked by the player
+// clicking a real direction button (radio-group exclusivity) — so the
+// instant free exploration actually starts, every override below stops
+// applying, automatically and permanently, handing control straight back
+// to the plain position-graph rules with zero extra hand-off code. This
+// is what makes the whole sequence safely one-shot: re-walking an intro
+// node later must never replay its effects.
+// ==========================================================================
+
+$node2: map.get(vars.$positions, 2);
+$node3: map.get(vars.$positions, 3);
+$node4: map.get(vars.$positions, 4);
+$node13: map.get(vars.$positions, 13);
+$node14: map.get(vars.$positions, 14);
+
+@function offset-x($node) {
+  @return (map.get($node, col) + 0.5) * vars.$tile-size-display * -1;
+}
+
+@function offset-y($node) {
+  @return (map.get($node, row) + 0.5) * vars.$tile-size-display * -1;
+}
+
+// How long the screen takes to fade back in after the initial blackout
+// (deliberately much slower than the fall's blackout below) — slow enough
+// that the cave/the wake-up reads as emerging out of the dark rather than
+// being switched on.
+$intro-fade-in-duration: 3s;
+
+// How long the screen takes to darken during the bridge collapse. Kept an
+// exact multiple of $screen-shake-duration (see SCREEN SHAKE below) so the
+// shake's last cycle lines up perfectly with the moment it goes fully dark.
+$intro-collapse-fade-duration: 1.6s;
+
+// How far (in px) the player visibly drops during the fall, independent
+// of the camera (see PLAYER FALL below) — matches the actual row distance
+// from the bridge (node 4, row 3) down to the landing floor (row 10).
+$fall-drop-distance: 7 * vars.$tile-size-display;
+
+// How long the wake-up blink cycle takes (see PLAYER POSE below) — its
+// own step's dialogue is delayed to match, same as every other step.
+// Slow on purpose: two heavy blinks read as coming to, a fast pair looks
+// like a sprite glitch.
+$wake-blink-duration: 2.4s;
+
+// Sit-down sheet on the bridge. Last frame holds through the drop.
+$intro-fall-pose-duration: vars.$movement-duration;
+// Stumble plays over the last walk cycle, so it lands as he stops.
+$intro-stumble-delay: vars.$walk-duration - vars.$movement-duration;
+// Glance left, then back right, before the second bridge line. Held
+// deliberately slow — this is him scanning the dark, not a head twitch.
+$intro-look-duration: 1.4s;
+// After standing: look left and hold (scaleX, no left sprite).
+$intro-wake-glance-duration: 0.5s;
+// Glance left then right after the pack line (scaleX, no left sprite).
+$intro-wake-turn-duration: 1.4s;
+
+// ---- BEATS ----
+// Extra pause added on top of an animation's own duration before that
+// step's dialogue box appears: the silence between the character actually
+// coming to rest and him speaking. One value per dramatic weight instead
+// of a single global breather, because the same pause cannot serve a
+// panicked reaction and a scene card.
+//
+// $beat-quick  reaction while something is still happening (mid-shake,
+//              mid-slip) — any real pause here kills the panic.
+// $beat-short  brisk lines: opening cards he is not reacting to yet, and
+//              auto-fading hints that must not outstay their animation.
+// $beat        default: he stops, takes it in, then comments.
+// $beat-long   scene captions, time skips and big reveals — the screen
+//              should be allowed to just sit there first.
+$beat-quick: 0.15s;
+$beat-short: 0.5s;
+$beat: 0.9s;
+$beat-long: 1.4s;
+
+// Opening cards after Start stay on #intro-dark (CSS cannot advance
+// radios). Caption 1 on black, cave fades in, caption 2, then speech.
+$opening-caption-duration: 4s;
+$opening-caption-1-at: vars.$title-fade-out-duration + $beat-long;
+$opening-blackout-at: $opening-caption-1-at + $opening-caption-duration;
+$opening-caption-2-at: $opening-blackout-at + $intro-fade-in-duration + $beat;
+$opening-speech-at: $opening-caption-2-at + $opening-caption-duration +
+  $beat-short;
+
+// After "I'm falling" the chain stays on #intro-fall: scream, drop,
+// blackout + silent camera jump to 13, "some time later", fade in, Argh.
+// Scream holds through the drop, then fades with the veil. Blackout no
+// longer waits for the old 4s caption, or the gap after the scream dies
+// first reads as "too late".
+$fall-scream-at: 0s;
+$fall-blackout-in-at: $beat-long + $beat + $beat-short;
+$fall-full-black-at: $fall-blackout-in-at + $intro-collapse-fade-duration;
+$fall-scream-duration: $fall-full-black-at;
+$fall-reposition-at: $fall-full-black-at;
+$fall-caption-2-at: $fall-full-black-at + $beat-long;
+$fall-fade-in-at: $fall-caption-2-at + $opening-caption-duration;
+$fall-blackout-total: $fall-fade-in-at + $intro-fade-in-duration;
+$fall-argh-at: $fall-blackout-total + $beat-long;
+$walk-in-duration: vars.$walk-duration;
+$fall-shake-until: $fall-caption-2-at;
+$fall-shake-loops: math.ceil(
+  math.div($fall-shake-until, vars.$screen-shake-duration)
+);
+
+@function fall-blackout-pct($time) {
+  @return math.percentage(math.div($time, $fall-blackout-total));
+}

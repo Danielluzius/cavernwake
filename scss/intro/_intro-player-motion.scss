@@ -1,0 +1,285 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'intro-config' as *;
+
+// ==========================================================================
+// PLAYER: step-1 walk-in (camera fixed on node 2, player visibly walks in
+// from node 1's position) — every other step relies on the normal
+// counter-translate base rule (player/_player.scss), no override needed.
+//
+// Driven via --player-extra-offset (see player/_player.scss) instead of a
+// @keyframes animation on purpose: a plain custom-property + transition
+// change lets .player's own existing "transition: transform" handle it
+// exactly like every other state change in the game. A separate CSS
+// animation would end (fill-mode: forwards) at the very same moment
+// --world-offset changes for step 2 (both triggered by the same click),
+// and a transition can't pick up smoothly from a value an animation was
+// still holding — causing the character to instantly snap to node 3
+// instead of visibly walking there.
+// ==========================================================================
+
+// Node 1 is 3 tiles left of the node-2 camera (one walk edge).
+// Glow hole stays closed until the lantern line (see LAMP GLOW).
+$walk-in-tiles: vars.$movement-tiles-per-step;
+$walk-in-start-offset: -$walk-in-tiles * vars.$tile-size-display;
+$walk-in-cycles: vars.$walk-cycles;
+
+// Steps dark/fade/1: held at node 1. Glow stays on (unlit).
+#position-1:checked ~ #intro-dark:checked ~ .game .player,
+#position-1:checked ~ #intro-fade:checked ~ .game .player,
+#position-1:checked ~ #intro-1:checked ~ .game .player {
+  --player-extra-offset: #{$walk-in-start-offset};
+  transition: none;
+}
+
+// Step 2: walks node 1 → 2. Lantern line holds there after he arrives.
+#position-1:checked ~ #intro-2:checked ~ .game .player,
+#position-1:checked ~ #intro-lantern:checked ~ .game .player,
+#position-1:checked ~ #intro-home:checked ~ .game .player {
+  --player-extra-offset: 0px;
+  transition-duration: $walk-in-duration;
+}
+
+#position-1:checked ~ #intro-lantern:checked ~ .game .player,
+#position-1:checked ~ #intro-home:checked ~ .game .player {
+  transition: none;
+}
+
+// ==========================================================================
+// PLAYER WALK-CYCLE — plays the 4-frame walk-right sheet for exactly
+// $movement-duration on every step that visibly moves the character
+// (walk-in, and each camera pan below), same technique as the free-roam
+// graph (see player/_player.scss / animations/_animations.scss). Named
+// per intro step (not one shared name) so a later replay of the same
+// steps (page reload / restart) still restarts the animation even if
+// some future edit ever revisits an identical computed value — the
+// linear one-way chain itself never repeats a step during normal play.
+@keyframes player-walk-intro-2 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_004.png');
+  }
+}
+
+#position-1:checked ~ #intro-2:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right-before.png');
+  animation: player-walk-intro-2 vars.$movement-duration steps(1, end)
+    $walk-in-cycles;
+}
+
+@keyframes player-walk-intro-3 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_004.png');
+  }
+}
+
+// Step 3: camera pan node 2 -> 3 is the walk.
+#position-1:checked ~ #intro-3:checked ~ .game .player__sprite {
+  animation: player-walk-intro-3 vars.$movement-duration steps(1, end)
+    vars.$walk-cycles;
+}
+
+#position-1:checked ~ #intro-2:checked ~ .game .world,
+#position-1:checked ~ #intro-2:checked ~ .game .player {
+  transition-duration: $walk-in-duration;
+}
+
+#position-1:checked ~ #intro-3:checked ~ .game .world,
+#position-1:checked ~ #intro-3:checked ~ .game .player {
+  transition-duration: vars.$walk-duration;
+}
+
+@keyframes player-walk-intro-4 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_004.png');
+  }
+}
+
+@keyframes player-intro-stumble {
+  0% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/stumble/frame_004.png');
+  }
+}
+
+// Step 4: camera pan node 3 -> 4 is the walk. The last cycle is a stumble
+// plus a short rumble under "What the…?".
+#position-1:checked ~ #intro-4:checked ~ .game .player__sprite {
+  animation:
+    player-walk-intro-4 vars.$movement-duration steps(1, end) vars.$walk-cycles,
+    player-intro-stumble vars.$movement-duration steps(1, end) $intro-stumble-delay;
+}
+
+#position-1:checked ~ #intro-4:checked ~ .game .world,
+#position-1:checked ~ #intro-4:checked ~ .game .player {
+  transition-duration: vars.$walk-duration;
+}
+
+@keyframes player-walk-intro-9 {
+  0% {
+    background-image: url('../assets/characters/without-backpack/walk-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/without-backpack/walk-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/without-backpack/walk-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/without-backpack/walk-right/frame_004.png');
+  }
+}
+
+// Step 9: camera pan node 13 -> 14 (see CAMERA above) is the actual walk.
+// Overridden background-image (without-backpack/base-right, see PLAYER
+// POSE below) still applies once the animation ends, same fallback
+// mechanism as every other walk trigger.
+#position-1:checked ~ #intro-9:checked ~ .game .player__sprite {
+  animation: player-walk-intro-9 vars.$movement-duration steps(1, end)
+    vars.$walk-cycles;
+}
+
+#position-1:checked ~ #intro-9:checked ~ .game .world,
+#position-1:checked ~ #intro-9:checked ~ .game .player {
+  transition-duration: vars.$walk-duration;
+}
+
+@keyframes player-walk-intro-12 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/frame_004.png');
+  }
+}
+
+// Step 12: camera pan node 14 -> 13 is the walk left. Hold facing left
+// after the cycle — default base-right would snap him around early.
+#position-1:checked ~ #intro-12:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation: player-walk-intro-12 vars.$movement-duration steps(1, end)
+    vars.$walk-cycles;
+}
+
+#position-1:checked ~ #intro-12:checked ~ .game .world,
+#position-1:checked ~ #intro-12:checked ~ .game .player {
+  transition-duration: vars.$walk-duration;
+}
+
+// Step 13: surprised hold through "Again?" (same sheet as last-lever).
+#position-1:checked ~ #intro-13:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/surprised/frame_002.png');
+  animation: player-surprised vars.$movement-duration steps(1, end) forwards;
+}
+
+// Then back to the standing pose for the hurry line.
+#position-1:checked ~ #intro-hurry:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+
+@keyframes player-walk-intro-14 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-right/frame_004.png');
+  }
+}
+
+// Step 14: walk 13 -> 14 after the hurry line, then the last line.
+#position-1:checked ~ #intro-14:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-walk-intro-14 vars.$movement-duration steps(1, end)
+    vars.$walk-cycles;
+}
+
+#position-1:checked ~ #intro-14:checked ~ .game .world,
+#position-1:checked ~ #intro-14:checked ~ .game .player {
+  transition-duration: vars.$walk-duration;
+}
+
+// ==========================================================================
+// PLAYER FALL — step "fall": drops straight down out of frame via its own
+// vertical extra-offset while the camera (--world-offset-y) stays fixed
+// at node 4 (see CAMERA above). Reset back to 0 at step 5, but instantly
+// (transition: none — the character is hidden behind the blackout by
+// then, see PLAYER POSE below), ready for the next real position change.
+// ==========================================================================
+
+#position-1:checked ~ #intro-fall:checked ~ .game .player {
+  --world-offset: #{offset-x($node4)};
+  --world-offset-y: #{offset-y($node4)};
+  --player-extra-offset-y: #{$fall-drop-distance};
+  transition-duration: vars.$movement-duration;
+  transition-timing-function: ease-in;
+  animation: intro-fall-player-land 1ms step-end forwards;
+  animation-delay: $fall-reposition-at;
+}
+
+// Step "dark-hold": stays fallen, same offset as "fall" (screen is
+// darkening/dark, nothing visibly moves anyway).
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .player {
+  --player-extra-offset-y: #{$fall-drop-distance};
+}
+
+#position-1:checked ~ #intro-5:checked ~ .game .player,
+#position-1:checked ~ #intro-6:checked ~ .game .player {
+  --player-extra-offset-y: 0px;
+  transition: none;
+}

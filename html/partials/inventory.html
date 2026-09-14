@@ -1,0 +1,215 @@
+<!-- Inventory overlay in .ui. Toggle and back sit in the top-left corner
+     of the vision-field square; the open bag grows left beside it. Close
+     via the X on the icon slot. World click (hit)
+     resets the item-quote radio. Each slot has two labels (a/b) so the
+     same item can be inspected again without clicking the world first.
+     Use-layers sit on top during obstacle -choosing: the matching tool
+     advances that barrier, everything else pings the fail quote. -->
+<div class="inventory">
+     <label class="inventory__hit" for="item-quote-idle"></label>
+
+     <div class="inventory__panel">
+          <div class="inventory__art">
+               <!-- 2x3 over the brown body: tools on top, craft parts below.
+                    Bomb spans the bottom row after crafting; lever sits in
+                    the middle pocket after the wall blast. -->
+               <div class="inventory__grid">
+                    <div class="inventory__slot inventory__slot--sickle">
+                         <label class="inventory__icon" for="item-quote-sickle-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Sichel</span><span class="i18n i18n--en">Sickle</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-sickle-b"></label>
+                         <label class="inventory__use inventory__use--vine24" for="vine24-cut-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use sickle</span><span class="visually-hidden i18n i18n--de">Sichel benutzen</span></label>
+                         <label class="inventory__use inventory__use--vine12" for="vine12-cut-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use sickle</span><span class="visually-hidden i18n i18n--de">Sichel benutzen</span></label>
+                         <label class="inventory__use inventory__use--vine30" for="vine30-cut-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use sickle</span><span class="visually-hidden i18n i18n--de">Sichel benutzen</span></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--pickaxe">
+                         <label class="inventory__icon" for="item-quote-pickaxe-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Spitzhacke</span><span class="i18n i18n--en">Pickaxe</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-pickaxe-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--rock" for="rock-cut-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use pickaxe</span><span class="visually-hidden i18n i18n--de">Spitzhacke benutzen</span></label>
+                         <label class="inventory__use inventory__use--wall-pickaxe" for="wall-pickaxe-swing"
+                             ><span class="visually-hidden i18n i18n--en">Use pickaxe</span><span class="visually-hidden i18n i18n--de">Spitzhacke benutzen</span></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--shovel">
+                         <label class="inventory__icon" for="item-quote-shovel-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Schaufel</span><span class="i18n i18n--en">Shovel</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-shovel-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--mud" for="mud-cut-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use shovel</span><span class="visually-hidden i18n i18n--de">Schaufel benutzen</span></label>
+                         <label class="inventory__use inventory__use--wall-shovel" for="wall-shovel-swing"
+                             ><span class="visually-hidden i18n i18n--en">Use shovel</span><span class="visually-hidden i18n i18n--de">Schaufel benutzen</span></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--bomb-shell">
+                         <label class="inventory__icon" for="item-quote-bomb-shell-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Bombenschale</span><span class="i18n i18n--en">Bomb casing</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-shell-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--wb-a-shell" for="workbench-a-shell"></label>
+                         <label class="inventory__use inventory__use--wb-b-ps" for="workbench-b-powder-shell"></label>
+                         <label class="inventory__use inventory__use--wb-b-fs" for="workbench-b-fuse-shell"></label>
+                         <label class="inventory__use inventory__use--wb-bad-pfs" for="workbench-bad-pfs"></label>
+                         <label class="inventory__use inventory__use--wb-bad-fps" for="workbench-bad-fps"></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--bomb-powder">
+                         <label class="inventory__icon" for="item-quote-bomb-powder-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Schwarzpulver</span><span class="i18n i18n--en">Gunpowder</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-powder-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--wb-a-powder" for="workbench-a-powder"></label>
+                         <label class="inventory__use inventory__use--wb-b-sp" for="workbench-b-shell-powder"></label>
+                         <label class="inventory__use inventory__use--wb-b-fp" for="workbench-b-fuse-powder"></label>
+                         <label class="inventory__use inventory__use--wb-bad-sfp" for="workbench-bad-sfp"></label>
+                         <label class="inventory__use inventory__use--wb-bad-fsp" for="workbench-bad-fsp"></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--bomb-fuse">
+                         <label class="inventory__icon" for="item-quote-bomb-fuse-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Zündschnur</span><span class="i18n i18n--en">Fuse</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-fuse-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--wb-a-fuse" for="workbench-a-fuse"></label>
+                         <label class="inventory__use inventory__use--wb-b-sf" for="workbench-b-shell-fuse"></label>
+                         <label class="inventory__use inventory__use--wb-b-pf" for="workbench-b-powder-fuse"></label>
+                         <label class="inventory__use inventory__use--wb-ok" for="workbench-crafting"></label>
+                         <label class="inventory__use inventory__use--wb-bad-psf" for="workbench-bad-psf"></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--bomb">
+                         <label class="inventory__icon" for="item-quote-bomb-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Bombe</span><span class="i18n i18n--en">Bomb</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-bomb-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--wall" for="wall-blast-prompt"
+                             ><span class="visually-hidden i18n i18n--en">Use bomb</span><span class="visually-hidden i18n i18n--de">Bombe benutzen</span></label>
+                    </div>
+                    <div class="inventory__slot inventory__slot--last-lever">
+                         <label class="inventory__icon" for="item-quote-last-lever-a">
+                              <span class="inventory__caption"><span class="i18n i18n--de">Hebel</span><span class="i18n i18n--en">Lever</span></span>
+                         </label>
+                         <label class="inventory__icon inventory__icon--b" for="item-quote-last-lever-b"></label>
+                         <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                         <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+                         <label class="inventory__use inventory__use--socket" for="last-lever-socket-fitting"
+                             ><span class="visually-hidden i18n i18n--en">Insert lever</span><span class="visually-hidden i18n i18n--de">Hebel einsetzen</span></label>
+                    </div>
+               </div>
+               <div class="inventory__slot inventory__slot--lamp">
+                    <label class="inventory__icon" for="item-quote-lamp-a">
+                         <span class="inventory__caption"><span class="i18n i18n--de">Laterne</span><span class="i18n i18n--en">Lantern</span></span>
+                    </label>
+                    <label class="inventory__icon inventory__icon--b" for="item-quote-lamp-b"></label>
+                    <label class="inventory__use inventory__use--lamp-intro" for="intro-11"
+                        ><span class="visually-hidden i18n i18n--en">Light lantern</span><span class="visually-hidden i18n i18n--de">Laterne anzünden</span></label>
+                    <label class="inventory__use inventory__use--lamp-fuse" for="wall-fuse-prompt"
+                        ><span class="visually-hidden i18n i18n--en">Use lantern</span><span class="visually-hidden i18n i18n--de">Laterne benutzen</span></label>
+                    <label class="inventory__use inventory__use--fail" for="item-use-fail-a"></label>
+                    <label class="inventory__use inventory__use--fail inventory__use--fail-b" for="item-use-fail-b"></label>
+               </div>
+          </div>
+     </div>
+     <!-- Eats the opening click's mouseup so it cannot land on a use/fail
+          label (lamp sits on the field edge once the bag morphs open). -->
+     <div class="inventory__click-guard"></div>
+</div>
+
+<!-- Inspect quotes sit with the other speech bubbles (above the player).
+     Auto-fade, no Continue. Replayable asides — no new spoilers. -->
+<div class="dialogue dialogue--item-quote" data-item="sickle">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Tut noch, was sie soll.</span>
+            <span class="i18n i18n--en">Still sharp. That's all I need to know.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="pickaxe">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Schwer. Für Fels gemacht, nicht für Leute.</span>
+            <span class="i18n i18n--en">Heavy. This was made for rock, not people.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="shovel">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Für Schlamm. Und was sonst im Weg liegt.</span>
+            <span class="i18n i18n--en">Mud, gravel, whatever's in the way.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="bomb">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Das will ich wirklich nicht fallen lassen.</span>
+            <span class="i18n i18n--en">I really don't want to drop this.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="lamp">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Brennt noch. Bleib so.</span>
+            <span class="i18n i18n--en">Still burning. Stay that way.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="bomb-shell">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Leer. Wartet drauf, gefüllt zu werden.</span>
+            <span class="i18n i18n--en">It's empty. It needs filling.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="bomb-powder">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Schwarzer Staub. Beutel lieber zu.</span>
+            <span class="i18n i18n--en">Black dust. Keep the bag closed.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="bomb-fuse">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Dünne Schnur. Riecht, als würd die schnell Feuer fangen.</span>
+            <span class="i18n i18n--en">Thin cord. It smells as if it would catch easily.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-quote" data-item="last-lever">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Aus der Halterung gerissen. Noch ganz.</span>
+            <span class="i18n i18n--en">Pulled out of its fitting. Still in one piece.</span>
+        </p>
+     </div>
+</div>
+<div class="dialogue dialogue--item-use-fail">
+     <div class="dialogue__box">
+          <p class="dialogue__text">
+            <span class="i18n i18n--de">Das bringt hier nichts.</span>
+            <span class="i18n i18n--en">That's no use here.</span>
+        </p>
+     </div>
+</div>

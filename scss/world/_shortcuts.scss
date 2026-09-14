@@ -1,0 +1,411 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+
+// ==========================================================================
+// CORRIDOR SKIPS
+// After a barrier is gone, stacked D-pad labels (same swap as `--post`)
+// jump an empty stand in one click. Interaction nodes stay in the graph
+// so the first clear still has a place to stand.
+//
+// $hops is how many normal 3-tile rooms the jump covers. Exploration
+// skips keep normal walk frames and play ($walk-cycles × hops − 1) loops
+// stretched across the camera beat (duration × hops / $skip-walk-speed)
+// so the extra in-place cycle is gone but he still walks until arrival.
+// $haste: true is the cave-in run after the last lever — fast-walk
+// frames and vars.$skip-speed (also the outro dash in scss/outro/_outro.scss).
+// ==========================================================================
+
+@function skip-duration($hops, $haste: false) {
+  @if $haste {
+    @return calc(var(--walk-duration) * #{math.div($hops, vars.$skip-speed)});
+  }
+
+  @return calc(
+    var(--walk-duration) * #{math.div($hops, vars.$skip-walk-speed)}
+  );
+}
+
+@mixin skip-edge($from, $to, $facing, $hops, $haste: false) {
+  $target: map.get(vars.$positions, $to);
+  $duration: skip-duration($hops, $haste);
+  $gait: 'walk-#{$facing}';
+  $full-cycles: vars.$walk-cycles * $hops;
+  // One fewer loop than room-count would suggest — that last cycle was
+  // the in-place step after ease-out. Stretch the remaining loops across
+  // the whole camera duration so he still walks until he arrives.
+  $walk-loops: $full-cycles - 1;
+  $cycle-duration: calc(
+    var(--walk-duration) *
+      #{math.div($hops, vars.$skip-walk-speed * $walk-loops)}
+  );
+
+  @if $haste {
+    $gait: 'walk-#{$facing}/fast-walk-#{$facing}';
+    $walk-loops: math.div(vars.$walk-cycles * $hops, vars.$skip-speed);
+    $cycle-duration: var(--walk-cycle-duration);
+  }
+
+  @keyframes player-walk-from-#{$from}-to-#{$to} {
+    0% {
+      background-image: url('../assets/characters/with-backpack/walk/#{$gait}/frame_001.png');
+    }
+    25% {
+      background-image: url('../assets/characters/with-backpack/walk/#{$gait}/frame_002.png');
+    }
+    50% {
+      background-image: url('../assets/characters/with-backpack/walk/#{$gait}/frame_003.png');
+    }
+    75%,
+    100% {
+      background-image: url('../assets/characters/with-backpack/walk/#{$gait}/frame_004.png');
+    }
+  }
+
+  #position-#{$to}--from-#{$from}:checked ~ .game .world {
+    --world-offset: #{(map.get($target, col) + 0.5) *
+      vars.$tile-size-display *
+      -1};
+    --world-offset-y: #{(map.get($target, row) + 0.5) *
+      vars.$tile-size-display *
+      -1};
+    transition-duration: $duration;
+  }
+
+  #position-#{$to}--from-#{$from}:checked ~ .game .player {
+    transition-duration: $duration;
+  }
+
+  #position-#{$to}--from-#{$from}:checked ~ .game .player__sprite {
+    background-image: url('../assets/characters/with-backpack/base/base-#{$facing}.png');
+    animation: player-walk-from-#{$from}-to-#{$to}
+      $cycle-duration
+      steps(1, end)
+      $walk-loops;
+  }
+}
+
+// ---- Vines at 24: 23 ↔ 25 (skip empty 24) ----
+
+@include skip-edge(23, 25, right, 2);
+@include skip-edge(25, 23, left, 2);
+
+#vine24-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='23'],
+#vine24-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='25'],
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='25'] {
+  display: none;
+}
+
+#vine24-done:checked
+  ~ .game
+  .direction-controls__button--right[data-position='23']:not([data-arrival]),
+#vine24-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button--left[data-position='25']:not([data-arrival]) {
+  display: none;
+}
+
+#position-23--from-25:checked
+  ~ .game
+  .direction-controls__button--up[data-position='23'],
+#position-23--from-25:checked
+  ~ .game
+  .direction-controls__button--left[data-position='23'],
+#last-lever-armed:not(:checked)
+  ~ #position-23--from-25:checked
+  ~ .game
+  .direction-controls__button--right[data-position='23'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+#position-25--from-23:checked
+  ~ .game
+  .direction-controls__button--down[data-position='25'],
+#lift-17-26-unlocked:checked
+  ~ #position-25--from-23:checked
+  ~ .game
+  .direction-controls__button--right[data-position='25'],
+#vine24-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #position-25--from-23:checked
+  ~ .game
+  .direction-controls__button--left[data-position='25'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+// ---- Waterfall: 19 ↔ 21 (skip empty 20 after the first pickaxe visit) ----
+// First walk to 19 stays a normal 21-20-19. #pickaxe-armed is the
+// persistent "been there" flag — a position radio unchecks on leave.
+
+@include skip-edge(19, 21, right, 2);
+@include skip-edge(21, 19, left, 2);
+
+#lever7-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='19'],
+#lever7-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='21'],
+#pickaxe-armed:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='19'],
+#pickaxe-armed:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='21'],
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='19'],
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='21'] {
+  display: none;
+}
+
+#lever7-done:checked
+  ~ #pickaxe-armed:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button--right[data-position='19']:not([data-arrival]),
+#lever7-done:checked
+  ~ #pickaxe-armed:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button--left[data-position='21']:not([data-arrival]) {
+  display: none;
+}
+
+#position-21--from-19:checked
+  ~ .game
+  .direction-controls__button--right[data-position='21'],
+#position-21--from-19:checked
+  ~ .game
+  .direction-controls__button--down[data-position='21'],
+#lever7-done:checked
+  ~ #pickaxe-armed:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #position-21--from-19:checked
+  ~ .game
+  .direction-controls__button--left[data-position='21'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+#lever7-done:checked
+  ~ #pickaxe-armed:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #position-19--from-21:checked
+  ~ .game
+  .direction-controls__button--right[data-position='19'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+// ---- Mud: 27 ↔ 30 (skip 28+29 from the ladder, after the 11↔27 call) ----
+// 28 is the lift call stand. 29 is the mud / bridge stand. The skip
+// starts at node 30 so you don't stop on the bridge on the way back.
+
+@include skip-edge(27, 30, right, 3);
+@include skip-edge(30, 27, left, 3);
+
+#mud-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip-mud'],
+#lift-11-27-unlocked:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip-mud'],
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button[data-arrival='skip-mud'] {
+  display: none;
+}
+
+#lift-11-27-unlocked:checked
+  ~ #mud-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button--right[data-position='27']:not([data-arrival]),
+#lift-11-27-unlocked:checked
+  ~ #mud-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button--left[data-position='30']:not([data-arrival]) {
+  display: none;
+}
+
+#position-27--from-30:checked
+  ~ .game
+  .direction-controls__button--up[data-position='27'],
+#mud-done:checked
+  ~ #position-27--from-30:checked
+  ~ .game
+  .direction-controls__button--right[data-position='27'] {
+  @include dlg.direction-button-reveal(skip-duration(3));
+}
+
+#position-30--from-27:checked
+  ~ .game
+  .direction-controls__button--up[data-position='30'],
+#vine30-done:checked
+  ~ #position-30--from-27:checked
+  ~ .game
+  .direction-controls__button--right[data-position='30'],
+#lift-11-27-unlocked:checked
+  ~ #mud-done:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #position-30--from-27:checked
+  ~ .game
+  .direction-controls__button--left[data-position='30'] {
+  @include dlg.direction-button-reveal(skip-duration(3));
+}
+
+// ---- Big rock at 34: 33 ↔ 35 after the rock, 33 ↔ 36 after the 10↔36 call ----
+
+@include skip-edge(33, 35, right, 2);
+@include skip-edge(35, 33, left, 2);
+@include skip-edge(33, 36, right, 3);
+@include skip-edge(36, 33, left, 3);
+
+#rock-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='33'],
+#rock-done:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='35'],
+#lift-10-36-unlocked:checked
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='33'],
+#lift-10-36-unlocked:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip-lift'] {
+  display: none;
+}
+
+#rock-done:checked
+  ~ .game
+  .direction-controls__button--right[data-position='33']:not([data-arrival]),
+#rock-done:checked
+  ~ .game
+  .direction-controls__button--left[data-position='35']:not([data-arrival]),
+#lift-10-36-unlocked:checked
+  ~ .game
+  .direction-controls__button--left[data-position='36']:not([data-arrival]) {
+  display: none;
+}
+
+#position-33--from-35:checked
+  ~ .game
+  .direction-controls__button--up[data-position='33'],
+#rock-done:checked
+  ~ #position-33--from-35:checked
+  ~ .game
+  .direction-controls__button--right[data-position='33'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+#position-33--from-36:checked
+  ~ .game
+  .direction-controls__button--up[data-position='33'],
+#lift-10-36-unlocked:checked
+  ~ #position-33--from-36:checked
+  ~ .game
+  .direction-controls__button--right[data-position='33'] {
+  @include dlg.direction-button-reveal(skip-duration(3));
+}
+
+#lift-10-36-unlocked:checked
+  ~ #position-35--from-33:checked
+  ~ .game
+  .direction-controls__button--right[data-position='35'],
+#rock-done:checked
+  ~ #position-35--from-33:checked
+  ~ .game
+  .direction-controls__button--left[data-position='35'] {
+  @include dlg.direction-button-reveal(skip-duration(2));
+}
+
+#position-36--from-33:checked
+  ~ .game
+  .direction-controls__button--up[data-position='36'],
+#lift-10-36-unlocked:checked
+  ~ #position-36--from-33:checked
+  ~ .game
+  .direction-controls__button--left[data-position='36'] {
+  @include dlg.direction-button-reveal(skip-duration(3));
+}
+
+// ---- Stone wall: 32 → 30 after picking up the last lever ----
+// First walk in (30-31-32) stays a normal step so the dead-end beat
+// isn't rushed. After #last-lever-armed the way out skips empty 31.
+// 30→32 stays normal (and hidden on escape) so you don't sprint back in.
+
+@include skip-edge(32, 30, left, 2, true);
+
+#last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip'][data-position='32'] {
+  display: none;
+}
+
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button--left[data-position='32']:not([data-arrival]) {
+  display: none;
+}
+
+#position-30--from-32:checked
+  ~ .game
+  .direction-controls__button--up[data-position='30'] {
+  @include dlg.direction-button-reveal(skip-duration(2, true));
+}
+
+// ---- Escape: 21 → 23 (skip the workbench) ----
+// Rock drop still keys off landing at 23 (see world/_collapse.scss).
+
+@include skip-edge(21, 23, right, 2, true);
+
+#last-lever-armed:not(:checked)
+  ~ .game
+  .direction-controls__button[data-arrival='skip-escape'][data-position='21'] {
+  display: none;
+}
+
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button--right[data-position='21']:not([data-arrival='skip-escape']) {
+  display: none;
+}
+
+#last-lever-armed:checked
+  ~ #collapse-bench-seen:checked
+  ~ #position-23--from-21:checked
+  ~ .game
+  .direction-controls__button--up[data-position='23'] {
+  @include dlg.direction-button-reveal(0s);
+}
+
+// ---- Escape: 6 → 4 after the dock line (Continue checks #position-4--from-6) ----
+
+@include skip-edge(6, 4, left, 2, true);
+@include skip-edge(4, 2, left, 2, true);
+
+.direction-controls__button[data-arrival='skip-escape'][data-position='6'] {
+  display: none;
+}
+
+#lift-6-14-unlocked:checked
+  ~ .game
+  .direction-controls__button--left[data-position='6']:not([data-arrival]),
+#lift-6-14-unlocked:checked
+  ~ .game
+  .direction-controls__button--right[data-position='5'],
+#lift-6-14-unlocked:checked
+  ~ .game
+  .direction-controls__button--right[data-position='4'] {
+  display: none;
+}

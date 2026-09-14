@@ -1,0 +1,316 @@
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'click-hint';
+
+// ==========================================================================
+// LAST LEVER SOCKET (node 15) — the run's final puzzle: slotting the lever
+// picked up in the dead end right of node 32 (see world/_tools.scss) into
+// the broken winch beside node 15, which repairs the 6<->14 lift and opens
+// the way out.
+//
+//   last-lever-socket-step:
+//     idle + socket-spark (no lever, one-shot hint)
+//     idle -> choosing (bag) -> fitting -> lift-6-14-unlocked
+//   #last-lever-way-seen dismisses the line after the car has docked
+//   (checkbox, so it cannot uncheck the lift radio).
+//
+// Two stacked labels (hint vs fit). The fit label opens inventory
+// (#last-lever-socket-choosing); the lever item in the bag sets fitting. Continue
+// on that line checks #lift-6-14-unlocked so the throw, the car and the
+// turn run without a second object click. 15→14 stays open until then
+// so they can walk to the shaft and figure out they need the winch.
+// After confirm Continue the ending is one-way: left from 15, no 14→15,
+// no riding 6 back down.
+//
+// The last step deliberately keeps the id the lift system already reads
+// (vars.$lifts '6-14' unlock), so world/_lift.scss and lift-gate() in
+// components/_direction-controls.scss need no changes at all. It MUST stay the
+// group's final step: anything after it would uncheck it and raise the car.
+// ==========================================================================
+
+$socket-col: 20;
+$socket-row: 9;
+$socket-cols: 2;
+$socket-rows: 2;
+// Art stays 2x2; the click box sits on the winch, not the standing tile
+// at col 19.
+$socket-hit-col: 20.85;
+$socket-hit-row: 9.4;
+$socket-hit-cols: 0.95;
+$socket-hit-rows: 1.15;
+
+// Dialogue open or animation running: player pinned, movement locked.
+$socket-movement-lock: '#last-lever-socket-fitting';
+
+// Interact poses only — not the hint dialogue, which keeps the standing sprite.
+$socket-action-busy: '#last-lever-socket-fitting';
+
+// Shaft 6<->14 ride length, then a short beat after the turn before the
+// second line. Same timing the basket uses (world/_lift.scss).
+$socket-car-duration: vars.$elevator-duration-short;
+$socket-turn-delay: $socket-car-duration;
+$socket-line-delay: calc(#{$socket-turn-delay} + 0.4s);
+
+// Only reachable from node 15 itself. Without this the socket would also be
+// in reach from node 14 (col 16 vs. the socket's col 20–21, against a vision
+// field ~4 tiles wide), letting the player interact from across the gap.
+$at-node-15: ":is(#position-15, [id^='position-15--']):checked";
+
+// Socket shows sticks once the lever has been slotted in (first click) and
+// stays that way through the pull and after the lift unlocks.
+$socket-sticks: '#last-lever-socket-fitting, #last-lever-socket-fitted, #last-lever-socket-pulling, #lift-6-14-unlocked';
+
+.object--last-lever-socket,
+.object--last-lever-socket-fit,
+.object--last-lever-socket-pull {
+  position: absolute;
+  left: $socket-hit-col * vars.$tile-size-display;
+  top: $socket-hit-row * vars.$tile-size-display;
+  width: $socket-hit-cols * vars.$tile-size-display;
+  height: $socket-hit-rows * vars.$tile-size-display;
+  background-image: none;
+  pointer-events: none;
+  cursor: default;
+  @include click-hint.place(
+    $socket-hit-col,
+    $socket-hit-row,
+    $socket-hit-cols,
+    $socket-hit-rows,
+    15
+  );
+}
+
+// Full 2×2 canvas — the labels above are only the winch hitbox, which
+// cropped the insert/pull frames when they shared the same box.
+.object--last-lever-socket-art {
+  position: absolute;
+  left: $socket-col * vars.$tile-size-display;
+  top: $socket-row * vars.$tile-size-display;
+  width: $socket-cols * vars.$tile-size-display;
+  height: $socket-rows * vars.$tile-size-display;
+  background-image: url('../assets/characters/with-backpack/use-item/last-lever/last-lever-before.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+:is(#{$socket-sticks}):checked ~ .game .object--last-lever-socket-art {
+  background-image: url('../assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png');
+}
+
+// ---- Hint branch (no lever yet) ----
+#socket-spark:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #last-lever-socket-idle:checked
+  ~ #{$at-node-15}
+  ~ .game
+  .object--last-lever-socket {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+#socket-spark:checked
+  ~ #last-lever-armed:not(:checked)
+  ~ #last-lever-socket-idle:checked
+  ~ #{$at-node-15}
+  ~ .game
+  .object--last-lever-socket {
+  @include click-hint.show($socket-hit-col, $socket-hit-row, $socket-hit-cols, $socket-hit-rows, 15);
+}
+
+#last-lever-armed:checked
+  ~ #last-lever-socket-idle:checked
+  ~ #{$at-node-15}
+  ~ .game
+  .object--last-lever-socket {
+  pointer-events: none;
+  cursor: default;
+}
+
+// ---- Fit branch (lever in pack). Click opens the bag; the lever item then
+//      checks fitting. Prompt Continue still runs the rest. ----
+#last-lever-armed:checked
+  ~ #last-lever-socket-idle:checked
+  ~ #{$at-node-15}
+  ~ .game
+  .object--last-lever-socket-fit {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($socket-hit-col, $socket-hit-row, $socket-hit-cols, $socket-hit-rows, 15);
+}
+
+// ---- Player pose ----
+// On .player__action, never .player__sprite (see player/_player.scss).
+:is(#{$socket-action-busy}):checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+:is(#{$socket-action-busy}):checked ~ .game .player__action {
+  opacity: 1;
+}
+
+#last-lever-socket-fitting:checked ~ .game .player__action {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-item-pickup-right vars.$movement-duration steps(1, end);
+}
+
+// Prompt Continue checks #lift-6-14-unlocked. That radio stays on, and
+// .player__action just played the insert pose, so a second interact on
+// the same overlay would not restart (same trick as the other shafts:
+// dedicated .player__call + body wrapper, uniquely named keyframes).
+#lift-6-14-unlocked:checked ~ .game .object--last-lever-socket-art {
+  animation: last-lever-socket-pull vars.$movement-duration steps(1, end);
+}
+
+@keyframes last-lever-use-hide {
+  from,
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes last-lever-use-show {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes last-lever-socket-use {
+  0% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_004.png');
+  }
+}
+
+#lift-6-14-unlocked:checked ~ .game .player__body--6-14 {
+  animation: last-lever-use-hide vars.$movement-duration steps(1, end);
+}
+
+#lift-6-14-unlocked:checked ~ .game .player__call--6-14 {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation:
+    last-lever-use-show vars.$movement-duration steps(1, end),
+    last-lever-socket-use vars.$movement-duration steps(1, end);
+}
+
+#lift-6-14-unlocked:checked ~ #{$at-node-15} ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: last-lever-face-left 0s $socket-turn-delay forwards;
+}
+
+@keyframes last-lever-face-left {
+  to {
+    background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  }
+}
+
+:is(#{$socket-movement-lock}):checked
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+// ---- Dialogue ----
+#socket-spark-seen {
+  @include dlg.lock-edges;
+}
+
+#socket-spark-seen:checked
+  ~ .game
+  .dialogue[data-step='last-lever-socket-hint']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+#last-lever-socket-fitting:checked
+  ~ .game
+  .dialogue[data-step='last-lever-socket-prompt']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$movement-duration);
+}
+
+#lift-6-14-unlocked:checked
+  ~ #last-lever-way-seen:not(:checked)
+  ~ .game
+  .dialogue[data-step='last-lever-socket-confirm']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($socket-line-delay);
+}
+
+// lock-edges' extra :checked would become :not(:checked):checked here
+// and never match, so write the hide directly.
+#lift-6-14-unlocked:checked
+  ~ #last-lever-way-seen:not(:checked)
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+// ==========================================================================
+// CAVE COLLAPSE — screen shake + surprised look-up start on the confirm
+// Continue (#last-lever-notice), not during pickup. Path re-seals, shaft
+// flood, bench rock and debris: world/_collapse.scss.
+// ==========================================================================
+
+#last-lever-notice:checked ~ .game .viewport,
+#last-lever-turn:checked ~ .game .viewport,
+#last-lever-armed:checked ~ .game .viewport {
+  animation: intro-screen-shake vars.$screen-shake-duration ease-in-out infinite;
+}
+
+#last-lever-notice:checked ~ .game .player__sprite {
+  opacity: 0;
+}
+
+#last-lever-notice:checked ~ .game .player__action {
+  opacity: 1;
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  animation: player-surprised vars.$movement-duration steps(1, end) forwards;
+}
+
+// 15→14 stays open so they can walk to the shaft before inserting the
+// lever. After confirm Continue the ending is one-way: no 14→15 and no
+// riding 6 back down. Ladder down is already closed once the last lever
+// is in the pack — the climb 23→15 is one-way too.
+#last-lever-way-seen:checked
+  ~ .game
+  .direction-controls__button--right[data-position='14'] {
+  display: none;
+}
+
+#last-lever-way-seen:checked
+  ~ .game
+  .direction-controls__button--down.direction-controls__button--edge[data-position='6'] {
+  display: none;
+}
+
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button--down[data-position='15'],
+#last-lever-armed:checked
+  ~ .game
+  .direction-controls__button--down[data-position='21'] {
+  display: none;
+}
+
+// Climb 23→15 leaves base-up. He only turns to the socket (right) when
+// inserting the lever. After the car docks he faces the shaft.
+#last-lever-armed:checked
+  ~ #last-lever-socket-fitting:checked
+  ~ #{$at-node-15}
+  ~ .game
+  .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-right.png');
+}
+

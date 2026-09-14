@@ -1,0 +1,658 @@
+@use '../base/variables' as vars;
+
+// ==========================================================================
+// DIALOGUE — two voices:
+//   .dialogue            player speech (pixel bubble + bottom tail)
+//   .dialogue--caption   scene card (no chrome, centered)
+//   .dialogue--center    speech placement only (no tail; player off-screen)
+// Speech chrome is the 8-bit box-shadow bubble from
+// https://codepen.io/rombicombi/pen/NWExpaa (no clip-path, no bevel).
+// $dialogue-fill stands in for the pen's white so the tail punches the
+// outline; $dialogue-outline is the pen's black. Inventory name tags
+// reuse pixel-bubble-border; settings panels still use
+// dialogue-panel-fill (4-way outline + bevel).
+// ==========================================================================
+
+$p: vars.$dialogue-pixel;
+// How far the 4-way outline sits out — bigger = chunkier missing corners.
+$pixel-step-pad: $p * 2;
+$pixel-step-box: $p * 3;
+$pixel-press: $p;
+
+@mixin pixel-outline($outline: vars.$dialogue-outline, $step: $pixel-step-pad) {
+  box-shadow:
+    0 $step 0 $outline,
+    0 (-$step) 0 $outline,
+    $step 0 0 $outline,
+    (-$step) 0 0 $outline;
+}
+
+// Inner fill ring + outer ink ring, 1-unit missing corners. No blur /
+// spread — each entry is one art pixel. $fill must match the element's
+// background so joins (tail, hover) don't leave a halo.
+@mixin pixel-bubble-border(
+  $fill: vars.$dialogue-fill,
+  $ink: vars.$dialogue-outline
+) {
+  box-shadow:
+    0 (-$p) $fill,
+    0 (-$p * 2) $ink,
+    $p 0 $fill,
+    $p (-$p) $ink,
+    ($p * 2) 0 $ink,
+    0 $p $fill,
+    0 ($p * 2) $ink,
+    (-$p) 0 $fill,
+    (-$p) $p $ink,
+    (-$p * 2) 0 $ink,
+    (-$p) (-$p) $ink,
+    $p $p $ink;
+}
+
+// Cream panel fill used by speech bubbles and inventory name tags.
+@mixin dialogue-panel-fill {
+  background: linear-gradient(
+    to top,
+    vars.$dialogue-bevel 0,
+    vars.$dialogue-bevel #{vars.$dialogue-bevel-height},
+    vars.$dialogue-fill #{vars.$dialogue-bevel-height}
+  );
+  @include pixel-outline($step: $pixel-step-box);
+}
+
+// Show a box. $delay is the same wait the box itself uses (0 = immediate).
+// Speech bubbles fade/slide in like the Continue chevron; the arrow starts
+// $dialogue-arrow-in-delay after that. Other callers (backpack, START)
+// still just pop via opacity/visibility.
+@mixin dialogue-box-open($delay: 0s) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  @if $delay != 0s {
+    transition:
+      opacity 0s $delay,
+      visibility 0s $delay;
+  }
+
+  &.dialogue__box {
+    transition: none;
+    animation: var(--dialogue-enter) vars.$dialogue-box-in-duration ease-out both;
+    animation-delay: $delay;
+  }
+
+  // Speech spark: fade in large, then shrink on its own. Captions use
+  // a real NEXT pad — no ::before.
+  .dialogue__button::before {
+    animation: dialogue-spark-in vars.$dialogue-spark-in-duration ease-out both;
+    animation-delay: calc(#{$delay} + #{vars.$dialogue-arrow-in-delay});
+  }
+
+  .dialogue__button--teach::before {
+    animation-name: dialogue-spark-teach;
+    animation-duration: vars.$dialogue-spark-teach-duration;
+  }
+}
+
+// Hint / blocked lines: same fade as item inspect, no Continue, exits right.
+// Kept for scripted beats (blast run, inventory inspect) that are not
+// click-to-dismiss.
+@mixin dialogue-box-hint($delay: 0s) {
+  animation: dialogue-ephemeral vars.$dialogue-hint-duration ease-out both;
+  animation-delay: $delay;
+
+  .dialogue__button {
+    display: none;
+  }
+}
+
+// Scene cards that play themselves: fade in, sit, fade out. No click.
+@mixin dialogue-box-caption-auto($delay: 0s, $duration: 4s) {
+  pointer-events: none;
+  animation: dialogue-caption-auto $duration ease-in-out both;
+  animation-delay: $delay;
+
+  .dialogue__button {
+    display: none;
+  }
+}
+
+// Hide walk/climb pads while a one-shot hint line is waiting on Continue.
+// Apply on the radio/checkbox that holds the line open.
+@mixin lock-edges {
+  &:checked ~ .game .direction-controls__button--edge[data-position] {
+    display: none;
+  }
+}
+
+@mixin dialogue-box-open-after($wait) {
+  @include dialogue-box-open($wait);
+}
+
+// Green pad + unfilled ">" chevron. Outline is the same 8-bit bubble
+// chrome as speech boxes. Hover retints fill + inner ring together.
+@mixin arrow-pad {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: vars.$dialogue-arrow-bg;
+  font-size: 0;
+  color: transparent;
+  user-select: none;
+  @include pixel-bubble-border($fill: vars.$dialogue-arrow-bg);
+
+  &::after {
+    content: '';
+    display: block;
+    width: 28%;
+    height: 28%;
+    margin-right: 12%;
+    border-top: $p solid #fff;
+    border-right: $p solid #fff;
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    background: vars.$dialogue-arrow-bg-hover;
+    @include pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+  }
+}
+
+// Same green pad as arrow-pad, with a white close X instead of ">".
+@mixin close-pad {
+  @include arrow-pad;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    width: 46%;
+    height: $p;
+    margin: 0;
+    border: 0;
+    background: #fff;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+// Retint a pixel-button (hover / selected choice) without a cream halo:
+// background and the bubble's inner ring have to move together.
+@mixin pixel-button-fill($fill) {
+  background: $fill;
+  color: #fff;
+  @include pixel-bubble-border($fill: $fill);
+}
+
+// Text pad in the same 8-bit chrome as the speech bubble: cream fill,
+// ink ring, green on hover, 1 pixel of travel on press. Fill is passed
+// into pixel-bubble-border so the inner ring retints with it.
+@mixin pixel-button($fill: vars.$dialogue-fill) {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: ($p * 2) vars.$dialogue-padding-x;
+  border: 0;
+  border-radius: 0;
+  background: $fill;
+  color: vars.$dialogue-text-color;
+  font-family: inherit;
+  font-size: vars.$dialogue-font-size;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  @include pixel-bubble-border($fill: $fill);
+
+  &:hover {
+    @include pixel-button-fill(vars.$dialogue-arrow-bg);
+  }
+
+  &:active {
+    transform: translateY($pixel-press);
+  }
+}
+
+// Walk pads slide outward into place like the Continue chevron (margin, so
+// the rotate/position transform stays free). $delay waits out the walk
+// on visibility/margin only. Opacity must stay undelayed: hover goes to
+// solid 1, and leaving :hover must not reuse the walk-length delay.
+@mixin direction-button-reveal($delay: 0s) {
+  opacity: var(--edge-opacity);
+  visibility: visible;
+  pointer-events: auto;
+  margin: 0;
+  transition:
+    opacity 0.15s ease,
+    margin vars.$dialogue-arrow-in-duration $delay ease-out,
+    visibility 0s $delay;
+
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+}
+
+.dialogue {
+  --dialogue-enter: dialogue-box-in;
+  --dialogue-drop: 0px;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: calc(
+    var(--chrome-h) + var(--field-size) / 2 + var(--dialogue-lift) -
+      var(--dialogue-drop)
+  );
+  box-sizing: border-box;
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
+}
+
+// Full-screen center (speech while the player is off-screen). Captions
+// also sit here — no tail, so they center in the field portion of the
+// shell (padding-bottom eats the chrome strip).
+.dialogue--center,
+.dialogue--caption {
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: var(--chrome-h);
+}
+
+// 1×1 seed; the stair is the Pen's bottom tail with X signs flipped.
+// Stem sits in the middle of the right half (75%).
+@mixin speech-tail-bottom(
+  $fill: vars.$dialogue-fill,
+  $ink: vars.$dialogue-outline
+) {
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    pointer-events: none;
+    height: $p;
+    width: $p;
+    bottom: -$p * 2;
+    left: calc(75% - #{$p * 0.5});
+    box-shadow:
+      0 $p $ink,
+      0 ($p * 2) $ink,
+      0 ($p * 3) $ink,
+      0 ($p * 4) $ink,
+      $p ($p * 3) $ink,
+      ($p * 2) ($p * 2) $ink,
+      ($p * 3) $p $ink,
+      $p $p $fill,
+      ($p * 2) $p $fill,
+      $p ($p * 2) $fill,
+      $p 0 $fill,
+      ($p * 2) 0 $fill,
+      ($p * 3) 0 $fill;
+  }
+}
+
+.dialogue__box {
+  --dialogue-px: #{$p};
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  width: vars.$dialogue-box-width;
+  // Equal inset now that the tan bevel is gone — extra bottom padding
+  // sat the copy optically high in the bubble.
+  padding: vars.$dialogue-padding-top vars.$dialogue-padding-x;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  margin-left: vars.$dialogue-arrow-slide;
+  transition:
+    opacity vars.$dialogue-box-in-duration ease-in,
+    margin-left vars.$dialogue-box-in-duration ease-in,
+    visibility 0s vars.$dialogue-box-in-duration;
+}
+
+.dialogue:not(.dialogue--caption) .dialogue__box {
+  background: vars.$dialogue-fill;
+  @include pixel-bubble-border;
+}
+
+
+.dialogue:not(.dialogue--caption):not(.dialogue--center) .dialogue__box {
+  @include speech-tail-bottom;
+}
+
+.dialogue__text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 100%;
+  color: vars.$dialogue-text-color;
+  font-family: inherit;
+  font-size: vars.$dialogue-font-size;
+  // 1, not 1.25: Fusion Pixel's period sits in the x-height when the
+  // line box is taller than the 8px em, so the dot reads as mid-glyph.
+  line-height: 1;
+  text-align: center;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+// Continue hit is only the spark in the corner — the rest of the bubble
+// is not a button. Cue matches world click-hints
+// (scss/world/_click-hint.scss).
+.dialogue__button {
+  position: absolute;
+  inset: auto;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: calc(#{vars.$click-hint-size} + #{$p * 4});
+  height: calc(#{vars.$click-hint-size} + #{$p * 4});
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 0;
+  color: transparent;
+  cursor: pointer;
+  user-select: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: $p;
+    bottom: $p;
+    box-sizing: border-box;
+    width: vars.$click-hint-size;
+    height: vars.$click-hint-size;
+    pointer-events: none;
+    background: vars.$dialogue-arrow-bg;
+    image-rendering: pixelated;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    @include pixel-outline($step: $p);
+    opacity: 0;
+    transition: background 0.15s ease;
+  }
+
+  &:hover::before {
+    background: vars.$dialogue-arrow-bg-hover;
+  }
+}
+
+// Scene cards: no cream panel, no tail. Fade in place. Continue is a
+// small green NEXT under the line — not the speech spark.
+//
+// This is the narrator, not the character, so it borrows the TITLE
+// SCREEN's voice instead of the bubble's: same cream-on-dark type, the
+// title's tan pixel drop shadow, wide letter-spacing and small caps-ish
+// uppercase (see components/_title-screen.scss .title-screen__title).
+.dialogue--caption {
+  --dialogue-enter: dialogue-caption-in;
+
+  .dialogue__box {
+    width: auto;
+    max-width: vars.$dialogue-caption-max-width;
+    // Wide inset so the scrim below has room to fade out well clear of
+    // the type instead of clipping into it.
+    padding: ($p * 8) ($p * 12);
+    margin-left: 0;
+    transform: none;
+    // Soft dark plate, no edges: captions also play over the LIT cave
+    // (fade, fall), where bare cream type on rock is hard to read. Same
+    // near-black as the title screen's vignette.
+    background: radial-gradient(
+      ellipse 62% 58% at 50% 48%,
+      rgba(5, 4, 10, 0.88) 0%,
+      rgba(5, 4, 10, 0.78) 55%,
+      rgba(5, 4, 10, 0) 100%
+    );
+    box-shadow: none;
+    transition:
+      opacity vars.$dialogue-box-in-duration ease-in,
+      visibility 0s vars.$dialogue-box-in-duration;
+  }
+
+  .dialogue__text {
+    color: vars.$dialogue-caption-color;
+    // Bigger than a spoken line: the narrator addresses the player, not
+    // the room, and these cards usually sit on an otherwise empty screen.
+    font-size: vars.$dialogue-caption-font-size;
+    text-transform: uppercase;
+    letter-spacing: $p;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-shadow:
+      $p 0 0 vars.$dialogue-outline,
+      (-$p) 0 0 vars.$dialogue-outline,
+      0 $p 0 vars.$dialogue-outline,
+      0 (-$p) 0 vars.$dialogue-outline,
+      0 ($p * 2) 0 vars.$dialogue-bevel;
+  }
+
+  .dialogue__button {
+    position: relative;
+    inset: auto;
+    margin-top: $p * 5;
+    padding: $p ($p * 4);
+    width: auto;
+    height: auto;
+    font-size: vars.$dialogue-font-size;
+    line-height: 1;
+    letter-spacing: $p * 0.5;
+    color: #fff;
+    background: vars.$dialogue-arrow-bg;
+    @include pixel-bubble-border($fill: vars.$dialogue-arrow-bg);
+
+    &::before {
+      content: none;
+    }
+
+    &:hover {
+      background: vars.$dialogue-arrow-bg-hover;
+      @include pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+    }
+  }
+}
+
+@keyframes dialogue-spark-in {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(var(--spark-end, #{vars.$click-hint-hover-scale}));
+  }
+}
+
+@keyframes dialogue-spark-teach {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  22%,
+  46% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  34%,
+  58% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(var(--spark-end, #{vars.$click-hint-hover-scale}));
+  }
+}
+
+@keyframes ok-pad-in {
+  from {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(var(--spark-end, 0.82));
+  }
+}
+
+@keyframes dialogue-box-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    margin-left: calc(-1 * #{vars.$dialogue-arrow-slide});
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    margin-left: 0;
+  }
+}
+
+@keyframes dialogue-caption-auto {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    transform: none;
+  }
+
+  18% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  72% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+  }
+}
+
+@keyframes dialogue-caption-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+}
+
+@keyframes dialogue-ephemeral {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    margin-left: calc(-1 * #{vars.$dialogue-arrow-slide});
+  }
+
+  12% {
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  80% {
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    margin-left: #{vars.$dialogue-arrow-slide};
+  }
+}
+
+// Same motion, different name — inventory inspect ping-pongs a/b radios
+// so a second click restarts the bubble (identical animation values would not).
+@keyframes dialogue-ephemeral-replay {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    margin-left: calc(-1 * #{vars.$dialogue-arrow-slide});
+  }
+
+  12% {
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  80% {
+    opacity: 1;
+    margin-left: 0;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    margin-left: #{vars.$dialogue-arrow-slide};
+  }
+}

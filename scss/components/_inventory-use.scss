@@ -1,0 +1,281 @@
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+@use 'inventory-shared' as *;
+
+// ==========================================================================
+// USE MODE — obstacle -choosing opens the bag like #inventory-open-play.
+// Inspect labels go dead; matching-tool layers set that barrier's confirm
+// step; everything else pings the shared fail quote (own radio group).
+// Sibling order is load-bearing: vines sit before pickaxe/shovel, rock
+// before shovel, mud before bomb parts, wall after the workbench.
+// ==========================================================================
+
+:is(#{$inventory-bag-open}):checked ~ .game .inventory__slot .inventory__icon {
+  pointer-events: none;
+}
+
+:is(#{$inventory-bag-open}):checked ~ .game .dialogue--item-quote .dialogue__box {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#vine24-choosing:checked ~ :is(#{$sickle-held}):checked ~ .game .inventory__use--vine24,
+:is(#{$sickle-held}):checked ~ #vine12-choosing:checked ~ .game .inventory__use--vine12,
+#vine30-choosing:checked ~ .game .inventory__use--vine30,
+#pickaxe-armed:checked ~ #rock-choosing:checked ~ .game .inventory__use--rock,
+#shovel-armed:checked ~ #mud-choosing:checked ~ .game .inventory__use--mud,
+#workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall,
+#pickaxe-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-pickaxe,
+#shovel-armed:checked ~ #wall-choosing:checked ~ .game .inventory__use--wall-shovel,
+#wall-fuse-choosing:checked ~ .game .inventory__use--lamp-fuse,
+#last-lever-armed:checked ~ #last-lever-socket-choosing:checked ~ .game .inventory__use--socket {
+  pointer-events: auto;
+}
+
+// Workbench sequence: first empty click -> a-*, second -> b-*, third
+// fuse after shell-powder crafts, any other third permutation is bad-*.
+$wb-start: '#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps';
+
+#bomb-shell-armed:checked ~ :is(#{$wb-start}):checked ~ .game .inventory__use--wb-a-shell,
+#bomb-powder-armed:checked ~ :is(#{$wb-start}):checked ~ .game .inventory__use--wb-a-powder,
+#bomb-fuse-armed:checked ~ :is(#{$wb-start}):checked ~ .game .inventory__use--wb-a-fuse,
+#bomb-powder-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sp,
+#bomb-fuse-armed:checked ~ #workbench-a-shell:checked ~ .game .inventory__use--wb-b-sf,
+#bomb-shell-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-ps,
+#bomb-fuse-armed:checked ~ #workbench-a-powder:checked ~ .game .inventory__use--wb-b-pf,
+#bomb-shell-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fs,
+#bomb-powder-armed:checked ~ #workbench-a-fuse:checked ~ .game .inventory__use--wb-b-fp,
+#bomb-fuse-armed:checked ~ #workbench-b-shell-powder:checked ~ .game .inventory__use--wb-ok,
+#bomb-powder-armed:checked ~ #workbench-b-shell-fuse:checked ~ .game .inventory__use--wb-bad-sfp,
+#bomb-fuse-armed:checked ~ #workbench-b-powder-shell:checked ~ .game .inventory__use--wb-bad-psf,
+#bomb-shell-armed:checked ~ #workbench-b-powder-fuse:checked ~ .game .inventory__use--wb-bad-pfs,
+#bomb-powder-armed:checked ~ #workbench-b-fuse-shell:checked ~ .game .inventory__use--wb-bad-fsp,
+#bomb-shell-armed:checked ~ #workbench-b-fuse-powder:checked ~ .game .inventory__use--wb-bad-fps {
+  pointer-events: auto;
+}
+
+:is(#{$sickle-held}):checked
+  ~ :is(#{$inventory-craft-open}):checked
+  ~ .game
+  .inventory__slot--sickle
+  .inventory__use--fail,
+#pickaxe-armed:checked
+  ~ :is(#{$inventory-craft-open}):checked
+  ~ .game
+  .inventory__slot--pickaxe
+  .inventory__use--fail,
+#shovel-armed:checked
+  ~ :is(#{$inventory-craft-open}):checked
+  ~ .game
+  .inventory__slot--shovel
+  .inventory__use--fail,
+:is(#{$inventory-craft-open}):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .inventory__slot--lamp
+  .inventory__use--fail,
+:is(#{$inventory-craft-open}):checked
+  ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .inventory__slot--last-lever
+  .inventory__use--fail {
+  pointer-events: auto;
+}
+
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing):checked
+  ~ #pickaxe-armed:checked
+  ~ .game
+  .inventory__slot--pickaxe
+  .inventory__use--fail,
+#pickaxe-armed:checked
+  ~ :is(#rock-choosing, #mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--pickaxe
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing):checked
+  ~ #shovel-armed:checked
+  ~ .game
+  .inventory__slot--shovel
+  .inventory__use--fail,
+#shovel-armed:checked
+  ~ :is(#mud-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--shovel
+  .inventory__use--fail,
+:is(#{$sickle-held}):checked
+  ~ :is(#rock-choosing, #mud-choosing, #{$wall-item-choosing}, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--sickle
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ #bomb-shell-armed:checked
+  ~ .game
+  .inventory__slot--bomb-shell
+  .inventory__use--fail,
+#bomb-shell-armed:checked
+  ~ :is(#{$wall-item-choosing}, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--bomb-shell
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ #bomb-powder-armed:checked
+  ~ .game
+  .inventory__slot--bomb-powder
+  .inventory__use--fail,
+#bomb-powder-armed:checked
+  ~ :is(#{$wall-item-choosing}, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--bomb-powder
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ #bomb-fuse-armed:checked
+  ~ .game
+  .inventory__slot--bomb-fuse
+  .inventory__use--fail,
+#bomb-fuse-armed:checked
+  ~ :is(#{$wall-item-choosing}, #last-lever-socket-choosing):checked
+  ~ .game
+  .inventory__slot--bomb-fuse
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ #workbench-done:checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__use--fail,
+#workbench-done:checked
+  ~ #wall-choosing:checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked
+  ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .inventory__slot--last-lever
+  .inventory__use--fail,
+:is(#{$inventory-use-choosing}):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .inventory__slot--lamp
+  .inventory__use--fail {
+  pointer-events: auto;
+}
+
+#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp .inventory__use--fail {
+  pointer-events: none;
+}
+
+:is(#{$inventory-use-choosing}):checked
+  ~ #wall-done:checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__use--fail,
+#wall-fuse-choosing:checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__use--fail,
+#wall-done:checked
+  ~ #last-lever-socket-choosing:checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__use--fail {
+  pointer-events: none;
+}
+
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ :is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-shell
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ :is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-powder
+  .inventory__use--fail,
+:is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked
+  ~ :is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-fuse
+  .inventory__use--fail,
+#workbench-done:checked
+  ~ :is(#{$wall-item-choosing}):checked
+  ~ .game
+  :is(
+    .inventory__slot--bomb-shell,
+    .inventory__slot--bomb-powder,
+    .inventory__slot--bomb-fuse
+  )
+  .inventory__use--fail,
+#workbench-done:checked
+  ~ #last-lever-socket-choosing:checked
+  ~ .game
+  :is(
+    .inventory__slot--bomb-shell,
+    .inventory__slot--bomb-powder,
+    .inventory__slot--bomb-fuse
+  )
+  .inventory__use--fail {
+  pointer-events: none;
+}
+
+:is(#{$inventory-use-choosing}):checked
+  ~ :is(
+    #last-lever-socket-fitting,
+    #last-lever-socket-fitted,
+    #lift-6-14-unlocked
+  ):checked
+  ~ .game
+  .inventory__slot--last-lever
+  .inventory__use--fail {
+  pointer-events: none;
+}
+
+:is(#{$inventory-bag-open}):checked
+  ~ #item-use-fail-a:not(:checked)
+  ~ .game
+  .inventory__slot
+  .inventory__use--fail-b {
+  pointer-events: none;
+}
+
+:is(#{$inventory-bag-open}):checked
+  ~ #item-use-fail-a:checked
+  ~ .game
+  .inventory__slot
+  .inventory__use--fail:not(.inventory__use--fail-b) {
+  pointer-events: none;
+}
+
+// Do not gate these on bag-open: that selector starts matching when the
+// bag opens and would replay a leftover fail-a from an earlier miss.
+.dialogue--item-use-fail {
+  visibility: hidden;
+}
+
+:is(#{$inventory-bag-open}):checked ~ .game .dialogue--item-use-fail {
+  visibility: visible;
+}
+
+#item-use-fail-a:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+  animation: dialogue-ephemeral vars.$inventory-quote-duration ease-out forwards;
+}
+
+#item-use-fail-b:checked ~ .game .dialogue--item-use-fail .dialogue__box {
+  animation: dialogue-ephemeral-replay vars.$inventory-quote-duration ease-out
+    forwards;
+}

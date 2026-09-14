@@ -1,0 +1,696 @@
+@use '../base/variables' as vars;
+@use 'dialogue' as dlg;
+@use 'inventory-shared' as *;
+
+.inventory__toggle {
+  @include inventory-hud-slot(vars.$inventory-toggle-size);
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: url('../assets/objects/inventory/backpack.png') center / contain
+    no-repeat;
+  image-rendering: pixelated;
+  cursor: pointer;
+  user-select: none;
+  // Reappear after the bag has shrunk back to icon size.
+  transition:
+    opacity 0.15s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+.inventory__toggle--tutorial {
+  background-image: url('../assets/objects/inventory/backpack-before.png');
+}
+
+// Tutorial toggle: backpack pickup until the lamp is used.
+#position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--tutorial {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__toggle--play {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#position-1:checked ~ #{vars.$intro-until-bag} ~ .game .inventory__toggle--play {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes inventory-toggle-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+#inventory-open:not(:checked)
+  ~ #position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__toggle--tutorial {
+  animation: inventory-toggle-pulse 1s ease-in-out infinite;
+}
+
+#inventory-open:checked
+  ~ #position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__toggle,
+:is(#inventory-open-play, #{$inventory-bag-open}):checked ~ .game .inventory__toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.12s,
+    visibility 0s;
+}
+
+.inventory {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  // Stay visible while the bag shrinks back on close.
+  transition:
+    opacity 0s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+#inventory-open:checked ~ #intro-10:checked ~ .game .inventory,
+:is(#inventory-open-play, #{$inventory-bag-open}):checked ~ .game .inventory {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}
+
+// Catches world clicks while open; no dim so the backpack stays the UI.
+.inventory__hit {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+@keyframes inventory-click-guard-off {
+  to {
+    pointer-events: none;
+  }
+}
+
+.inventory__click-guard {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+:is(#{$inventory-bag-open}):checked ~ .game .inventory__click-guard {
+  pointer-events: auto;
+  animation: inventory-click-guard-off 0.01s 0.28s linear forwards;
+}
+
+.inventory__panel {
+  position: absolute;
+  // Layout at the open slot: right edge on the circle's left, mid height.
+  // Closed transform parks the shrunk bag on the top-left icon.
+  top: calc(var(--field-size) / 2);
+  left: calc(50% + var(--inv-anchor-x));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  pointer-events: none;
+  transform-origin: 100% 50%;
+  transform: translate(-100%, -50%)
+    translate(var(--inv-morph-x), var(--inv-morph-y))
+    scale(#{vars.$inventory-morph-scale});
+  transition: transform vars.$inventory-morph-duration ease-out;
+}
+
+#inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+:is(#inventory-open-play, #{$inventory-bag-open}):checked ~ .game .inventory__panel {
+  pointer-events: auto;
+  overflow: visible;
+  transform: translate(-100%, -50%) scale(1);
+}
+
+.inventory__back {
+  @include dlg.close-pad;
+  @include inventory-hud-slot(vars.$inventory-back-size);
+  z-index: 3;
+  display: flex;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s,
+    visibility 0s;
+}
+
+#inventory-open:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__back--tutorial,
+#inventory-open-play:checked ~ .game .inventory__back--play,
+#vine24-choosing:checked ~ .game .inventory__back--vine24,
+#vine12-choosing:checked ~ .game .inventory__back--vine12,
+#vine30-choosing:checked ~ .game .inventory__back--vine30,
+#rock-choosing:checked ~ .game .inventory__back--rock,
+#mud-choosing:checked ~ .game .inventory__back--mud,
+#wall-choosing:checked ~ .game .inventory__back--wall,
+#wall-fuse-choosing:checked ~ .game .inventory__back--wall-fuse,
+#last-lever-socket-choosing:checked ~ .game .inventory__back--socket,
+:is(#{$inventory-craft-open}):checked ~ .game .inventory__back--workbench {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.2s vars.$inventory-morph-duration,
+    visibility 0s vars.$inventory-morph-duration;
+}
+
+.inventory__art {
+  position: relative;
+  width: vars.$inventory-art-size;
+  height: vars.$inventory-art-size;
+  image-rendering: pixelated;
+  background: url('../assets/objects/inventory/inventory-background.png') center /
+    contain no-repeat;
+}
+
+// 2x3 centered on the brown pouches; lamp hangs outside on the right.
+.inventory__grid {
+  position: absolute;
+  left: 29%;
+  width: 42%;
+  top: 48%;
+  height: 36%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  column-gap: 3px * vars.$vision-scale;
+  row-gap: 7px * vars.$vision-scale;
+  align-content: stretch;
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+.inventory__slot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+  background: none;
+  border: 0;
+  outline: none;
+}
+
+.inventory__slot--sickle {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.inventory__slot--pickaxe {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.inventory__slot--shovel {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.inventory__slot--bomb-shell {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.inventory__slot--bomb-powder {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.inventory__slot--bomb-fuse {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+// Overlay the bottom row; explicit cells above keep craft parts in place.
+.inventory__slot--bomb {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 42%;
+  height: 118%;
+  justify-self: center;
+  align-self: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.inventory__slot--last-lever {
+  grid-column: 2;
+  grid-row: 2;
+  z-index: 0;
+  pointer-events: none;
+}
+
+// Lamp hangs on the right strap of the 32px bag (lamp.png is 6x14).
+.inventory__slot--lamp {
+  position: absolute;
+  left: 82%;
+  top: 32%;
+  width: 19%;
+  height: 44%;
+  z-index: 2;
+}
+
+.inventory__slot--lamp .inventory__icon {
+  background-position: top center;
+}
+
+.inventory__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.inventory__icon--b {
+  position: absolute;
+  inset: 0;
+}
+
+.inventory__caption {
+  @include dlg.pixel-bubble-border;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + #{vars.$dialogue-pixel * 2});
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  overflow: visible;
+  padding: vars.$dialogue-padding-top vars.$dialogue-padding-x;
+  border: 0;
+  background: vars.$dialogue-fill;
+  color: vars.$dialogue-text-color;
+  font-family: inherit;
+  font-size: vars.$dialogue-font-size;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+// Lamp hangs past the bag's right edge; grow the tag left so the last
+// letters are not clipped by the panel.
+.inventory__slot--lamp .inventory__caption {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.inventory__slot:hover .inventory__caption,
+.inventory__slot:focus-within .inventory__caption {
+  opacity: 1;
+  visibility: visible;
+}
+
+.inventory__use {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.inventory__use--vine24,
+.inventory__use--vine12,
+.inventory__use--vine30,
+.inventory__use--rock,
+.inventory__use--mud,
+.inventory__use--wall,
+.inventory__use--wall-pickaxe,
+.inventory__use--wall-shovel,
+.inventory__use--socket,
+.inventory__use--lamp-fuse,
+.inventory__use[class*='inventory__use--wb-'] {
+  z-index: 5;
+}
+
+.inventory__use[class*='inventory__use--wb-'] {
+  z-index: 6;
+}
+
+#position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__use--lamp-intro {
+  pointer-events: auto;
+}
+
+// Click hint while the bag is open at intro-10: short rattle, pause, loop.
+// Lives on the icon so the use-hitbox stays still. Delay matches the bag
+// morph so it does not shake while the panel is still growing.
+@keyframes inventory-lamp-hint-rattle {
+  0%,
+  8% {
+    transform: translateX(0);
+  }
+
+  11% {
+    transform: translateX(-3px);
+  }
+
+  15% {
+    transform: translateX(3px);
+  }
+
+  19% {
+    transform: translateX(-2px);
+  }
+
+  23% {
+    transform: translateX(2px);
+  }
+
+  27%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#inventory-open:checked
+  ~ #position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__slot--lamp
+  .inventory__icon {
+  animation: inventory-lamp-hint-rattle 2.2s ease-in-out
+    vars.$inventory-morph-duration infinite;
+}
+
+@mixin inventory-item-held {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.inventory__slot--sickle .inventory__icon {
+  background-image: url('../assets/objects/inventory/sickle.png');
+}
+
+:is(#{$sickle-held}):checked
+  ~ .game
+  .inventory__slot--sickle
+  .inventory__icon {
+  @include inventory-item-held;
+}
+
+.inventory__slot--pickaxe .inventory__icon {
+  background-image: url('../assets/objects/inventory/pickaxe.png');
+}
+
+#pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__icon {
+  @include inventory-item-held;
+}
+
+.inventory__slot--shovel .inventory__icon {
+  background-image: url('../assets/objects/inventory/shovel.png');
+}
+
+#shovel-armed:checked ~ .game .inventory__slot--shovel .inventory__icon {
+  @include inventory-item-held;
+}
+
+.inventory__slot--bomb .inventory__icon {
+  background-image: url('../assets/objects/inventory/bomb.png');
+}
+
+#workbench-done:checked ~ .game .inventory__slot--bomb .inventory__icon {
+  @include inventory-item-held;
+}
+
+#workbench-done:checked ~ .game .inventory__slot--bomb {
+  z-index: 2;
+}
+
+:is(
+    #wall-blast-prompt,
+    #wall-placed,
+    #wall-fuse-choosing,
+    #wall-fuse-prompt,
+    #wall-lantern-fire,
+    #wall-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb
+  .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:is(
+    #wall-blast-prompt,
+    #wall-placed,
+    #wall-fuse-choosing,
+    #wall-fuse-prompt,
+    #wall-lantern-fire,
+    #wall-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb {
+  z-index: 0;
+}
+
+.inventory__slot--lamp .inventory__icon {
+  background-image: url('../assets/objects/inventory/lamp-after.png');
+}
+
+#intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon {
+  background-image: url('../assets/objects/inventory/lamp-before.png');
+}
+
+#intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon,
+:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ .game
+  .inventory__slot--lamp
+  .inventory__icon {
+  @include inventory-item-held;
+}
+
+#position-1:checked ~ #intro-dark:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-fade:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-1:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-2:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-lantern:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-home:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-3:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-anyway:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-4:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-sit:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-fall:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-dark-hold:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-5:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-breathe:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-6:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-7:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-pack:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-8:checked ~ .game .inventory__slot--lamp .inventory__icon,
+#position-1:checked ~ #intro-9:checked ~ .game .inventory__slot--lamp .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inventory__slot--bomb-shell .inventory__icon {
+  background-image: url('../assets/objects/inventory/bomb-shell.png');
+}
+
+#bomb-shell-armed:checked ~ .game .inventory__slot--bomb-shell .inventory__icon {
+  @include inventory-item-held;
+}
+
+:is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-shell
+  .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inventory__slot--bomb-powder .inventory__icon {
+  background-image: url('../assets/objects/inventory/bomb-gunpowder.png');
+}
+
+#bomb-powder-armed:checked
+  ~ .game
+  .inventory__slot--bomb-powder
+  .inventory__icon {
+  @include inventory-item-held;
+}
+
+:is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-powder
+  .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inventory__slot--bomb-fuse .inventory__icon {
+  background-image: url('../assets/objects/inventory/bomb-fuse.png');
+}
+
+#bomb-fuse-armed:checked ~ .game .inventory__slot--bomb-fuse .inventory__icon {
+  @include inventory-item-held;
+}
+
+:is(
+    #workbench-crafting,
+    #workbench-crafted,
+    #workbench-take,
+    #workbench-done
+  ):checked
+  ~ .game
+  .inventory__slot--bomb-fuse
+  .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inventory__slot--last-lever .inventory__icon {
+  background-image: url('../assets/objects/inventory/last-lever-item.png');
+}
+
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .inventory__slot--last-lever
+  .inventory__icon {
+  @include inventory-item-held;
+}
+
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .inventory__slot--last-lever {
+  z-index: 2;
+}
+
+:is(
+    #last-lever-socket-fitting,
+    #last-lever-socket-fitted,
+    #lift-6-14-unlocked
+  ):checked
+  ~ .game
+  .inventory__slot--last-lever
+  .inventory__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Tutorial bag only — #inventory-open stays checked after the lamp, so
+// pairing it with #intro-11:not(:checked) hid every pad for the rest of
+// the game. Same gate as the bag paint above (#intro-10).
+#inventory-open:checked
+  ~ #intro-10:checked
+  ~ .game
+  .direction-controls__button--edge,
+#inventory-open:checked
+  ~ #intro-10:checked
+  ~ .game
+  .direction-controls__button--intro-arrow,
+:is(#inventory-open-play, #{$inventory-bag-open}):checked
+  ~ .game
+  .direction-controls__button--edge,
+:is(#inventory-open-play, #{$inventory-bag-open}):checked
+  ~ .game
+  .direction-controls__button--intro-arrow {
+  display: none;
+}
+
+$inventory-quote-items: sickle, pickaxe, shovel, bomb, lamp, bomb-shell,
+  bomb-powder, bomb-fuse, last-lever;
+
+@each $item in $inventory-quote-items {
+  // Ping-pong: after -a plays, the overlay -b label is the only live
+  // click; after -b, -a is live again. Different animation names so the
+  // bubble actually restarts.
+  #item-quote-#{$item}-a:not(:checked)
+    ~ .game
+    .inventory__slot--#{$item}
+    .inventory__icon--b {
+    pointer-events: none;
+  }
+
+  #item-quote-#{$item}-a:checked
+    ~ .game
+    .inventory__slot--#{$item}
+    .inventory__icon:not(.inventory__icon--b) {
+    pointer-events: none;
+  }
+
+  #item-quote-#{$item}-a:checked
+    ~ .game
+    .dialogue--item-quote[data-item='#{$item}']
+    .dialogue__box {
+    animation: dialogue-ephemeral vars.$inventory-quote-duration ease-out
+      forwards;
+  }
+
+  #item-quote-#{$item}-b:checked
+    ~ .game
+    .dialogue--item-quote[data-item='#{$item}']
+    .dialogue__box {
+    animation: dialogue-ephemeral-replay vars.$inventory-quote-duration ease-out
+      forwards;
+  }
+}

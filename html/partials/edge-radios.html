@@ -1,0 +1,122 @@
+<!-- One extra "facing" radio per edge (position-<to>--from-<source>),
+         all unchecked — lets the direction button actually clicked decide
+         which way the player sprite faces (see player/_player.scss),
+         instead of the plain position-<to> id above which can be reached
+         from several directions and can't disambiguate on its own.
+         Auto-generated from logic-map.png via scripts/extract_positions.py. -->
+<input type="radio" name="position" id="position-2--from-1" class="world-position-input" />
+<input type="radio" name="position" id="position-3--from-2" class="world-position-input" />
+<input type="radio" name="position" id="position-1--from-2" class="world-position-input" />
+<input type="radio" name="position" id="position-4--from-3" class="world-position-input" />
+<input type="radio" name="position" id="position-2--from-3" class="world-position-input" />
+<input type="radio" name="position" id="position-5--from-4" class="world-position-input" />
+<input type="radio" name="position" id="position-3--from-4" class="world-position-input" />
+<input type="radio" name="position" id="position-6--from-5" class="world-position-input" />
+<input type="radio" name="position" id="position-4--from-5" class="world-position-input" />
+<!-- Elevator ride BACK from a dual-access end's simple partner (see
+         base/_variables.scss vars.$elevator-reverse-duals) — 2 facing
+         variants, since which way the player is currently facing when
+         boarding here depends on how they arrived, not a single fixed
+         direction. Hand-added, not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-14--from-6--right" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-6--left" class="world-position-input" />
+<input type="radio" name="position" id="position-5--from-6" class="world-position-input" />
+<input type="radio" name="position" id="position-4--from-6" class="world-position-input" />
+<input type="radio" name="position" id="position-2--from-4" class="world-position-input" />
+<input type="radio" name="position" id="position-8--from-7" class="world-position-input" />
+<input type="radio" name="position" id="position-16--from-8" class="world-position-input" />
+<input type="radio" name="position" id="position-7--from-8" class="world-position-input" />
+<input type="radio" name="position" id="position-10--from-9" class="world-position-input" />
+<input type="radio" name="position" id="position-36--from-10" class="world-position-input" />
+<input type="radio" name="position" id="position-9--from-10" class="world-position-input" />
+<input type="radio" name="position" id="position-12--from-11" class="world-position-input" />
+<input type="radio" name="position" id="position-27--from-11" class="world-position-input" />
+<input type="radio" name="position" id="position-11--from-12" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-13" class="world-position-input" />
+<!-- Dual-access elevator end (see base/_variables.scss vars.$elevator-dual-ends) —
+         hand-added, not part of extract_positions.py's output: 2 facing
+         variants instead of the single position-6--from-14 an auto-run
+         would produce. -->
+<input type="radio" name="position" id="position-6--from-14--right" class="world-position-input" />
+<input type="radio" name="position" id="position-6--from-14--left" class="world-position-input" />
+<input type="radio" name="position" id="position-15--from-14" class="world-position-input" />
+<input type="radio" name="position" id="position-13--from-14" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-15" class="world-position-input" />
+<input type="radio" name="position" id="position-14--from-15" class="world-position-input" />
+<input type="radio" name="position" id="position-8--from-16" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-16" class="world-position-input" />
+<input type="radio" name="position" id="position-18--from-17" class="world-position-input" />
+<!-- Dual-access elevator end (see base/_variables.scss vars.$elevator-dual-ends) —
+         hand-added, not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-26--from-17--right" class="world-position-input" />
+<input type="radio" name="position" id="position-26--from-17--left" class="world-position-input" />
+<input type="radio" name="position" id="position-16--from-17" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-18" class="world-position-input" />
+<input type="radio" name="position" id="position-20--from-19" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-19" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-20" class="world-position-input" />
+<input type="radio" name="position" id="position-19--from-20" class="world-position-input" />
+<input type="radio" name="position" id="position-22--from-21" class="world-position-input" />
+<!-- Second arrival for the same walk edge, used for every return AFTER
+     the workbench interaction — see scss/world/_workbench.scss. -->
+<input type="radio" name="position" id="position-22--from-21--post" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-21" class="world-position-input" />
+<!-- Second arrival for the same ladder edge, used for every return AFTER
+     the sickle interaction — see scss/world/_obstacles.scss. -->
+<input type="radio" name="position" id="position-30--from-21--post" class="world-position-input" />
+<input type="radio" name="position" id="position-20--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-19--from-21" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-22" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-22" class="world-position-input" />
+<input type="radio" name="position" id="position-15--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-24--from-23" class="world-position-input" />
+<!-- Corridor skip after vine24-done: 23↔25, skipping empty node 24
+     (see scss/world/_obstacles.scss). Hand-added, not part of
+     extract_positions.py's output. -->
+<input type="radio" name="position" id="position-25--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-22--from-23" class="world-position-input" />
+<input type="radio" name="position" id="position-22--from-23--post" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-24" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-24" class="world-position-input" />
+<input type="radio" name="position" id="position-26--from-25" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-25" class="world-position-input" />
+<input type="radio" name="position" id="position-24--from-25" class="world-position-input" />
+<input type="radio" name="position" id="position-23--from-25" class="world-position-input" />
+<!-- Elevator ride BACK from a dual-access end's simple partner (see
+         base/_variables.scss vars.$elevator-reverse-duals). Hand-added,
+         not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-17--from-26--right" class="world-position-input" />
+<input type="radio" name="position" id="position-17--from-26--left" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-26" class="world-position-input" />
+<input type="radio" name="position" id="position-11--from-27" class="world-position-input" />
+<input type="radio" name="position" id="position-28--from-27" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-27" class="world-position-input" />
+<input type="radio" name="position" id="position-29--from-28" class="world-position-input" />
+<input type="radio" name="position" id="position-27--from-28" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-29" class="world-position-input" />
+<input type="radio" name="position" id="position-28--from-29" class="world-position-input" />
+<input type="radio" name="position" id="position-21--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-31--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-29--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-27--from-30" class="world-position-input" />
+<input type="radio" name="position" id="position-32--from-31" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-31" class="world-position-input" />
+<!-- Cover run after lighting the wall bomb (see scss/world/_stone-wall.scss):
+         same 31→30 walk, but the rest pose stays facing the wall. Hand-added,
+         not part of extract_positions.py's output. -->
+<input type="radio" name="position" id="position-30--from-31--right" class="world-position-input" />
+<input type="radio" name="position" id="position-31--from-32" class="world-position-input" />
+<input type="radio" name="position" id="position-30--from-32" class="world-position-input" />
+<input type="radio" name="position" id="position-25--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-34--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-35--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-36--from-33" class="world-position-input" />
+<input type="radio" name="position" id="position-35--from-34" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-34" class="world-position-input" />
+<input type="radio" name="position" id="position-36--from-35" class="world-position-input" />
+<input type="radio" name="position" id="position-34--from-35" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-35" class="world-position-input" />
+<input type="radio" name="position" id="position-10--from-36" class="world-position-input" />
+<input type="radio" name="position" id="position-35--from-36" class="world-position-input" />
+<input type="radio" name="position" id="position-33--from-36" class="world-position-input" />

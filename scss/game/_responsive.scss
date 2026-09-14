@@ -1,0 +1,699 @@
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+
+// ==========================================================================
+// COMPACT / SCALE BREAKPOINTS
+// Three layouts: wide (D-pad on the circle, panels left/right when the
+// window fits both docks), overlay (same chrome, panels in the field
+// when side docks would clip), and compact (playfield on top, D-pad in
+// a chrome strip, bag/gear on the lower corners, panels overlay the
+// field). Scale steps are discrete so the 3x pixel art stays even:
+// 0.5 / 0.75 / 1 / 1.25.
+//
+// Compact when the window is narrow OR too short to host the 640px
+// circle. Loaded last so these geometry overrides win source-order ties
+// against components without fighting the ID-chain state rules.
+// ==========================================================================
+
+@mixin layout-compact {
+  .game {
+    --chrome-h: 0px;
+    --band-top: env(safe-area-inset-top, 0px);
+    --safe-y: calc(
+      env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px)
+    );
+    --band-sum: calc(100svh - var(--safe-y));
+    --band-hud: max(92px, calc(var(--band-sum) * 0.11));
+    --pad-btn: 52px;
+    --ok-btn: 52px;
+    --pad-reach-x: 68px;
+    --pad-reach-y: 68px;
+    --pad-cluster: calc(var(--pad-reach-y) * 2 + var(--pad-btn));
+    --gap-circle-pad: 18px;
+    --pad-floor: 24px;
+    --field-size: round(
+      nearest,
+      min(
+        calc(#{vars.$vision-field-size} * 0.78),
+        calc(100vw - 28px),
+        calc(
+          var(--band-sum) - var(--band-hud) - var(--gap-circle-pad) -
+            var(--pad-cluster) - var(--pad-floor)
+        )
+      ),
+      2px
+    );
+    --field-scale: calc(var(--field-size) / #{vars.$vision-field-size});
+    --play-top-min: calc(var(--band-top) + var(--band-hud));
+    --play-top-max: calc(
+      var(--band-top) + var(--band-sum) - var(--field-size) -
+        var(--gap-circle-pad) - var(--pad-cluster) - var(--pad-floor)
+    );
+    --play-top-raw: clamp(
+      var(--play-top-min),
+      calc(
+        var(--band-top) + (var(--band-sum) - var(--field-size)) / 2 - 16px
+      ),
+      var(--play-top-max)
+    );
+    --play-top: round(nearest, var(--play-top-raw), 2px);
+    --pad-region-top: calc(var(--play-top) + var(--field-size));
+    --pad-region-bottom: calc(var(--band-top) + var(--band-sum));
+    --dpad-origin: round(
+      nearest,
+      clamp(
+        calc(
+          var(--pad-region-top) + var(--gap-circle-pad) + var(--pad-reach-y) +
+            var(--pad-btn) / 2
+        ),
+        calc(
+          var(--pad-region-top) +
+            (var(--pad-region-bottom) - var(--pad-region-top)) * 0.38
+        ),
+        calc(
+          var(--pad-region-bottom) - var(--pad-reach-y) - var(--pad-btn) / 2 -
+            var(--pad-floor)
+        )
+      ),
+      2px
+    );
+    --hud-y: round(
+      nearest,
+      clamp(
+        calc(var(--band-top) + var(--hud-icon-pad) + var(--hud-icon-half)),
+        calc(var(--band-top) + (var(--play-top) - var(--band-top)) * 2 / 3),
+        calc(var(--play-top) - var(--hud-icon-half) - 8px)
+      ),
+      2px
+    );
+    --panel-y: calc(var(--play-top) + var(--field-size) / 2);
+    --band-mid: var(--field-size);
+    --hud-inv-x: calc(-50vw + var(--hud-icon-pad) + var(--hud-icon-half));
+    --hud-set-x: calc(50vw - var(--hud-icon-pad) - var(--hud-icon-half));
+    --hud-inv-y: 0px;
+    --hud-set-y: 0px;
+    --chrome-center-from-mid: calc(var(--field-size) / 2);
+    --pad-ghost-opacity: 0;
+    --pad-ghost-visibility: hidden;
+    --edge-opacity: 1;
+    --inv-fit: min(
+      1,
+      calc((var(--field-size) - 16px) / #{vars.$inventory-art-size}),
+      calc((100vw - 24px) / #{vars.$inventory-art-size})
+    );
+  }
+
+  .scene--game {
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .layout-shell {
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    margin-inline: auto;
+  }
+
+  .playfield {
+    position: absolute;
+    top: var(--play-top);
+    left: round(nearest, 50cqi, 1px);
+    right: auto;
+    width: var(--field-size);
+    max-width: 100%;
+    margin-left: calc(var(--field-size) / -2);
+  }
+
+  .playfield-inner {
+    left: 0;
+    transform: scale(var(--field-scale));
+    transform-origin: 0 0;
+  }
+
+  .hud-origin {
+    top: var(--hud-y);
+  }
+
+  .direction-controls {
+    top: var(--dpad-origin);
+  }
+
+  .direction-controls__button {
+    width: var(--pad-btn);
+    height: var(--pad-btn);
+    left: calc(var(--pad-btn) / -2);
+    top: calc(var(--pad-btn) / -2);
+  }
+
+  .direction-controls__button--edge {
+    background: vars.$dialogue-arrow-bg-hover;
+    @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+  }
+
+  .dialogue:not(.dialogue--caption):not(.dialogue--center) {
+    padding-bottom: calc(
+      100svh - var(--play-top) - var(--field-size) / 2 +
+        var(--dialogue-lift) - var(--dialogue-drop)
+    );
+  }
+
+  .dialogue--center,
+  .dialogue--caption {
+    align-items: center;
+    padding-top: var(--play-top);
+    padding-bottom: calc(100svh - var(--play-top) - var(--field-size));
+  }
+
+  .direction-controls > div.direction-controls__button {
+    opacity: var(--pad-ghost-opacity);
+    visibility: var(--pad-ghost-visibility);
+  }
+
+  .inventory {
+    z-index: 5;
+  }
+
+  .settings {
+    z-index: 5;
+  }
+
+  .inventory__hit,
+  .settings__hit {
+    position: fixed;
+    inset: 0;
+  }
+
+  .inventory__panel {
+    top: var(--panel-y);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%)
+      translate(var(--hud-inv-x), calc(var(--hud-y) - var(--panel-y)))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(
+      #inventory-open-play,
+      #vine24-choosing,
+      #vine12-choosing,
+      #vine30-choosing,
+      #rock-choosing,
+      #mud-choosing,
+      #wall-choosing,
+      #wall-fuse-choosing,
+      #last-lever-socket-choosing,
+      #workbench-choosing,
+      #workbench-a-shell,
+      #workbench-a-powder,
+      #workbench-a-fuse,
+      #workbench-b-shell-powder,
+      #workbench-b-shell-fuse,
+      #workbench-b-powder-shell,
+      #workbench-b-powder-fuse,
+      #workbench-b-fuse-shell,
+      #workbench-b-fuse-powder,
+      #workbench-bad-sfp,
+      #workbench-bad-psf,
+      #workbench-bad-pfs,
+      #workbench-bad-fsp,
+      #workbench-bad-fps
+    ):checked
+    ~ .game
+    .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+
+  .settings__panel {
+    top: var(--panel-y);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%)
+      translate(var(--hud-set-x), calc(var(--hud-y) - var(--panel-y)))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+
+  // Continue control sits in the D-pad hole: unlabeled green spark that
+  // shrinks on appear (same motion as desktop ::before).
+  .dialogue:not(.dialogue--caption) .dialogue__button {
+    --spark-end: calc(42 / 52);
+    box-shadow: none;
+    position: fixed;
+    left: round(nearest, 50cqi, 1px);
+    top: var(--dpad-origin);
+    right: auto;
+    bottom: auto;
+    z-index: 3;
+    width: var(--ok-btn);
+    height: var(--ok-btn);
+    min-width: 0;
+    margin-left: calc(var(--ok-btn) / -2);
+    margin-top: calc(var(--ok-btn) / -2);
+    padding: 0;
+    font-size: 0;
+    line-height: 1;
+    letter-spacing: 0;
+    color: transparent;
+    background: transparent;
+    transform: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+    &::before {
+      content: '';
+      inset: 0;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background: vars.$dialogue-arrow-bg-hover;
+      @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+      transform: scale(1);
+      transform-origin: 50% 50%;
+      animation: ok-pad-in 0.7s ease-out both;
+    }
+
+    &::after {
+      content: none;
+    }
+
+    &:hover {
+      background: transparent;
+      box-shadow: none;
+
+      &::before {
+        background: vars.$dialogue-arrow-bg-hover;
+        @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+      }
+    }
+  }
+
+  .title-screen__brand {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    justify-self: stretch;
+    transform: scale(0.6);
+    transform-origin: 50% 50%;
+  }
+
+  .title-screen__button,
+  .title-screen__legal-link {
+    position: relative;
+  }
+
+  .title-screen__button::before,
+  .title-screen__legal-link::before {
+    content: '';
+    position: absolute;
+    inset: -12px -10px;
+  }
+
+  .title-screen__legal {
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 16px
+      calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .title-screen__legal-panel {
+    width: min(480px, 100%);
+    max-width: 100%;
+    padding: 18px 18px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .title-screen__legal-title {
+    padding-inline: 36px;
+    font-size: 16px;
+  }
+
+  .title-screen__legal-close {
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .dialogue--caption .dialogue__text {
+    white-space: normal;
+    max-width: min(90vw, #{vars.$dialogue-caption-max-width});
+  }
+}
+
+// Circle HUD stays on the field corners; bag/gear grow in the circle
+// instead of docking left/right (those docks need ~480px beside 640).
+@mixin panels-over-field {
+  .game {
+    --inv-fit: min(
+      1,
+      calc((var(--field-size) - 16px) / #{vars.$inventory-art-size}),
+      calc((100vw - 24px) / #{vars.$inventory-art-size})
+    );
+  }
+
+  .inventory__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%)
+      translate(var(--hud-inv-x), var(--hud-inv-y))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  :is(
+      #inventory-open-play,
+      #vine24-choosing,
+      #vine12-choosing,
+      #vine30-choosing,
+      #rock-choosing,
+      #mud-choosing,
+      #wall-choosing,
+      #wall-fuse-choosing,
+      #last-lever-socket-choosing,
+      #workbench-choosing,
+      #workbench-a-shell,
+      #workbench-a-powder,
+      #workbench-a-fuse,
+      #workbench-b-shell-powder,
+      #workbench-b-shell-fuse,
+      #workbench-b-powder-shell,
+      #workbench-b-powder-fuse,
+      #workbench-b-fuse-shell,
+      #workbench-b-fuse-powder,
+      #workbench-bad-sfp,
+      #workbench-bad-psf,
+      #workbench-bad-pfs,
+      #workbench-bad-fsp,
+      #workbench-bad-fps
+    ):checked
+    ~ .game
+    .inventory__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%)
+      translate(var(--hud-set-x), var(--hud-set-y))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  #settings-open:checked ~ .game .settings__panel {
+    transform: translate(-50%, -50%) scale(var(--inv-fit));
+  }
+}
+
+@mixin layout-compact-overlay {
+  .game {
+    --chrome-h: 0px;
+    --play-top: 0px;
+    --band-top: 0px;
+    --band: var(--field-size);
+    --field-scale: min(0.6, calc((100svh - 24px) / #{vars.$vision-field-size}));
+    --hud-inv-x: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-x: calc(
+      var(--field-size) * 0.5 - var(--hud-icon-pad) - var(--hud-icon-half)
+    );
+    --hud-inv-y: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-y: var(--hud-inv-y);
+    --chrome-center-from-mid: calc(
+      var(--field-size) / 2 - #{vars.$chrome-reach-y} -
+        #{vars.$direction-button-size * 0.5} - 10px
+    );
+  }
+
+  .scene--game {
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .layout-shell {
+    width: min(var(--field-size), 100%);
+    height: calc(var(--field-size) + var(--chrome-h));
+  }
+
+  .playfield {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin-left: 0;
+  }
+
+  .hud-origin {
+    top: calc(var(--field-size) / 2);
+  }
+
+  .direction-controls {
+    top: calc(
+      var(--field-size) - #{vars.$chrome-reach-y} -
+        #{vars.$direction-button-size * 0.5} - 10px
+    );
+  }
+
+  .inventory__panel,
+  .settings__panel {
+    top: calc(var(--field-size) / 2);
+  }
+
+  .inventory__panel {
+    transform: translate(-50%, -50%)
+      translate(var(--hud-inv-x), var(--hud-inv-y))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  .settings__panel {
+    transform: translate(-50%, -50%)
+      translate(var(--hud-set-x), var(--hud-set-y))
+      scale(#{vars.$inventory-morph-scale});
+  }
+
+  .dialogue--center,
+  .dialogue--caption {
+    padding-top: 0;
+    padding-bottom: var(--chrome-h);
+  }
+
+  .dialogue:not(.dialogue--caption) .dialogue__button {
+    --spark-end: #{vars.$click-hint-hover-scale};
+    top: calc(50% + var(--chrome-center-from-mid));
+    width: auto;
+    height: auto;
+    min-width: calc(#{vars.$direction-button-size} + #{vars.$dialogue-pixel * 8});
+    padding: vars.$dialogue-pixel (vars.$dialogue-pixel * 5);
+    font-size: vars.$dialogue-font-size;
+    color: #fff;
+    background: vars.$dialogue-arrow-bg;
+    @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg);
+    transform: translate(-50%, -50%);
+
+    &::before {
+      inset: auto;
+      right: vars.$dialogue-pixel;
+      bottom: vars.$dialogue-pixel;
+      width: 15px;
+      height: 15px;
+      @include dlg.pixel-outline;
+      animation: none;
+    }
+
+    &::after {
+      content: none;
+    }
+
+    &:hover {
+      background: vars.$dialogue-arrow-bg-hover;
+      @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+    }
+  }
+}
+
+// Phone-first compact (also short landscape on wider phones).
+@media (max-width: vars.$layout-compact-max), (max-height: vars.$layout-short-max) {
+  @include layout-compact;
+}
+
+@media (max-width: 383px) {
+  .title-screen__brand {
+    transform: scale(0.5625);
+  }
+}
+
+// Phones, plus tablets that get the wide HUD but still have no mouse.
+@media (max-width: vars.$layout-compact-max), (hover: none) {
+  .title-screen__mobile-note {
+    display: block;
+  }
+}
+
+// Large phones / small tablets: still compact chrome, slightly larger title.
+@media (min-width: vars.$layout-phablet-min) and (max-width: vars.$layout-compact-max) and (min-height: 700px) {
+  .title-screen__brand {
+    transform: scale(0.75);
+  }
+}
+
+// Too short to reserve a chrome strip (landscape phones): overlay the
+// D-pad on the lower part of the field.
+@media (max-height: vars.$layout-short-max) {
+  @include layout-compact-overlay;
+}
+
+// Short desktop windows: shrink the circle, keep the wide HUD.
+// min-height excludes landscape phones (those stay compact via the
+// max-height: $layout-short-max query above).
+@media (min-width: vars.$layout-desktop-min) and (max-height: 700px) and (min-height: vars.$layout-short-max + 1px) {
+  .game {
+    --field-scale: #{vars.$field-scale-phablet};
+    --chrome-h: 0px;
+    --pad-ghost-opacity: 0;
+    --pad-ghost-visibility: hidden;
+    --pad-reach-x: calc(#{vars.$direction-button-reach} * var(--field-scale));
+    --pad-reach-y: calc(#{vars.$direction-button-reach} * var(--field-scale));
+    --hud-inv-y: calc(
+      var(--field-size) * -0.5 + var(--hud-icon-pad) + var(--hud-icon-half)
+    );
+    --hud-set-y: var(--hud-inv-y);
+  }
+}
+
+// Comfortable desktop: authored 640px field.
+@media (min-width: vars.$layout-desktop-min) and (min-height: 701px) {
+  .game {
+    --field-scale: #{vars.$field-scale-desktop};
+  }
+}
+
+// Widescreen: one step up so the circle does not sit as a postage stamp.
+@media (min-width: vars.$layout-wide-min) and (min-height: vars.$layout-wide-min-height) {
+  .game {
+    --field-scale: #{vars.$field-scale-wide};
+  }
+}
+
+// Circle stays centered, so each side dock needs a full panel's width
+// even if only bag or gear is open. Overlay below that span (compact
+// already covers max-width 719 / short landscape).
+//   0.75× field 480 + 480×2 = 1440
+//   1×    field 640 + 480×2 = 1600
+//   1.25× field 800 + 480×2 = 1760
+@media (min-width: vars.$layout-desktop-min) and (max-width: #{vars.$layout-side-docks-min-phablet - 1px}) and (max-height: 700px) and (min-height: vars.$layout-short-max + 1px) {
+  @include panels-over-field;
+}
+
+@media (min-width: vars.$layout-desktop-min) and (max-width: #{vars.$layout-side-docks-min-desktop - 1px}) and (min-height: 701px) {
+  @include panels-over-field;
+}
+
+@media (min-width: vars.$layout-side-docks-min-desktop) and (max-width: #{vars.$layout-side-docks-min-wide - 1px}) and (min-height: vars.$layout-wide-min-height) {
+  @include panels-over-field;
+}
+
+// Touch devices have no hover. Available D-pad edges use the hover fill
+// and full opacity so they don't look idle/dimmed.
+@media (hover: none), (pointer: coarse) {
+  .game {
+    --edge-opacity: 1;
+  }
+
+  .direction-controls__button--edge {
+    background: vars.$dialogue-arrow-bg-hover;
+    @include dlg.pixel-bubble-border($fill: vars.$dialogue-arrow-bg-hover);
+  }
+}
+
+.title-screen,
+.end-screen {
+  width: 100%;
+  height: 100%;
+  height: 100svh;
+}
+
+// Cannot lock Safari's sensor. Cover the game on touch landscape so
+// portrait stays the only playable layout. Desktop (hover + mouse)
+// stays landscape as usual.
+.orientation-lock {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: vars.$z-index-ui + 20;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: vars.$dialogue-pixel * 6;
+  padding: vars.$dialogue-pixel * 8;
+  background: #05040a;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.orientation-lock__title,
+.orientation-lock__copy {
+  margin: 0;
+  color: vars.$dialogue-fill;
+  font-family: inherit;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.orientation-lock__title {
+  font-size: vars.$dialogue-font-size;
+  letter-spacing: vars.$dialogue-pixel;
+  text-transform: uppercase;
+  text-shadow:
+    3px 0 0 #010000,
+    -3px 0 0 #010000,
+    0 3px 0 #010000,
+    0 -3px 0 #010000;
+}
+
+.orientation-lock__copy {
+  font-size: vars.$dialogue-font-size;
+  letter-spacing: vars.$dialogue-pixel * 0.5;
+  color: vars.$dialogue-bevel;
+}
+
+.orientation-lock::before {
+  content: '';
+  width: 36px;
+  height: 60px;
+  box-sizing: border-box;
+  background: vars.$dialogue-fill;
+  box-shadow:
+    0 -3px #ebcba0,
+    0 -6px #010000,
+    3px 0 #ebcba0,
+    3px -3px #010000,
+    6px 0 #010000,
+    0 3px #ebcba0,
+    0 6px #010000,
+    -3px 0 #ebcba0,
+    -3px 3px #010000,
+    -6px 0 #010000,
+    -3px -3px #010000,
+    3px 3px #010000;
+}
+
+@media (orientation: landscape) and (hover: none),
+  (orientation: landscape) and (pointer: coarse) and (max-height: 600px) {
+  .orientation-lock {
+    display: flex;
+  }
+}

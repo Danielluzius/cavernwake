@@ -1,9 +1,4 @@
 :root {
-  --tile-size: 96px;
-  --character-size: 252px;
-  --movement-step: 288px;
-  --walk-frame-count: 4;
-  --idle-frame-count: 4;
   --walk-cycle-duration: 0.6s;
   --walk-duration: 1.2s;
 }
@@ -56,6 +51,18 @@ input {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .game {
@@ -902,425 +909,6 @@ input {
   pointer-events: none;
 }
 
-.room {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(var(--room-cols, 1), 96px);
-  grid-template-rows: repeat(var(--room-rows, 1), 96px);
-}
-
-.cell-x-1 {
-  grid-column: 1;
-}
-
-.cell-x-2 {
-  grid-column: 2;
-}
-
-.cell-x-3 {
-  grid-column: 3;
-}
-
-.cell-x-4 {
-  grid-column: 4;
-}
-
-.cell-x-5 {
-  grid-column: 5;
-}
-
-.cell-x-6 {
-  grid-column: 6;
-}
-
-.cell-x-7 {
-  grid-column: 7;
-}
-
-.cell-x-8 {
-  grid-column: 8;
-}
-
-.cell-x-9 {
-  grid-column: 9;
-}
-
-.cell-x-10 {
-  grid-column: 10;
-}
-
-.cell-x-11 {
-  grid-column: 11;
-}
-
-.cell-x-12 {
-  grid-column: 12;
-}
-
-.cell-x-13 {
-  grid-column: 13;
-}
-
-.cell-x-14 {
-  grid-column: 14;
-}
-
-.cell-x-15 {
-  grid-column: 15;
-}
-
-.cell-x-16 {
-  grid-column: 16;
-}
-
-.cell-x-17 {
-  grid-column: 17;
-}
-
-.cell-x-18 {
-  grid-column: 18;
-}
-
-.cell-x-19 {
-  grid-column: 19;
-}
-
-.cell-x-20 {
-  grid-column: 20;
-}
-
-.cell-x-21 {
-  grid-column: 21;
-}
-
-.cell-x-22 {
-  grid-column: 22;
-}
-
-.cell-x-23 {
-  grid-column: 23;
-}
-
-.cell-x-24 {
-  grid-column: 24;
-}
-
-.cell-x-25 {
-  grid-column: 25;
-}
-
-.cell-x-26 {
-  grid-column: 26;
-}
-
-.cell-x-27 {
-  grid-column: 27;
-}
-
-.cell-x-28 {
-  grid-column: 28;
-}
-
-.cell-x-29 {
-  grid-column: 29;
-}
-
-.cell-x-30 {
-  grid-column: 30;
-}
-
-.cell-x-31 {
-  grid-column: 31;
-}
-
-.cell-x-32 {
-  grid-column: 32;
-}
-
-.cell-x-33 {
-  grid-column: 33;
-}
-
-.cell-x-34 {
-  grid-column: 34;
-}
-
-.cell-x-35 {
-  grid-column: 35;
-}
-
-.cell-x-36 {
-  grid-column: 36;
-}
-
-.cell-x-37 {
-  grid-column: 37;
-}
-
-.cell-x-38 {
-  grid-column: 38;
-}
-
-.cell-x-39 {
-  grid-column: 39;
-}
-
-.cell-x-40 {
-  grid-column: 40;
-}
-
-.cell-y-1 {
-  grid-row: 1;
-}
-
-.cell-y-2 {
-  grid-row: 2;
-}
-
-.cell-y-3 {
-  grid-row: 3;
-}
-
-.cell-y-4 {
-  grid-row: 4;
-}
-
-.cell-y-5 {
-  grid-row: 5;
-}
-
-.cell-y-6 {
-  grid-row: 6;
-}
-
-.cell-y-7 {
-  grid-row: 7;
-}
-
-.cell-y-8 {
-  grid-row: 8;
-}
-
-.cell-y-9 {
-  grid-row: 9;
-}
-
-.cell-y-10 {
-  grid-row: 10;
-}
-
-.tile--vertex {
-  position: absolute;
-}
-
-.vertex-x-0 {
-  left: calc(0 * 96px - 48px);
-}
-
-.vertex-x-1 {
-  left: calc(1 * 96px - 48px);
-}
-
-.vertex-x-2 {
-  left: calc(2 * 96px - 48px);
-}
-
-.vertex-x-3 {
-  left: calc(3 * 96px - 48px);
-}
-
-.vertex-x-4 {
-  left: calc(4 * 96px - 48px);
-}
-
-.vertex-x-5 {
-  left: calc(5 * 96px - 48px);
-}
-
-.vertex-x-6 {
-  left: calc(6 * 96px - 48px);
-}
-
-.vertex-x-7 {
-  left: calc(7 * 96px - 48px);
-}
-
-.vertex-x-8 {
-  left: calc(8 * 96px - 48px);
-}
-
-.vertex-x-9 {
-  left: calc(9 * 96px - 48px);
-}
-
-.vertex-x-10 {
-  left: calc(10 * 96px - 48px);
-}
-
-.vertex-x-11 {
-  left: calc(11 * 96px - 48px);
-}
-
-.vertex-x-12 {
-  left: calc(12 * 96px - 48px);
-}
-
-.vertex-x-13 {
-  left: calc(13 * 96px - 48px);
-}
-
-.vertex-x-14 {
-  left: calc(14 * 96px - 48px);
-}
-
-.vertex-x-15 {
-  left: calc(15 * 96px - 48px);
-}
-
-.vertex-x-16 {
-  left: calc(16 * 96px - 48px);
-}
-
-.vertex-x-17 {
-  left: calc(17 * 96px - 48px);
-}
-
-.vertex-x-18 {
-  left: calc(18 * 96px - 48px);
-}
-
-.vertex-x-19 {
-  left: calc(19 * 96px - 48px);
-}
-
-.vertex-x-20 {
-  left: calc(20 * 96px - 48px);
-}
-
-.vertex-x-21 {
-  left: calc(21 * 96px - 48px);
-}
-
-.vertex-x-22 {
-  left: calc(22 * 96px - 48px);
-}
-
-.vertex-x-23 {
-  left: calc(23 * 96px - 48px);
-}
-
-.vertex-x-24 {
-  left: calc(24 * 96px - 48px);
-}
-
-.vertex-x-25 {
-  left: calc(25 * 96px - 48px);
-}
-
-.vertex-x-26 {
-  left: calc(26 * 96px - 48px);
-}
-
-.vertex-x-27 {
-  left: calc(27 * 96px - 48px);
-}
-
-.vertex-x-28 {
-  left: calc(28 * 96px - 48px);
-}
-
-.vertex-x-29 {
-  left: calc(29 * 96px - 48px);
-}
-
-.vertex-x-30 {
-  left: calc(30 * 96px - 48px);
-}
-
-.vertex-x-31 {
-  left: calc(31 * 96px - 48px);
-}
-
-.vertex-x-32 {
-  left: calc(32 * 96px - 48px);
-}
-
-.vertex-x-33 {
-  left: calc(33 * 96px - 48px);
-}
-
-.vertex-x-34 {
-  left: calc(34 * 96px - 48px);
-}
-
-.vertex-x-35 {
-  left: calc(35 * 96px - 48px);
-}
-
-.vertex-x-36 {
-  left: calc(36 * 96px - 48px);
-}
-
-.vertex-x-37 {
-  left: calc(37 * 96px - 48px);
-}
-
-.vertex-x-38 {
-  left: calc(38 * 96px - 48px);
-}
-
-.vertex-x-39 {
-  left: calc(39 * 96px - 48px);
-}
-
-.vertex-x-40 {
-  left: calc(40 * 96px - 48px);
-}
-
-.vertex-y-0 {
-  top: calc(0 * 96px - 48px);
-}
-
-.vertex-y-1 {
-  top: calc(1 * 96px - 48px);
-}
-
-.vertex-y-2 {
-  top: calc(2 * 96px - 48px);
-}
-
-.vertex-y-3 {
-  top: calc(3 * 96px - 48px);
-}
-
-.vertex-y-4 {
-  top: calc(4 * 96px - 48px);
-}
-
-.vertex-y-5 {
-  top: calc(5 * 96px - 48px);
-}
-
-.vertex-y-6 {
-  top: calc(6 * 96px - 48px);
-}
-
-.vertex-y-7 {
-  top: calc(7 * 96px - 48px);
-}
-
-.vertex-y-8 {
-  top: calc(8 * 96px - 48px);
-}
-
-.vertex-y-9 {
-  top: calc(9 * 96px - 48px);
-}
-
-.vertex-y-10 {
-  top: calc(10 * 96px - 48px);
-}
-
 .environment-map {
   position: absolute;
   top: 0;
@@ -1328,7 +916,7 @@ input {
   width: 3744px;
   height: 2688px;
   pointer-events: none;
-  background-image: url("../assets/world/carvernwake-main-background.png");
+  background-image: url("../assets/world/cavernwake-main-background.png");
   background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -1341,7 +929,7 @@ input {
   width: 3744px;
   height: 2688px;
   pointer-events: none;
-  background-image: url("../assets/world/carvernwake-last-background.png");
+  background-image: url("../assets/world/cavernwake-last-background.png");
   background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -1354,7 +942,7 @@ input {
   width: 3744px;
   height: 2688px;
   pointer-events: none;
-  background-image: url("../assets/world/carvernwake-forground.png");
+  background-image: url("../assets/world/cavernwake-foreground.png");
   background-size: 3744px 2688px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -1581,19 +1169,6 @@ input {
   box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
 }
 
-.dialogue--caption-silent .dialogue__box {
-  background: none;
-  padding: 0;
-}
-
-@keyframes dialogue-arrow-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 @keyframes dialogue-spark-in {
   0% {
     opacity: 0;
@@ -1775,14 +1350,14 @@ input {
 .lift-basket {
   top: calc(var(--lift-6-14-row) * 96px);
   height: 192px;
-  background-image: url("../assets/objects/lift/basked.png");
+  background-image: url("../assets/objects/lift/basket.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door {
   top: calc((var(--lift-6-14-row) + 1) * 96px);
   height: 96px;
-  background-image: url("../assets/objects/lift/basked-door.png");
+  background-image: url("../assets/objects/lift/basket-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
 }
@@ -1826,14 +1401,14 @@ input {
 .lift-basket--17-26 {
   top: calc(var(--lift-17-26-row) * 96px);
   height: 192px;
-  background-image: url("../assets/objects/lift/basked.png");
+  background-image: url("../assets/objects/lift/basket.png");
   transition: top 2s ease-in-out;
 }
 
 .lift-door--17-26 {
   top: calc((var(--lift-17-26-row) + 1) * 96px);
   height: 96px;
-  background-image: url("../assets/objects/lift/basked-door.png");
+  background-image: url("../assets/objects/lift/basket-door.png");
   transition: top 2s ease-in-out;
   pointer-events: none;
 }
@@ -2034,14 +1609,14 @@ input {
 .lift-basket--11-27 {
   top: calc(var(--lift-11-27-row) * 96px);
   height: 192px;
-  background-image: url("../assets/objects/lift/basked.png");
+  background-image: url("../assets/objects/lift/basket.png");
   transition: top 3s ease-in-out;
 }
 
 .lift-door--11-27 {
   top: calc((var(--lift-11-27-row) + 1) * 96px);
   height: 96px;
-  background-image: url("../assets/objects/lift/basked-door.png");
+  background-image: url("../assets/objects/lift/basket-door.png");
   transition: top 3s ease-in-out;
   pointer-events: none;
 }
@@ -2242,14 +1817,14 @@ input {
 .lift-basket--10-36 {
   top: calc(var(--lift-10-36-row) * 96px);
   height: 192px;
-  background-image: url("../assets/objects/lift/basked.png");
+  background-image: url("../assets/objects/lift/basket.png");
   transition: top 4s ease-in-out;
 }
 
 .lift-door--10-36 {
   top: calc((var(--lift-10-36-row) + 1) * 96px);
   height: 96px;
-  background-image: url("../assets/objects/lift/basked-door.png");
+  background-image: url("../assets/objects/lift/basket-door.png");
   transition: top 4s ease-in-out;
   pointer-events: none;
 }
@@ -2516,9 +2091,6 @@ input {
   height: 100%;
   background-repeat: no-repeat;
   background-size: contain;
-  --sprite-frame-width: 84px;
-  --sprite-frame-height: 84px;
-  --sprite-frame-count: 4;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
@@ -4382,39 +3954,39 @@ input {
 }
 @keyframes player-pickaxe-swing {
   0% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_001.png");
   }
   25% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_002.png");
   }
   50% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_003.png");
   }
   75%, 100% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_004.png");
   }
 }
 @keyframes player-pickaxe-bounce {
   0% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_001.png");
   }
   12.5% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_002.png");
   }
   25% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_003.png");
   }
   37.5%, 50% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_004.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_004.png");
   }
   62.5% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_003.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_003.png");
   }
   75% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_002.png");
   }
   87.5%, 100% {
-    background-image: url("../assets/characters/with-backpack/use-item/pikeaxe/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/use-item/pickaxe/frame_001.png");
   }
 }
 @keyframes player-pickaxe-pickup {
@@ -4503,10 +4075,10 @@ input {
 }
 @keyframes player-surprised {
   0% {
-    background-image: url("../assets/characters/with-backpack/suprised/frame_001.png");
+    background-image: url("../assets/characters/with-backpack/surprised/frame_001.png");
   }
   50%, 100% {
-    background-image: url("../assets/characters/with-backpack/suprised/frame_002.png");
+    background-image: url("../assets/characters/with-backpack/surprised/frame_002.png");
   }
 }
 @keyframes player-stumble {
@@ -7979,26 +7551,7 @@ input {
   pointer-events: auto;
 }
 
-#position-1:checked ~ #intro-dark:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-fade:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-1:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-2:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-lantern:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-home:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-3:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-anyway:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-4:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-sit:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-fall:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-dark-hold:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-5:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-breathe:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-6:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-7:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-pack:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-8:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-9:checked ~ .game .inventory__toggle--play,
-#position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle--play {
+#position-1:checked ~ :is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10):checked ~ .game .inventory__toggle--play {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -8399,7 +7952,7 @@ input {
 }
 
 .inventory__slot--pickaxe .inventory__icon {
-  background-image: url("../assets/objects/inventory/pikeaxe.png");
+  background-image: url("../assets/objects/inventory/pickaxe.png");
 }
 
 #pickaxe-armed:checked ~ .game .inventory__slot--pickaxe .inventory__icon {
@@ -10146,7 +9699,7 @@ input {
   top: 1632px;
   width: 192px;
   height: 192px;
-  background-image: url("../assets/world/obstacles/big-rock/pikeaxe-before.png");
+  background-image: url("../assets/world/obstacles/big-rock/pickaxe-before.png");
   background-size: 192px 192px;
   background-position: 0px 0px;
   background-repeat: no-repeat;
@@ -10167,7 +9720,7 @@ input {
 
 @keyframes pickaxe-take-swap {
   to {
-    background-image: url("../assets/world/obstacles/big-rock/pikeaxe-after.png");
+    background-image: url("../assets/world/obstacles/big-rock/pickaxe-after.png");
   }
 }
 #pickaxe-pickup:checked ~ .game .object--pickaxe {
@@ -10175,7 +9728,7 @@ input {
 }
 
 #pickaxe-armed:checked ~ .game .object--pickaxe {
-  background-image: url("../assets/world/obstacles/big-rock/pikeaxe-after.png");
+  background-image: url("../assets/world/obstacles/big-rock/pickaxe-after.png");
 }
 
 :is(#pickaxe-prompt, #pickaxe-pickup):checked ~ .game .player__sprite {
@@ -13382,7 +12935,7 @@ input {
 }
 
 #position-1:checked ~ #intro-13:checked ~ .game .player__sprite {
-  background-image: url("../assets/characters/with-backpack/suprised/frame_002.png");
+  background-image: url("../assets/characters/with-backpack/surprised/frame_002.png");
   animation: player-surprised 0.6s steps(1, end) forwards;
 }
 
@@ -13848,11 +13401,6 @@ input {
   animation: player-stand-up 0.8s steps(1, end);
 }
 
-@keyframes player-intro-wake-look-left {
-  from, to {
-    transform: scaleX(-1);
-  }
-}
 #position-1:checked ~ #intro-7:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-pack:checked ~ .game .player__sprite,
 #position-1:checked ~ #intro-8:checked ~ .game .player__sprite,

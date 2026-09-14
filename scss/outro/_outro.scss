@@ -1,0 +1,228 @@
+@use 'sass:math';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+
+// ==========================================================================
+// OUTRO / ENDING SEQUENCE
+// After the 6<->14 ride docks: line at node 6, Continue runs 6→4 (haste
+// skip + stumble on the intro bridge), line there, Continue runs 4→2
+// then keeps going off-screen while the camera holds node 2.
+//
+//   outro: idle -> end -> fade -> credits
+//
+// Gated on #lift-6-14-unlocked and #position-2--from-4 so the opening
+// stretch (nodes 1-4) never replays this sequence on ordinary backtracking.
+// ==========================================================================
+
+$outro-walk-tiles: 10;
+$outro-walk-offset: -$outro-walk-tiles * vars.$tile-size-display;
+$outro-walk-duration: math.div(
+    math.div($outro-walk-tiles, vars.$movement-tiles-per-step) *
+      vars.$walk-duration,
+    vars.$skip-speed
+  );
+$outro-walk-loops: math.div(
+    math.div($outro-walk-tiles, vars.$movement-tiles-per-step) *
+      vars.$walk-cycles,
+    vars.$skip-speed
+  );
+$outro-cycle-duration: math.div($outro-walk-duration, $outro-walk-loops);
+$outro-fade-duration: 2s;
+
+$outro-gate: '#lift-6-14-unlocked:checked ~ #position-2--from-4:checked';
+
+$outro-busy: '#outro-idle, #outro-to-1, #outro-end, #outro-fade, #outro-credits';
+
+$at-6-from-lift: ':is(#position-6--from-14--right, #position-6--from-14--left):checked';
+$escape-at-4: '#lift-6-14-unlocked:checked ~ #position-4--from-6:checked';
+$escape-6-to-4-walk: calc(
+  var(--walk-duration) * #{math.div(2, vars.$skip-speed)}
+);
+$escape-6-to-4-cycles: math.div(vars.$walk-cycles * 2, vars.$skip-speed);
+$escape-4-to-2-walk: $escape-6-to-4-walk;
+$escape-4-to-2-cycles: $escape-6-to-4-cycles;
+$escape-out-line: calc(#{$escape-4-to-2-walk} + #{$outro-walk-duration});
+// Trip as the camera settles on the bridge, not after a standstill.
+$escape-stumble-overlap: 0.4s;
+$escape-stumble-delay: calc(#{$escape-6-to-4-walk} - #{$escape-stumble-overlap});
+$escape-bridge-line: calc(
+  #{$escape-stumble-delay} + #{vars.$movement-duration} + 0.4s
+);
+
+// ---- Dock at 6: hurry line, Continue starts the 6→4 run ----
+#lift-6-14-unlocked:checked
+  ~ #{$at-6-from-lift}
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#lift-6-14-unlocked:checked
+  ~ #{$at-6-from-lift}
+  ~ .game
+  .dialogue[data-step='escape-run']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after(vars.$elevator-duration-short);
+}
+
+// ---- 6 → 4: haste onto the intro bridge, then stumble ----
+@keyframes escape-bridge-sprite-hide {
+  from,
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes escape-bridge-action-show {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+#{$escape-at-4} ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation:
+    player-walk-from-6-to-4 var(--walk-cycle-duration) steps(1, end)
+      $escape-6-to-4-cycles,
+    escape-bridge-sprite-hide vars.$movement-duration steps(1, end)
+      $escape-stumble-delay;
+}
+
+#{$escape-at-4} ~ .game .player__action {
+  transform: scaleX(-1);
+  animation:
+    escape-bridge-action-show vars.$movement-duration steps(1, end)
+      $escape-stumble-delay,
+    player-stumble vars.$movement-duration steps(1, end) $escape-stumble-delay;
+}
+
+#{$escape-at-4} ~ .game .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+#{$escape-at-4}
+  ~ .game
+  .dialogue[data-step='escape-bridge']
+  .dialogue__box {
+  @include dlg.dialogue-box-open-after($escape-bridge-line);
+}
+
+// ---- Movement lock ----
+#{$outro-gate}
+  ~ :is(#{$outro-busy}):checked
+  ~ .game
+  .direction-controls__button--edge[data-position] {
+  display: none;
+}
+
+// ---- Outside lines (after 4→2 + the off-screen run, camera on node 2) ----
+#{$outro-gate} ~ #outro-idle:checked ~ .game .dialogue[data-step='outro-idle'] .dialogue__box {
+  @include dlg.dialogue-box-open-after($escape-out-line);
+}
+
+#{$outro-gate} ~ #outro-end:checked ~ .game .dialogue[data-step='outro-end'] .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+// Sprite runs left after the camera has settled on node 2. Must live on
+// an inner wrapper: delaying .player's own transform also delays the
+// camera counter-translate, so the cave would snap to node 2 without him.
+#{$outro-gate} ~ .game .player__body--6-14 {
+  transform: translateX(#{$outro-walk-offset});
+  transition: transform $outro-walk-duration ease-in-out $escape-4-to-2-walk;
+}
+
+@keyframes player-walk-outro-to-1 {
+  0% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png');
+  }
+  25% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png');
+  }
+  50% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png');
+  }
+  75%,
+  100% {
+    background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png');
+  }
+}
+
+#{$outro-gate} ~ #outro-idle:checked ~ .game .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+  animation:
+    player-walk-from-4-to-2 var(--walk-cycle-duration) steps(1, end)
+      $escape-4-to-2-cycles,
+    player-walk-outro-to-1 $outro-cycle-duration steps(1, end)
+      $outro-walk-loops $escape-4-to-2-walk;
+}
+
+#{$outro-gate}
+  ~ :is(#outro-end, #outro-fade, #outro-credits):checked
+  ~ .game
+  .player__sprite {
+  background-image: url('../assets/characters/with-backpack/base/base-left.png');
+}
+
+// ---- Fade to black, then end screen ----
+#outro-fade:checked ~ .game .blackout {
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity $outro-fade-duration ease-in-out;
+}
+
+#outro-fade:checked ~ .game .end-screen {
+  display: grid;
+  opacity: 1;
+  --end-fade: 0s;
+}
+
+#{$outro-gate} ~ #outro-fade:checked ~ .game .end-screen {
+  opacity: 0;
+  --end-fade: #{$outro-fade-duration};
+  animation: outro-end-screen-show 0s $outro-fade-duration forwards;
+}
+
+#outro-fade:checked ~ .game .title-screen {
+  display: none;
+}
+
+// HUD sits in .ui above .blackout, so the veil never covers the bag or
+// gear. Fade them on the same clock as the veil. Hide cannot key off
+// #intro-11: after Start that radio is gone and #intro-14 stays checked.
+@keyframes outro-hud-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+#outro-fade:checked ~ .game .inventory__toggle,
+#outro-fade:checked ~ .game .inventory,
+#outro-fade:checked ~ .game .inventory__back,
+#outro-fade:checked ~ .game .settings__toggle,
+#outro-fade:checked ~ .game .settings,
+#outro-fade:checked ~ .game .settings__back {
+  pointer-events: none;
+  transition: none;
+  animation: outro-hud-fade $outro-fade-duration ease-in-out forwards;
+}
+
+#outro-credits:checked ~ .game .inventory__toggle,
+#outro-credits:checked ~ .game .inventory,
+#outro-credits:checked ~ .game .inventory__back,
+#outro-credits:checked ~ .game .settings__toggle,
+#outro-credits:checked ~ .game .settings,
+#outro-credits:checked ~ .game .settings__back {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none;
+}
+
+@keyframes outro-end-screen-show {
+  to {
+    opacity: 1;
+  }
+}

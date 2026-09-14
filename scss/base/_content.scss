@@ -1,0 +1,230 @@
+// ==========================================================================
+// CONTENT MAPS
+// Intro selector fragments, obstacle gates, lift shafts.
+// ==========================================================================
+
+// --- Intro / opening cutscene (see scss/intro/_intro.scss) ---
+$screen-shake-duration: 0.4s;
+$blackout-duration: 0.5s;
+// Any intro radio — title Start checks #intro-dark, then the chain stays
+// in this group. Used to hide the title and show the cave.
+$intro-running: ':is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked';
+// Same chain without the opening black card. HUD that should wait for
+// the cave fade-in (settings gear) uses this; #intro-dark handles that
+// beat itself with the blackout timing in scss/intro/_intro.scss.
+$intro-after-opening: ':is(#intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked';
+// Opening through intro-10: play-toggle stays hidden (tutorial bag is
+// intro-10). intro-11 onward reveals .inventory__toggle--play.
+$intro-until-bag: ':is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10):checked';
+
+// --- Obstacles (see world/_obstacles.scss, world/_collapse.scss) ---
+// One entry per barrier blocking one or more walk edges (see
+// components/_direction-controls.scss obstacle-gate()) — same idea as vars.$lifts'
+// unlock flags. `unlock`: walk edge hidden until that id is checked.
+// `lock`: walk edge hidden while that id is NOT checked (collapse re-seals).
+// A (node, direction) pair may appear in only ONE entry — obstacle-gate()
+// returns on first match. `blocks` lists every exit hidden while gated.
+$obstacles: (
+  vine24: (
+    unlock: 'vine24-done',
+    blocks: (
+      (
+        node: 24,
+        direction: right,
+      ),
+      (
+        node: 25,
+        direction: left,
+      ),
+    ),
+  ),
+  vine30: (
+    unlock: 'vine30-done',
+    blocks: (
+      (
+        node: 30,
+        direction: right,
+      ),
+      (
+        node: 31,
+        direction: left,
+      ),
+    ),
+  ),
+  // Waterfall over col 9-11 / row 15-27 (see world/_waterfall.scss),
+  // removed by the node-7 lever (world/_lever.scss), re-sealed on cave
+  // collapse (world/_collapse.scss).
+  waterfall: (
+      unlock: 'lever7-done',
+      lock: 'last-lever-armed',
+      blocks: (
+        (
+          node: 20,
+          direction: right,
+        ),
+        (
+          node: 21,
+          direction: left,
+        ),
+        (
+          node: 29,
+          direction: right,
+        ),
+        (
+          node: 30,
+          direction: left,
+        ),
+      ),
+    ),
+  // Tall shaft waterfall col 21-23 / row 7-27 (world/_collapse.scss),
+  // seals the east corridor once the last lever is picked up.
+  collapse-shaft: (
+      lock: 'last-lever-armed',
+      blocks: (
+        (
+          node: 23,
+          direction: right,
+        ),
+        (
+          node: 24,
+          direction: left,
+        ),
+      ),
+    ),
+  // Workbench rock drop (world/_collapse.scss) — blocks the walk back from
+  // node 23 once the last lever is picked up (the escape only ever goes
+  // 22 -> 23, never back). Same lock as the upper-corridor rock.
+  collapse-bench: (
+      lock: 'last-lever-armed',
+      blocks: (
+        (
+          node: 23,
+          direction: left,
+        ),
+      ),
+    ),
+  // Upper rock on the 14<->13 corridor (world/_collapse.scss) — locked
+  // while #last-lever-armed is on.
+  collapse-upper-rock: (
+      lock: 'last-lever-armed',
+      blocks: (
+        (
+          node: 14,
+          direction: left,
+        ),
+        (
+          node: 13,
+          direction: right,
+        ),
+      ),
+    ),
+  // Big rock over col 29-31 / row 23-25 (see world/_barriers.scss), broken
+  // open with the pickaxe from left of node 19 (world/_tools.scss).
+  rock: (
+      unlock: 'rock-done',
+      blocks: (
+        (
+          node: 34,
+          direction: right,
+        ),
+        (
+          node: 35,
+          direction: left,
+        ),
+      ),
+    ),
+  // Mud over col 6-9 / row 23-25 (see world/_barriers.scss), cleared with the
+  // shovel from left of node 9 (world/_tools.scss).
+  mud: (
+      unlock: 'mud-done',
+      blocks: (
+        (
+          node: 28,
+          direction: right,
+        ),
+        (
+          node: 29,
+          direction: left,
+        ),
+      ),
+    ),
+  // Stone wall over col 15-20 / row 20-25 (see world/_stone-wall.scss),
+  // blown open with the bomb built at the node-22 workbench
+  // (world/_workbench.scss).
+  stone-wall: (
+      unlock: 'wall-done',
+      blocks: (
+        (
+          node: 31,
+          direction: right,
+        ),
+        (
+          node: 32,
+          direction: left,
+        ),
+      ),
+    ),
+);
+
+// --- Lifts (see world/_lift.scss) ---
+// One entry per elevator shaft in $positions above. top-node/bottom-node
+// are the two nodes it connects — column, both dock rows, ride duration,
+// which half of the graph each end belongs to, where the call button sits
+// and which walk button that button gates are ALL derived from those two
+// ids, so nothing here can drift out of sync with the map.
+// unlock: id of the shaft's one-way activation checkbox in html/index.html
+// (null = always usable). suffix: modifier on the .lift-* class names —
+// empty for shaft 6<->14, which predates the others.
+// gate: WHICH button the activation checkbox hides until it's pressed.
+//   approach — the walk button leading to the bottom station, so the
+//     station itself can't even be entered yet. Fits shafts whose top half
+//     is unreachable until the shaft works.
+//   ride-up  — the bottom station's own up button. The station stays
+//     walkable and the car can still be ridden DOWN from the top (it's
+//     parked up there anyway); only calling it up is impossible until the
+//     lever is repaired. Used by 6<->14, whose top half {1..6} is where
+//     the intro starts, so it must stay reachable from the very first
+//     frame. Its car also returns to the top on its own after a ride down
+//     (counterweight) as long as the shaft is still locked.
+// call-button: explicit tile coords plus the direction the character turns
+// to operate it, or null to place it automatically next to the node the
+// player walks in from (facing derived from that approach). 6<->14's lever
+// sits far away on purpose — it's the story's "repair the lift to open the
+// way out" beat, found only after shaft 17<->26 is working.
+$lifts: (
+  '6-14': (
+    suffix: '',
+    top-node: 6,
+    bottom-node: 14,
+    unlock: 'lift-6-14-unlocked',
+    gate: ride-up,
+    // Opted out of the generated call button: this shaft is repaired by the
+    // last-lever socket instead (see world/_last-lever.scss).
+    call-button: custom,
+  ),
+  '17-26': (
+    suffix: '--17-26',
+    top-node: 17,
+    bottom-node: 26,
+    unlock: 'lift-17-26-unlocked',
+    gate: approach,
+    call-button: null,
+  ),
+  '11-27': (
+    suffix: '--11-27',
+    top-node: 11,
+    bottom-node: 27,
+    unlock: 'lift-11-27-unlocked',
+    gate: approach,
+    call-button: null,
+  ),
+  '10-36': (
+    suffix: '--10-36',
+    top-node: 10,
+    bottom-node: 36,
+    unlock: 'lift-10-36-unlocked',
+    gate: approach,
+    call-button: null,
+  ),
+);
+

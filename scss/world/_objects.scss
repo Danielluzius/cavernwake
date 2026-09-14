@@ -1,0 +1,100 @@
+@use '../base/variables' as vars;
+
+// ==========================================================================
+// INTERACTABLE OBJECTS
+// Action objects are <label>s pointing at radios in html/index.html.
+// Hint-only hotspots are <button>s: click focuses them, :has(:focus) shows
+// the bubble, and walking/other clicks steal focus so play continues.
+// ==========================================================================
+.object {
+  position: relative;
+  z-index: 1;
+  width: vars.$tile-size-display;
+  height: vars.$tile-size-display;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  appearance: none;
+  overflow: visible;
+
+  &:focus {
+    outline: none;
+  }
+
+  // Green Continue pad without the chevron (see world/_click-hint.scss).
+  // Ghosted until hover; --click-hint is 0 or 1 on the live hotspot.
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 4;
+    width: vars.$click-hint-size;
+    height: vars.$click-hint-size;
+    box-sizing: border-box;
+    border: 0;
+    pointer-events: none;
+    background: vars.$dialogue-arrow-bg;
+    image-rendering: pixelated;
+    top: var(--click-hint-top, 0);
+    left: var(--click-hint-left, 0);
+    opacity: calc(
+      var(--click-hint, 0) * var(--hint-vis, 1) *
+        #{vars.$click-hint-idle-opacity}
+    );
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition:
+      opacity vars.$click-hint-fade-duration ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+    box-shadow:
+      0 #{vars.$dialogue-pixel} 0 vars.$dialogue-outline,
+      0 (-#{vars.$dialogue-pixel}) 0 vars.$dialogue-outline,
+      #{vars.$dialogue-pixel} 0 0 vars.$dialogue-outline,
+      (-#{vars.$dialogue-pixel}) 0 0 vars.$dialogue-outline;
+  }
+
+  &:hover::before {
+    opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+    background: vars.$dialogue-arrow-bg-hover;
+    transform: scale(vars.$click-hint-hover-scale);
+    transition:
+      opacity 0.15s ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+  }
+}
+
+// ==========================================================================
+// BACKPACK LAMP GLOW — sits at the exact same spot as .story-object--backpack
+// itself (col 17 / row 10.5, see intro/_intro.scss), but positioned
+// independently rather than nested inside the label: that label already
+// has its own absolute position, so nesting the glow inside it would have
+// doubled the offset instead of sharing it. Hidden until the intro hands
+// the lamp glow over to it (see intro/_intro.scss) — the backpack hasn't
+// been dropped yet otherwise.
+// ==========================================================================
+.lamp-glow--backpack {
+  position: absolute;
+  left: 17.5 * vars.$tile-size-display;
+  top: 11 * vars.$tile-size-display;
+  // Sibling of .player now (see index.html), not nested inside
+  // .world-layer--objects — needs its own z-index above the player's
+  // (world/_world.scss) so it can actually darken the character visually
+  // instead of being trapped below it by that layer's own stacking context.
+  z-index: vars.$z-index-foreground;
+  // opacity/visibility (not display) so the intro's handoff (see
+  // intro/_intro.scss) can delay the swap with transition-delay.
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0s,
+    visibility 0s;
+}

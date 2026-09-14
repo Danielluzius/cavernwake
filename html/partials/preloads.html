@@ -1,0 +1,179 @@
+<!-- Preload the resting frame that's shown the instant the game scene
+         appears: browsers otherwise fetch it lazily on first use, causing
+         a brief flash/pop-in. Same reason for the other three facing
+         poses (see player/_player.scss) — the first click of a given
+         direction otherwise still lazy-loads it right when the sprite
+         swaps, producing the same flash. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-right-before.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-left.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-down.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/base/base-up.png" />
+<!-- Walk-cycle frames (see animations/_animations.scss) — same
+         first-use flash reasoning, only referenced inside @keyframes. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/frame_004.png" />
+<!-- Fast-walk is only the outro dash off-screen (see scss/outro/_outro.scss). -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-right/fast-walk-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_004.png" />
+<!-- Title-screen trip (see scss/components/_title-screen.scss) — only
+         referenced inside @keyframes, same first-use flash reasoning. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_005.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/startscreen-fall/frame_006.png" />
+<!-- End-screen trip (see scss/components/_end-screen.scss). -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/stumble/frame_004.png" />
+<!-- Elevator idle-cycle frames (see animations/_animations.scss,
+         both the plain per-shaft and the dual-access facing variants) —
+         same first-use flash reasoning, only referenced inside
+         @keyframes. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/idle/idle-left/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/fall/frame_005.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/climb/frame_005.png" />
+<!-- Intro-only poses (see scss/intro/_intro.scss) — same first-use
+         flash reasoning as the four poses above. -->
+<link rel="preload" as="image" href="./assets/characters/without-backpack/base/base-right.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/passed-out/passed-out-eyes-open.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/stand-up/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/interact-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/without-backpack/walk-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/world/settings-button.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/backpack.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/backpack-before.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/inventory-background.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/lamp-before.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/lamp-after.png" />
+<!-- Sickle pickup + swing frames (see scss/animations/_animations.scss)
+     and the three vine barrier states (see scss/world/_obstacles.scss) —
+     only referenced inside @keyframes/background-image, same first-use
+     flash reasoning as everything else here. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-right/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/sickle/frame_004.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-with-sickle.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/obstacle-vines-gone.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/waterfall/waterfall-base.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_001.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_002.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_003.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/waterfall/frame_004.png" />
+<!-- Pickaxe pickup + swing frames and the four before/after object states
+     (see scss/world/_tools.scss, scss/world/_barriers.scss). -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/interact/interact-left/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pickaxe/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pickaxe/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pickaxe/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/pickaxe/frame_004.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/big-rock/pickaxe-before.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/big-rock/pickaxe-after.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-before.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/big-rock/rock-after.png" />
+<!-- Shovel pickup + swing frames and the four before/after mud states
+     (see scss/world/_tools.scss, scss/world/_barriers.scss). -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/shovel/frame_004.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/mud/shovel-before.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/mud/shovel-after.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-before.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/mud/mud-after.png" />
+<!-- Lift call-button lever states (see scss/world/_lift.scss) — plain
+     background-image swap on a permanent checkbox, same first-use flash
+     reasoning as everything else here. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lever/lever-up.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lever/lever-down.png" />
+<!-- Bomb parts, the workbench that assembles them and the wall it opens
+     (see scss/world/_tools.scss, _workbench.scss, _stone-wall.scss). -->
+<link rel="preload" as="image" href="./assets/objects/inventory/sickle.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/pickaxe.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/shovel.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/bomb-shell.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/bomb-gunpowder.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/bomb-fuse.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/bomb.png" />
+<link rel="preload" as="image" href="./assets/objects/inventory/bomb-fire.png" />
+<link rel="preload" as="image" href="./assets/world/workbench.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/stone-wall/stone-wall-before.png" />
+<link rel="preload" as="image" href="./assets/world/obstacles/stone-wall/stone-wall-after.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_005.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_006.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_007.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/workbench/frame_008.png" />
+<!-- Lighting the bomb fuse at the stone wall (see scss/world/_stone-wall.scss). -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_002.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_003.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_004.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_005.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/lantern-fire/frame_006.png" />
+<!-- Last lever: the item on the ground, the socket's empty/fitted states and
+     the two-frame fitting animation (see scss/world/_last-lever.scss). -->
+<link rel="preload" as="image" href="./assets/objects/inventory/last-lever-item.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-before.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/last-lever-sticks.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/use-item/last-lever/frame_002.png" />
+<!-- Cave-shake surprised look-up after last-lever confirm Continue. -->
+<link rel="preload" as="image" href="./assets/characters/with-backpack/surprised/frame_001.png" />
+<link rel="preload" as="image" href="./assets/characters/with-backpack/surprised/frame_002.png" />
+<!-- Shaft flood reuses the waterfall frames already preloaded above. -->
+<!-- UI pixel font (see scss/base/_fonts.scss). -->
+<link rel="preload" as="font" type="font/woff2" crossorigin
+     href="./assets/fonts/fusion-pixel-8px-proportional-latin.woff2" />

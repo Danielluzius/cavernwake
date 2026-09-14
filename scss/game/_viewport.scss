@@ -1,0 +1,51 @@
+@use '../base/variables' as vars;
+
+// The viewport is the visible "window" into the world. The player stays
+// exactly centered inside it while the world moves underneath.
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Pixel art must stay crisp at any scale.
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+// Circular visible area as a real layout box (2 × radius in tile px).
+// Browser zoom then scales it together with tiles / lamp glow. A
+// clip-path: circle(Npx) on the full-window .viewport does not.
+// Compact/wide screens scale this box via --field-scale (see
+// game/_layout.scss); internal world px stay at $vision-field-size.
+.vision-field {
+  position: relative;
+  flex-shrink: 0;
+  width: vars.$vision-field-size;
+  height: vars.$vision-field-size;
+  margin-top: vars.$vision-field-offset-y;
+  overflow: hidden;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
+  animation: vision-field-pulse 4s ease-in-out infinite;
+}
+
+// Gently breathes the vision circle in and out, like a flickering
+// light source. Kept small so it doesn't hide/reveal much of the world.
+// Uses % of this box so the pulse tracks zoom the same way as the mask.
+@keyframes vision-field-pulse {
+  0%,
+  100% {
+    clip-path: circle(50% at 50% 50%);
+  }
+
+  50% {
+    clip-path: circle(
+      calc(50% - #{2px * vars.$display-scale}) at 50% 50%
+    );
+  }
+}

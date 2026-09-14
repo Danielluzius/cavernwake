@@ -1,0 +1,274 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../base/variables' as vars;
+@use '../components/dialogue' as dlg;
+@use 'tools';
+@use 'click-hint';
+
+// ==========================================================================
+// TOOL-GATED BARRIERS
+// Blocks a walk edge (see vars.$obstacles) until the matching tool from
+// world/_tools.scss has been picked up and used on it:
+//
+//   <id>-step: idle -> cut-prompt -> cutting -> done
+//
+// No-tool clicks go through a spark group, not extra -blocked radios.
+// Each barrier is TWO stacked labels: `.object--<id>` starts the no-tool
+// branch, `.object--<id>-cut` the clear-it branch. Both are dead by default
+// and exactly one resting step re-enables exactly one of them — that flip is
+// the only way CSS can express an if/else on click.
+// ==========================================================================
+
+// `tool`: which world/_tools.scss pickup group gates this barrier.
+// `pose`: the standing sprite the swing frames fall back to when the
+// animation ends — must match the direction those frames are drawn facing,
+// otherwise the player visibly snaps around the moment it finishes.
+$tool-barriers: (
+  rock: (
+    col: 29,
+    row: 23,
+    cols: 3,
+    rows: 3,
+    at: 34,
+    before: '../assets/world/obstacles/big-rock/rock-before.png',
+    after: '../assets/world/obstacles/big-rock/rock-after.png',
+    tool: pickaxe,
+    anim: player-pickaxe-swing,
+    pose: '../assets/characters/with-backpack/base/base-right.png',
+    // Swing has an impact — screen shake timed to the strike frame (see
+    // player-pickaxe-swing, 50% into the animation).
+    shake: true,
+  ),
+  mud: (
+    col: 5,
+    row: 22.5,
+    cols: 5,
+    rows: 4,
+    at: 29,
+    // Stretched a full tile taller and wider than the art's own aspect
+    // ratio, so it needs an explicit size — `contain` would letterbox it.
+    fit: 100% 100%,
+    before: '../assets/world/obstacles/mud/mud-before.png',
+    after: '../assets/world/obstacles/mud/mud-after.png',
+    tool: shovel,
+    anim: player-shovel-swing,
+    pose: '../assets/characters/with-backpack/base/base-left.png',
+  ),
+);
+
+@each $id, $cfg in $tool-barriers {
+  $tool: map.get($cfg, tool);
+  $busy-steps: list.join((cut-prompt, cutting), ());
+  @if map.has-key($cfg, extra-busy) {
+    $busy-steps: list.join($busy-steps, map.get($cfg, extra-busy));
+  }
+  $busy: tools.step-list($id, $busy-steps);
+  $tool-locked: tools.step-list($tool, (idle, prompt, pickup));
+
+  .object--#{$id},
+  .object--#{$id}-cut,
+  .object--#{$id}-gone {
+    position: absolute;
+    left: map.get($cfg, col) * vars.$tile-size-display;
+    top: map.get($cfg, row) * vars.$tile-size-display;
+    width: map.get($cfg, cols) * vars.$tile-size-display;
+    height: map.get($cfg, rows) * vars.$tile-size-display;
+    background-size: if(map.has-key($cfg, fit), map.get($cfg, fit), contain);
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    // Dead by default — the click routing below is the only thing that ever
+    // makes one of the two layers live.
+    pointer-events: none;
+    cursor: default;
+    @include click-hint.place(
+      map.get($cfg, col),
+      map.get($cfg, row),
+      map.get($cfg, cols),
+      map.get($cfg, rows),
+      map.get($cfg, at)
+    );
+  }
+
+  .object--#{$id} {
+    background-image: url(map.get($cfg, before));
+  }
+
+  $at-node: vars.at-node(map.get($cfg, at));
+
+  // Source order matters: `~` only looks forward, and every tool's radios
+  // sit before its barrier's ones in html/index.html.
+  ##{$id}-spark:checked
+    ~ :is(#{$tool-locked}):checked
+    ~ ##{$id}-idle:checked
+    ~ #{$at-node}
+    ~ .game
+    .object--#{$id},
+  ##{$tool}-armed:checked
+    ~ ##{$id}-idle:checked
+    ~ #{$at-node}
+    ~ .game
+    .object--#{$id}-cut {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  ##{$id}-spark:checked
+    ~ :is(#{$tool-locked}):checked
+    ~ ##{$id}-idle:checked
+    ~ #{$at-node}
+    ~ .game
+    .object--#{$id} {
+    @include click-hint.show(
+      map.get($cfg, col),
+      map.get($cfg, row),
+      map.get($cfg, cols),
+      map.get($cfg, rows),
+      map.get($cfg, at)
+    );
+  }
+
+  ##{$tool}-armed:checked
+    ~ ##{$id}-idle:checked
+    ~ #{$at-node}
+    ~ .game
+    .object--#{$id}-cut {
+    @include click-hint.show(
+      map.get($cfg, col),
+      map.get($cfg, row),
+      map.get($cfg, cols),
+      map.get($cfg, rows),
+      map.get($cfg, at)
+    );
+  }
+
+  // Foreground twin (see .world-layer--foreground in html/index.html):
+  // renders the cleared barrier above the player, so walking through the gap
+  // looks like passing behind what's left rather than in front.
+  .object--#{$id}-gone {
+    background-image: url(map.get($cfg, after));
+    opacity: 0;
+  }
+
+  ##{$id}-done:checked ~ .game .object--#{$id}-gone {
+    opacity: 1;
+  }
+
+  @keyframes #{$id}-clear-swap {
+    to {
+      background-image: url(map.get($cfg, after));
+    }
+  }
+
+  // Swing-timed swap: the barrier only gives way once the animation ended.
+  ##{$id}-cutting:checked ~ .game .object--#{$id} {
+    animation: #{$id}-clear-swap 0s vars.$movement-duration forwards;
+  }
+
+  // The animation above stops applying the instant -cutting unchecks itself,
+  // so the barrier would snap back to intact on Continue without this; the
+  // foreground twin takes over the rendering from here.
+  ##{$id}-done:checked ~ .game .object--#{$id} {
+    background-image: url(map.get($cfg, after));
+    opacity: 0;
+  }
+
+  // Only the swing itself forces a facing — the dialogue-only steps leave
+  // the player in whatever direction they actually arrived from, since these
+  // nodes are reachable from both sides. Plays on .player__action, never on
+  // .player__sprite (see player/_player.scss for why).
+  ##{$id}-cutting:checked ~ .game .player__sprite {
+    opacity: 0;
+  }
+
+  ##{$id}-cutting:checked ~ .game .player__action {
+    opacity: 1;
+    background-image: url(map.get($cfg, pose));
+    animation: #{map.get($cfg, anim)} vars.$movement-duration steps(1, end);
+  }
+
+  @if map.has-key($cfg, shake) {
+    // Shake on .viewport only — pulse stays on .vision-field.
+    ##{$id}-cutting:checked ~ .game .viewport {
+      animation: intro-screen-shake vars.$screen-shake-duration ease-in-out 1;
+      animation-delay: vars.$movement-duration * 0.5;
+    }
+  }
+
+  // No walking away while a dialogue is open or an animation is running.
+  :is(#{$busy}):checked
+    ~ .game
+    .direction-controls__button--edge[data-position] {
+    display: none;
+  }
+
+  // ---- Dialogue ----
+  // No-tool hint: one-shot on the spark group. Later tool clicks use the
+  // cut/craft branch, not this box.
+  ##{$id}-spark-seen {
+    @include dlg.lock-edges;
+  }
+
+  ##{$id}-spark-seen:checked
+    ~ .game
+    .dialogue[data-step='#{$id}-blocked']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+
+  ##{$id}-cut-prompt:checked
+    ~ .game
+    .dialogue[data-step='#{$id}-cut-prompt']
+    .dialogue__box {
+    @include dlg.dialogue-box-open;
+  }
+
+  ##{$id}-cutting:checked
+    ~ .game
+    .dialogue[data-step='#{$id}-cut-confirm']
+    .dialogue__box {
+    @include dlg.dialogue-box-open-after(vars.$movement-duration);
+  }
+}
+
+// Mud art lives on the foreground twin (same layer as mud-after) so the
+// player walks behind the pile. Objects-layer labels stay click hits only.
+$mud-at: vars.at-node(29);
+$shovel-locked: tools.step-list(shovel, (idle, prompt, pickup));
+
+.object--mud,
+.object--mud-cut {
+  background-image: none;
+}
+
+.object--mud-gone {
+  background-image: url('../assets/world/obstacles/mud/mud-before.png');
+  opacity: 1;
+}
+
+#mud-cutting:checked ~ .game .object--mud {
+  animation: none;
+  background-image: none;
+}
+
+#mud-cutting:checked ~ .game .object--mud-gone {
+  animation: mud-clear-swap 0s vars.$movement-duration forwards;
+}
+
+#mud-done:checked ~ .game .object--mud-gone {
+  background-image: url('../assets/world/obstacles/mud/mud-after.png');
+  opacity: 1;
+}
+
+#mud-spark:checked
+  ~ :is(#{$shovel-locked}):checked
+  ~ #mud-idle:checked
+  ~ #{$mud-at}
+  ~ .game
+  .object--mud-gone,
+#shovel-armed:checked
+  ~ #mud-idle:checked
+  ~ #{$mud-at}
+  ~ .game
+  .object--mud-gone {
+  @include click-hint.show(5, 22.5, 5, 4, 29);
+}

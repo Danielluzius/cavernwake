@@ -1,0 +1,857 @@
+<!-- Opening-cutscene dialogue boxes — one per beat, see
+                     scss/intro/_intro.scss for which #intro-N reveals
+                     which box and for how long. Bilingual via .i18n
+                     spans like the rest of the UI.
+                     .dialogue--caption = scene cards (opening + time
+                     skip auto-play). Player speech after Start lives on
+                     #intro-dark; the fall scream + Argh live on #intro-fall.
+                     default .dialogue = player speech. -->
+<div class="dialogue dialogue--caption" data-intro-step="dark">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein neues Abenteuer</span>
+            <span class="i18n i18n--en">A new adventure</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue dialogue--caption" data-intro-step="fade">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der Höhleneingang</span>
+            <span class="i18n i18n--en">The cave entrance</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue dialogue--center" data-intro-step="1">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Letzte Erkundung für heute.</span>
+            <span class="i18n i18n--en">That's the last one for today.</span>
+        </p>
+        <label class="dialogue__button dialogue__button--teach" for="intro-2"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="2">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ganz schön dunkel hier.</span>
+            <span class="i18n i18n--en">It's pretty dark in here.</span>
+        </p>
+        <label class="dialogue__button" for="intro-lantern"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="lantern">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Gut, dass ich eine Laterne dabei hab.</span>
+            <span class="i18n i18n--en">It's a good job I brought a lantern.</span>
+        </p>
+        <label class="dialogue__button" for="intro-home"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="home">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Nur noch diese Höhle, dann geht's heim.</span>
+            <span class="i18n i18n--en">I'll just have a look in this cave, then I'm heading home.</span>
+        </p>
+        <label class="dialogue__button" for="intro-3"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="3">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine Brücke?</span>
+            <span class="i18n i18n--en">A bridge?</span>
+        </p>
+        <label class="dialogue__button" for="intro-anyway"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="anyway">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ich hoffe, die hält.</span>
+            <span class="i18n i18n--en">I hope it holds.</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="4">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Was zum…?</span>
+            <span class="i18n i18n--en">What the…?</span>
+        </p>
+        <label class="dialogue__button" for="intro-sit"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="sit">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ich falle!</span>
+            <span class="i18n i18n--en">I'm falling!</span>
+        </p>
+        <label class="dialogue__button" for="intro-fall"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="fall">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">AAAAAAAHHH!</span>
+            <span class="i18n i18n--en">AAAAAAAHHH!</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue dialogue--caption" data-intro-step="dark-hold">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Etwas später</span>
+            <span class="i18n i18n--en">Some time later</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="5">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Argh.</span>
+            <span class="i18n i18n--en">Argh.</span>
+        </p>
+        <label class="dialogue__button" for="intro-6"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="6">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hier unten seh ich fast nichts.</span>
+            <span class="i18n i18n--en">I can hardly see a thing down here.</span>
+        </p>
+        <label class="dialogue__button" for="intro-7"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="7">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der Rucksack muss beim Sturz woanders gelandet sein.</span>
+            <span class="i18n i18n--en">My rucksack must've come off on the way down.</span>
+        </p>
+        <label class="dialogue__button" for="intro-8"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="8">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der muss hier irgendwo sein.</span>
+            <span class="i18n i18n--en">It's got to be around here somewhere.</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="9">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ah, da ist er ja!</span>
+            <span class="i18n i18n--en">Ah, there it is.</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="10">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Zuerst brauche ich Licht.</span>
+            <span class="i18n i18n--en">I need some light first.</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="11">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">So ist's besser.</span>
+            <span class="i18n i18n--en">That's better.</span>
+        </p>
+        <label class="dialogue__button" for="intro-12"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="12">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hier komm ich nicht mehr hoch.</span>
+            <span class="i18n i18n--en">I can't climb back up from here.</span>
+        </p>
+        <label class="dialogue__button" for="intro-13"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="13">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schon wieder?</span>
+            <span class="i18n i18n--en">Again?</span>
+        </p>
+        <label class="dialogue__button" for="intro-hurry"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="hurry">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ich muss hier so schnell wie möglich raus.</span>
+            <span class="i18n i18n--en">I need to get out of here as quickly as I can.</span>
+        </p>
+        <label class="dialogue__button" for="intro-14"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-intro-step="14">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Irgendwo muss es einen Weg nach draußen geben.</span>
+            <span class="i18n i18n--en">There's got to be another way out.</span>
+        </p>
+        <label class="dialogue__button" for="position-14"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+
+<!-- Mid-game / outro. Continue still advances the same radio group
+     (or a position radio for wall-lantern-fire / escape). -->
+<div class="dialogue" data-step="vine24-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Die sind dick. Mit der Hand reiß ich das nicht durch.</span>
+            <span class="i18n i18n--en">These are thick. I'm not getting through that by hand.</span>
+        </p>
+        <label class="dialogue__button" for="vine24-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine24-cut-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Mit der Sichel sollte das gehen.</span>
+            <span class="i18n i18n--en">The sickle should clear this.</span>
+        </p>
+        <label class="dialogue__button" for="vine24-cutting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine24-cut-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Die sind durch.</span>
+            <span class="i18n i18n--en">That's done it.</span>
+        </p>
+        <label class="dialogue__button" for="vine24-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine30-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Da steckt irgendwas Metallenes im Gestrüpp.</span>
+            <span class="i18n i18n--en">There's something metal stuck in here.</span>
+        </p>
+        <label class="dialogue__button" for="vine30-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine30-found">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine Sichel. Ganz schön scharf.</span>
+            <span class="i18n i18n--en">A sickle. Pretty sharp.</span>
+        </p>
+        <label class="dialogue__button" for="vine30-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine30-cut-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Gut, dann säbel ich die mal weg.</span>
+            <span class="i18n i18n--en">Right. I'll cut through these.</span>
+        </p>
+        <label class="dialogue__button" for="vine30-cutting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine30-cut-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Gestrüpp weg. Jetzt komm ich durch.</span>
+            <span class="i18n i18n--en">I can get through now.</span>
+        </p>
+        <label class="dialogue__button" for="vine30-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine12-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schon wieder Ranken. Da liegt irgendwas dahinter.</span>
+            <span class="i18n i18n--en">More vines. There's something behind them.</span>
+        </p>
+        <label class="dialogue__button" for="vine12-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine12-cut-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Mal sehen, was dahinter ist.</span>
+            <span class="i18n i18n--en">Let's see what's back there.</span>
+        </p>
+        <label class="dialogue__button" for="vine12-cutting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="vine12-cut-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">In der Wand steckt etwas.</span>
+            <span class="i18n i18n--en">There's something stuck in the wall.</span>
+        </p>
+        <label class="dialogue__button" for="vine12-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="waterfall-hint-20-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Vorhang aus Wasser. Da lauf ich nicht durch.</span>
+            <span class="i18n i18n--en">That's a wall of water. I'm not going through it.</span>
+        </p>
+        <label class="dialogue__button" for="waterfall-hint-20-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="waterfall-hint-21-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Vorhang aus Wasser. Da lauf ich nicht durch.</span>
+            <span class="i18n i18n--en">That's a wall of water. I'm not going through it.</span>
+        </p>
+        <label class="dialogue__button" for="waterfall-hint-21-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="waterfall-hint-29-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Vorhang aus Wasser. Da lauf ich nicht durch.</span>
+            <span class="i18n i18n--en">That's a wall of water. I'm not going through it.</span>
+        </p>
+        <label class="dialogue__button" for="waterfall-hint-29-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="waterfall-hint-30-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Vorhang aus Wasser. Da lauf ich nicht durch.</span>
+            <span class="i18n i18n--en">That's a wall of water. I'm not going through it.</span>
+        </p>
+        <label class="dialogue__button" for="waterfall-hint-30-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lever7-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schon wieder ein Hebel. Sieht anders aus als der am Aufzug.</span>
+            <span class="i18n i18n--en">Another lever. Not like the one on the lift.</span>
+        </p>
+        <label class="dialogue__button" for="lever7-confirm"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lever7-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Vor mir hat sich nichts bewegt.</span>
+            <span class="i18n i18n--en">Nothing happened.</span>
+        </p>
+        <label class="dialogue__button" for="lever7-wonder"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lever7-wonder">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hat sich irgendwo was verändert?</span>
+            <span class="i18n i18n--en">Did something change?</span>
+        </p>
+        <label class="dialogue__button" for="lever7-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="pickaxe-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine alte Spitzhacke? Liegt hier wohl schon länger.</span>
+            <span class="i18n i18n--en">An old pickaxe. It's been down here a while.</span>
+        </p>
+        <label class="dialogue__button" for="pickaxe-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="pickaxe-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Noch gut in Schuss. Die nehm ich mit.</span>
+            <span class="i18n i18n--en">It's still in good shape. I'll take it.</span>
+        </p>
+        <label class="dialogue__button" for="pickaxe-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="rock-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Mit bloßen Händen schieb ich das nicht weg.</span>
+            <span class="i18n i18n--en">I'm not moving that by hand.</span>
+        </p>
+        <label class="dialogue__button" for="rock-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="rock-cut-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Damit mach ich das Geröll kaputt.</span>
+            <span class="i18n i18n--en">This should clear it.</span>
+        </p>
+        <label class="dialogue__button" for="rock-cutting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="rock-cut-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">So. Der Weg ist frei.</span>
+            <span class="i18n i18n--en">There. The way's clear.</span>
+        </p>
+        <label class="dialogue__button" for="rock-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="shovel-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine Schaufel. Was macht die hier unten?</span>
+            <span class="i18n i18n--en">A shovel. What's that doing down here?</span>
+        </p>
+        <label class="dialogue__button" for="shovel-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="shovel-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Könnte nützlich sein. Die kommt mit.</span>
+            <span class="i18n i18n--en">Could be useful. I'm taking it.</span>
+        </p>
+        <label class="dialogue__button" for="shovel-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="mud-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der Wasserfall hat hier eine Menge Schlamm angeschwemmt.</span>
+            <span class="i18n i18n--en">The waterfall dumped a lot of mud here.</span>
+        </p>
+        <label class="dialogue__button" for="mud-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="mud-cut-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Damit schaufel ich den weg.</span>
+            <span class="i18n i18n--en">The shovel should clear this.</span>
+        </p>
+        <label class="dialogue__button" for="mud-cutting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="mud-cut-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schlamm ist weg. Weiter.</span>
+            <span class="i18n i18n--en">That's the mud out of the way.</span>
+        </p>
+        <label class="dialogue__button" for="mud-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-shell-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Irgendeine leere Schale. Ziemlich schwer für etwas Hohles.</span>
+            <span class="i18n i18n--en">Some kind of empty casing. Heavy for something so hollow.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-shell-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-shell-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Brauch ich vielleicht noch. Die behalt ich.</span>
+            <span class="i18n i18n--en">Might need this. I'll hang on to it.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-shell-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-powder-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schwarzer Staub. Sieht nicht nach Dreck aus.</span>
+            <span class="i18n i18n--en">Black dust. That's not dirt.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-powder-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-powder-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Bloß nicht verschütten. Wer weiß, was das anstellt.</span>
+            <span class="i18n i18n--en">I'd better not spill it. Who knows what it'll do.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-powder-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-fuse-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine Schnur? Könnte vielleicht brennen.</span>
+            <span class="i18n i18n--en">A cord. Looks as if it might burn.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-fuse-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="bomb-fuse-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ganz schön kurz. Ich sollte sie besser trockenhalten.</span>
+            <span class="i18n i18n--en">It's pretty short. Better keep it dry.</span>
+        </p>
+        <label class="dialogue__button" for="bomb-fuse-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- One-shot until all three parts are in; Continue is spark-done. -->
+<div class="dialogue" data-step="workbench-incomplete">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ich hab noch nicht alles dafür.</span>
+            <span class="i18n i18n--en">I haven't got everything I need yet.</span>
+        </p>
+        <label class="dialogue__button" for="workbench-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="workbench-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hm. Hier kann ich was zusammenbauen.</span>
+            <span class="i18n i18n--en">Hm. I can put something together here.</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-step="workbench-craft-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Also gut. Dann bau ich das zusammen.</span>
+            <span class="i18n i18n--en">Alright. Let's put this together.</span>
+        </p>
+        <label class="dialogue__button" for="workbench-crafting"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="workbench-craft-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine Bombe also. Hässlich, aber es tut's.</span>
+            <span class="i18n i18n--en">A bomb, then. Ugly, but it'll work.</span>
+        </p>
+        <label class="dialogue__button" for="workbench-crafted"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="workbench-take">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schwerer als gedacht. Vorsicht damit.</span>
+            <span class="i18n i18n--en">Heavier than I thought. I'll be careful with it.</span>
+        </p>
+        <label class="dialogue__button" for="workbench-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Kein Durchgang. Durchgehend Fels.</span>
+            <span class="i18n i18n--en">That's solid rock. No way through.</span>
+        </p>
+        <label class="dialogue__button" for="wall-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-pickaxe-fail">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Zu hart. Zu groß. Die Spitzhacke kommt da nicht durch.</span>
+            <span class="i18n i18n--en">Too hard. Too big. The pickaxe is no use on this.</span>
+        </p>
+        <label class="dialogue__button" for="wall-pickaxe-failed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-shovel-fail">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Das ist Fels, kein Dreck. Die Schaufel bringt hier nichts.</span>
+            <span class="i18n i18n--en">That's rock, not dirt. The shovel's useless here.</span>
+        </p>
+        <label class="dialogue__button" for="wall-tools-failed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-blast-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Wenn irgendwas die Wand aufmacht, dann das.</span>
+            <span class="i18n i18n--en">If anything's getting through that wall, it's this.</span>
+        </p>
+        <label class="dialogue__button" for="wall-placed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- The one Continue in the game that moves the player instead of advancing
+     its own group — see scss/world/_stone-wall.scss for why. -->
+<div class="dialogue" data-step="wall-fuse-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Vorsichtig anzünden, dann rennen.</span>
+            <span class="i18n i18n--en">Light it carefully, then run.</span>
+        </p>
+        <label class="dialogue__button" for="wall-lantern-fire"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-lantern-fire">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schnell weg.</span>
+            <span class="i18n i18n--en">Time to run.</span>
+        </p>
+        <label class="dialogue__button" for="position-30--from-31--right"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- After the run left; one-way, then look right, blast, then confirm. -->
+<div class="dialogue" data-step="wall-blast-run">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Deckung!</span>
+            <span class="i18n i18n--en">Get down!</span>
+        </p>
+    </div>
+</div>
+<div class="dialogue" data-step="wall-blast-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Es ist offen. Ich glaub's kaum.</span>
+            <span class="i18n i18n--en">It's open. I can't believe that worked.</span>
+        </p>
+        <label class="dialogue__button" for="wall-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="last-lever-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Hebel. Der ist aus der Halterung gefallen.</span>
+            <span class="i18n i18n--en">A lever. It's fallen out of its fitting.</span>
+        </p>
+        <label class="dialogue__button" for="last-lever-pickup"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="last-lever-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Sieht noch ganz aus.</span>
+            <span class="i18n i18n--en">Still looks intact.</span>
+        </p>
+        <label class="dialogue__button" for="last-lever-notice"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="last-lever-notice">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Schon wieder ein Beben?!</span>
+            <span class="i18n i18n--en">Another tremor?</span>
+        </p>
+        <label class="dialogue__button" for="last-lever-turn"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="last-lever-turn">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Die Höhle hält das nicht mehr aus. Raus!</span>
+            <span class="i18n i18n--en">The cave's coming down. I need to get out.</span>
+        </p>
+        <label class="dialogue__button" for="last-lever-armed"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="collapse-hint-21-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Das Wasser ist wieder da. Da geh ich nicht durch!</span>
+            <span class="i18n i18n--en">The water's back. I'm not going through that!</span>
+        </p>
+        <label class="dialogue__button" for="collapse-hint-21-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="collapse-hint-30-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Wasser. Schon wieder. Da lang nicht.</span>
+            <span class="i18n i18n--en">Water. Again. Not that way.</span>
+        </p>
+        <label class="dialogue__button" for="collapse-hint-30-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="collapse-hint-23-blocked">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der Schacht steht voll. Sackgasse!</span>
+            <span class="i18n i18n--en">The shaft's flooded. Dead end!</span>
+        </p>
+        <label class="dialogue__button" for="collapse-hint-23-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- Appears after the workbench rock finishes falling (one-way). -->
+<div class="dialogue" data-step="collapse-bench">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der Weg ist verschüttet. Schnell weiter!</span>
+            <span class="i18n i18n--en">That way's buried. Keep moving!</span>
+        </p>
+        <label class="dialogue__button" for="collapse-bench-seen"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="collapse-bench-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Das hat mir fast den Kopf abgerissen.</span>
+            <span class="i18n i18n--en">That almost took my head off.</span>
+        </p>
+        <label class="dialogue__button" for="collapse-bench-look-idle"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- One-shot socket hint; Continue is spark-done. -->
+<div class="dialogue" data-step="last-lever-socket-hint">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Eine leere Halterung. Da hat mal was drin gesessen.</span>
+            <span class="i18n i18n--en">It's empty. Something used to go here.</span>
+        </p>
+        <label class="dialogue__button" for="socket-spark-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="last-lever-socket-prompt">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Passt.</span>
+            <span class="i18n i18n--en">It fits.</span>
+        </p>
+        <label class="dialogue__button" for="lift-6-14-unlocked"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- After the car docks and he turns left. Continue unlocks the walk. -->
+<div class="dialogue" data-step="last-lever-socket-confirm">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hoffentlich bringt mich das raus!</span>
+            <span class="i18n i18n--en">I hope this gets me out.</span>
+        </p>
+        <label class="dialogue__button" for="last-lever-way-seen"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<!-- One-way call lines (scss/world/_lift.scss). Unlock checkboxes start
+     the car; *-call-done is the Continue dismiss. 6<->14 uses the socket
+     confirm instead. -->
+<div class="dialogue" data-step="lift-17-26-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Hebel. Was macht der?</span>
+            <span class="i18n i18n--en">A lever. What does this do?</span>
+        </p>
+        <label class="dialogue__button" for="lift-17-26-unlocked"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-17-26-shaft">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ein Aufzug?</span>
+            <span class="i18n i18n--en">A lift?</span>
+        </p>
+        <label class="dialogue__button" for="lift-17-26-hope"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-17-26-hope">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Hoffentlich geht der noch.</span>
+            <span class="i18n i18n--en">Hope it still works.</span>
+        </p>
+        <label class="dialogue__button" for="lift-17-26-call-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-11-27-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Noch ein Hebel. Gleiche Art.</span>
+            <span class="i18n i18n--en">Another lever. Same kind.</span>
+        </p>
+        <label class="dialogue__button" for="lift-11-27-unlocked"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-11-27-shaft">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Der sieht mitgenommen aus.</span>
+            <span class="i18n i18n--en">This one looks worse for wear.</span>
+        </p>
+        <label class="dialogue__button" for="lift-11-27-hope"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-11-27-hope">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Dann probiere ich ihn.</span>
+            <span class="i18n i18n--en">I'll try it.</span>
+        </p>
+        <label class="dialogue__button" for="lift-11-27-call-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-10-36-look">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Wieder einer. Das kenn ich schon.</span>
+            <span class="i18n i18n--en">Another one. Same as before.</span>
+        </p>
+        <label class="dialogue__button" for="lift-10-36-unlocked"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-10-36-shaft">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Noch ein Aufzug. Wohin diesmal?</span>
+            <span class="i18n i18n--en">Another lift. Where to this time?</span>
+        </p>
+        <label class="dialogue__button" for="lift-10-36-hope"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="lift-10-36-hope">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Ob der mich weiterbringt.</span>
+            <span class="i18n i18n--en">I'll see if this gets me anywhere.</span>
+        </p>
+        <label class="dialogue__button" for="lift-10-36-call-done"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="escape-run">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Da vorn ist die Brücke. Lauf.</span>
+            <span class="i18n i18n--en">There's the bridge. Keep running.</span>
+        </p>
+        <label class="dialogue__button" for="position-4--from-6"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="escape-bridge">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Das passiert mir nicht nochmal.</span>
+            <span class="i18n i18n--en">That's not happening twice.</span>
+        </p>
+        <label class="dialogue__button" for="position-2--from-4"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="outro-idle">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Puh.</span>
+            <span class="i18n i18n--en">Phew.</span>
+        </p>
+        <label class="dialogue__button" for="outro-end"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
+<div class="dialogue" data-step="outro-end">
+    <div class="dialogue__box">
+        <p class="dialogue__text">
+            <span class="i18n i18n--de">Für heute reicht's.</span>
+            <span class="i18n i18n--en">That's enough for today.</span>
+        </p>
+        <label class="dialogue__button" for="outro-fade"><span class="visually-hidden i18n i18n--en">Continue</span><span class="visually-hidden i18n i18n--de">Weiter</span></label>
+    </div>
+</div>
