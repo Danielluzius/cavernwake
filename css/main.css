@@ -7703,7 +7703,7 @@ input {
   animation: inventory-toggle-pulse 1s ease-in-out infinite;
 }
 
-@keyframes inventory-toggle-new-item-vine30-pickup {
+@keyframes inventory-toggle-new-item-vine30-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7711,11 +7711,11 @@ input {
     transform: scale(1.18);
   }
 }
-#vine30-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-vine30-pickup 0.5s ease-in-out 0.6s 2;
+#vine30-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-vine30-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-pickaxe-pickup {
+@keyframes inventory-toggle-new-item-pickaxe-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7723,11 +7723,11 @@ input {
     transform: scale(1.18);
   }
 }
-#pickaxe-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-pickaxe-pickup 0.5s ease-in-out 0.6s 2;
+#pickaxe-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-pickaxe-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-shovel-pickup {
+@keyframes inventory-toggle-new-item-shovel-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7735,11 +7735,11 @@ input {
     transform: scale(1.18);
   }
 }
-#shovel-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-shovel-pickup 0.5s ease-in-out 0.6s 2;
+#shovel-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-shovel-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-bomb-shell-pickup {
+@keyframes inventory-toggle-new-item-bomb-shell-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7747,11 +7747,11 @@ input {
     transform: scale(1.18);
   }
 }
-#bomb-shell-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-bomb-shell-pickup 0.5s ease-in-out 0.6s 2;
+#bomb-shell-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-bomb-shell-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-bomb-powder-pickup {
+@keyframes inventory-toggle-new-item-bomb-powder-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7759,11 +7759,11 @@ input {
     transform: scale(1.18);
   }
 }
-#bomb-powder-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-bomb-powder-pickup 0.5s ease-in-out 0.6s 2;
+#bomb-powder-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-bomb-powder-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-bomb-fuse-pickup {
+@keyframes inventory-toggle-new-item-bomb-fuse-armed {
   0%, 100% {
     transform: scale(1);
   }
@@ -7771,11 +7771,11 @@ input {
     transform: scale(1.18);
   }
 }
-#bomb-fuse-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-bomb-fuse-pickup 0.5s ease-in-out 0.6s 2;
+#bomb-fuse-armed:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-bomb-fuse-armed 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-workbench-take {
+@keyframes inventory-toggle-new-item-workbench-done {
   0%, 100% {
     transform: scale(1);
   }
@@ -7783,11 +7783,11 @@ input {
     transform: scale(1.18);
   }
 }
-#workbench-take:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-workbench-take 0.5s ease-in-out 0.6s 2;
+#workbench-done:checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-workbench-done 0.5s ease-in-out 2;
 }
 
-@keyframes inventory-toggle-new-item-last-lever-pickup {
+@keyframes inventory-toggle-new-item-last-lever {
   0%, 100% {
     transform: scale(1);
   }
@@ -7795,8 +7795,8 @@ input {
     transform: scale(1.18);
   }
 }
-#last-lever-pickup:checked ~ .game .inventory__toggle--play {
-  animation: inventory-toggle-new-item-last-lever-pickup 0.5s ease-in-out 0.6s 2;
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__toggle--play {
+  animation: inventory-toggle-new-item-last-lever 0.5s ease-in-out 2;
 }
 
 #inventory-open:checked ~ #item-quote-idle:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
@@ -8227,44 +8227,6 @@ input {
 #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon,
 #wall-fuse-choosing:checked ~ .game .inventory__slot--lamp .inventory__icon {
   animation: inventory-lamp-hint-rattle 2.2s ease-in-out 0.45s infinite;
-}
-
-.inventory__slot--lamp::before {
-  content: "";
-  position: absolute;
-  z-index: 6;
-  top: 18%;
-  left: 50%;
-  width: 15px;
-  height: 15px;
-  margin-left: calc(15px / -2);
-  box-sizing: border-box;
-  pointer-events: none;
-  background: #2f6b32;
-  image-rendering: pixelated;
-  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1) * 0.4);
-  transform: scale(1);
-  transform-origin: 50% 50%;
-  transition: opacity 0.7s ease, background 0.15s ease, transform 0.15s ease;
-  box-shadow: 0 3px 0 #010000, 0 -3px 0 #010000, 3px 0 0 #010000, -3px 0 0 #010000;
-}
-
-.inventory__slot--lamp:hover::before {
-  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
-  background: #3a8240;
-  transform: scale(0.65);
-  transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
-}
-
-#inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__slot--lamp,
-#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp {
-  --click-hint: 1;
-}
-@media (hover: none), (pointer: coarse) {
-  #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__slot--lamp::before,
-  #wall-fuse-choosing:checked ~ .game .inventory__slot--lamp::before {
-    animation: click-hint-touch-hover 0.45s ease 0.7s both;
-  }
 }
 
 .inventory__slot--sickle .inventory__icon {

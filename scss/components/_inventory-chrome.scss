@@ -1,5 +1,4 @@
 @use '../base/variables' as vars;
-@use '../world/click-hint' as click-hint;
 @use 'dialogue' as dlg;
 @use 'inventory-shared' as *;
 
@@ -62,14 +61,16 @@
   animation: inventory-toggle-pulse 1s ease-in-out infinite;
 }
 
-// One-shot bag bounce when a pickup radio turns on. Unique keyframe
-// names so a later pickup restarts the motion (same computed `animation`
-// would not). Delay waits out the grab pose.
-$inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
-  bomb-shell-pickup, bomb-powder-pickup, bomb-fuse-pickup, workbench-take,
-  last-lever-pickup;
+// One-shot bag bounce when the slot actually gains the item. Pickup
+// radios fire on the first Continue; the icon waits for the commit step.
+// No grab-pose delay — that pose is already over. Unique keyframe names
+// so a later gain restarts the motion (same computed `animation` would
+// not). List order is play order: each gain stays :checked, and the
+// later rule has to win the cascade.
+$inventory-gained-beats: vine30-armed, pickaxe-armed, shovel-armed,
+  bomb-shell-armed, bomb-powder-armed, bomb-fuse-armed, workbench-done;
 
-@each $id in $inventory-pickup-beats {
+@each $id in $inventory-gained-beats {
   @keyframes inventory-toggle-new-item-#{$id} {
     0%,
     100% {
@@ -82,9 +83,27 @@ $inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
   }
 
   ##{$id}:checked ~ .game .inventory__toggle--play {
-    animation: inventory-toggle-new-item-#{$id} 0.5s ease-in-out
-      vars.$movement-duration 2;
+    animation: inventory-toggle-new-item-#{$id} 0.5s ease-in-out 2;
   }
+}
+
+// The lever icon is held from the quake line onward, across radios that
+// uncheck each other. One shared animation so those steps don't cancel it.
+@keyframes inventory-toggle-new-item-last-lever {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+:is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked
+  ~ .game
+  .inventory__toggle--play {
+  animation: inventory-toggle-new-item-last-lever 0.5s ease-in-out 2;
 }
 
 #inventory-open:checked
@@ -489,10 +508,11 @@ $inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
   pointer-events: auto;
 }
 
-// Click hint while the bag is open at intro-10 or while lighting the
-// wall bomb: short rattle, pause, loop. Lives on the icon so the
-// use-hitbox stays still. Delay matches the bag morph so it does not
-// shake while the panel is still growing.
+// Lamp cue while the bag is open at intro-10 or while lighting the
+// wall bomb: short rattle, pause, loop. The green hotspot pad is
+// deliberately absent. Lives on the icon so the use-hitbox stays
+// still. Delay matches the bag morph so it does not shake while the
+// panel is still growing.
 @keyframes inventory-lamp-hint-rattle {
   0%,
   8% {
@@ -533,58 +553,6 @@ $inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
   .inventory__icon {
   animation: inventory-lamp-hint-rattle 2.2s ease-in-out
     vars.$inventory-morph-duration infinite;
-}
-
-// Same green pad as world hotspots: first lighting at intro-10, and again
-// once the placed bomb has opened the bag. --hint-vis hides it with the
-// other hints.
-.inventory__slot--lamp::before {
-  content: '';
-  position: absolute;
-  z-index: 6;
-  top: 18%;
-  left: 50%;
-  width: vars.$click-hint-size;
-  height: vars.$click-hint-size;
-  margin-left: calc(#{vars.$click-hint-size} / -2);
-  box-sizing: border-box;
-  pointer-events: none;
-  background: vars.$dialogue-arrow-bg;
-  image-rendering: pixelated;
-  opacity: calc(
-    var(--click-hint, 0) * var(--hint-vis, 1) *
-      #{vars.$click-hint-idle-opacity}
-  );
-  transform: scale(1);
-  transform-origin: 50% 50%;
-  transition:
-    opacity vars.$click-hint-fade-duration ease,
-    background 0.15s ease,
-    transform 0.15s ease;
-  box-shadow:
-    0 #{vars.$dialogue-pixel} 0 vars.$dialogue-outline,
-    0 (-#{vars.$dialogue-pixel}) 0 vars.$dialogue-outline,
-    #{vars.$dialogue-pixel} 0 0 vars.$dialogue-outline,
-    (-#{vars.$dialogue-pixel}) 0 0 vars.$dialogue-outline;
-}
-
-.inventory__slot--lamp:hover::before {
-  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
-  background: vars.$dialogue-arrow-bg-hover;
-  transform: scale(vars.$click-hint-hover-scale);
-  transition:
-    opacity 0.15s ease,
-    background 0.15s ease,
-    transform 0.15s ease;
-}
-
-#inventory-open:checked
-  ~ #position-1:checked
-  ~ #intro-10:checked
-  ~ .game
-  .inventory__slot--lamp,
-#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp {
-  @include click-hint.live;
 }
 
 @mixin inventory-item-held {
