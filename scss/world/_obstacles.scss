@@ -208,6 +208,12 @@ $barriers: (
   // Continue cannot strand vine-step. Node 30 still uses a radio — pickup
   // follows.
   @if $id == 30 {
+    // First-look line is a rest step (keeps climb facing) so it is not
+    // in $busy — still pin the D-pad until Continue starts the pickup.
+    #vine30-blocked {
+      @include dlg.lock-edges;
+    }
+
     #vine30-blocked:checked
       ~ .game
       .dialogue[data-step='vine30-blocked']

@@ -30,10 +30,6 @@ $end-run-after: vars.$title-emerge-duration;
 $end-button-width: vars.$tile-size-display * 4.2;
 $end-button-half: $end-button-width * 0.5;
 $end-stand-gap: vars.$tile-size-display * 0.15;
-$end-at-button-right: calc(50vw + #{$end-button-half});
-$end-at-stand: calc(
-  50vw - #{$end-button-half + $end-walker-size + $end-stand-gap}
-);
 
 $end-approach-in: 1.7s;
 $end-cross: 1.15s;
@@ -90,6 +86,10 @@ $end-exit-after: $end-act-after + $end-act;
   font-smooth: never;
   opacity: 0;
   --end-fade: #{$end-fade};
+  --end-scale: 1;
+  --end-walker-size: calc(#{$end-walker-size} * var(--end-scale));
+  --end-button-half: calc(#{$end-button-half} * var(--end-scale));
+  --end-stand-gap: calc(#{$end-stand-gap} * var(--end-scale));
 }
 
 .end-screen__brand {
@@ -110,6 +110,7 @@ $end-exit-after: $end-act-after + $end-act;
 
 .end-screen__title {
   margin: 0;
+  max-width: min(90vw, #{$end-button-width * 2.4});
   color: vars.$dialogue-fill;
   font-size: vars.$dialogue-font-size * 2;
   font-weight: 400;
@@ -127,6 +128,7 @@ $end-exit-after: $end-act-after + $end-act;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: min(90vw, #{$end-button-width * 2.4});
   margin: 0;
   color: vars.$dialogue-bevel;
   font-size: vars.$dialogue-font-size;
@@ -205,9 +207,9 @@ $end-exit-after: $end-act-after + $end-act;
   position: absolute;
   top: 50%;
   left: 0;
-  width: $end-walker-size;
-  height: $end-walker-size;
-  margin-top: calc(#{vars.$tile-size-display * 0.15});
+  width: var(--end-walker-size);
+  height: var(--end-walker-size);
+  margin-top: calc(#{vars.$tile-size-display * 0.15} * var(--end-scale));
   background-image: url('../assets/characters/with-backpack/walk/walk-left/fast-walk-left/frame_001.png');
   background-repeat: no-repeat;
   background-size: contain;
@@ -232,16 +234,21 @@ $end-exit-after: $end-act-after + $end-act;
   }
 
   #{math.percentage(math.div($end-approach-in, $end-travel))} {
-    transform: translateX($end-at-button-right);
+    transform: translateX(calc(50vw + var(--end-button-half)));
   }
 
   #{math.percentage(math.div($end-approach, $end-travel))},
   #{math.percentage(math.div($end-approach + $end-act, $end-travel))} {
-    transform: translateX($end-at-stand);
+    transform: translateX(
+      calc(
+        50vw - var(--end-button-half) - var(--end-walker-size) -
+          var(--end-stand-gap)
+      )
+    );
   }
 
   100% {
-    transform: translateX(-#{$end-walker-size});
+    transform: translateX(calc(-1 * var(--end-walker-size)));
   }
 }
 

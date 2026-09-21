@@ -61,6 +61,31 @@
   animation: inventory-toggle-pulse 1s ease-in-out infinite;
 }
 
+// One-shot bag bounce when a pickup radio turns on. Unique keyframe
+// names so a later pickup restarts the motion (same computed `animation`
+// would not). Delay waits out the grab pose.
+$inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
+  bomb-shell-pickup, bomb-powder-pickup, bomb-fuse-pickup, workbench-take,
+  last-lever-pickup;
+
+@each $id in $inventory-pickup-beats {
+  @keyframes inventory-toggle-new-item-#{$id} {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.18);
+    }
+  }
+
+  ##{$id}:checked ~ .game .inventory__toggle--play {
+    animation: inventory-toggle-new-item-#{$id} 0.5s ease-in-out
+      vars.$movement-duration 2;
+  }
+}
+
 #inventory-open:checked
   ~ #position-1:checked
   ~ #intro-10:checked
@@ -408,9 +433,10 @@
   pointer-events: auto;
 }
 
-// Click hint while the bag is open at intro-10: short rattle, pause, loop.
-// Lives on the icon so the use-hitbox stays still. Delay matches the bag
-// morph so it does not shake while the panel is still growing.
+// Click hint while the bag is open at intro-10 or while lighting the
+// wall bomb: short rattle, pause, loop. Lives on the icon so the
+// use-hitbox stays still. Delay matches the bag morph so it does not
+// shake while the panel is still growing.
 @keyframes inventory-lamp-hint-rattle {
   0%,
   8% {
@@ -442,6 +468,10 @@
 #inventory-open:checked
   ~ #position-1:checked
   ~ #intro-10:checked
+  ~ .game
+  .inventory__slot--lamp
+  .inventory__icon,
+#wall-fuse-choosing:checked
   ~ .game
   .inventory__slot--lamp
   .inventory__icon {

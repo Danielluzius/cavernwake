@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:math';
 @use '../base/variables' as vars;
 @use '../components/dialogue' as dlg;
 @use 'tools';
@@ -35,6 +36,10 @@ $size: 6;
 $bomb-col: 17.165;
 $bomb-row: 24.665;
 $bomb-size: 0.67;
+// Wall pad: same column as the placed bomb, a little above its sprite.
+$hint-pad-left: $bomb-col - $col + math.div($bomb-size, 2) -
+  math.div(vars.$click-hint-size, vars.$tile-size-display * 2);
+$hint-pad-top: $bomb-row - $row - 0.5;
 
 $pulse-duration: vars.$movement-duration;
 
@@ -117,7 +122,7 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
   image-rendering: pixelated;
   pointer-events: none;
   cursor: default;
-  @include click-hint.place($col, $row, $size, $size, 31, 1.2, 2.55);
+  @include click-hint.place($col, $row, $size, $size, 31, $hint-pad-left, $hint-pad-top);
 }
 
 // Look line until the pickaxe is owned. Sickle must not steal this click
@@ -150,7 +155,7 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
   ~ #{vars.at-node(31)}
   ~ .game
   .object--stone-wall-front {
-  @include click-hint.show($col, $row, $size, $size, 31, 1.2, 2.55);
+  @include click-hint.show($col, $row, $size, $size, 31, $hint-pad-left, $hint-pad-top);
 }
 
 #pickaxe-armed:checked
@@ -163,7 +168,7 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
   ~ #{vars.at-node(31)}
   ~ .game
   .object--stone-wall-front {
-  @include click-hint.show($col, $row, $size, $size, 31, 1.2, 2.55);
+  @include click-hint.show($col, $row, $size, $size, 31, $hint-pad-left, $hint-pad-top);
 }
 
 .object--stone-wall-front {

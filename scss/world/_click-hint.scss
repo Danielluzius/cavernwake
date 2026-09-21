@@ -60,6 +60,35 @@ $top-inset: 0.25;
 
 @mixin live {
   --click-hint: 1;
+
+  // Restarted whenever this selector matches (arrive at the node), so
+  // the delay is per-hint, not a one-shot from page load.
+  @media (hover: none), (pointer: coarse) {
+    &::before {
+      animation: click-hint-touch-hover
+        vars.$click-hint-touch-hover-duration
+        ease
+        vars.$click-hint-touch-hover-delay
+        both;
+    }
+  }
+}
+
+@keyframes click-hint-touch-hover {
+  from {
+    opacity: calc(
+      var(--click-hint, 0) * var(--hint-vis, 1) *
+        #{vars.$click-hint-idle-opacity}
+    );
+    background: vars.$dialogue-arrow-bg;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+    background: vars.$dialogue-arrow-bg-hover;
+    transform: scale(vars.$click-hint-hover-scale);
+  }
 }
 
 @mixin show($col, $row, $cols, $rows, $node-id, $pad-left: null, $pad-top: null) {

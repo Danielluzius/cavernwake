@@ -267,6 +267,9 @@ $click-hint-size: math.div($dialogue-continue-size, 2);
 $click-hint-idle-opacity: 0.4;
 $click-hint-hover-scale: 0.65;
 $click-hint-fade-duration: 0.7s;
+// Touch: ghost first, then settle into the hover look (no pointer).
+$click-hint-touch-hover-delay: 0.7s;
+$click-hint-touch-hover-duration: 0.45s;
 $dialogue-arrow-bg: #2f6b32;
 $dialogue-arrow-bg-hover: #3a8240;
 // Like the above-head placement, but a bit lower: box bottom overlaps

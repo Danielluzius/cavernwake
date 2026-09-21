@@ -30,7 +30,9 @@
   }
 
   // Green Continue pad without the chevron (see world/_click-hint.scss).
-  // Ghosted until hover; --click-hint is 0 or 1 on the live hotspot.
+  // Ghosted until hover on pointer devices. Touch delays into the hover
+  // look when the hotspot is live (world/_click-hint.scss). --click-hint
+  // is 0 or 1 on the live hotspot.
   &::before {
     content: '';
     position: absolute;

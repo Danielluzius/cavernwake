@@ -305,13 +305,28 @@
     }
   }
 
-  .title-screen__brand {
+  .title-screen__brand,
+  .end-screen__brand {
     width: 100%;
     max-width: 100%;
     min-width: 0;
     justify-self: stretch;
     transform: scale(0.6);
     transform-origin: 50% 50%;
+  }
+
+  .end-screen {
+    --end-scale: 0.6;
+  }
+
+  .end-screen__button {
+    position: relative;
+  }
+
+  .end-screen__button::before {
+    content: '';
+    position: absolute;
+    inset: -12px -10px;
   }
 
   .title-screen__button,
@@ -555,8 +570,13 @@
 }
 
 @media (max-width: 383px) {
-  .title-screen__brand {
+  .title-screen__brand,
+  .end-screen__brand {
     transform: scale(0.5625);
+  }
+
+  .end-screen {
+    --end-scale: 0.5625;
   }
 }
 
@@ -569,8 +589,13 @@
 
 // Large phones / small tablets: still compact chrome, slightly larger title.
 @media (min-width: vars.$layout-phablet-min) and (max-width: vars.$layout-compact-max) and (min-height: 700px) {
-  .title-screen__brand {
+  .title-screen__brand,
+  .end-screen__brand {
     transform: scale(0.75);
+  }
+
+  .end-screen {
+    --end-scale: 0.75;
   }
 }
 
@@ -631,7 +656,8 @@
 }
 
 // Touch devices have no hover. Available D-pad edges use the hover fill
-// and full opacity so they don't look idle/dimmed.
+// and full opacity so they don't look idle/dimmed. Click-hints delay
+// into that look in world/_click-hint.scss (`live`).
 @media (hover: none), (pointer: coarse) {
   .game {
     --edge-opacity: 1;

@@ -517,7 +517,7 @@ $title-lang-mark: vars.$dialogue-pixel * 3;
 
 .skip-intro__choices {
   display: flex;
-  gap: vars.$dialogue-pixel * 8;
+  gap: vars.$dialogue-pixel * 10;
 }
 
 .skip-intro__choice {
@@ -528,5 +528,15 @@ $title-lang-mark: vars.$dialogue-pixel * 3;
 }
 
 .skip-intro__choice:hover {
+  text-decoration: underline;
+  text-decoration-thickness: vars.$dialogue-pixel;
+  text-underline-offset: vars.$dialogue-pixel;
+}
+
+.skip-intro__choice--yes {
   color: vars.$dialogue-bevel;
+}
+
+.skip-intro__choice--yes:hover {
+  color: vars.$dialogue-fill;
 }
