@@ -6,10 +6,15 @@
 // SETTINGS — overlay in .ui, mirrored to the inventory HUD.
 // Gear + close sit in the top-right corner of the vision-field square.
 // The gear art (same PNG as the HUD icon) morphs from the icon slot to
-// the right of the field; the cream window fades in after that grow.
+// the right of the field. Open: grow the gear, then fade the cream
+// window in. Close: fade the window out to the full-size gear, then
+// shrink it back to the HUD slot.
 // Sibling ~ chains must start from an input that sits BEFORE .game and
 // only list later siblings.
 // ==========================================================================
+
+$settings-window-fade: 0.15s;
+$settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
 
 @mixin settings-hud-slot($box-size) {
   position: absolute;
@@ -33,8 +38,8 @@
   cursor: pointer;
   user-select: none;
   transition:
-    opacity 0.15s vars.$inventory-morph-duration,
-    visibility 0s vars.$inventory-morph-duration;
+    opacity 0.15s $settings-close-hold,
+    visibility 0s $settings-close-hold;
 }
 
 // Hidden through the cutscene. Last Continue (#intro-hints) pops the
@@ -43,15 +48,16 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  animation: inventory-toggle-pulse 0.5s ease-in-out 2;
-  transition:
-    opacity 0.15s,
-    visibility 0s;
+  // Same delay as the HUD slot reappear so the pulse is not eaten by
+  // the morph wait on first show, and so closing settings does not
+  // restart an instant fade-in over the shrinking panel.
+  animation: inventory-toggle-pulse 0.5s ease-in-out $settings-close-hold 2;
 }
 
 // #inventory-open stays checked after the lamp (intro-11 closes the
 // tutorial bag by dropping #intro-10, not by unchecking the box). Hide
 // the gear only while that bag is actually open.
+#settings-open:checked ~ .game .settings__toggle,
 #settings-open:checked ~ #{vars.$intro-running} ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
 #inventory-open-play:checked ~ .game .settings__toggle,
@@ -73,8 +79,8 @@
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 0s vars.$inventory-morph-duration,
-    visibility 0s vars.$inventory-morph-duration;
+    opacity 0s $settings-close-hold,
+    visibility 0s $settings-close-hold;
 }
 
 #settings-open:checked ~ .game .settings {
@@ -96,17 +102,23 @@
   position: absolute;
   top: calc(var(--field-size) / 2);
   left: calc(50% + var(--set-anchor-x));
+  overflow: hidden;
   pointer-events: none;
   transform-origin: 0% 50%;
   transform: translate(0, -50%)
     translate(var(--set-morph-x), var(--set-morph-y))
     scale(#{vars.$inventory-morph-scale});
-  transition: transform vars.$inventory-morph-duration ease-out;
+  // Close: wait out the window→gear fade, then shrink.
+  transition: transform vars.$inventory-morph-duration ease-out
+    $settings-window-fade;
 }
 
 #settings-open:checked ~ .game .settings__panel {
+  overflow: visible;
   pointer-events: auto;
   transform: translate(0, -50%) scale(1);
+  // Open: grow immediately; the window fade waits on .settings__body.
+  transition: transform vars.$inventory-morph-duration ease-out;
 }
 
 // Same PNG as the HUD gear, so the closed scale lands on the icon and
@@ -141,12 +153,14 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
   line-height: 1.25;
   -webkit-font-smoothing: none;
   opacity: 0;
-  transition: opacity 0.15s;
+  // Close: quick crossfade onto the full-size gear, then the panel
+  // shrinks. Open uses the delayed fade below.
+  transition: opacity $settings-window-fade ease-out;
 }
 
 #settings-open:checked ~ .game .settings__body {
   opacity: 1;
-  transition: opacity 0.2s vars.$inventory-morph-duration;
+  transition: opacity 0.2s ease-out vars.$inventory-morph-duration;
 }
 
 .settings__back {
