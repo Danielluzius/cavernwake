@@ -1,4 +1,5 @@
 @use '../base/variables' as vars;
+@use '../world/click-hint' as click-hint;
 @use 'dialogue' as dlg;
 @use 'inventory-shared' as *;
 
@@ -532,6 +533,58 @@ $inventory-pickup-beats: vine30-pickup, pickaxe-pickup, shovel-pickup,
   .inventory__icon {
   animation: inventory-lamp-hint-rattle 2.2s ease-in-out
     vars.$inventory-morph-duration infinite;
+}
+
+// Same green pad as world hotspots: first lighting at intro-10, and again
+// once the placed bomb has opened the bag. --hint-vis hides it with the
+// other hints.
+.inventory__slot--lamp::before {
+  content: '';
+  position: absolute;
+  z-index: 6;
+  top: 18%;
+  left: 50%;
+  width: vars.$click-hint-size;
+  height: vars.$click-hint-size;
+  margin-left: calc(#{vars.$click-hint-size} / -2);
+  box-sizing: border-box;
+  pointer-events: none;
+  background: vars.$dialogue-arrow-bg;
+  image-rendering: pixelated;
+  opacity: calc(
+    var(--click-hint, 0) * var(--hint-vis, 1) *
+      #{vars.$click-hint-idle-opacity}
+  );
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition:
+    opacity vars.$click-hint-fade-duration ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+  box-shadow:
+    0 #{vars.$dialogue-pixel} 0 vars.$dialogue-outline,
+    0 (-#{vars.$dialogue-pixel}) 0 vars.$dialogue-outline,
+    #{vars.$dialogue-pixel} 0 0 vars.$dialogue-outline,
+    (-#{vars.$dialogue-pixel}) 0 0 vars.$dialogue-outline;
+}
+
+.inventory__slot--lamp:hover::before {
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+  background: vars.$dialogue-arrow-bg-hover;
+  transform: scale(vars.$click-hint-hover-scale);
+  transition:
+    opacity 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+#inventory-open:checked
+  ~ #position-1:checked
+  ~ #intro-10:checked
+  ~ .game
+  .inventory__slot--lamp,
+#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp {
+  @include click-hint.live;
 }
 
 @mixin inventory-item-held {

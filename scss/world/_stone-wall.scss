@@ -203,9 +203,8 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
 
 .object--wall-bomb {
   opacity: 0;
-}
-
-.object--wall-bomb-hit {
+  // Pad lives on the foreground sprite. The hit label sits in the
+  // objects layer, behind the wall, so a hint there never shows.
   @include click-hint.place($bomb-col, $bomb-row, $bomb-size, $bomb-size, 31);
 }
 
@@ -215,7 +214,13 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
   .object--wall-bomb-hit {
   pointer-events: auto;
   cursor: pointer;
-  @include click-hint.show($bomb-col, $bomb-row, $bomb-size, $bomb-size, 31);
+}
+
+#wall-placed:checked
+  ~ #{vars.at-node(31)}
+  ~ .game
+  .object--wall-bomb {
+  @include click-hint.live;
 }
 
 .object--wall-bomb::after {

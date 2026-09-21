@@ -8229,6 +8229,44 @@ input {
   animation: inventory-lamp-hint-rattle 2.2s ease-in-out 0.45s infinite;
 }
 
+.inventory__slot--lamp::before {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  top: 18%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  margin-left: calc(15px / -2);
+  box-sizing: border-box;
+  pointer-events: none;
+  background: #2f6b32;
+  image-rendering: pixelated;
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1) * 0.4);
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: opacity 0.7s ease, background 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 3px 0 #010000, 0 -3px 0 #010000, 3px 0 0 #010000, -3px 0 0 #010000;
+}
+
+.inventory__slot--lamp:hover::before {
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+  background: #3a8240;
+  transform: scale(0.65);
+  transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+#inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__slot--lamp,
+#wall-fuse-choosing:checked ~ .game .inventory__slot--lamp {
+  --click-hint: 1;
+}
+@media (hover: none), (pointer: coarse) {
+  #inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__slot--lamp::before,
+  #wall-fuse-choosing:checked ~ .game .inventory__slot--lamp::before {
+    animation: click-hint-touch-hover 0.45s ease 0.7s both;
+  }
+}
+
 .inventory__slot--sickle .inventory__icon {
   background-image: url("../assets/objects/inventory/sickle.png");
 }
@@ -11938,9 +11976,6 @@ input {
 
 .object--wall-bomb {
   opacity: 0;
-}
-
-.object--wall-bomb-hit {
   --click-hint-top: 24.66px;
   --click-hint-left: 24.66px;
 }
@@ -11948,12 +11983,13 @@ input {
 #wall-placed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--wall-bomb-hit {
   pointer-events: auto;
   cursor: pointer;
-  --click-hint-top: 24.66px;
-  --click-hint-left: 24.66px;
+}
+
+#wall-placed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--wall-bomb {
   --click-hint: 1;
 }
 @media (hover: none), (pointer: coarse) {
-  #wall-placed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--wall-bomb-hit::before {
+  #wall-placed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--wall-bomb::before {
     animation: click-hint-touch-hover 0.45s ease 0.7s both;
   }
 }
