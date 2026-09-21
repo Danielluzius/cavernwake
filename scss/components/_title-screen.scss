@@ -101,6 +101,16 @@ $title-fall-delay: vars.$title-load-delay + $title-walk-time;
   animation-delay: vars.$title-credit-delay;
 }
 
+.title-screen__credit-name {
+  color: vars.$dialogue-fill;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.title-screen__credit-name:hover {
+  color: vars.$dialogue-bevel;
+}
+
 .title-screen__load {
   display: flex;
   flex-direction: column;

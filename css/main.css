@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --walk-cycle-duration: 0.6s;
   --walk-duration: 1.2s;
@@ -6911,6 +6912,16 @@ input {
   animation-delay: 2.7s;
 }
 
+.title-screen__credit-name {
+  color: #ebcba0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.title-screen__credit-name:hover {
+  color: #ca946e;
+}
+
 .title-screen__load {
   display: flex;
   flex-direction: column;
@@ -7315,22 +7326,62 @@ input {
 .end-screen__title {
   margin: 0;
   color: #ebcba0;
-  font-size: 72px;
+  font-size: 48px;
   font-weight: 400;
-  letter-spacing: 6px;
-  line-height: 1;
+  letter-spacing: 3px;
+  line-height: 1.15;
+  text-align: center;
   text-shadow: 3px 3px 0 #010000, 0 6px 0 #ca946e;
   animation: title-emerge 3s ease-out both;
   animation-delay: calc(var(--end-fade) + 0s);
 }
 
 .end-screen__credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
   color: #ca946e;
   font-size: 24px;
   letter-spacing: 3px;
-  animation: title-fade-in 1.1s ease-out both;
-  animation-delay: calc(var(--end-fade) + 2.7s);
+}
+
+.end-screen__credit-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.end-screen__credit-prompt {
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in 1.1s ease-out both;
+  animation-delay: calc(var(--end-fade) + 8.2s);
+}
+
+.end-screen__credit-hint {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #ebcba0;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in 1.1s ease-out both;
+  animation-delay: calc(var(--end-fade) + 8.65s);
+}
+
+.end-screen__credit-hint::before {
+  content: "▶";
+}
+
+.end-screen__credit-hint::after {
+  content: "◀";
 }
 
 .end-screen__choices {
@@ -7340,9 +7391,10 @@ input {
   justify-content: center;
   width: max-content;
   padding: 6px;
-  clip-path: inset(0 0 0 100%);
-  animation: end-button-wipe 1.15s linear both;
-  animation-delay: calc(var(--end-fade) + 4.7s);
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in 0.45s ease-out both;
+  animation-delay: calc(var(--end-fade) + 6.8s);
 }
 
 .end-screen__button {
@@ -7403,61 +7455,19 @@ input {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  animation: end-walker-travel 7s linear both, end-walker-run 0.45s steps(1, end) 6 both, end-walker-act 2.6s steps(1, end) forwards, end-walker-exit 0.45s steps(1, end) 3 forwards;
-  animation-delay: calc(var(--end-fade) + 3s), calc(var(--end-fade) + 3s), calc(var(--end-fade) + 5.85s), calc(var(--end-fade) + 8.45s);
+  animation: end-walker-travel 10.1s linear both, end-walker-run 0.45s steps(1, end) 6 both, end-walker-act 5.7s steps(1, end) forwards, end-walker-exit 0.45s steps(1, end) 3 forwards;
+  animation-delay: calc(var(--end-fade) + 3s), calc(var(--end-fade) + 3s), calc(var(--end-fade) + 5.85s), calc(var(--end-fade) + 11.55s);
 }
 
-.end-screen__line {
-  box-shadow: 0 -3px #ebcba0, 0 -6px #010000, 3px 0 #ebcba0, 3px -3px #010000, 6px 0 #010000, 0 3px #ebcba0, 0 6px #010000, -3px 0 #ebcba0, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
-}
-.end-screen__line::after {
-  content: "";
-  display: block;
-  position: absolute;
-  box-sizing: border-box;
-  pointer-events: none;
-  height: 3px;
-  width: 3px;
-  bottom: -6px;
-  left: calc(75% - 1.5px);
-  box-shadow: 0 3px #010000, 0 6px #010000, 0 9px #010000, 0 12px #010000, 3px 9px #010000, 6px 6px #010000, 9px 3px #010000, 3px 3px #ebcba0, 6px 3px #ebcba0, 3px 6px #ebcba0, 3px 0 #ebcba0, 6px 0 #ebcba0, 9px 0 #ebcba0;
-}
-.end-screen__line {
-  position: absolute;
-  left: 50%;
-  bottom: 108%;
-  margin: 0;
-  padding: 9px 15px;
-  background: #ebcba0;
-  color: #2a1810;
-  font-size: 24px;
-  letter-spacing: 3px;
-  line-height: 1;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  opacity: 0;
-  visibility: hidden;
-  animation: end-puh 1.7s ease-out both;
-  animation-delay: calc(var(--end-fade) + 7.1s);
-}
-
-@keyframes end-button-wipe {
-  from {
-    clip-path: inset(0 0 0 100%);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
 @keyframes end-walker-travel {
   0% {
     transform: translateX(100vw);
   }
-  24.2857142857% {
-    transform: translateX(calc(50vw + 124.8px));
+  16.8316831683% {
+    transform: translateX(calc(50vw + 201.6px));
   }
-  40.7142857143%, 77.8571428571% {
-    transform: translateX(calc(50vw - 307.2px));
+  28.2178217822%, 84.6534653465% {
+    transform: translateX(calc(50vw - 384px));
   }
   100% {
     transform: translateX(-168px);
@@ -7492,28 +7502,41 @@ input {
   }
 }
 @keyframes end-walker-act {
-  0%, 9.6153846154% {
+  0% {
     background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
-  30.7692307692% {
+  6.1403508772% {
     background-image: url("../assets/characters/with-backpack/base/base-right.png");
   }
-  48.0769230769%, 100% {
+  8.7719298246% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_001.png");
+  }
+  11.4035087719% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_002.png");
+  }
+  14.0350877193% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_003.png");
+  }
+  16.6666666667% {
+    background-image: url("../assets/characters/with-backpack/interact/interact-right/frame_004.png");
+  }
+  17.3684210526% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+  28.9473684211% {
+    background-image: url("../assets/characters/with-backpack/base/base-right.png");
+  }
+  29.649122807% {
+    background-image: url("../assets/characters/with-backpack/base/base-down.png");
+  }
+  80.701754386% {
+    background-image: url("../assets/characters/with-backpack/base/base-down.png");
+  }
+  81.4035087719% {
     background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
-}
-@keyframes end-puh {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  14%, 72% {
-    opacity: 1;
-    visibility: visible;
-  }
   100% {
-    opacity: 0;
-    visibility: hidden;
+    background-image: url("../assets/characters/with-backpack/base/base-left.png");
   }
 }
 .inventory__toggle {

@@ -9,12 +9,11 @@
 // it. Reload via ./index.html resets every radio/checkbox.
 //
 // Sequence (CSS animation-delay, no JS):
-//   1. Title eases in like the title screen
-//   2. Credit fades in
-//   3. Character runs in from the right
-//   4. Only while he crosses the pad: it wipes in behind him
-//   5. He stops left of the pad, looks right, looks left
-//   6. Then "Puh..", then run off to the left
+//   1. Title eases in
+//   2. Character runs in from the right and stops left of the pad
+//   3. Looks right, interact-right, Back to start fades in
+//   4. Pause, base-down, pause, prompt then Click here
+//   5. Pause, looks left, pause, then runs off
 // ==========================================================================
 
 // Same wait as $outro-fade-duration in scss/outro/_outro.scss.
@@ -26,12 +25,9 @@ $end-run-cycle: 0.45s;
 // Real outro waits out the blackout; the title ENDE skip sets
 // --end-fade to 0s so the sequence starts immediately.
 $end-title-after: 0s;
-$end-credit-after: vars.$title-credit-delay;
 $end-run-after: vars.$title-emerge-duration;
 
-// Pad is centered; EN copy is the wider one. Used to park him left of
-// it and to start the wipe only once he actually crosses the pad.
-$end-button-width: vars.$tile-size-display * 2.6;
+$end-button-width: vars.$tile-size-display * 4.2;
 $end-button-half: $end-button-width * 0.5;
 $end-stand-gap: vars.$tile-size-display * 0.15;
 $end-at-button-right: calc(50vw + #{$end-button-half});
@@ -42,27 +38,30 @@ $end-at-stand: calc(
 $end-approach-in: 1.7s;
 $end-cross: 1.15s;
 $end-approach: $end-approach-in + $end-cross;
-$end-wipe: $end-cross;
-$end-hold-left: 0.25s;
-$end-puh-hold: 1.35s;
-$end-look-right: 0.55s;
-$end-look-left: 0.45s;
+$end-look-right: 0.35s;
+$end-interact: vars.$movement-duration;
+$end-pause: 0.7s;
+$end-prompt-gap: 0.45s;
+$end-look-left: 0.4s;
+$end-gesture: $end-look-right + $end-interact;
+$end-down-at: $end-gesture + $end-pause;
+$end-prompt-at: $end-down-at + $end-pause;
+$end-hint-at: $end-prompt-at + $end-prompt-gap;
+$end-look-left-at: $end-hint-at + vars.$title-credit-duration + $end-pause;
+$end-act: $end-look-left-at + $end-look-left + $end-pause;
 $end-exit: 1.55s;
-$end-center-hold: $end-hold-left + $end-look-right + $end-look-left +
-  $end-puh-hold;
-$end-travel: $end-approach + $end-center-hold + $end-exit;
+$end-travel: $end-approach + $end-act + $end-exit;
 $end-approach-loops: math.round(math.div($end-approach, $end-run-cycle));
 $end-exit-loops: math.round(math.div($end-exit, $end-run-cycle));
 
-$end-wipe-after: $end-run-after + $end-approach-in;
 $end-act-after: $end-run-after + $end-approach;
-$end-exit-after: $end-act-after + $end-center-hold;
-$end-puh-after: $end-act-after + $end-hold-left + $end-look-right +
-  $end-look-left;
-$end-puh-duration: $end-puh-hold + 0.35s;
+$end-button-after: $end-act-after + $end-gesture;
+$end-prompt-after: $end-act-after + $end-prompt-at;
+$end-hint-after: $end-act-after + $end-hint-at;
+$end-exit-after: $end-act-after + $end-act;
 
-@function end-hold-pct($t) {
-  @return math.percentage(math.div($t, $end-center-hold));
+@function end-act-pct($t) {
+  @return math.percentage(math.div($t, $end-act));
 }
 
 .end-screen {
@@ -112,10 +111,11 @@ $end-puh-duration: $end-puh-hold + 0.35s;
 .end-screen__title {
   margin: 0;
   color: vars.$dialogue-fill;
-  font-size: vars.$dialogue-font-size * 3;
+  font-size: vars.$dialogue-font-size * 2;
   font-weight: 400;
-  letter-spacing: vars.$dialogue-pixel * 2;
-  line-height: 1;
+  letter-spacing: vars.$dialogue-pixel;
+  line-height: 1.15;
+  text-align: center;
   text-shadow:
     #{vars.$dialogue-pixel} #{vars.$dialogue-pixel} 0 #{vars.$dialogue-outline},
     0 #{vars.$dialogue-pixel * 2} 0 #{vars.$dialogue-bevel};
@@ -124,17 +124,53 @@ $end-puh-duration: $end-puh-hold + 0.35s;
 }
 
 .end-screen__credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
   color: vars.$dialogue-bevel;
   font-size: vars.$dialogue-font-size;
   letter-spacing: vars.$dialogue-pixel;
-  animation: title-fade-in vars.$title-credit-duration ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-credit-after});
 }
 
-// Behind the runner (z-index 0). clip-path wipes right → left so the
-// pad appears in his wake; the clipped side is not clickable.
-// Padding keeps the 8-bit bubble chrome inside the clip box.
+.end-screen__credit-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: vars.$dialogue-pixel;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.end-screen__credit-prompt {
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in vars.$title-credit-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-prompt-after});
+}
+
+.end-screen__credit-hint {
+  display: flex;
+  align-items: center;
+  gap: vars.$dialogue-pixel * 3;
+  color: vars.$dialogue-fill;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in vars.$title-credit-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-hint-after});
+}
+
+.end-screen__credit-hint::before {
+  content: '▶';
+}
+
+.end-screen__credit-hint::after {
+  content: '◀';
+}
+
 .end-screen__choices {
   position: relative;
   z-index: 0;
@@ -142,9 +178,10 @@ $end-puh-duration: $end-puh-hold + 0.35s;
   justify-content: center;
   width: max-content;
   padding: vars.$dialogue-pixel * 2;
-  clip-path: inset(0 0 0 100%);
-  animation: end-button-wipe $end-wipe linear both;
-  animation-delay: calc(var(--end-fade) + #{$end-wipe-after});
+  opacity: 0;
+  visibility: hidden;
+  animation: title-choices-in 0.45s ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-button-after});
 }
 
 .end-screen__button {
@@ -180,44 +217,13 @@ $end-puh-duration: $end-puh-hold + 0.35s;
   animation:
     end-walker-travel $end-travel linear both,
     end-walker-run $end-run-cycle steps(1, end) $end-approach-loops both,
-    end-walker-act $end-center-hold steps(1, end) forwards,
+    end-walker-act $end-act steps(1, end) forwards,
     end-walker-exit $end-run-cycle steps(1, end) $end-exit-loops forwards;
   animation-delay:
     calc(var(--end-fade) + #{$end-run-after}),
     calc(var(--end-fade) + #{$end-run-after}),
     calc(var(--end-fade) + #{$end-act-after}),
     calc(var(--end-fade) + #{$end-exit-after});
-}
-
-.end-screen__line {
-  @include dlg.pixel-bubble-border;
-  @include dlg.speech-tail-bottom;
-  position: absolute;
-  left: 50%;
-  bottom: 108%;
-  margin: 0;
-  padding: vars.$dialogue-padding-top vars.$dialogue-padding-x;
-  background: vars.$dialogue-fill;
-  color: vars.$dialogue-text-color;
-  font-size: vars.$dialogue-font-size;
-  letter-spacing: vars.$dialogue-pixel;
-  line-height: 1;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  opacity: 0;
-  visibility: hidden;
-  animation: end-puh $end-puh-duration ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-puh-after});
-}
-
-@keyframes end-button-wipe {
-  from {
-    clip-path: inset(0 0 0 100%);
-  }
-
-  to {
-    clip-path: inset(0 0 0 0);
-  }
 }
 
 @keyframes end-walker-travel {
@@ -230,7 +236,7 @@ $end-puh-duration: $end-puh-hold + 0.35s;
   }
 
   #{math.percentage(math.div($end-approach, $end-travel))},
-  #{math.percentage(math.div($end-approach + $end-center-hold, $end-travel))} {
+  #{math.percentage(math.div($end-approach + $end-act, $end-travel))} {
     transform: translateX($end-at-stand);
   }
 
@@ -272,33 +278,51 @@ $end-puh-duration: $end-puh-hold + 0.35s;
 }
 
 @keyframes end-walker-act {
-  0%,
-  #{end-hold-pct($end-hold-left)} {
+  0% {
     background-image: url('../assets/characters/with-backpack/base/base-left.png');
   }
-  #{end-hold-pct($end-hold-left + $end-look-right)} {
+
+  #{end-act-pct($end-look-right)} {
     background-image: url('../assets/characters/with-backpack/base/base-right.png');
   }
-  #{end-hold-pct($end-hold-left + $end-look-right + $end-look-left)},
-  100% {
+
+  #{end-act-pct($end-look-right + $end-interact * 0.25)} {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_001.png');
+  }
+
+  #{end-act-pct($end-look-right + $end-interact * 0.5)} {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_002.png');
+  }
+
+  #{end-act-pct($end-look-right + $end-interact * 0.75)} {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_003.png');
+  }
+
+  #{end-act-pct($end-gesture)} {
+    background-image: url('../assets/characters/with-backpack/interact/interact-right/frame_004.png');
+  }
+
+  #{end-act-pct($end-gesture + 0.04s)} {
+    background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  }
+
+  #{end-act-pct($end-down-at)} {
+    background-image: url('../assets/characters/with-backpack/base/base-right.png');
+  }
+
+  #{end-act-pct($end-down-at + 0.04s)} {
+    background-image: url('../assets/characters/with-backpack/base/base-down.png');
+  }
+
+  #{end-act-pct($end-look-left-at)} {
+    background-image: url('../assets/characters/with-backpack/base/base-down.png');
+  }
+
+  #{end-act-pct($end-look-left-at + 0.04s)} {
     background-image: url('../assets/characters/with-backpack/base/base-left.png');
   }
-}
-
-@keyframes end-puh {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  14%,
-  72% {
-    opacity: 1;
-    visibility: visible;
-  }
 
   100% {
-    opacity: 0;
-    visibility: hidden;
+    background-image: url('../assets/characters/with-backpack/base/base-left.png');
   }
 }

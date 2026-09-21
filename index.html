@@ -728,7 +728,15 @@
                     <div class="title-screen__brand">
                          <div class="title-screen__masthead">
                               <h1 class="title-screen__title">CAVERNWAKE</h1>
-                              <p class="title-screen__credit">made by Daniel Luzius</p>
+                              <p class="title-screen__credit">
+                                   made by
+                                   <a
+                                        class="title-screen__credit-name"
+                                        href="https://danielluzius.dev"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                   >Daniel Luzius</a>
+                              </p>
                               <div class="title-screen__choices">
                                    <div class="title-screen__cta">
                                         <label class="title-screen__button title-screen__lang" for="lang-en">English</label>
@@ -806,26 +814,45 @@
           </section>
 
           <!-- Ending overlay sits on .game (not inside .scene--game) so
-               the cave can stay hidden while credits run. Runner wipes
-               the title pad in behind him.
+               the cave can stay hidden while credits run.
                See scss/components/_end-screen.scss. -->
           <div class="end-screen">
                <div class="end-screen__brand">
                     <div class="end-screen__masthead">
-                         <h1 class="end-screen__title">CAVERNWAKE</h1>
-                         <p class="end-screen__credit">made by Daniel Luzius</p>
+                         <h1 class="end-screen__title">
+                              <span class="i18n i18n--de">Danke fürs Spielen</span>
+                              <span class="i18n i18n--en">Thanks for playing</span>
+                         </h1>
+                         <div class="end-screen__credit">
+                              <p class="end-screen__credit-copy i18n i18n--de">
+                                   <span class="end-screen__credit-prompt">Willst du mehr über mich wissen?</span>
+                                   <a
+                                        class="end-screen__credit-hint"
+                                        href="https://danielluzius.dev"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                   >Hier klicken</a>
+                              </p>
+                              <p class="end-screen__credit-copy i18n i18n--en">
+                                   <span class="end-screen__credit-prompt">Want to know more about me?</span>
+                                   <a
+                                        class="end-screen__credit-hint"
+                                        href="https://danielluzius.dev"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                   >Click here</a>
+                              </p>
+                         </div>
                          <div class="end-screen__choices">
                               <a class="end-screen__button" href="./index.html">
-                                   <span class="i18n i18n--de">Zum Titel</span>
-                                   <span class="i18n i18n--en">Back to title</span>
+                                   <span class="i18n i18n--de">Startbildschirm</span>
+                                   <span class="i18n i18n--en">Back to startscreen</span>
                               </a>
                          </div>
                     </div>
                </div>
                <div class="end-screen__run" aria-hidden="true">
-                    <div class="end-screen__walker">
-                         <p class="end-screen__line">Puh..</p>
-                    </div>
+                    <div class="end-screen__walker"></div>
                </div>
           </div>
 
