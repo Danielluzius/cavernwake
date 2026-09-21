@@ -196,9 +196,16 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open:checked
+    ~ #item-quote-idle:checked
+    ~ #intro-10:checked
+    ~ .game
+    .inventory__panel,
+  #inventory-open-play:checked
+    ~ #item-quote-idle:checked
+    ~ .game
+    .inventory__panel,
   :is(
-      #inventory-open-play,
       #vine24-choosing,
       #vine12-choosing,
       #vine30-choosing,
@@ -237,7 +244,8 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #{vars.$hints-prompt} ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
 
@@ -392,9 +400,16 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open:checked
+    ~ #item-quote-idle:checked
+    ~ #intro-10:checked
+    ~ .game
+    .inventory__panel,
+  #inventory-open-play:checked
+    ~ #item-quote-idle:checked
+    ~ .game
+    .inventory__panel,
   :is(
-      #inventory-open-play,
       #vine24-choosing,
       #vine12-choosing,
       #vine30-choosing,
@@ -433,7 +448,8 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #{vars.$hints-prompt} ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
 

@@ -26,8 +26,8 @@ $inventory-craft-open: '#workbench-choosing, #workbench-a-shell, #workbench-a-po
 $inventory-bag-open: '#{$inventory-use-choosing}, #{$inventory-craft-open}';
 $sickle-held: '#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done';
 
-// Inspect radios (a/b ping-pong). Speech pause hides the bag so the
-// line is not trapped under the panel; Continue returns to idle.
+// Inspect radios (a/b ping-pong). Speech pause morphs the bag closed
+// (same as Close); Continue returns to idle and the bag morphs open.
 $inventory-quote-items: sickle, pickaxe, shovel, bomb, lamp, bomb-shell,
   bomb-powder, bomb-fuse, last-lever;
 
@@ -43,9 +43,9 @@ $inventory-quote-open: '';
 $inventory-fail-open: '#item-use-fail-a, #item-use-fail-b';
 $inventory-speech-pause: '#{$inventory-quote-open}, #{$inventory-fail-open}';
 
-// Pause only while the matching line is actually on screen. A leftover
-// quote radio must not hide the bag during obstacle -choosing.
-@mixin when-inventory-speech-pause($target) {
+// Inspect quotes while the browse bag is open. Leftover quote radios must
+// not hide the bag during obstacle -choosing.
+@mixin when-inventory-inspect-pause($target) {
   #inventory-open-play:checked
     ~ :is(#{$inventory-quote-open}):checked
     ~ .game
@@ -54,11 +54,27 @@ $inventory-speech-pause: '#{$inventory-quote-open}, #{$inventory-fail-open}';
     ~ :is(#{$inventory-quote-open}):checked
     ~ #intro-10:checked
     ~ .game
-    #{$target},
+    #{$target} {
+    @content;
+  }
+}
+
+@mixin when-inventory-fail-pause($target) {
   :is(#{$inventory-bag-open}):checked
     ~ :is(#{$inventory-fail-open}):checked
     ~ .game
     #{$target} {
+    @content;
+  }
+}
+
+// Pause only while the matching line is actually on screen.
+@mixin when-inventory-speech-pause($target) {
+  @include when-inventory-inspect-pause($target) {
+    @content;
+  }
+
+  @include when-inventory-fail-pause($target) {
     @content;
   }
 }

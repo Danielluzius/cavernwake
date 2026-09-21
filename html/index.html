@@ -285,16 +285,17 @@
          #inventory-open is the tutorial overlay (intro-10). After the lamp
          that checkbox may stay on; #inventory-open-play is the real toggle
          from intro-11 onward so reopening inventory cannot replay dialogue.
-         Last intro Continue checks #position-14 so the graph takes over. -->
+         Hints prompt is last; the first walk from node 14 then takes the graph. -->
      <input type="checkbox" id="inventory-open" class="world-position-input" />
      <input type="checkbox" id="inventory-open-play" class="world-position-input" />
 
      <!-- Settings overlay (scss/components/_settings.scss). Same sibling
-         position as inventory so ~ chains reach .game. Hints default on,
-         language default EN (title-screen toggle), panel starts on the
-         menu page. -->
+         position as inventory so ~ chains reach .game. Hints stay pending
+         until the intro prompt; language default EN (title-screen toggle),
+         panel starts on the menu page. -->
      <input type="checkbox" id="settings-open" class="world-position-input" />
-     <input type="radio" name="hints-vis" id="hints-on" class="world-position-input" checked />
+     <input type="radio" name="hints-vis" id="hints-pending" class="world-position-input" checked />
+     <input type="radio" name="hints-vis" id="hints-on" class="world-position-input" />
      <input type="radio" name="hints-vis" id="hints-off" class="world-position-input" />
      <input type="radio" name="ui-lang" id="lang-de" class="world-position-input" />
      <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" checked />
@@ -870,7 +871,7 @@
                  while .viewport itself is transformed (e.g. the intro's
                  screen shake) — a transformed ancestor would otherwise
                  become its containing block and shake it too. -->
-               <div class="blackout"></div>
+               <div class="blackout"><div class="blackout__veil"></div></div>
 
                <!-- Detonation flash, sibling of .viewport for the exact same
                  reason as .blackout above — it fires while .viewport is

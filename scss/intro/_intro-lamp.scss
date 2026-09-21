@@ -71,7 +71,7 @@ $unlit-intro-steps: intro-dark, intro-fade, intro-1, intro-2, intro-5,
 
 #position-1:checked ~ #intro-10:checked ~ .game .lamp-glow--backpack,
 #position-1:checked
-  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked
   ~ .game
   .lamp-glow--backpack {
   opacity: 0;
@@ -153,7 +153,7 @@ $lit-before-fall-steps: intro-home, intro-3, intro-anyway, intro-4, intro-sit;
 }
 
 #position-1:checked
-  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked
   ~ .game
   .player.lamp-glow-anchor
   .lamp-glow {
@@ -182,7 +182,7 @@ $lit-before-fall-steps: intro-home, intro-3, intro-anyway, intro-4, intro-sit;
 }
 
 #position-1:checked
-  ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked
   ~ .game
   .player.lamp-glow-anchor
   .lamp-glow__layer {

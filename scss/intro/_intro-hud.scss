@@ -10,7 +10,7 @@
 // is running (#position-1 unchecks the instant real navigation begins,
 // see banner comment above), reveal the two fake intro-only arrows at
 // exactly the right step, and reveal node 14's walk pads once the
-// intro finishes (step 14).
+// intro finishes (hints prompt, then node 14's walk pads).
 //
 // Visibility/opacity, not display:none: display-none → flex skips CSS
 // transitions, so node 14's first pads and the first walk after intro
@@ -121,6 +121,10 @@
 #position-1:checked
   ~ #intro-14:checked
   ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
+  ~ #intro-hints:checked
+  ~ .game
   .direction-controls__button--edge[data-position] {
   opacity: 0;
   visibility: hidden;
@@ -149,28 +153,28 @@
   @include dlg.direction-button-reveal($intro-wake-turn-duration + $beat);
 }
 
-// Last Continue checks plain #position-14 (not --from-13). Same camera
-// as the intro-14 walk landing, no walk replay. --from-13 would replay
-// the 13→14 walk-right sheet.
+// Hints prompt holds at node 14 after the intro-14 walk. Still standing
+// here — pads come in when An/Aus clears #hints-pending. Lift-up stays
+// gated. First real walk then unchecks #position-1.
 
-#position-14:checked ~ #intro-14:checked ~ .game .world,
-#position-14:checked ~ #intro-14:checked ~ .game .player {
+#position-1:checked ~ #intro-hints:checked ~ .game .world,
+#position-1:checked ~ #intro-hints:checked ~ .game .player {
   transition: none;
 }
 
-#position-14:checked ~ #intro-14:checked ~ .game .player__sprite {
+#position-1:checked ~ #intro-hints:checked ~ .game .player__sprite {
   animation: none;
   background-image: url('../assets/characters/with-backpack/base/base-right.png');
 }
 
-// Graph reveal waits as if he just walked in. He is already standing
-// here — bring the walk pads in with the click. Lift-up stays gated.
-#position-14:checked
-  ~ #intro-14:checked
+#hints-pending:not(:checked)
+  ~ #position-1:checked
+  ~ #intro-hints:checked
   ~ .game
   .direction-controls__button--left[data-position='14'],
-#position-14:checked
-  ~ #intro-14:checked
+#hints-pending:not(:checked)
+  ~ #position-1:checked
+  ~ #intro-hints:checked
   ~ .game
   .direction-controls__button--right[data-position='14'] {
   @include dlg.direction-button-reveal(0s);

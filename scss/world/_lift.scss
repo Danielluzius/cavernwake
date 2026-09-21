@@ -498,6 +498,8 @@ $lift-rattle-px: 1px;
       background-size: contain;
       image-rendering: pixelated;
       pointer-events: none;
+      z-index: 1;
+      transform: translateZ(0);
     }
 
     // Unlock is permanent, so this animation runs once on the lever click

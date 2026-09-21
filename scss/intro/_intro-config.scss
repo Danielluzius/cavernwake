@@ -9,7 +9,7 @@
 // INTRO / OPENING CUTSCENE
 // Title-screen Start checks #intro-skip (yes/no after the title fade).
 // No continues on #intro-dark; Yes jumps to #intro-5. Linear radio
-// chain (name="intro", #intro-1..#intro-14, see index.html), deliberately
+// chain (name="intro", #intro-1..#intro-hints, see index.html), deliberately
 // decoupled from the free-roam position graph (vars.$positions/#position-N,
 // see world/_world.scss etc.) even though several beats re-use the SAME
 // nodes (1-4, 13, 14) for their camera targets — this avoids ever needing

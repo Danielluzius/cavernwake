@@ -132,13 +132,11 @@
   &--background {
     z-index: vars.$z-index-background;
 
-    // Flat backdrop, spans the full viewport regardless of world scroll
-    // position.
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    // Fills the vision circle. .game is already black around it; a
+    // position:fixed 100vh layer inside the scaled .playfield-inner
+    // is the iOS containing-block trap that covered the top of the field.
+    position: absolute;
+    inset: 0;
     background-color: #000;
   }
 

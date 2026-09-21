@@ -71,7 +71,7 @@ $wb-start: '#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbe
   .inventory__slot--shovel
   .inventory__use--fail,
 :is(#{$inventory-craft-open}):checked
-  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked
   ~ .game
   .inventory__slot--lamp
   .inventory__use--fail,
@@ -154,7 +154,7 @@ $wb-start: '#workbench-choosing, #workbench-bad-sfp, #workbench-bad-psf, #workbe
   .inventory__slot--last-lever
   .inventory__use--fail,
 :is(#{$inventory-use-choosing}):checked
-  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked
+  ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked
   ~ .game
   .inventory__slot--lamp
   .inventory__use--fail {

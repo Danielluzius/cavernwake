@@ -132,7 +132,8 @@
   --world-offset-y: #{offset-y($node13)};
 }
 
-#position-1:checked ~ #intro-14:checked ~ .game .world {
+#position-1:checked ~ #intro-14:checked ~ .game .world,
+#position-1:checked ~ #intro-hints:checked ~ .game .world {
   --world-offset: #{offset-x($node14)};
   --world-offset-y: #{offset-y($node14)};
 }

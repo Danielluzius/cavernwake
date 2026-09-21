@@ -190,7 +190,7 @@ $escape-bridge-line: calc(
 
 // HUD sits in .ui above .blackout, so the veil never covers the bag or
 // gear. Fade them on the same clock as the veil. Hide cannot key off
-// #intro-11: after Start that radio is gone and #intro-14 stays checked.
+// #intro-11: after Start that radio is gone and #intro-hints stays checked.
 @keyframes outro-hud-fade {
   to {
     opacity: 0;

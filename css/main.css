@@ -89,11 +89,11 @@ input {
   display: none;
 }
 
-:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--intro {
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .scene--intro {
   pointer-events: none;
 }
 
-:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--game {
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .scene--game {
   display: flex;
   opacity: 0;
   animation: title-scene-in 0.8s ease-out 2s both;
@@ -183,7 +183,7 @@ input {
   justify-content: center;
 }
 
-:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .scene--game {
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .scene--game {
   display: flex;
 }
 
@@ -892,11 +892,8 @@ input {
 }
 .world-layer--background {
   z-index: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  inset: 0;
   background-color: #000;
 }
 .world-layer--environment {
@@ -1599,6 +1596,8 @@ input {
   background-size: contain;
   image-rendering: pixelated;
   pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
 }
 
 @keyframes lift-barrier-hold-17-26 {
@@ -1817,6 +1816,8 @@ input {
   background-size: contain;
   image-rendering: pixelated;
   pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
 }
 
 @keyframes lift-barrier-hold-11-27 {
@@ -2035,6 +2036,8 @@ input {
   background-size: contain;
   image-rendering: pixelated;
   pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
 }
 
 @keyframes lift-barrier-hold-10-36 {
@@ -6917,7 +6920,7 @@ input {
   font-smooth: never;
 }
 
-:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .title-screen {
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen {
   pointer-events: none;
   animation: title-overlay-out 2s ease-out forwards;
 }
@@ -7676,7 +7679,7 @@ input {
   pointer-events: auto;
 }
 
-:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__toggle--play {
+:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__toggle--play {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -7796,8 +7799,9 @@ input {
   animation: inventory-toggle-new-item-last-lever-pickup 0.5s ease-in-out 0.6s 2;
 }
 
-#inventory-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__toggle {
+#inventory-open:checked ~ #item-quote-idle:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
+#inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__toggle,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__toggle {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -7814,8 +7818,9 @@ input {
   transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 
-#inventory-open:checked ~ #intro-10:checked ~ .game .inventory,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory {
+#inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory,
+#inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -7865,24 +7870,45 @@ input {
   transition: transform 0.45s ease-out;
 }
 
-#inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-:is(#inventory-open-play, #vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
+#inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__panel,
+#inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__panel,
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__panel {
   pointer-events: auto;
   overflow: visible;
   transform: translate(-100%, -50%) scale(1);
 }
 
-#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory,
-#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory {
   pointer-events: none;
 }
 
-#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__panel,
-#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__panel,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory__panel {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory {
+  opacity: 0;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__panel,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__panel {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__hit,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__hit {
+  pointer-events: none;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__toggle,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__toggle {
   pointer-events: none;
 }
 
@@ -7956,8 +7982,8 @@ input {
   transition: opacity 0.15s, visibility 0s;
 }
 
-#inventory-open:checked ~ #intro-10:checked ~ .game .inventory__back--tutorial,
-#inventory-open-play:checked ~ .game .inventory__back--play,
+#inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__back--tutorial,
+#inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__back--play,
 #vine24-choosing:checked ~ .game .inventory__back--vine24,
 #vine12-choosing:checked ~ .game .inventory__back--vine12,
 #vine30-choosing:checked ~ .game .inventory__back--vine30,
@@ -7971,6 +7997,20 @@ input {
   visibility: visible;
   pointer-events: auto;
   transition: opacity 0.2s 0.45s, visibility 0s 0.45s;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__back--play,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__back--play {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .inventory__back--tutorial,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .inventory__back--tutorial {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .inventory__art {
@@ -8257,7 +8297,7 @@ input {
 }
 
 #intro-10:checked ~ .game .inventory__slot--lamp .inventory__icon,
-:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__slot--lamp .inventory__icon {
+:is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__slot--lamp .inventory__icon {
   opacity: 1;
   pointer-events: auto;
 }
@@ -8376,17 +8416,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-sickle-a:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-sickle-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-sickle-a:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-sickle-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-sickle-a:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-sickle-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button--teach::before {
@@ -8399,17 +8440,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-sickle-b:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-sickle-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-sickle-b:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-sickle-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-sickle-b:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-sickle-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=sickle] .dialogue__box .dialogue__button--teach::before {
@@ -8430,17 +8472,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-a:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-pickaxe-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-a:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-pickaxe-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-a:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-pickaxe-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button--teach::before {
@@ -8453,17 +8496,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-b:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-pickaxe-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-b:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-pickaxe-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-pickaxe-b:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-pickaxe-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=pickaxe] .dialogue__box .dialogue__button--teach::before {
@@ -8484,17 +8528,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-shovel-a:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-shovel-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-shovel-a:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-shovel-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-shovel-a:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-shovel-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button--teach::before {
@@ -8507,17 +8552,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-shovel-b:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-shovel-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-shovel-b:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-shovel-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-shovel-b:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-shovel-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=shovel] .dialogue__box .dialogue__button--teach::before {
@@ -8538,17 +8584,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-a:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-a:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-a:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button--teach::before {
@@ -8561,17 +8608,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-b:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-b:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-b:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb] .dialogue__box .dialogue__button--teach::before {
@@ -8592,17 +8640,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-lamp-a:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-lamp-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-lamp-a:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-lamp-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-lamp-a:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-lamp-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button--teach::before {
@@ -8615,17 +8664,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-lamp-b:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-lamp-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-lamp-b:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-lamp-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-lamp-b:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-lamp-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=lamp] .dialogue__box .dialogue__button--teach::before {
@@ -8646,17 +8696,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-a:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-shell-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-a:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-shell-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-a:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-shell-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button--teach::before {
@@ -8669,17 +8720,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-b:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-shell-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-b:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-shell-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-shell-b:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-shell-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-shell] .dialogue__box .dialogue__button--teach::before {
@@ -8700,17 +8752,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-a:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-powder-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-a:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-powder-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-a:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-powder-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button--teach::before {
@@ -8723,17 +8776,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-b:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-powder-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-b:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-powder-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-powder-b:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-powder-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-powder] .dialogue__box .dialogue__button--teach::before {
@@ -8754,17 +8808,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-a:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-fuse-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-a:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-fuse-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-a:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-fuse-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button--teach::before {
@@ -8777,17 +8832,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-b:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-bomb-fuse-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-b:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-bomb-fuse-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-bomb-fuse-b:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-bomb-fuse-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=bomb-fuse] .dialogue__box .dialogue__button--teach::before {
@@ -8808,17 +8864,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-a:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-last-lever-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-a:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-last-lever-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-a:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-last-lever-a:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button--teach::before {
@@ -8831,17 +8888,18 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-b:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box.dialogue__box,
 #inventory-open:checked ~ #item-quote-last-lever-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box.dialogue__box {
   transition: none;
   animation: var(--dialogue-enter) 0.4s ease-out both;
-  animation-delay: 0s;
+  animation-delay: 0.45s;
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-b:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button::before,
 #inventory-open:checked ~ #item-quote-last-lever-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button::before {
   animation: dialogue-spark-in 0.9s ease-out both;
-  animation-delay: calc(0s + 0.75s);
+  animation-delay: calc(0.45s + 0.75s);
 }
 #inventory-open-play:checked ~ #item-quote-last-lever-b:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button--teach::before,
 #inventory-open:checked ~ #item-quote-last-lever-b:checked ~ #intro-10:checked ~ .game .dialogue--item-quote[data-item=last-lever] .dialogue__box .dialogue__button--teach::before {
@@ -8893,7 +8951,7 @@ input {
 :is(#vine30-armed, #vine30-choosing, #vine30-cut-prompt, #vine30-cutting, #vine30-done):checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--sickle .inventory__use--fail,
 #pickaxe-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--pickaxe .inventory__use--fail,
 #shovel-armed:checked ~ :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .inventory__slot--shovel .inventory__use--fail,
-:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
+:is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__slot--lamp .inventory__use--fail,
 :is(#workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail {
   pointer-events: auto;
 }
@@ -8912,7 +8970,7 @@ input {
 :is(#vine24-choosing, #vine30-choosing, #vine12-choosing, #rock-choosing, #mud-choosing):checked ~ #workbench-done:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 #workbench-done:checked ~ #wall-choosing:checked ~ .game .inventory__slot--bomb .inventory__use--fail,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing):checked ~ :is(#last-lever-notice, #last-lever-turn, #last-lever-armed):checked ~ .game .inventory__slot--last-lever .inventory__use--fail,
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__slot--lamp .inventory__use--fail {
+:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing):checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__slot--lamp .inventory__use--fail {
   pointer-events: auto;
 }
 
@@ -9011,13 +9069,21 @@ input {
   transition: opacity 0.15s 0.45s, visibility 0s 0.45s;
 }
 
-:is(#intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .settings__toggle {
+#intro-hints:checked ~ .game .settings__toggle {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-#settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .settings__toggle,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__toggle {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  cursor: default;
+  animation: none;
+}
+
+#settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .settings__toggle,
 #inventory-open:checked ~ #intro-10:checked ~ .game .settings__toggle,
 #inventory-open-play:checked ~ .game .settings__toggle,
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ .game .settings__toggle,
@@ -9039,7 +9105,8 @@ input {
   transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 
-#settings-open:checked ~ .game .settings {
+#settings-open:checked ~ .game .settings,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -9062,7 +9129,8 @@ input {
   transition: transform 0.45s ease-out;
 }
 
-#settings-open:checked ~ .game .settings__panel {
+#settings-open:checked ~ .game .settings__panel,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
   pointer-events: auto;
   transform: translate(0, -50%) scale(1);
 }
@@ -9090,7 +9158,8 @@ input {
   transition: opacity 0.15s;
 }
 
-#settings-open:checked ~ .game .settings__body {
+#settings-open:checked ~ .game .settings__body,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__body {
   opacity: 1;
   transition: opacity 0.2s 0.45s;
 }
@@ -9190,6 +9259,25 @@ input {
   font-weight: 400;
   text-align: center;
   color: #2a1810;
+}
+
+.settings__prompt {
+  display: none;
+  margin: 0;
+  text-align: center;
+}
+
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__prompt {
+  display: block;
+}
+
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__title {
+  padding-bottom: 0;
+}
+
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__row--lang,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__footer {
+  display: none;
 }
 
 .settings__copy {
@@ -9367,10 +9455,13 @@ input {
   --hint-vis: 0;
 }
 
-#settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .inventory__toggle,
+#settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__toggle,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ .game .inventory__back,
-#settings-open:checked ~ .game .inventory {
+#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory__back,
+#settings-open:checked ~ .game .inventory,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -9393,7 +9484,9 @@ input {
 }
 
 #settings-open:checked ~ .game .direction-controls__button--edge,
-#settings-open:checked ~ .game .direction-controls__button--intro-arrow {
+#settings-open:checked ~ .game .direction-controls__button--intro-arrow,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .direction-controls__button--edge,
+#hints-pending:checked ~ #intro-hints:checked ~ .game .direction-controls__button--intro-arrow {
   display: none;
 }
 
@@ -11678,7 +11771,11 @@ input {
 }
 
 #inventory-open-play:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ .game .craft-tray,
-#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .craft-tray,
+#inventory-open:checked ~ :is(#item-quote-sickle-a, #item-quote-sickle-b, #item-quote-pickaxe-a, #item-quote-pickaxe-b, #item-quote-shovel-a, #item-quote-shovel-b, #item-quote-bomb-a, #item-quote-bomb-b, #item-quote-lamp-a, #item-quote-lamp-b, #item-quote-bomb-shell-a, #item-quote-bomb-shell-b, #item-quote-bomb-powder-a, #item-quote-bomb-powder-b, #item-quote-bomb-fuse-a, #item-quote-bomb-fuse-b, #item-quote-last-lever-a, #item-quote-last-lever-b):checked ~ #intro-10:checked ~ .game .craft-tray {
+  opacity: 0;
+  visibility: hidden;
+}
+
 :is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .craft-tray {
   opacity: 0;
   visibility: hidden;
@@ -12104,8 +12201,8 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100svh;
   z-index: 90;
   background-color: #fff;
   opacity: 0;
@@ -13637,7 +13734,8 @@ input {
   --world-offset-y: -1008px;
 }
 
-#position-1:checked ~ #intro-14:checked ~ .game .world {
+#position-1:checked ~ #intro-14:checked ~ .game .world,
+#position-1:checked ~ #intro-hints:checked ~ .game .world {
   --world-offset: -1584px;
   --world-offset-y: -1008px;
 }
@@ -14054,7 +14152,7 @@ input {
 }
 
 #position-1:checked ~ #intro-10:checked ~ .game .lamp-glow--backpack,
-#position-1:checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .lamp-glow--backpack {
+#position-1:checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .lamp-glow--backpack {
   opacity: 0;
   visibility: hidden;
 }
@@ -14166,7 +14264,7 @@ input {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2712,3000 A288,288 0 1,0 3288,3000 A288,288 0 1,0 2712,3000 Z");
 }
 
-#position-1:checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .player.lamp-glow-anchor .lamp-glow {
+#position-1:checked ~ :is(#intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .player.lamp-glow-anchor .lamp-glow {
   opacity: 1;
   visibility: visible;
 }
@@ -14184,17 +14282,17 @@ input {
   animation: intro-lamp-open-3 0.8s ease-out, lamp-glow-pulse 3s ease-in-out 0.8s infinite;
 }
 
-#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer {
+#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer {
   transform: translate(-50%, -50%);
   animation: lamp-glow-pulse 3s ease-in-out infinite;
 }
-#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(1) {
+#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(1) {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2781.12,3000 A218.88,218.88 0 1,0 3218.88,3000 A218.88,218.88 0 1,0 2781.12,3000 Z");
 }
-#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(2) {
+#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(2) {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2735.04,3000 A264.96,264.96 0 1,0 3264.96,3000 A264.96,264.96 0 1,0 2735.04,3000 Z");
 }
-#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(3) {
+#position-1:checked ~ :is(#intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .player.lamp-glow-anchor .lamp-glow__layer:nth-child(3) {
   clip-path: path(evenodd, "M0,0 H6000 V6000 H0 Z M2712,3000 A288,288 0 1,0 3288,3000 A288,288 0 1,0 2712,3000 Z");
 }
 
@@ -14406,13 +14504,18 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100svh;
   z-index: 90;
-  background-color: #000;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease-in-out;
+}
+
+.blackout__veil {
+  position: absolute;
+  inset: 0;
+  background-color: #000;
 }
 
 @keyframes intro-opening-blackout {
@@ -14433,29 +14536,6 @@ input {
   transition: none;
   animation: intro-opening-blackout 3s ease-in-out both;
   animation-delay: 5.4s;
-}
-
-@keyframes intro-opening-settings {
-  from {
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-#position-1:checked ~ #intro-dark:checked ~ .game .settings__toggle {
-  pointer-events: auto;
-  animation: intro-opening-settings 3s ease-in-out both;
-  animation-delay: 5.4s;
-}
-
-#settings-open:checked ~ #position-1:checked ~ #intro-dark:checked ~ .game .settings__toggle {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  animation: none;
 }
 
 #position-1:checked ~ #intro-fade:checked ~ .game .blackout {
@@ -14502,7 +14582,11 @@ input {
 #position-1:checked ~ #intro-fall:checked ~ .game .blackout {
   opacity: 0;
   transition: none;
-  animation: intro-fall-blackout 12.8s ease-in-out forwards, intro-screen-shake 0.4s ease-in-out 15;
+  animation: intro-fall-blackout 12.8s ease-in-out forwards;
+}
+
+#position-1:checked ~ #intro-fall:checked ~ .game .blackout__veil {
+  animation: intro-screen-shake 0.4s ease-in-out 15;
 }
 
 #position-1:checked ~ #intro-dark-hold:checked ~ .game .blackout {
@@ -15073,7 +15157,8 @@ input {
 #position-1:checked ~ #intro-12:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-13:checked ~ .game .direction-controls__button--edge[data-position],
 #position-1:checked ~ #intro-hurry:checked ~ .game .direction-controls__button--edge[data-position],
-#position-1:checked ~ #intro-14:checked ~ .game .direction-controls__button--edge[data-position] {
+#position-1:checked ~ #intro-14:checked ~ .game .direction-controls__button--edge[data-position],
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--edge[data-position] {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -15106,27 +15191,27 @@ input {
   opacity: 1;
 }
 
-#position-14:checked ~ #intro-14:checked ~ .game .world,
-#position-14:checked ~ #intro-14:checked ~ .game .player {
+#position-1:checked ~ #intro-hints:checked ~ .game .world,
+#position-1:checked ~ #intro-hints:checked ~ .game .player {
   transition: none;
 }
 
-#position-14:checked ~ #intro-14:checked ~ .game .player__sprite {
+#position-1:checked ~ #intro-hints:checked ~ .game .player__sprite {
   animation: none;
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
-#position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--left[data-position="14"],
-#position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--right[data-position="14"] {
+#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"],
+#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
   transition: opacity 0.15s ease, margin 0.4s 0s ease-out, visibility 0s 0s;
 }
-#position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--left[data-position="14"]:hover, #position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--left[data-position="14"]:active,
-#position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--right[data-position="14"]:hover,
-#position-14:checked ~ #intro-14:checked ~ .game .direction-controls__button--right[data-position="14"]:active {
+#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:hover, #hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:active,
+#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:hover,
+#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:active {
   opacity: 1;
 }
 
@@ -15607,9 +15692,9 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-inv-x), calc(var(--hud-y) - var(--panel-y))) scale(0.15);
   }
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-  :is(#inventory-open-play,
-  #vine24-choosing,
+  #inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__panel,
+  :is(#vine24-choosing,
   #vine12-choosing,
   #vine30-choosing,
   #rock-choosing,
@@ -15640,7 +15725,8 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), calc(var(--hud-y) - var(--panel-y))) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -15908,9 +15994,9 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
   }
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-  :is(#inventory-open-play,
-  #vine24-choosing,
+  #inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__panel,
+  :is(#vine24-choosing,
   #vine12-choosing,
   #vine30-choosing,
   #rock-choosing,
@@ -15941,7 +16027,8 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -15965,9 +16052,9 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
   }
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-  :is(#inventory-open-play,
-  #vine24-choosing,
+  #inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__panel,
+  :is(#vine24-choosing,
   #vine12-choosing,
   #vine30-choosing,
   #rock-choosing,
@@ -15998,7 +16085,8 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -16022,9 +16110,9 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-inv-x), var(--hud-inv-y)) scale(0.15);
   }
-  #inventory-open:checked ~ #intro-10:checked ~ .game .inventory__panel,
-  :is(#inventory-open-play,
-  #vine24-choosing,
+  #inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory__panel,
+  #inventory-open-play:checked ~ #item-quote-idle:checked ~ .game .inventory__panel,
+  :is(#vine24-choosing,
   #vine12-choosing,
   #vine30-choosing,
   #rock-choosing,
@@ -16055,7 +16143,8 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel,
+  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
