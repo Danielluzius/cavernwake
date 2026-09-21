@@ -292,13 +292,13 @@
 
      <!-- Settings overlay (scss/components/_settings.scss). Same sibling
          position as inventory so ~ chains reach .game. Hints default on,
-         language default EN (title-screen toggle), panel starts on the
-         menu page. -->
+         no language until the title-screen pads (Start waits on that),
+         panel starts on the menu page. -->
      <input type="checkbox" id="settings-open" class="world-position-input" />
      <input type="radio" name="hints-vis" id="hints-on" class="world-position-input" checked />
      <input type="radio" name="hints-vis" id="hints-off" class="world-position-input" />
      <input type="radio" name="ui-lang" id="lang-de" class="world-position-input" />
-     <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" checked />
+     <input type="radio" name="ui-lang" id="lang-en" class="world-position-input" />
      <input type="radio" name="settings-page" id="settings-page-menu" class="world-position-input" checked />
      <input type="radio" name="settings-page" id="settings-page-imprint" class="world-position-input" />
      <input type="radio" name="settings-page" id="settings-page-restart" class="world-position-input" />
@@ -371,10 +371,7 @@
                               <div class="title-screen__choices">
                                    <div class="title-screen__cta">
                                         <label class="title-screen__button title-screen__lang" for="lang-en">English</label>
-                                        <label class="title-screen__button title-screen__start" for="intro-skip">
-                                             <span class="i18n i18n--de">Start</span>
-                                             <span class="i18n i18n--en">Start</span>
-                                        </label>
+                                        <label class="title-screen__button title-screen__start" for="intro-skip">Start</label>
                                         <label class="title-screen__button title-screen__lang" for="lang-de">Deutsch</label>
                                    </div>
                                    <label class="title-screen__legal-link" for="title-imprint-open">

@@ -322,6 +322,13 @@
     transform-origin: 50% 50%;
   }
 
+  // Desktop bar is 6 tiles / 80vw. After the 0.6 brand scale that reads
+  // as a short stub, and the lying walker owns the right end. Stretch
+  // to the brand so the figure is a smaller share of a longer track.
+  .title-screen__load {
+    width: 92%;
+  }
+
   .end-screen {
     --end-scale: 0.6;
   }

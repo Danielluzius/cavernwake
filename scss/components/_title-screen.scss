@@ -11,10 +11,11 @@
 //   4. Last stretch: they stumble (still upright), then lie down on
 //      the final startscreen-fall frame
 //
-// Deutsch?/English? + Impressum fade in between credit and bar once
-// the bar is full. Picking a language crossfades those pads to Start
-// in the same slot. Start checks #intro-skip and fades the overlay;
-// skip intro yes/no then sits on black.
+// Language pads fade in between credit and bar once the bar is full.
+// Start sits in its slot muted and unclickable until DE/EN is picked,
+// then it comes up to full opacity; the other language stays muted.
+// Imprint waits on that pick. Start checks #intro-skip and fades the
+// overlay; skip intro yes/no then sits on black.
 // ==========================================================================
 
 $title-bar-width: vars.$tile-size-display * 6;
@@ -190,8 +191,7 @@ $title-fall-delay: vars.$title-load-delay + $title-walk-time;
 
 .title-screen__choices {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   top: 100%;
   z-index: 1;
   display: flex;
@@ -199,15 +199,14 @@ $title-fall-delay: vars.$title-load-delay + $title-walk-time;
   align-items: center;
   gap: vars.$dialogue-pixel * 5;
   width: max-content;
-  margin-inline: auto;
   margin-top: vars.$tile-size-display * 0.55;
-  transform: none;
+  transform: translateX(-50%);
   animation: title-choices-in 0.5s ease-out both;
   animation-delay: vars.$title-choices-delay;
 }
 
-// Equal 1fr tracks keep Start on the title center; lang pads shrink to
-// their label instead of a shared 10em column that stretched ENGLISH.
+// Equal 1fr tracks: both lang pads stretch to the wider label so Start
+// stays on the title / loading-bar center (DE is wider than EN).
 .title-screen__cta {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -215,32 +214,51 @@ $title-fall-delay: vars.$title-load-delay + $title-walk-time;
   column-gap: vars.$dialogue-pixel * 6;
 }
 
+$title-cta-mute: 0.4;
+
 .title-screen__lang {
   position: relative;
   box-sizing: border-box;
-  width: auto;
+  width: 100%;
   min-width: 0;
   padding: vars.$dialogue-pixel * 2 vars.$dialogue-padding-x * 0.7;
   font-size: vars.$dialogue-font-size * 0.75;
   text-align: center;
+  transition: opacity 0.5s ease-out;
 }
 
-.title-screen__lang[for='lang-en'] {
-  justify-self: end;
+#lang-de:checked ~ .game .title-screen__lang[for='lang-de'],
+#lang-en:checked ~ .game .title-screen__lang[for='lang-en'] {
+  text-decoration: underline;
+  text-decoration-thickness: vars.$dialogue-pixel;
+  text-underline-offset: vars.$dialogue-pixel;
 }
 
-.title-screen__lang[for='lang-de'] {
-  justify-self: start;
+#lang-de:checked ~ .game .title-screen__lang[for='lang-en'],
+#lang-en:checked ~ .game .title-screen__lang[for='lang-de'] {
+  opacity: $title-cta-mute;
 }
 
-$title-lang-mark: vars.$dialogue-pixel * 3;
+#lang-de:checked ~ .game .title-screen__lang[for='lang-en']:hover,
+#lang-en:checked ~ .game .title-screen__lang[for='lang-de']:hover {
+  opacity: 1;
+}
 
-.title-screen__lang::after {
+.title-screen__start {
+  position: relative;
+  opacity: $title-cta-mute;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out;
+}
+
+$title-start-mark: vars.$dialogue-pixel * 3;
+
+.title-screen__start::after {
   content: '';
   position: absolute;
-  top: calc(#{$title-lang-mark} * -0.4);
-  width: $title-lang-mark;
-  height: $title-lang-mark;
+  top: calc(#{$title-start-mark} * -0.4);
+  width: $title-start-mark;
+  height: $title-start-mark;
   box-sizing: border-box;
   background: vars.$dialogue-arrow-bg;
   box-shadow:
@@ -250,19 +268,46 @@ $title-lang-mark: vars.$dialogue-pixel * 3;
     (-#{vars.$dialogue-pixel}) 0 0 #{vars.$dialogue-outline};
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.5s ease-out;
 }
 
-.title-screen__lang[for='lang-en']::after {
-  left: calc(#{$title-lang-mark} * -0.4);
-}
-
-.title-screen__lang[for='lang-de']::after {
-  right: calc(#{$title-lang-mark} * -0.4);
-}
-
-#lang-de:checked ~ .game .title-screen__lang[for='lang-de']::after,
-#lang-en:checked ~ .game .title-screen__lang[for='lang-en']::after {
+#lang-de:checked ~ .game .title-screen__start,
+#lang-en:checked ~ .game .title-screen__start {
   opacity: 1;
+  pointer-events: auto;
+}
+
+#lang-en:checked ~ .game .title-screen__start::after {
+  left: calc(#{$title-start-mark} * -0.4);
+  opacity: 1;
+}
+
+#lang-de:checked ~ .game .title-screen__start::after {
+  right: calc(#{$title-start-mark} * -0.4);
+  opacity: 1;
+}
+
+.title-screen__legal-link,
+.title-screen__mobile-note {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease-out,
+    visibility 0s;
+}
+
+#lang-de:checked ~ .game .title-screen__legal-link,
+#lang-en:checked ~ .game .title-screen__legal-link {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#lang-de:checked ~ .game .title-screen__mobile-note,
+#lang-en:checked ~ .game .title-screen__mobile-note {
+  opacity: 1;
+  visibility: visible;
 }
 
 .title-screen__legal-link {
@@ -296,8 +341,6 @@ $title-lang-mark: vars.$dialogue-pixel * 3;
   text-align: center;
   pointer-events: none;
   user-select: none;
-  animation: title-choices-in 0.5s ease-out both;
-  animation-delay: vars.$title-choices-delay;
 }
 
 // Overlay the whole title screen. Positioned against the overlay itself

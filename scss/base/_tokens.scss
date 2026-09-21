@@ -307,6 +307,9 @@ $inventory-back-size: math.div($tile-size-display, 2.5);
 $inventory-art-size: 320px * $vision-scale;
 $inventory-lamp-expand-duration: 0.8s;
 $inventory-morph-duration: 0.45s;
+// HUD bag/gear fades in only after the morph has landed, while the
+// parked mini-panel still covers the slot.
+$hud-icon-fade: 0.15s;
 $inventory-morph-scale: math.div($inventory-toggle-size, $inventory-art-size);
 // Open bag: right edge on the vision field's left, vertically centered.
 // Treat the round clip as its bounding square: icon sits in that

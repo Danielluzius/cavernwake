@@ -7035,8 +7035,7 @@ input {
 
 .title-screen__choices {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   top: 100%;
   z-index: 1;
   display: flex;
@@ -7044,9 +7043,8 @@ input {
   align-items: center;
   gap: 15px;
   width: max-content;
-  margin-inline: auto;
   margin-top: 52.8px;
-  transform: none;
+  transform: translateX(-50%);
   animation: title-choices-in 0.5s ease-out both;
   animation-delay: 8.9s;
 }
@@ -7061,22 +7059,39 @@ input {
 .title-screen__lang {
   position: relative;
   box-sizing: border-box;
-  width: auto;
+  width: 100%;
   min-width: 0;
   padding: 6px 10.5px;
   font-size: 18px;
   text-align: center;
+  transition: opacity 0.5s ease-out;
 }
 
-.title-screen__lang[for=lang-en] {
-  justify-self: end;
+#lang-de:checked ~ .game .title-screen__lang[for=lang-de],
+#lang-en:checked ~ .game .title-screen__lang[for=lang-en] {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
 }
 
-.title-screen__lang[for=lang-de] {
-  justify-self: start;
+#lang-de:checked ~ .game .title-screen__lang[for=lang-en],
+#lang-en:checked ~ .game .title-screen__lang[for=lang-de] {
+  opacity: 0.4;
 }
 
-.title-screen__lang::after {
+#lang-de:checked ~ .game .title-screen__lang[for=lang-en]:hover,
+#lang-en:checked ~ .game .title-screen__lang[for=lang-de]:hover {
+  opacity: 1;
+}
+
+.title-screen__start {
+  position: relative;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out;
+}
+
+.title-screen__start::after {
   content: "";
   position: absolute;
   top: calc(9px * -0.4);
@@ -7087,19 +7102,44 @@ input {
   box-shadow: 0 3px 0 #010000, 0 -3px 0 #010000, 3px 0 0 #010000, -3px 0 0 #010000;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.5s ease-out;
 }
 
-.title-screen__lang[for=lang-en]::after {
-  left: calc(9px * -0.4);
-}
-
-.title-screen__lang[for=lang-de]::after {
-  right: calc(9px * -0.4);
-}
-
-#lang-de:checked ~ .game .title-screen__lang[for=lang-de]::after,
-#lang-en:checked ~ .game .title-screen__lang[for=lang-en]::after {
+#lang-de:checked ~ .game .title-screen__start,
+#lang-en:checked ~ .game .title-screen__start {
   opacity: 1;
+  pointer-events: auto;
+}
+
+#lang-en:checked ~ .game .title-screen__start::after {
+  left: calc(9px * -0.4);
+  opacity: 1;
+}
+
+#lang-de:checked ~ .game .title-screen__start::after {
+  right: calc(9px * -0.4);
+  opacity: 1;
+}
+
+.title-screen__legal-link,
+.title-screen__mobile-note {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out, visibility 0s;
+}
+
+#lang-de:checked ~ .game .title-screen__legal-link,
+#lang-en:checked ~ .game .title-screen__legal-link {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#lang-de:checked ~ .game .title-screen__mobile-note,
+#lang-en:checked ~ .game .title-screen__mobile-note {
+  opacity: 1;
+  visibility: visible;
 }
 
 .title-screen__legal-link {
@@ -7131,8 +7171,6 @@ input {
   text-align: center;
   pointer-events: none;
   user-select: none;
-  animation: title-choices-in 0.5s ease-out both;
-  animation-delay: 8.9s;
 }
 
 .title-screen__legal {
@@ -7805,7 +7843,7 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.12s, visibility 0s;
+  transition: opacity 0s, visibility 0s;
 }
 
 .inventory {
@@ -7815,7 +7853,7 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0s 0.45s, visibility 0s 0.45s;
+  transition: opacity 0s 0.6s, visibility 0s 0.6s;
 }
 
 #inventory-open:checked ~ #item-quote-idle:checked ~ #intro-10:checked ~ .game .inventory,
@@ -9085,7 +9123,7 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.12s, visibility 0s;
+  transition: opacity 0s, visibility 0s;
 }
 
 .settings {
@@ -9095,7 +9133,7 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0s 0.6s, visibility 0s 0.6s;
+  transition: opacity 0s 0.75s, visibility 0s 0.75s;
 }
 
 #settings-open:checked ~ .game .settings {
@@ -9418,6 +9456,14 @@ input {
   background: #3a8240;
   color: #fff;
   box-shadow: 0 -3px #3a8240, 0 -6px #010000, 3px 0 #3a8240, 3px -3px #010000, 6px 0 #010000, 0 3px #3a8240, 0 6px #010000, -3px 0 #3a8240, -3px 3px #010000, -6px 0 #010000, -3px -3px #010000, 3px 3px #010000;
+}
+
+.i18n--de {
+  display: none;
+}
+
+#lang-de:checked ~ .game .i18n--de {
+  display: revert;
 }
 
 #lang-de:checked ~ .game .i18n--en,
@@ -15776,6 +15822,9 @@ input {
     justify-self: stretch;
     transform: scale(0.6);
     transform-origin: 50% 50%;
+  }
+  .title-screen__load {
+    width: 92%;
   }
   .end-screen {
     --end-scale: 0.6;

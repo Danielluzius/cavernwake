@@ -13,9 +13,9 @@
   image-rendering: pixelated;
   cursor: pointer;
   user-select: none;
-  // Reappear after the bag has shrunk back to icon size.
+  // Wait until the bag has landed, then fade over the parked mini-panel.
   transition:
-    opacity 0.15s vars.$inventory-morph-duration,
+    opacity vars.$hud-icon-fade vars.$inventory-morph-duration,
     visibility 0s vars.$inventory-morph-duration;
 }
 
@@ -121,7 +121,7 @@ $inventory-gained-beats: vine30-armed, pickaxe-armed, shovel-armed,
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 0.12s,
+    opacity 0s,
     visibility 0s;
 }
 
@@ -132,10 +132,10 @@ $inventory-gained-beats: vine30-armed, pickaxe-armed, shovel-armed,
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  // Stay visible while the bag shrinks back on close.
+  // Stay visible through the shrink and the HUD-icon fade on top of it.
   transition:
-    opacity 0s vars.$inventory-morph-duration,
-    visibility 0s vars.$inventory-morph-duration;
+    opacity 0s (vars.$inventory-morph-duration + vars.$hud-icon-fade),
+    visibility 0s (vars.$inventory-morph-duration + vars.$hud-icon-fade);
 }
 
 #inventory-open:checked

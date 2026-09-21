@@ -15,6 +15,7 @@
 
 $settings-window-fade: 0.15s;
 $settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
+$settings-toggle-in-delay: $settings-close-hold;
 
 @mixin settings-hud-slot($box-size) {
   position: absolute;
@@ -38,8 +39,8 @@ $settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
   cursor: pointer;
   user-select: none;
   transition:
-    opacity 0.15s $settings-close-hold,
-    visibility 0s $settings-close-hold;
+    opacity vars.$hud-icon-fade $settings-toggle-in-delay,
+    visibility 0s $settings-toggle-in-delay;
 }
 
 // Hidden through the cutscene. Last Continue (#intro-hints) pops the
@@ -51,7 +52,7 @@ $settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
   // Same delay as the HUD slot reappear so the pulse is not eaten by
   // the morph wait on first show, and so closing settings does not
   // restart an instant fade-in over the shrinking panel.
-  animation: inventory-toggle-pulse 0.5s ease-in-out $settings-close-hold 2;
+  animation: inventory-toggle-pulse 0.5s ease-in-out $settings-toggle-in-delay 2;
 }
 
 // #inventory-open stays checked after the lamp (intro-11 closes the
@@ -67,7 +68,7 @@ $settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 0.12s,
+    opacity 0s,
     visibility 0s;
 }
 
@@ -79,8 +80,8 @@ $settings-close-hold: vars.$inventory-morph-duration + $settings-window-fade;
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 0s $settings-close-hold,
-    visibility 0s $settings-close-hold;
+    opacity 0s ($settings-close-hold + vars.$hud-icon-fade),
+    visibility 0s ($settings-close-hold + vars.$hud-icon-fade);
 }
 
 #settings-open:checked ~ .game .settings {
@@ -321,6 +322,16 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
 
 .settings__row--link:hover {
   @include dlg.pixel-button-fill(vars.$dialogue-arrow-bg-hover);
+}
+
+// No language yet: hide DE so dual strings cannot inflate layout
+// (title Start used to read StartStart and shove the lang pads out).
+.i18n--de {
+  display: none;
+}
+
+#lang-de:checked ~ .game .i18n--de {
+  display: revert;
 }
 
 #lang-de:checked ~ .game .i18n--en,
