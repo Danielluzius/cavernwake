@@ -37,21 +37,16 @@
     visibility 0s vars.$inventory-morph-duration;
 }
 
-// Hidden through the cutscene. #intro-hints is the last intro radio and
-// stays checked, so this also covers free play. During the hints prompt
-// the icon is visible but not clickable (see below).
+// Hidden through the cutscene. Last Continue (#intro-hints) pops the
+// gear in and nods it twice so the HUD slot is obvious.
 #intro-hints:checked ~ .game .settings__toggle {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-}
-
-#{vars.$hints-prompt} ~ .game .settings__toggle {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: none;
-  cursor: default;
-  animation: none;
+  animation: inventory-toggle-pulse 0.5s ease-in-out 2;
+  transition:
+    opacity 0.15s,
+    visibility 0s;
 }
 
 // #inventory-open stays checked after the lamp (intro-11 closes the
@@ -65,7 +60,6 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  animation: none;
   transition:
     opacity 0.12s,
     visibility 0s;
@@ -83,8 +77,7 @@
     visibility 0s vars.$inventory-morph-duration;
 }
 
-#settings-open:checked ~ .game .settings,
-#{vars.$hints-prompt} ~ .game .settings {
+#settings-open:checked ~ .game .settings {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -111,8 +104,7 @@
   transition: transform vars.$inventory-morph-duration ease-out;
 }
 
-#settings-open:checked ~ .game .settings__panel,
-#{vars.$hints-prompt} ~ .game .settings__panel {
+#settings-open:checked ~ .game .settings__panel {
   pointer-events: auto;
   transform: translate(0, -50%) scale(1);
 }
@@ -152,8 +144,7 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
   transition: opacity 0.15s;
 }
 
-#settings-open:checked ~ .game .settings__body,
-#{vars.$hints-prompt} ~ .game .settings__body {
+#settings-open:checked ~ .game .settings__body {
   opacity: 1;
   transition: opacity 0.2s vars.$inventory-morph-duration;
 }
@@ -206,25 +197,6 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
   font-weight: 400;
   text-align: center;
   color: vars.$dialogue-text-color;
-}
-
-.settings__prompt {
-  display: none;
-  margin: 0;
-  text-align: center;
-}
-
-#{vars.$hints-prompt} ~ .game .settings__prompt {
-  display: block;
-}
-
-#{vars.$hints-prompt} ~ .game .settings__title {
-  padding-bottom: 0;
-}
-
-#{vars.$hints-prompt} ~ .game .settings__row--lang,
-#{vars.$hints-prompt} ~ .game .settings__footer {
-  display: none;
 }
 
 .settings__copy {
@@ -347,14 +319,11 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
 }
 
 #settings-open:checked ~ #{vars.$intro-running} ~ .game .inventory__toggle,
-#{vars.$hints-prompt} ~ .game .inventory__toggle,
 #settings-open:checked ~ #position-1:checked ~ #intro-10:checked
   ~ .game
   .inventory__toggle,
 #settings-open:checked ~ .game .inventory__back,
-#{vars.$hints-prompt} ~ .game .inventory__back,
-#settings-open:checked ~ .game .inventory,
-#{vars.$hints-prompt} ~ .game .inventory {
+#settings-open:checked ~ .game .inventory {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -381,8 +350,6 @@ $settings-choice-size: vars.$dialogue-pixel * 28;
 }
 
 #settings-open:checked ~ .game .direction-controls__button--edge,
-#settings-open:checked ~ .game .direction-controls__button--intro-arrow,
-#{vars.$hints-prompt} ~ .game .direction-controls__button--edge,
-#{vars.$hints-prompt} ~ .game .direction-controls__button--intro-arrow {
+#settings-open:checked ~ .game .direction-controls__button--intro-arrow {
   display: none;
 }

@@ -244,8 +244,7 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #settings-open:checked ~ .game .settings__panel,
-  #{vars.$hints-prompt} ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
 
@@ -448,8 +447,7 @@
       scale(#{vars.$inventory-morph-scale});
   }
 
-  #settings-open:checked ~ .game .settings__panel,
-  #{vars.$hints-prompt} ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
 

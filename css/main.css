@@ -9073,14 +9073,8 @@ input {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-}
-
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__toggle {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: none;
-  cursor: default;
-  animation: none;
+  animation: inventory-toggle-pulse 0.5s ease-in-out 2;
+  transition: opacity 0.15s, visibility 0s;
 }
 
 #settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .settings__toggle,
@@ -9091,7 +9085,6 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  animation: none;
   transition: opacity 0.12s, visibility 0s;
 }
 
@@ -9105,8 +9098,7 @@ input {
   transition: opacity 0s 0.45s, visibility 0s 0.45s;
 }
 
-#settings-open:checked ~ .game .settings,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings {
+#settings-open:checked ~ .game .settings {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -9129,8 +9121,7 @@ input {
   transition: transform 0.45s ease-out;
 }
 
-#settings-open:checked ~ .game .settings__panel,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
+#settings-open:checked ~ .game .settings__panel {
   pointer-events: auto;
   transform: translate(0, -50%) scale(1);
 }
@@ -9158,8 +9149,7 @@ input {
   transition: opacity 0.15s;
 }
 
-#settings-open:checked ~ .game .settings__body,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__body {
+#settings-open:checked ~ .game .settings__body {
   opacity: 1;
   transition: opacity 0.2s 0.45s;
 }
@@ -9259,25 +9249,6 @@ input {
   font-weight: 400;
   text-align: center;
   color: #2a1810;
-}
-
-.settings__prompt {
-  display: none;
-  margin: 0;
-  text-align: center;
-}
-
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__prompt {
-  display: block;
-}
-
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__title {
-  padding-bottom: 0;
-}
-
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__row--lang,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .settings__footer {
-  display: none;
 }
 
 .settings__copy {
@@ -9456,12 +9427,9 @@ input {
 }
 
 #settings-open:checked ~ :is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .inventory__toggle,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ #position-1:checked ~ #intro-10:checked ~ .game .inventory__toggle,
 #settings-open:checked ~ .game .inventory__back,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory__back,
-#settings-open:checked ~ .game .inventory,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .inventory {
+#settings-open:checked ~ .game .inventory {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -9484,9 +9452,7 @@ input {
 }
 
 #settings-open:checked ~ .game .direction-controls__button--edge,
-#settings-open:checked ~ .game .direction-controls__button--intro-arrow,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .direction-controls__button--edge,
-#hints-pending:checked ~ #intro-hints:checked ~ .game .direction-controls__button--intro-arrow {
+#settings-open:checked ~ .game .direction-controls__button--intro-arrow {
   display: none;
 }
 
@@ -15201,17 +15167,17 @@ input {
   background-image: url("../assets/characters/with-backpack/base/base-right.png");
 }
 
-#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"],
-#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"] {
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"],
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"] {
   opacity: var(--edge-opacity);
   visibility: visible;
   pointer-events: auto;
   margin: 0;
   transition: opacity 0.15s ease, margin 0.4s 0s ease-out, visibility 0s 0s;
 }
-#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:hover, #hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:active,
-#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:hover,
-#hints-pending:not(:checked) ~ #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:active {
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:hover, #position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--left[data-position="14"]:active,
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:hover,
+#position-1:checked ~ #intro-hints:checked ~ .game .direction-controls__button--right[data-position="14"]:active {
   opacity: 1;
 }
 
@@ -15725,8 +15691,7 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), calc(var(--hud-y) - var(--panel-y))) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel,
-  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -16027,8 +15992,7 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel,
-  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -16085,8 +16049,7 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel,
-  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {
@@ -16143,8 +16106,7 @@ input {
     transform-origin: 50% 50%;
     transform: translate(-50%, -50%) translate(var(--hud-set-x), var(--hud-set-y)) scale(0.15);
   }
-  #settings-open:checked ~ .game .settings__panel,
-  #hints-pending:checked ~ #intro-hints:checked ~ .game .settings__panel {
+  #settings-open:checked ~ .game .settings__panel {
     transform: translate(-50%, -50%) scale(var(--inv-fit));
   }
   .craft-tray {

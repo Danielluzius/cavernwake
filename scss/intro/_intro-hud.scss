@@ -10,7 +10,7 @@
 // is running (#position-1 unchecks the instant real navigation begins,
 // see banner comment above), reveal the two fake intro-only arrows at
 // exactly the right step, and reveal node 14's walk pads once the
-// intro finishes (hints prompt, then node 14's walk pads).
+// intro finishes (node 14's walk pads).
 //
 // Visibility/opacity, not display:none: display-none → flex skips CSS
 // transitions, so node 14's first pads and the first walk after intro
@@ -153,9 +153,9 @@
   @include dlg.direction-button-reveal($intro-wake-turn-duration + $beat);
 }
 
-// Hints prompt holds at node 14 after the intro-14 walk. Still standing
-// here — pads come in when An/Aus clears #hints-pending. Lift-up stays
-// gated. First real walk then unchecks #position-1.
+// Last Continue checks #intro-hints (intro-14 walk already landed).
+// Pads come in with that click. Lift-up stays gated. First real walk
+// then unchecks #position-1.
 
 #position-1:checked ~ #intro-hints:checked ~ .game .world,
 #position-1:checked ~ #intro-hints:checked ~ .game .player {
@@ -167,13 +167,11 @@
   background-image: url('../assets/characters/with-backpack/base/base-right.png');
 }
 
-#hints-pending:not(:checked)
-  ~ #position-1:checked
+#position-1:checked
   ~ #intro-hints:checked
   ~ .game
   .direction-controls__button--left[data-position='14'],
-#hints-pending:not(:checked)
-  ~ #position-1:checked
+#position-1:checked
   ~ #intro-hints:checked
   ~ .game
   .direction-controls__button--right[data-position='14'] {

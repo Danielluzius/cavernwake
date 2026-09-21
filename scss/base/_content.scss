@@ -11,9 +11,6 @@ $blackout-duration: 0.5s;
 $intro-running: ':is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked';
 // Same chain without the skip prompt and the opening black card.
 $intro-after-opening: ':is(#intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked';
-// Last intro beat: settings open on hints only. #hints-pending sits
-// before the intro radios, so this chain reaches .game.
-$hints-prompt: '#hints-pending:checked ~ #intro-hints:checked';
 // Opening through intro-10: play-toggle stays hidden (tutorial bag is
 // intro-10). intro-11 onward reveals .inventory__toggle--play.
 $intro-until-bag: ':is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10):checked';
