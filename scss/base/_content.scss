@@ -6,16 +6,17 @@
 // --- Intro / opening cutscene (see scss/intro/_intro.scss) ---
 $screen-shake-duration: 0.4s;
 $blackout-duration: 0.5s;
-// Any intro radio — title Start checks #intro-dark, then the chain stays
+// Any intro radio — title Start checks #intro-skip, then the chain stays
 // in this group. Used to hide the title and show the cave.
-$intro-running: ':is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked';
-// Same chain without the opening black card. HUD that should wait for
-// the cave fade-in (settings gear) uses this; #intro-dark handles that
-// beat itself with the blackout timing in scss/intro/_intro.scss.
+$intro-running: ':is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked';
+// Same chain without the skip prompt and the opening black card. HUD
+// that should wait for the cave fade-in (settings gear) uses this;
+// #intro-dark handles that beat itself with the blackout timing in
+// scss/intro/_intro.scss.
 $intro-after-opening: ':is(#intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14):checked';
 // Opening through intro-10: play-toggle stays hidden (tutorial bag is
 // intro-10). intro-11 onward reveals .inventory__toggle--play.
-$intro-until-bag: ':is(#intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10):checked';
+$intro-until-bag: ':is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10):checked';
 
 // --- Obstacles (see world/_obstacles.scss, world/_collapse.scss) ---
 // One entry per barrier blocking one or more walk edges (see

@@ -158,7 +158,7 @@ $elevator-reverse-duals: (
 // --- Title screen (see components/_title-screen.scss) ---
 // Beat timings: title emerges from the dark, then credit, then the
 // preload bar (walker stays in lockstep with the fill). Start checks
-// #intro-dark; the overlay fades out over $title-fade-out-duration.
+// #intro-skip; the overlay fades out over $title-fade-out-duration.
 $title-emerge-duration: 3s;
 $title-credit-delay: 2.7s;
 $title-credit-duration: 1.1s;

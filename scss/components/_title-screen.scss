@@ -13,7 +13,8 @@
 //
 // Deutsch?/English? + Impressum fade in between credit and bar once
 // the bar is full. Picking a language crossfades those pads to Start
-// in the same slot. Start checks #intro-dark and fades into the intro.
+// in the same slot. Start checks #intro-skip and fades the overlay;
+// skip intro yes/no then sits on black.
 // ==========================================================================
 
 $title-bar-width: vars.$tile-size-display * 6;
@@ -481,4 +482,51 @@ $title-lang-mark: vars.$dialogue-pixel * 3;
       #{vars.$dialogue-pixel * 3}
     );
   }
+}
+
+// Skip prompt after Start. Lives on .game (not .title-screen) so the
+// overlay-out animation cannot hide it. Same type as "made by" / name.
+.skip-intro {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: vars.$z-index-ui;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: vars.$tile-size-display * 0.35;
+  pointer-events: none;
+  font-family: inherit;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+#intro-skip:checked ~ .game .skip-intro {
+  display: flex;
+  animation: title-choices-in vars.$title-credit-duration ease-out both;
+  animation-delay: vars.$title-fade-out-duration;
+}
+
+.skip-intro__prompt,
+.skip-intro__choices {
+  margin: 0;
+  color: vars.$dialogue-bevel;
+  font-size: vars.$dialogue-font-size;
+  letter-spacing: vars.$dialogue-pixel;
+}
+
+.skip-intro__choices {
+  display: flex;
+  gap: vars.$dialogue-pixel * 8;
+}
+
+.skip-intro__choice {
+  color: vars.$dialogue-fill;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.skip-intro__choice:hover {
+  color: vars.$dialogue-bevel;
 }

@@ -81,9 +81,10 @@
 }
 
 // ==========================================================================
-// BLACKOUT — Start holds black through the first caption, then the cave
-// fades in on #intro-dark. After the drop, dark-hold fades to black for
-// the reposition, then step 5 lifts it again. Transparent everywhere else.
+// BLACKOUT — skip prompt and Start hold black through the first caption,
+// then the cave fades in on #intro-dark. After the drop, dark-hold fades
+// to black for the reposition, then step 5 lifts it again. Transparent
+// everywhere else.
 // ==========================================================================
 
 .blackout {
@@ -107,6 +108,11 @@
   to {
     opacity: 0;
   }
+}
+
+#position-1:checked ~ #intro-skip:checked ~ .game .blackout {
+  opacity: 1;
+  transition: none;
 }
 
 #position-1:checked ~ #intro-dark:checked ~ .game .blackout {

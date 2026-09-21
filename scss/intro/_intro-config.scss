@@ -7,8 +7,9 @@
 
 // ==========================================================================
 // INTRO / OPENING CUTSCENE
-// Title-screen Start checks #intro-dark. Its own linear radio chain
-// (name="intro", #intro-1..#intro-14, see index.html), deliberately
+// Title-screen Start checks #intro-skip (yes/no after the title fade).
+// No continues on #intro-dark; Yes jumps to #intro-5. Linear radio
+// chain (name="intro", #intro-1..#intro-14, see index.html), deliberately
 // decoupled from the free-roam position graph (vars.$positions/#position-N,
 // see world/_world.scss etc.) even though several beats re-use the SAME
 // nodes (1-4, 13, 14) for their camera targets — this avoids ever needing
@@ -92,10 +93,12 @@ $beat-short: 0.5s;
 $beat: 0.9s;
 $beat-long: 1.4s;
 
-// Opening cards after Start stay on #intro-dark (CSS cannot advance
-// radios). Caption 1 on black, cave fades in, caption 2, then speech.
+// Opening cards after No stay on #intro-dark (CSS cannot advance
+// radios). Title fade already ran on #intro-skip, so these delays
+// start from the No click: caption 1 on black, cave fades in,
+// caption 2, then speech.
 $opening-caption-duration: 4s;
-$opening-caption-1-at: vars.$title-fade-out-duration + $beat-long;
+$opening-caption-1-at: $beat-long;
 $opening-blackout-at: $opening-caption-1-at + $opening-caption-duration;
 $opening-caption-2-at: $opening-blackout-at + $intro-fade-in-duration + $beat;
 $opening-speech-at: $opening-caption-2-at + $opening-caption-duration +

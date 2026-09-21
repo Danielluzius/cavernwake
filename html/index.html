@@ -351,7 +351,8 @@
           <!-- Title screen: after the bar fills, Deutsch?/English? +
              Impressum fade in between credit and bar. Picking a language
              crossfades those pads to Start in the same slot. Start checks
-             #intro-dark and hands into the opening cutscene. -->
+             #intro-skip; after the overlay fades, skip intro yes/no.
+             No continues on #intro-dark, Yes on the wake-up beat. -->
           <section class="scene scene--intro">
                <div class="title-screen">
                     <div class="title-screen__brand">
@@ -369,7 +370,7 @@
                               <div class="title-screen__choices">
                                    <div class="title-screen__cta">
                                         <label class="title-screen__button title-screen__lang" for="lang-en">English</label>
-                                        <label class="title-screen__button title-screen__start" for="intro-dark">
+                                        <label class="title-screen__button title-screen__start" for="intro-skip">
                                              <span class="i18n i18n--de">Start</span>
                                              <span class="i18n i18n--en">Start</span>
                                         </label>
@@ -414,6 +415,27 @@
                     </div>
                </div>
           </section>
+
+          <!-- Skip-intro prompt: sibling of the title overlay so it can
+               fade in after that overlay is gone (the title-screen itself
+               is pointer-events:none by then). Yes → #intro-5, No →
+               #intro-dark. See scss/components/_title-screen.scss. -->
+          <div class="skip-intro">
+               <p class="skip-intro__prompt">
+                    <span class="i18n i18n--de">intro überspringen</span>
+                    <span class="i18n i18n--en">skip intro</span>
+               </p>
+               <p class="skip-intro__choices">
+                    <label class="skip-intro__choice" for="intro-5">
+                         <span class="i18n i18n--de">ja</span>
+                         <span class="i18n i18n--en">yes</span>
+                    </label>
+                    <label class="skip-intro__choice" for="intro-dark">
+                         <span class="i18n i18n--de">nein</span>
+                         <span class="i18n i18n--en">no</span>
+                    </label>
+               </p>
+          </div>
 
           <!-- Ending overlay sits on .game (not inside .scene--game) so
                the cave can stay hidden while credits run.

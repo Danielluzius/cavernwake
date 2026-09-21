@@ -38,9 +38,9 @@
 }
 
 // Visible once the cave is actually on screen — any intro beat after the
-// opening black card. #intro-dark fades the gear in with the world (see
-// scss/intro/_intro.scss). Not gated on the lamp / inventory tutorial so
-// imprint stays reachable before the backpack.
+// skip prompt and the opening black card. #intro-dark fades the gear in
+// with the world (see scss/intro/_intro.scss). Not gated on the lamp /
+// inventory tutorial so imprint stays reachable before the backpack.
 #{vars.$intro-after-opening} ~ .game .settings__toggle {
   opacity: 1;
   visibility: visible;

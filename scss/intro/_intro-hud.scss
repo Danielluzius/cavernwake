@@ -19,6 +19,10 @@
 // ==========================================================================
 
 #position-1:checked
+  ~ #intro-skip:checked
+  ~ .game
+  .direction-controls__button--edge[data-position],
+#position-1:checked
   ~ #intro-dark:checked
   ~ .game
   .direction-controls__button--edge[data-position],
