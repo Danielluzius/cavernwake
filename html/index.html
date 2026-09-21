@@ -40,6 +40,7 @@
      <input type="radio" name="mud-spark" id="mud-spark-done" class="world-position-input" />
      <input type="radio" name="workbench-spark" id="workbench-spark" class="world-position-input" checked />
      <input type="radio" name="workbench-spark" id="workbench-spark-seen" class="world-position-input" />
+     <input type="radio" name="workbench-spark" id="workbench-spark-later" class="world-position-input" />
      <input type="radio" name="workbench-spark" id="workbench-spark-done" class="world-position-input" />
      <input type="radio" name="wall-spark" id="wall-spark" class="world-position-input" checked />
      <input type="radio" name="wall-spark" id="wall-spark-seen" class="world-position-input" />
@@ -567,9 +568,10 @@
                               <label class="object object--bomb-fuse" for="bomb-fuse-prompt"></label>
 
                               <!-- Workbench at node 22 (scss/world/_workbench.scss):
-                             look line first, Continue opens the craft tray
-                             + inventory. Take is the finished bomb on the table. -->
-                              <label class="object object--workbench" for="workbench-look"></label>
+                             first click is the two-line intro (spark). After
+                             that, look + tray once at least one bomb part is
+                             armed. Take is the finished bomb on the table. -->
+                              <label class="object object--workbench" for="workbench-spark-seen"></label>
                               <label class="object object--workbench-craft" for="workbench-look"></label>
                               <label class="object object--workbench-take" for="workbench-take"></label>
 

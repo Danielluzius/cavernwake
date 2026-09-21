@@ -11035,7 +11035,17 @@ input {
   background-image: url("../assets/world/workbench.png");
 }
 
-#workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
+#workbench-spark:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench {
+  pointer-events: auto;
+  cursor: pointer;
+  --click-hint-top: 24px;
+  --click-hint-left: 136.5px;
+  --click-hint: 1;
+}
+
+#workbench-spark-done:checked ~ #bomb-shell-armed:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-craft,
+#workbench-spark-done:checked ~ #bomb-powder-armed:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-craft,
+#workbench-spark-done:checked ~ #bomb-fuse-armed:checked ~ #workbench-idle:checked ~ :is(#position-22, [id^=position-22--]):checked ~ .game .object--workbench-craft {
   pointer-events: auto;
   cursor: pointer;
   --click-hint-top: 24px;
@@ -11161,8 +11171,47 @@ input {
 }
 
 #workbench-spark-seen:checked ~ .game .direction-controls__button--edge[data-position],
+#workbench-spark-later:checked ~ .game .direction-controls__button--edge[data-position],
 #workbench-look:checked ~ .game .direction-controls__button--edge[data-position] {
   display: none;
+}
+
+#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0s;
+}
+#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box .dialogue__button::before {
+  animation: dialogue-spark-in 0.9s ease-out both;
+  animation-delay: calc(0s + 0.75s);
+}
+#workbench-spark-seen:checked ~ .game .dialogue[data-step=workbench-incomplete] .dialogue__box .dialogue__button--teach::before {
+  animation-name: dialogue-spark-teach;
+  animation-duration: 2.2s;
+}
+
+#workbench-spark-later:checked ~ .game .dialogue[data-step=workbench-later] .dialogue__box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+#workbench-spark-later:checked ~ .game .dialogue[data-step=workbench-later] .dialogue__box.dialogue__box {
+  transition: none;
+  animation: var(--dialogue-enter) 0.4s ease-out both;
+  animation-delay: 0s;
+}
+#workbench-spark-later:checked ~ .game .dialogue[data-step=workbench-later] .dialogue__box .dialogue__button::before {
+  animation: dialogue-spark-in 0.9s ease-out both;
+  animation-delay: calc(0s + 0.75s);
+}
+#workbench-spark-later:checked ~ .game .dialogue[data-step=workbench-later] .dialogue__box .dialogue__button--teach::before {
+  animation-name: dialogue-spark-teach;
+  animation-duration: 2.2s;
 }
 
 #workbench-look:checked ~ .game .dialogue[data-step=workbench-look] .dialogue__box {

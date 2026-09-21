@@ -14,8 +14,9 @@
 //                   -> take -> done
 //                   any other three-part order -> bad-* (shake, eject)
 //
-// The world label opens look; Continue then opens choosing. Parts are
-// placed from inventory in click order into the craft tray.
+// Two stacked world labels: spark is the two-line first look; look then
+// choosing once at least one bomb part is armed. Parts go on the tray
+// from inventory in click order.
 // ==========================================================================
 
 $col: 15;
@@ -63,10 +64,35 @@ $busy: tools.step-list(workbench, (crafting, take));
   background-image: url('../assets/world/workbench.png');
 }
 
-#workbench-idle:checked
+// First visit: two-line intro. After that, craft hit once any part is in.
+#workbench-spark:checked
+  ~ #workbench-idle:checked
   ~ #{$at-bench}
   ~ .game
   .object--workbench {
+  pointer-events: auto;
+  cursor: pointer;
+  @include click-hint.show($col, $row, $cols, $rows, 22);
+}
+
+#workbench-spark-done:checked
+  ~ #bomb-shell-armed:checked
+  ~ #workbench-idle:checked
+  ~ #{$at-bench}
+  ~ .game
+  .object--workbench-craft,
+#workbench-spark-done:checked
+  ~ #bomb-powder-armed:checked
+  ~ #workbench-idle:checked
+  ~ #{$at-bench}
+  ~ .game
+  .object--workbench-craft,
+#workbench-spark-done:checked
+  ~ #bomb-fuse-armed:checked
+  ~ #workbench-idle:checked
+  ~ #{$at-bench}
+  ~ .game
+  .object--workbench-craft {
   pointer-events: auto;
   cursor: pointer;
   @include click-hint.show($col, $row, $cols, $rows, 22);
@@ -258,8 +284,23 @@ $pre-steps: tools.step-list(
 
 // ---- Dialogue ----
 #workbench-spark-seen,
+#workbench-spark-later,
 #workbench-look {
   @include dlg.lock-edges;
+}
+
+#workbench-spark-seen:checked
+  ~ .game
+  .dialogue[data-step='workbench-incomplete']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
+}
+
+#workbench-spark-later:checked
+  ~ .game
+  .dialogue[data-step='workbench-later']
+  .dialogue__box {
+  @include dlg.dialogue-box-open;
 }
 
 #workbench-look:checked
