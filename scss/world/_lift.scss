@@ -20,11 +20,15 @@
 //
 // Rope math: its top is pinned at the fixed winch anchor, so animating its
 // height alone is enough — the bottom edge rises as height shrinks, falls
-// as it grows. Because the basket's own top and the world-offset centering
-// (world/_world.scss) both shift by the exact same row distance over the
-// exact same duration/easing, the basket stays glued to the viewport
-// centre throughout the ride for free (no counter-transform needed, unlike
-// .player).
+// as it grows. Basket and door do NOT follow that: their layout top is
+// fixed and the ride is a translateY of the same row distance, duration
+// and easing as the world-offset centering (world/_world.scss). Both are
+// transform transitions, so they stay on the compositor with the camera
+// and the player's counter-translate. A top/height transition on the car
+// was a frame behind those whenever layout missed a frame, which is the
+// slip of the character inside the tub. The rope can still lag by a frame
+// under load; its length cannot move with transform without squashing the
+// repeat-y sprite.
 //
 // GEOMETRY — all three parts read ONE inherited custom property per shaft,
 // `--lift-<id>-row` (the row the car is docked at), set on .world. So a
@@ -194,18 +198,28 @@ $lift-rattle-px: 1px;
     transition: height $duration ease-in-out;
   }
 
+  // Same translate on both so the rim stays one tile below the tub.
+  // Layout top is the resting offset that used to be baked into `top`
+  // (door sits $door-row-offset below the tub). will-change matches
+  // .player: a transform that exists only while the transition runs gets
+  // demoted at rest and the pixel-art edges blur.
+  .lift-basket#{$suffix},
+  .lift-door#{$suffix} {
+    transform: translateY(calc(#{$row} * #{$tile}));
+    transition: transform $duration ease-in-out;
+    will-change: transform;
+  }
+
   .lift-basket#{$suffix} {
-    top: calc(#{$row} * #{$tile});
+    top: 0;
     height: 2 * $tile;
     background-image: url('../assets/objects/lift/basket.png');
-    transition: top $duration ease-in-out;
   }
 
   .lift-door#{$suffix} {
-    top: calc((#{$row} + #{$door-row-offset}) * #{$tile});
+    top: $door-row-offset * $tile;
     height: $tile;
     background-image: url('../assets/objects/lift/basket-door.png');
-    transition: top $duration ease-in-out;
     pointer-events: none;
   }
 

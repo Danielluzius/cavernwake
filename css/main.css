@@ -1360,18 +1360,23 @@ input {
   transition: height 2s ease-in-out;
 }
 
+.lift-basket,
+.lift-door {
+  transform: translateY(calc(var(--lift-6-14-row) * 96px));
+  transition: transform 2s ease-in-out;
+  will-change: transform;
+}
+
 .lift-basket {
-  top: calc(var(--lift-6-14-row) * 96px);
+  top: 0;
   height: 192px;
   background-image: url("../assets/objects/lift/basket.png");
-  transition: top 2s ease-in-out;
 }
 
 .lift-door {
-  top: calc((var(--lift-6-14-row) + 1) * 96px);
+  top: 96px;
   height: 96px;
   background-image: url("../assets/objects/lift/basket-door.png");
-  transition: top 2s ease-in-out;
   pointer-events: none;
 }
 
@@ -1411,18 +1416,23 @@ input {
   transition: height 2s ease-in-out;
 }
 
+.lift-basket--17-26,
+.lift-door--17-26 {
+  transform: translateY(calc(var(--lift-17-26-row) * 96px));
+  transition: transform 2s ease-in-out;
+  will-change: transform;
+}
+
 .lift-basket--17-26 {
-  top: calc(var(--lift-17-26-row) * 96px);
+  top: 0;
   height: 192px;
   background-image: url("../assets/objects/lift/basket.png");
-  transition: top 2s ease-in-out;
 }
 
 .lift-door--17-26 {
-  top: calc((var(--lift-17-26-row) + 1) * 96px);
+  top: 96px;
   height: 96px;
   background-image: url("../assets/objects/lift/basket-door.png");
-  transition: top 2s ease-in-out;
   pointer-events: none;
 }
 
@@ -1624,18 +1634,23 @@ input {
   transition: height 3s ease-in-out;
 }
 
+.lift-basket--11-27,
+.lift-door--11-27 {
+  transform: translateY(calc(var(--lift-11-27-row) * 96px));
+  transition: transform 3s ease-in-out;
+  will-change: transform;
+}
+
 .lift-basket--11-27 {
-  top: calc(var(--lift-11-27-row) * 96px);
+  top: 0;
   height: 192px;
   background-image: url("../assets/objects/lift/basket.png");
-  transition: top 3s ease-in-out;
 }
 
 .lift-door--11-27 {
-  top: calc((var(--lift-11-27-row) + 1) * 96px);
+  top: 96px;
   height: 96px;
   background-image: url("../assets/objects/lift/basket-door.png");
-  transition: top 3s ease-in-out;
   pointer-events: none;
 }
 
@@ -1837,18 +1852,23 @@ input {
   transition: height 4s ease-in-out;
 }
 
+.lift-basket--10-36,
+.lift-door--10-36 {
+  transform: translateY(calc(var(--lift-10-36-row) * 96px));
+  transition: transform 4s ease-in-out;
+  will-change: transform;
+}
+
 .lift-basket--10-36 {
-  top: calc(var(--lift-10-36-row) * 96px);
+  top: 0;
   height: 192px;
   background-image: url("../assets/objects/lift/basket.png");
-  transition: top 4s ease-in-out;
 }
 
 .lift-door--10-36 {
-  top: calc((var(--lift-10-36-row) + 1) * 96px);
+  top: 96px;
   height: 96px;
   background-image: url("../assets/objects/lift/basket-door.png");
-  transition: top 4s ease-in-out;
   pointer-events: none;
 }
 
