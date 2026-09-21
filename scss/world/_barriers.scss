@@ -243,6 +243,8 @@ $shovel-locked: tools.step-list(shovel, (idle, prompt, pickup));
 .object--mud-gone {
   background-image: url('../assets/world/obstacles/mud/mud-before.png');
   opacity: 1;
+  // Look line hits -mud, the shovel branch hits -mud-cut.
+  @include click-hint.hover-from('.object--mud', '.object--mud-cut');
 }
 
 #mud-cutting:checked ~ .game .object--mud {

@@ -40,6 +40,10 @@ $bomb-size: 0.67;
 $hint-pad-left: $bomb-col - $col + math.div($bomb-size, 2) -
   math.div(vars.$click-hint-size, vars.$tile-size-display * 2);
 $hint-pad-top: $bomb-row - $row - 0.5;
+// Bomb pad: horizontally centred on the sprite, floating just above it
+// instead of sitting on top of the art.
+$bomb-hint-top: math.div(vars.$click-hint-size, vars.$tile-size-display) * -1 -
+  0.1;
 
 $pulse-duration: vars.$movement-duration;
 
@@ -173,6 +177,11 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
 
 .object--stone-wall-front {
   background-image: url('../assets/world/obstacles/stone-wall/stone-wall-before.png');
+  // Look line hits -stone-wall, the tool/bomb branches hit -stone-wall-cut.
+  @include click-hint.hover-from(
+    '.object--stone-wall',
+    '.object--stone-wall-cut'
+  );
 }
 
 @keyframes stone-wall-blast-swap {
@@ -205,7 +214,16 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
   opacity: 0;
   // Pad lives on the foreground sprite. The hit label sits in the
   // objects layer, behind the wall, so a hint there never shows.
-  @include click-hint.place($bomb-col, $bomb-row, $bomb-size, $bomb-size, 31);
+  @include click-hint.place(
+    $bomb-col,
+    $bomb-row,
+    $bomb-size,
+    $bomb-size,
+    31,
+    null,
+    $bomb-hint-top
+  );
+  @include click-hint.hover-from('.object--wall-bomb-hit');
 }
 
 #wall-placed:checked

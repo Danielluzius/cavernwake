@@ -11393,6 +11393,12 @@ input {
   background-image: url("../assets/world/obstacles/mud/mud-before.png");
   opacity: 1;
 }
+.world:has(.object--mud:hover, .object--mud-cut:hover) .object--mud-gone::before {
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+  background: #3a8240;
+  transform: scale(0.65);
+  transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
 
 #mud-cutting:checked ~ .game .object--mud {
   animation: none;
@@ -11913,6 +11919,12 @@ input {
 .object--stone-wall-front {
   background-image: url("../assets/world/obstacles/stone-wall/stone-wall-before.png");
 }
+.world:has(.object--stone-wall:hover, .object--stone-wall-cut:hover) .object--stone-wall-front::before {
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+  background: #3a8240;
+  transform: scale(0.65);
+  transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
 
 @keyframes stone-wall-blast-swap {
   to {
@@ -11938,8 +11950,14 @@ input {
 
 .object--wall-bomb {
   opacity: 0;
-  --click-hint-top: 24.66px;
+  --click-hint-top: -24.6px;
   --click-hint-left: 24.66px;
+}
+.world:has(.object--wall-bomb-hit:hover) .object--wall-bomb::before {
+  opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+  background: #3a8240;
+  transform: scale(0.65);
+  transition: opacity 0.15s ease, background 0.15s ease, transform 0.15s ease;
 }
 
 #wall-placed:checked ~ :is(#position-31, [id^=position-31--]):checked ~ .game .object--wall-bomb-hit {

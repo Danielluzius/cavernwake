@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
 @use '../base/variables' as vars;
@@ -56,6 +57,29 @@ $top-inset: 0.25;
 
   --click-hint-top: #{$local-top};
   --click-hint-left: #{$local-left};
+}
+
+// Hover look for pads that sit on a foreground twin: that element is
+// pointer-events: none, so `:hover` never reaches it and the pad kept the
+// idle look on desktop. Mirror the hover from the hit label(s) through the
+// shared .world ancestor (the two live in different world layers). Takes
+// several hits because one twin can have a branch per tool/state.
+@mixin hover-from($hits...) {
+  $hovers: ();
+
+  @each $hit in $hits {
+    $hovers: list.append($hovers, '#{$hit}:hover', comma);
+  }
+
+  .world:has(#{$hovers}) &::before {
+    opacity: calc(var(--click-hint, 0) * var(--hint-vis, 1));
+    background: vars.$dialogue-arrow-bg-hover;
+    transform: scale(vars.$click-hint-hover-scale);
+    transition:
+      opacity 0.15s ease,
+      background 0.15s ease,
+      transform 0.15s ease;
+  }
 }
 
 @mixin live {
