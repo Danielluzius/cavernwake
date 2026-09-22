@@ -15,6 +15,20 @@
 // against components without fighting the ID-chain state rules.
 // ==========================================================================
 
+// End-screen walker: skip the desktop “creep then dash” waypoint and
+// pull the stand in by the sprite’s empty canvas. Same motion on phone,
+// tablet, and wide so the body parks beside the pad.
+@mixin end-screen-walker-fit($nudge: 0.3) {
+  .end-screen {
+    --end-park-nudge: calc(var(--end-walker-size) * #{$nudge});
+  }
+
+  #outro-fade:checked ~ .game .end-screen__walker {
+    animation-name: end-walker-travel-compact, end-walker-run, end-walker-act,
+      end-walker-exit;
+  }
+}
+
 @mixin layout-compact {
   .game {
     --chrome-h: 0px;
@@ -333,6 +347,8 @@
     --end-scale: 0.6;
   }
 
+  @include end-screen-walker-fit;
+
   .end-screen__button {
     position: relative;
   }
@@ -649,6 +665,16 @@
   .game {
     --field-scale: #{vars.$field-scale-desktop};
   }
+}
+
+// Tablet / small desktop (iPad, 720–1199): same direct approach as phone.
+@media (min-width: vars.$layout-desktop-min) and (max-width: #{vars.$layout-wide-min - 1px}) {
+  @include end-screen-walker-fit;
+}
+
+// Widescreen 1200+: still no creep-waypoint; stand uses the same sprite inset.
+@media (min-width: vars.$layout-wide-min) {
+  @include end-screen-walker-fit;
 }
 
 // Widescreen: one step up so the circle does not sit as a postage stamp.

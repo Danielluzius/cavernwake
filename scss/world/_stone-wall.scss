@@ -445,14 +445,12 @@ $armed: '#wall-lantern-fire:checked ~ #{$blast-cover}:checked';
 }
 
 // Sibling of .viewport for the same reason as .blackout (see index.html):
-// position: fixed must stay pinned to the browser viewport while .viewport
-// itself is being shaken by a transform.
+// position: fixed keeps the shake on .viewport from moving it. inset:0
+// against the scaled .playfield-inner covers the field exactly — 100svh
+// fell short of the circle on phones, see scss/intro/_intro-fx.scss.
 .blast-flash {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100svh;
+  inset: 0;
   z-index: vars.$z-index-blackout;
   background-color: #fff;
   opacity: 0;

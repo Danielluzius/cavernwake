@@ -255,19 +255,27 @@ $walk-in-cycles: vars.$walk-cycles;
 }
 
 // ==========================================================================
-// PLAYER FALL — step "fall": drops straight down out of frame via its own
-// vertical extra-offset while the camera (--world-offset-y) stays fixed
-// at node 4 (see CAMERA above). Reset back to 0 at step 5, but instantly
-// (transition: none — the character is hidden behind the blackout by
-// then, see PLAYER POSE below), ready for the next real position change.
+// PLAYER FALL — step "fall": drops straight down out of frame while the
+// camera (--world-offset-y) stays fixed at node 4 (see CAMERA above).
+// Reset back to 0 at step 5, but instantly (transition: none — the
+// character is hidden behind the blackout by then, see PLAYER POSE
+// below), ready for the next real position change.
+//
+// The drop is margin-top, not --player-extra-offset-y. Changing
+// transform on .player (and the lamp anchor, which shares that class)
+// makes iOS Safari slide the already-composited cave texture with the
+// sprite: .world has will-change:transform, .vision-field clips with
+// overflow and an animated clip-path, .viewport is shaking. Desktop
+// repaints; the phone moves the cached bitmap and the top of the
+// circle goes black. Layout offset does not retarget that layer.
+// The lamp anchor falls with him, same as before.
 // ==========================================================================
 
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
   --world-offset: #{offset-x($node4)};
   --world-offset-y: #{offset-y($node4)};
-  --player-extra-offset-y: #{$fall-drop-distance};
-  transition-duration: vars.$movement-duration;
-  transition-timing-function: ease-in;
+  margin-top: #{$fall-drop-distance};
+  transition: margin-top vars.$movement-duration ease-in;
   animation: intro-fall-player-land 1ms step-end forwards;
   animation-delay: $fall-reposition-at;
 }

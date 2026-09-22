@@ -218,7 +218,8 @@ $inventory-gained-beats: vine30-armed, pickaxe-armed, shovel-armed,
 // Inspect: idle drops so the panel uses the closed morph; overlay stays
 // click-catching (visibility visible, opacity 0 after the morph) so the
 // world stays blocked. Close X + idle hit go dead. Continue restores idle
-// and the bag morphs open. Fail-tool: overlay click-dead, panel snap-hide.
+// and the bag morphs open. Fail-tool (any obstacle/workbench): overlay
+// click-dead, panel snap-hide, Close X off immediately.
 @include when-inventory-fail-pause('.inventory') {
   pointer-events: none;
 }
@@ -306,6 +307,15 @@ $inventory-gained-beats: vine30-armed, pickaxe-armed, shovel-armed,
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+@include when-inventory-fail-pause('.hud-origin .inventory__back') {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0s,
+    visibility 0s;
 }
 
 .inventory__art {

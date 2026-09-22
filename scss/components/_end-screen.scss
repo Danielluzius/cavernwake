@@ -90,6 +90,13 @@ $end-exit-after: $end-act-after + $end-act;
   --end-walker-size: calc(#{$end-walker-size} * var(--end-scale));
   --end-button-half: calc(#{$end-button-half} * var(--end-scale));
   --end-stand-gap: calc(#{$end-stand-gap} * var(--end-scale));
+  // Sprite canvas is padded; 0 on desktop. Compact pulls the stand
+  // toward the pad so the drawn body, not the box, sits beside it.
+  --end-park-nudge: 0px;
+  --end-stand-x: calc(
+    50vw - var(--end-button-half) - var(--end-walker-size) -
+      var(--end-stand-gap) + var(--end-park-nudge)
+  );
 }
 
 .end-screen__brand {
@@ -120,25 +127,26 @@ $end-exit-after: $end-act-after + $end-act;
   text-shadow:
     #{vars.$dialogue-pixel} #{vars.$dialogue-pixel} 0 #{vars.$dialogue-outline},
     0 #{vars.$dialogue-pixel * 2} 0 #{vars.$dialogue-bevel};
-  animation: title-emerge vars.$title-emerge-duration ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-title-after});
 }
 
 .end-screen__credit {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: min(90vw, #{$end-button-width * 2.4});
   margin: 0;
   color: vars.$dialogue-bevel;
   font-size: vars.$dialogue-font-size;
   letter-spacing: vars.$dialogue-pixel;
+  text-align: center;
 }
 
 .end-screen__credit-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: vars.$dialogue-pixel;
   margin: 0;
   text-align: center;
@@ -148,21 +156,30 @@ $end-exit-after: $end-act-after + $end-act;
 .end-screen__credit-prompt {
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in vars.$title-credit-duration ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-prompt-after});
 }
 
 .end-screen__credit-hint {
   display: flex;
   align-items: center;
+  justify-content: center;
+  align-self: center;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
   gap: vars.$dialogue-pixel * 3;
   color: vars.$dialogue-fill;
   text-decoration: none;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in vars.$title-credit-duration ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-hint-after});
+}
+
+.end-screen__credit-hint::before,
+.end-screen__credit-hint::after {
+  flex: 0 0 1.2em;
+  width: 1.2em;
+  text-align: center;
 }
 
 .end-screen__credit-hint::before {
@@ -182,8 +199,6 @@ $end-exit-after: $end-act-after + $end-act;
   padding: vars.$dialogue-pixel * 2;
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in 0.45s ease-out both;
-  animation-delay: calc(var(--end-fade) + #{$end-button-after});
 }
 
 .end-screen__button {
@@ -216,6 +231,32 @@ $end-exit-after: $end-act-after + $end-act;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  transform: translateX(100vw);
+}
+
+// Bind the sequence to #outro-fade so it cannot finish (or stick at
+// left:0) while .end-screen is still display:none during the run.
+#outro-fade:checked ~ .game .end-screen__title {
+  animation: title-emerge vars.$title-emerge-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-title-after});
+}
+
+#outro-fade:checked ~ .game .end-screen__credit-prompt {
+  animation: title-choices-in vars.$title-credit-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-prompt-after});
+}
+
+#outro-fade:checked ~ .game .end-screen__credit-hint {
+  animation: title-choices-in vars.$title-credit-duration ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-hint-after});
+}
+
+#outro-fade:checked ~ .game .end-screen__choices {
+  animation: title-choices-in 0.45s ease-out both;
+  animation-delay: calc(var(--end-fade) + #{$end-button-after});
+}
+
+#outro-fade:checked ~ .game .end-screen__walker {
   animation:
     end-walker-travel $end-travel linear both,
     end-walker-run $end-run-cycle steps(1, end) $end-approach-loops both,
@@ -239,12 +280,24 @@ $end-exit-after: $end-act-after + $end-act;
 
   #{math.percentage(math.div($end-approach, $end-travel))},
   #{math.percentage(math.div($end-approach + $end-act, $end-travel))} {
-    transform: translateX(
-      calc(
-        50vw - var(--end-button-half) - var(--end-walker-size) -
-          var(--end-stand-gap)
-      )
-    );
+    transform: translateX(var(--end-stand-x));
+  }
+
+  100% {
+    transform: translateX(calc(-1 * var(--end-walker-size)));
+  }
+}
+
+// Phone: no right-side runway, so the desktop waypoint (creep to the
+// pad, then dash past it) reads as a false start. One linear approach.
+@keyframes end-walker-travel-compact {
+  0% {
+    transform: translateX(100vw);
+  }
+
+  #{math.percentage(math.div($end-approach, $end-travel))},
+  #{math.percentage(math.div($end-approach + $end-act, $end-travel))} {
+    transform: translateX(var(--end-stand-x));
   }
 
   100% {

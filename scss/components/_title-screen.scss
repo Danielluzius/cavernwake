@@ -310,6 +310,20 @@ $title-start-mark: vars.$dialogue-pixel * 3;
   visibility: visible;
 }
 
+// The overlay only fades out (opacity 0 + visibility:hidden), it stays
+// in the DOM for the whole run. Language stays checked, so Start keeps
+// pointer-events:auto and would swallow in-game clicks (re-checking
+// #intro-skip). Hide the pads with the fade.
+#{vars.$intro-running} ~ .game .title-screen .title-screen__legal-link,
+#{vars.$intro-running} ~ .game .title-screen .title-screen__mobile-note,
+#{vars.$intro-running} ~ .game .title-screen .title-screen__choices,
+#{vars.$intro-running} ~ .game .title-screen .title-screen__start,
+#{vars.$intro-running} ~ .game .title-screen .title-screen__lang {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s vars.$title-fade-out-duration;
+}
+
 .title-screen__legal-link {
   margin: 0;
   padding: vars.$dialogue-pixel * 2 vars.$dialogue-pixel * 4;

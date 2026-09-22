@@ -864,10 +864,10 @@
                </div>
 
                <!-- Sibling of .viewport on purpose: .blackout is position:fixed
-                 and must stay pinned to the real browser viewport even
-                 while .viewport itself is transformed (e.g. the intro's
-                 screen shake) — a transformed ancestor would otherwise
-                 become its containing block and shake it too. -->
+                 and must not sit under .viewport's transform (the intro's
+                 screen shake) — that would shake the veil too. Its
+                 containing block is .playfield-inner, so inset:0 covers
+                 exactly the field. See scss/intro/_intro-fx.scss. -->
                <div class="blackout"><div class="blackout__veil"></div></div>
 
                <!-- Detonation flash, sibling of .viewport for the exact same

@@ -23,6 +23,7 @@ body {
   height: 100svh;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -7142,6 +7143,16 @@ input {
   visibility: visible;
 }
 
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen .title-screen__legal-link,
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen .title-screen__mobile-note,
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen .title-screen__choices,
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen .title-screen__start,
+:is(#intro-skip, #intro-dark, #intro-fade, #intro-1, #intro-2, #intro-lantern, #intro-home, #intro-3, #intro-anyway, #intro-4, #intro-sit, #intro-fall, #intro-dark-hold, #intro-5, #intro-breathe, #intro-6, #intro-7, #intro-pack, #intro-8, #intro-9, #intro-10, #intro-11, #intro-12, #intro-13, #intro-hurry, #intro-14, #intro-hints):checked ~ .game .title-screen .title-screen__lang {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s 2s;
+}
+
 .title-screen__legal-link {
   margin: 0;
   padding: 6px 12px;
@@ -7452,6 +7463,11 @@ input {
   --end-walker-size: calc(168px * var(--end-scale));
   --end-button-half: calc(201.6px * var(--end-scale));
   --end-stand-gap: calc(14.4px * var(--end-scale));
+  --end-park-nudge: 0px;
+  --end-stand-x: calc(
+    50vw - var(--end-button-half) - var(--end-walker-size) -
+      var(--end-stand-gap) + var(--end-park-nudge)
+  );
 }
 
 .end-screen__brand {
@@ -7480,25 +7496,26 @@ input {
   line-height: 1.15;
   text-align: center;
   text-shadow: 3px 3px 0 #010000, 0 6px 0 #ca946e;
-  animation: title-emerge 3s ease-out both;
-  animation-delay: calc(var(--end-fade) + 0s);
 }
 
 .end-screen__credit {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: min(90vw, 967.68px);
   margin: 0;
   color: #ca946e;
   font-size: 24px;
   letter-spacing: 3px;
+  text-align: center;
 }
 
 .end-screen__credit-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: 3px;
   margin: 0;
   text-align: center;
@@ -7508,21 +7525,30 @@ input {
 .end-screen__credit-prompt {
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in 1.1s ease-out both;
-  animation-delay: calc(var(--end-fade) + 8.2s);
 }
 
 .end-screen__credit-hint {
   display: flex;
   align-items: center;
+  justify-content: center;
+  align-self: center;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
   gap: 9px;
   color: #ebcba0;
   text-decoration: none;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in 1.1s ease-out both;
-  animation-delay: calc(var(--end-fade) + 8.65s);
+}
+
+.end-screen__credit-hint::before,
+.end-screen__credit-hint::after {
+  flex: 0 0 1.2em;
+  width: 1.2em;
+  text-align: center;
 }
 
 .end-screen__credit-hint::before {
@@ -7542,8 +7568,6 @@ input {
   padding: 6px;
   opacity: 0;
   visibility: hidden;
-  animation: title-choices-in 0.45s ease-out both;
-  animation-delay: calc(var(--end-fade) + 6.8s);
 }
 
 .end-screen__button {
@@ -7604,6 +7628,30 @@ input {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  transform: translateX(100vw);
+}
+
+#outro-fade:checked ~ .game .end-screen__title {
+  animation: title-emerge 3s ease-out both;
+  animation-delay: calc(var(--end-fade) + 0s);
+}
+
+#outro-fade:checked ~ .game .end-screen__credit-prompt {
+  animation: title-choices-in 1.1s ease-out both;
+  animation-delay: calc(var(--end-fade) + 8.2s);
+}
+
+#outro-fade:checked ~ .game .end-screen__credit-hint {
+  animation: title-choices-in 1.1s ease-out both;
+  animation-delay: calc(var(--end-fade) + 8.65s);
+}
+
+#outro-fade:checked ~ .game .end-screen__choices {
+  animation: title-choices-in 0.45s ease-out both;
+  animation-delay: calc(var(--end-fade) + 6.8s);
+}
+
+#outro-fade:checked ~ .game .end-screen__walker {
   animation: end-walker-travel 10.1s linear both, end-walker-run 0.45s steps(1, end) 6 both, end-walker-act 5.7s steps(1, end) forwards, end-walker-exit 0.45s steps(1, end) 3 forwards;
   animation-delay: calc(var(--end-fade) + 3s), calc(var(--end-fade) + 3s), calc(var(--end-fade) + 5.85s), calc(var(--end-fade) + 11.55s);
 }
@@ -7616,7 +7664,18 @@ input {
     transform: translateX(calc(50vw + var(--end-button-half)));
   }
   28.2178217822%, 84.6534653465% {
-    transform: translateX(calc(50vw - var(--end-button-half) - var(--end-walker-size) - var(--end-stand-gap)));
+    transform: translateX(var(--end-stand-x));
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--end-walker-size)));
+  }
+}
+@keyframes end-walker-travel-compact {
+  0% {
+    transform: translateX(100vw);
+  }
+  28.2178217822%, 84.6534653465% {
+    transform: translateX(var(--end-stand-x));
   }
   100% {
     transform: translateX(calc(-1 * var(--end-walker-size)));
@@ -7916,11 +7975,11 @@ input {
   transform: translate(-100%, -50%) scale(1);
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory {
+:is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory {
   pointer-events: none;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory__panel {
+:is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .inventory__panel {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -8049,6 +8108,13 @@ input {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+:is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .hud-origin .inventory__back {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0s, visibility 0s;
 }
 
 .inventory__art {
@@ -11797,7 +11863,7 @@ input {
   visibility: hidden;
 }
 
-:is(#vine24-choosing, #vine12-choosing, #vine30-choosing, #rock-choosing, #mud-choosing, #wall-choosing, #wall-fuse-choosing, #last-lever-socket-choosing, #workbench-choosing, #workbench-a-shell, #workbench-a-powder, #workbench-a-fuse, #workbench-b-shell-powder, #workbench-b-shell-fuse, #workbench-b-powder-shell, #workbench-b-powder-fuse, #workbench-b-fuse-shell, #workbench-b-fuse-powder, #workbench-bad-sfp, #workbench-bad-psf, #workbench-bad-pfs, #workbench-bad-fsp, #workbench-bad-fps):checked ~ :is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .craft-tray {
+:is(#item-use-fail-a, #item-use-fail-b):checked ~ .game .craft-tray {
   opacity: 0;
   visibility: hidden;
 }
@@ -12230,10 +12296,7 @@ input {
 
 .blast-flash {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100svh;
+  inset: 0;
   z-index: 90;
   background-color: #fff;
   opacity: 0;
@@ -13713,6 +13776,7 @@ input {
     --world-offset: -1296px;
     --world-offset-y: -1008px;
     --player-extra-offset-y: 0px;
+    margin-top: 0;
   }
 }
 #position-1:checked ~ #intro-fall:checked ~ .game .world {
@@ -13957,9 +14021,8 @@ input {
 #position-1:checked ~ #intro-fall:checked ~ .game .player {
   --world-offset: -1008px;
   --world-offset-y: -336px;
-  --player-extra-offset-y: 672px;
-  transition-duration: 0.6s;
-  transition-timing-function: ease-in;
+  margin-top: 672px;
+  transition: margin-top 0.6s ease-in;
   animation: intro-fall-player-land 1ms step-end forwards;
   animation-delay: 4.4s;
 }
@@ -14533,10 +14596,7 @@ input {
 
 .blackout {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100svh;
+  inset: 0;
   z-index: 90;
   opacity: 0;
   pointer-events: none;
@@ -15829,6 +15889,12 @@ input {
   .end-screen {
     --end-scale: 0.6;
   }
+  .end-screen {
+    --end-park-nudge: calc(var(--end-walker-size) * 0.3);
+  }
+  #outro-fade:checked ~ .game .end-screen__walker {
+    animation-name: end-walker-travel-compact, end-walker-run, end-walker-act, end-walker-exit;
+  }
   .end-screen__button {
     position: relative;
   }
@@ -16006,6 +16072,22 @@ input {
 @media (min-width: 720px) and (min-height: 701px) {
   .game {
     --field-scale: 1;
+  }
+}
+@media (min-width: 720px) and (max-width: 1199px) {
+  .end-screen {
+    --end-park-nudge: calc(var(--end-walker-size) * 0.3);
+  }
+  #outro-fade:checked ~ .game .end-screen__walker {
+    animation-name: end-walker-travel-compact, end-walker-run, end-walker-act, end-walker-exit;
+  }
+}
+@media (min-width: 1200px) {
+  .end-screen {
+    --end-park-nudge: calc(var(--end-walker-size) * 0.3);
+  }
+  #outro-fade:checked ~ .game .end-screen__walker {
+    animation-name: end-walker-travel-compact, end-walker-run, end-walker-act, end-walker-exit;
   }
 }
 @media (min-width: 1200px) and (min-height: 860px) {

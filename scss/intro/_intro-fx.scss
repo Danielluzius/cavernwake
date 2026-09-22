@@ -87,12 +87,17 @@
 // everywhere else.
 // ==========================================================================
 
+// Fixed so the intro shake on .viewport cannot move the veil, but its
+// containing block is .playfield-inner (that box carries the
+// --field-scale transform), so inset:0 is exactly the field. 100svh used
+// to be measured against the real viewport and then scaled down with the
+// field — on a phone svh is short of 640 once the browser chrome is
+// counted, so the veil stopped before the bottom of the circle and the
+// fall blacked out only part of the cave. Desktop and device emulation
+// never showed it because there svh is the full window height.
 .blackout {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100svh;
+  inset: 0;
   z-index: vars.$z-index-blackout;
   opacity: 0;
   pointer-events: none;

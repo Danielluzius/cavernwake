@@ -60,10 +60,7 @@ $inventory-speech-pause: '#{$inventory-quote-open}, #{$inventory-fail-open}';
 }
 
 @mixin when-inventory-fail-pause($target) {
-  :is(#{$inventory-bag-open}):checked
-    ~ :is(#{$inventory-fail-open}):checked
-    ~ .game
-    #{$target} {
+  :is(#{$inventory-fail-open}):checked ~ .game #{$target} {
     @content;
   }
 }
